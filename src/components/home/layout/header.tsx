@@ -22,11 +22,11 @@ export default function Header() {
       : pathname?.startsWith(href);
 
   return (
-    <header className="w-full border-b border-gray-100 bg-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between p-4">
+    <header className="w-full border-gray-100 bg-white px-30">
+      <div className="w-300 mx-auto ">
+        <div className=" flex items-center justify-between py-7.5">
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex flex-col leading-none">
-            
+          <div className="text-heading-primary-text flex flex-col leading-none font-semibold text-[40px]">
             Logo
           </div>
         </Link>
@@ -51,7 +51,7 @@ export default function Header() {
         <div className="hidden items-center gap-3 lg:flex">
           <Link
             href="/signin"
-            className="rounded-full bg-[#f15a29] px-6 py-2  font-semibold text-white shadow-sm hover:bg-[#e14f20]"
+            className="rounded-full bg-[#f15a29] px-7.5 py-2.5  font-semibold text-white shadow-sm hover:bg-[#e14f20] text-xl"
           >
             Sign In
           </Link>
@@ -100,6 +100,7 @@ export default function Header() {
           </nav>
         </div>
       )}
+      </div>
     </header>
   );
 }

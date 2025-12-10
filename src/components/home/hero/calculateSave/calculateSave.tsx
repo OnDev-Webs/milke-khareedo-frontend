@@ -3,7 +3,7 @@
 export default function CalculateSave() {
   return (
     <section className="w-full bg-[#e0e0e0] py-16">
-      <div className="mx-auto max-w-6xl px-4">
+      <div className="mx-auto w-300">
         
         <h2 className="mb-12 text-center text-2xl font-semibold text-[#5b567a]">
           Calculate how Much Can You Save?

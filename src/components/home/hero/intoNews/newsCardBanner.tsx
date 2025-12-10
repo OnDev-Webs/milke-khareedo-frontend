@@ -1,13 +1,12 @@
-export default function NewsCard() {
+export default function NewsCardBanner() {
   return (
     <div
       className="shadow-[0_0_10px_rgba(0,0,0,0.08)] 
-    p-7.5
-     rounded-4xl w-148 max-w-148 
+    py-7.5 px-10 rounded-4xl
     "
     >
-      <div className=" rounded-4xl bg-[#FFFFFF] flex flex-col items-center justify-center gap-5 ">
-        <div className="w-132.5 h-87.5 bg-[#F9F9FF] flex items-center justify-center rounded-4xl ">
+      <div className="w-300 max-w-300 rounded-4xl bg-[#FFFFFF] flex gap-5">
+        <div className="w-140 h-87.5 bg-[#F9F9FF] flex items-center justify-center rounded-4xl">
           <svg
             viewBox="0 0 24 24"
             fill="currentColor"
@@ -28,7 +27,7 @@ export default function NewsCard() {
             officiis nesciunt possimus pariatur expedita labore in quasi numquam
             praesentium voluptatem.
           </p>
-          <button className="mt-6 rounded-full border border-gray-400 px-17.5 py-5 text-sm font-semibold text-gray-600">
+          <button className="mt-6 rounded-full border border-gray-400 px-10 py-3 text-sm font-semibold text-gray-600">
             Button
           </button>
         </div>

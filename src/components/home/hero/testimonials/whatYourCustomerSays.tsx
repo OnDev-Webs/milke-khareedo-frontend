@@ -3,26 +3,22 @@
 const reviews = [
   {
     rating: 5,
-    text:
-      "description description description description description description description description description description description",
+    text: "description description description description description description description description description description description",
     user: "User Name",
   },
   {
     rating: 5,
-    text:
-      "description description description description description description description description description description description",
+    text: "description description description description description description description description description description description",
     user: "User Name",
   },
   {
     rating: 4,
-    text:
-      "description description description description description description description description description description description",
+    text: "description description description description description description description description description description description",
     user: "User Name",
   },
   {
     rating: 5,
-    text:
-      "description description description description description description description description description description description",
+    text: "description description description description description description description description description description description",
     user: "User Name",
   },
 ];
@@ -30,8 +26,7 @@ const reviews = [
 export default function Testimonials() {
   return (
     <section className="w-full bg-white py-16">
-      <div className="mx-auto max-w-6xl px-4">
-
+      <div className="mx-auto w-300">
         <h2 className="mb-10 text-center text-2xl font-semibold text-[#5b567a]">
           What Our Customers Say
         </h2>
@@ -40,20 +35,16 @@ export default function Testimonials() {
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="min-w-[270px] max-w-[270px] rounded-xl bg-white p-6 shadow-[0_18px_40px_rgba(0,0,0,0.05)]"
+              className="w-100 h-100 rounded-xl bg-white p-6 shadow-[0_18px_40px_rgba(0,0,0,0.05)]"
             >
-              <h4 className="text-lg font-semibold text-[#5b567a]">
-                Rating
-              </h4>
+              <h4 className="text-lg font-semibold text-[#5b567a]">Rating</h4>
 
               <p className="mt-4 text-sm leading-relaxed text-gray-500">
                 {review.text}
               </p>
 
               <div className="mt-6 flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#ededf0]">
-                  
-                </div>
+                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#ededf0]"></div>
 
                 <span className="text-sm font-medium text-gray-600">
                   {review.user}
@@ -62,7 +53,6 @@ export default function Testimonials() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );

@@ -22,7 +22,7 @@ const steps = [
 export default function HowItWorks() {
   return (
     <section className="w-full bg-white py-14">
-      <div className="mx-auto max-w-6xl px-4">
+      <div className="mx-auto w-300">
         <h2 className="mb-12 text-center text-2xl font-semibold text-[#5b567a]">
           How It Works
         </h2>

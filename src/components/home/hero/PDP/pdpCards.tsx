@@ -1,22 +1,24 @@
 "use client";
+import Image from "next/image";
+import dummySvg from "@/assests/Image icon.svg";
 
 const cards = [
-    { id: 1, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
-    { id: 2, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
-    { id: 3, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
-    { id: 4, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
-    { id: 5, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
-    { id: 6, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
-    { id: 7, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
-    { id: 8, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
-    { id: 9, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
+  { id: 1, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
+  { id: 2, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
+  { id: 3, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
+  { id: 4, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
+  { id: 5, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
+  { id: 6, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
+  { id: 7, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
+  { id: 8, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
+  { id: 9, title: "Body Text", subtitle: "Sub Text", cta: "Button" },
 ];
 
 export default function CardsSection() {
   return (
-    <section className="w-full bg-[#f7f7f9] py-25">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="flex items-center justify-between">
+    <section className="w-full bg-[#f7f7f9] py-25 ">
+      <div className="w-300 mx-auto">
+        <div className="flex items-center justify-between mt-15">
           <div className="flex flex-wrap gap-4">
             {Array.from({ length: 9 }).map((_, i) => (
               <div key={i} className="h-4 w-16 rounded bg-[#d7d7db]" />
@@ -44,32 +46,24 @@ export default function CardsSection() {
               className="flex flex-col items-center rounded-3xl bg-white p-4 shadow-[0_18px_40px_rgba(0,0,0,0.05)]"
             >
               <div className="mb-6 flex h-52 w-full items-center justify-center rounded-xl bg-[#f5f2ff]">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-10 w-10 text-[#d4cdee]"
-                  fill="currentColor"
-                >
-                  <path d="M21 19l-5.5-7-3.5 4.5-2.5-3L3 19z" />
-                  <circle cx="9" cy="8" r="2" />
-                </svg>
+                <Image src={dummySvg} alt="HeroImg" />
               </div>
 
-              <h3 className="text-base font-semibold text-gray-700">
+              <h3 className="text-base font-semibold text-[#828282]">
                 {card.title}
               </h3>
               <p className="mt-1 text-xs text-gray-500">{card.subtitle}</p>
 
-              <button className="mt-6 rounded-full border border-gray-400 px-12 py-3 text-sm font-semibold text-gray-600">
+              <button className="mt-6 rounded-full border border-gray-400 px-12 py-3 text-sm font-semibold text-[#828282]">
                 {card.cta}
               </button>
             </div>
           ))}
         </div>
         <div className="w-full text-center">
-
-        <button className="mt-6 rounded-full border border-gray-400 px-12 py-3 text-sm font-semibold text-gray-600">
-                View all
-              </button>
+          <button className="mt-6 rounded-full border border-gray-400 px-12 py-3 text-sm font-semibold text-[#828282]">
+            View all
+          </button>
         </div>
       </div>
     </section>

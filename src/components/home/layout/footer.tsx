@@ -3,8 +3,8 @@
 export default function FooterSection() {
 
   return (
-    <section className="relative mt-32 bg-[#d9d9dd] pt-24 pb-10">
-      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 md:flex-row">
+    <section className="relative bg-[#d9d9dd] py-20">
+      <div className="mx-auto flex w-300 flex-col gap-12 md:flex-row">
         <div className="w-full md:w-4/12">
           <h2 className="text-2xl font-semibold text-gray-700">Logo</h2>
           <p className="mt-4 text-sm leading-relaxed text-gray-600">
@@ -57,12 +57,6 @@ export default function FooterSection() {
           </div>
         </div>
       </div>
-
-      <div className="mt-10 text-center text-sm text-gray-500">
-        © All Rights Reserved by Brand name | Powered by Brand name
-      </div>
-
-      
     </section>
   );
 }

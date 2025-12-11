@@ -11,7 +11,7 @@ export default function RestOfTeam() {
   return (
     <section className="w-full bg-white py-16">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 className="mb-10 text-center text-2xl font-semibold text-[#5b567a]">
+        <h2 className="mb-10 text-center leading-12 font-bold text-4xl text-heading-secondary-text">
           Rest of the Team
         </h2>
 
@@ -32,8 +32,8 @@ export default function RestOfTeam() {
                 </svg>
               </div>
 
-              <p className="font-semibold text-[#5b567a]">{member.name}</p>
-              <p className="mt-1 text-gray-400">{member.role}</p>
+              <p className="font-semibold text-[22px] text-heading-primary-text leading-8">{member.name}</p>
+              <p className="mt-1 font-normal text-[16px] text-heading-primary-text">{member.role}</p>
 
               <div className="mt-5 flex gap-2">
                 {member?.items?.map((a) => (

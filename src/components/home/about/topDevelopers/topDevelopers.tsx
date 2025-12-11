@@ -4,7 +4,7 @@ export default function TopDeveloperLogos() {
     <section className="w-full bg-white py-14">
       <div className="mx-auto max-w-6xl px-4">
         
-        <h2 className="mb-10 text-center text-2xl font-semibold text-[#5b567a]">
+        <h2 className="mb-10 text-center leading-12 font-bold text-4xl text-heading-secondary-text">
           Top Developer Logos
         </h2>
 

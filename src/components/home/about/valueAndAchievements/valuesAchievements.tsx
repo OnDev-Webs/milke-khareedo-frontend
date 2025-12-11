@@ -37,7 +37,7 @@ export default function ValuesAchievements() {
   return (
     <section className="w-full bg-white py-16">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 className="mb-10 text-center text-2xl font-semibold text-[#5b567a]">
+        <h2 className="mb-10 text-center leading-12 font-bold text-4xl text-heading-secondary-text">
           Values &amp; Achievements
         </h2>
 
@@ -59,8 +59,8 @@ export default function ValuesAchievements() {
               </div>
 
               <div className="flex flex-col justify-center">
-                <h3 className=" font-semibold text-[#4c4870]">{item.title}</h3>
-                <p className="mt-2 leading-relaxed text-[#6b6889]">
+                <h3 className=" leading-12 font-bold text-4xl text-heading-secondary-text">{item.title}</h3>
+                <p className="mt-2 text-xl font-normal text-heading-secondary-muted-text leading-8">
                   {item.desc}
                 </p>
               </div>

@@ -11,15 +11,15 @@ export default function CompanyOverview() {
   return (
     <section className="w-full bg-white py-16">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 className="mb-12 text-center text-2xl font-semibold text-[#5b567a]">
+        <h2 className="mb-12 text-center leading-12 font-bold text-4xl text-heading-secondary-text">
           Company Overview
         </h2>
 
         <div className="grid items-start gap-12 md:grid-cols-2">
           <div>
-            <h3 className="text-xl font-semibold text-[#5b567a]">Heading</h3>
+            <h3 className="leading-12 font-bold text-4xl text-heading-secondary-text">Heading</h3>
 
-            <p className="mt-3 max-w-lg text-sm leading-relaxed text-gray-500">
+            <p className="mt-3 max-w-xl text-xl font-normal text-heading-secondary-muted-text leading-8">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi
               hic, beatae placeat eveniet quisquam similique dolores explicabo
               sit velit nam vitae cum eum minus veritatis reiciendis voluptates
@@ -44,10 +44,10 @@ export default function CompanyOverview() {
                   </div>
 
                   <div>
-                    <h4 className="text-sm font-semibold text-[#5b567a]">
+                    <h4 className="leading-12 font-bold text-4xl text-heading-secondary-text">
                       {item.title}
                     </h4>
-                    <p className="text-xs text-gray-500">{item.desc}</p>
+                    <p className="text-xl font-normal text-heading-secondary-muted-text leading-8">{item.desc}</p>
                   </div>
                 </div>
               ))}

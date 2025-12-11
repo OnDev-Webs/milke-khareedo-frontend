@@ -6,8 +6,8 @@ export default function MissionVision() {
       <div className="mx-auto max-w-6xl px-4">
         <div className="grid items-start gap-10 md:grid-cols-[1fr_auto_1fr]">
           <div>
-            <h3 className="text-xl font-semibold text-[#5b567a]">Mission</h3>
-            <p className="mt-3 text-sm leading-relaxed text-gray-500">
+            <h3 className="leading-12 font-bold text-4xl text-heading-secondary-text">Mission</h3>
+            <p className="mt-3 text-xl font-normal text-heading-secondary-muted-text leading-8">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
               earum, laboriosam consequuntur illo quae rem, aut voluptate error
               itaque velit iste architecto, nemo excepturi. Voluptatum provident
@@ -19,8 +19,8 @@ export default function MissionVision() {
           <div className="hidden h-40 w-px bg-[#d3d1e0] md:block" />
 
           <div>
-            <h3 className="text-xl font-semibold text-[#5b567a]">Vision</h3>
-            <p className="mt-3 text-sm leading-relaxed text-gray-500">
+            <h3 className="leading-12 font-bold text-4xl text-heading-secondary-text">Vision</h3>
+            <p className="mt-3 text-xl font-normal text-heading-secondary-muted-text leading-8">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Consectetur ullam, minima aspernatur doloremque iusto dolores
               atque natus deserunt quo exercitationem dolorem ducimus tempora

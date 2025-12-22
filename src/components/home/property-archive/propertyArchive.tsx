@@ -1,4 +1,3 @@
-
 import PropertyCard from "./propertyCard";
 
 type Property = {

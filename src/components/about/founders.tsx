@@ -3,13 +3,13 @@ const founders = [
     name: "User Name",
     role: "Co-Founder",
     desc: "description description description description description description description",
-    items: [1,2,3],
+    items: [1, 2, 3],
   },
   {
     name: "User Name",
     role: "Co-Founder",
     desc: "description description description description description description description",
-    items: [1,2,3],
+    items: [1, 2, 3],
   },
 ];
 
@@ -43,7 +43,9 @@ export default function Founders() {
                   <p className=" font-semibold text-[22px] text-heading-primary-text leading-8">
                     {founder.name}
                   </p>
-                  <p className=" text-xl font-normal text-heading-secondary-muted-text leading-8">{founder.role}</p>
+                  <p className=" text-xl font-normal text-heading-secondary-muted-text leading-8">
+                    {founder.role}
+                  </p>
                   <p className="text-xl font-normal text-heading-secondary-muted-text leading-8">
                     {founder.desc}
                   </p>
@@ -54,9 +56,7 @@ export default function Founders() {
                     <div
                       key={a}
                       className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#f0eff7]"
-                    >
-                      
-                    </div>
+                    ></div>
                   ))}
                 </div>
               </div>

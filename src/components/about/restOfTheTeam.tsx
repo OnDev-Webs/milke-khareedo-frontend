@@ -32,8 +32,12 @@ export default function RestOfTeam() {
                 </svg>
               </div>
 
-              <p className="font-semibold text-[22px] text-heading-primary-text leading-8">{member.name}</p>
-              <p className="mt-1 font-normal text-[16px] text-heading-primary-text">{member.role}</p>
+              <p className="font-semibold text-[22px] text-heading-primary-text leading-8">
+                {member.name}
+              </p>
+              <p className="mt-1 font-normal text-[16px] text-heading-primary-text">
+                {member.role}
+              </p>
 
               <div className="mt-5 flex gap-2">
                 {member?.items?.map((a) => (

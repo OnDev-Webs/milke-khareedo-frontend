@@ -50,9 +50,7 @@ export default function PDPSimilarProjects() {
   return (
     <section className="w-full bg-white py-10">
       <div className="mx-auto max-w-300">
-        <h3 className="mb-6 font-semibold text-3xl">
-          Similar Projects
-        </h3>
+        <h3 className="mb-6 font-semibold text-3xl">Similar Projects</h3>
 
         <div className="overflow-x-auto pb-4 md:overflow-visible">
           <div className="flex gap-6 px-2 md:grid md:grid-cols-3 md:gap-6 md:px-0">
@@ -82,9 +80,7 @@ export default function PDPSimilarProjects() {
                         key={a}
                         className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-xs text-gray-400"
                         title={`avatar ${a}`}
-                      >
-                        
-                      </div>
+                      ></div>
                     ))}
                   </div>
 

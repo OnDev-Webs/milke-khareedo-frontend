@@ -4,17 +4,13 @@ export default function CalculateSave() {
   return (
     <section className="w-full bg-[#e0e0e0] py-16">
       <div className="mx-auto w-300">
-        
         <h2 className="mb-12 text-center text-2xl font-semibold text-[#5b567a]">
           Calculate how Much Can You Save?
         </h2>
 
         <div className="grid gap-6 md:grid-cols-2">
-          
           <div className="rounded-[28px] bg-white p-8 shadow-[0_20px_40px_rgba(0,0,0,0.06)]">
-            <h3 className="text-lg font-semibold text-gray-700">
-              Body Text
-            </h3>
+            <h3 className="text-lg font-semibold text-gray-700">Body Text</h3>
             <p className="mt-1 text-sm text-gray-400">Sub Text</p>
           </div>
 
@@ -42,10 +38,7 @@ export default function CalculateSave() {
         </div>
 
         <div className="mt-6 flex items-center justify-between rounded-[28px] bg-white px-8 py-6 shadow-[0_20px_40px_rgba(0,0,0,0.06)]">
-          
-          <h3 className="text-lg font-semibold text-gray-600">
-            Location
-          </h3>
+          <h3 className="text-lg font-semibold text-gray-600">Location</h3>
 
           <div className="flex gap-4">
             {[1, 2].map((i) => (
@@ -65,7 +58,6 @@ export default function CalculateSave() {
             ))}
           </div>
         </div>
-
       </div>
     </section>
   );

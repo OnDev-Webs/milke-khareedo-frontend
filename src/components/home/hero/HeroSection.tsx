@@ -1,4 +1,4 @@
-import dummySvg from "@/assests/Image icon.svg";
+import dummySvg from "@/assets/Image icon.svg";
 import Image from "next/image";
 
 export default function Hero() {

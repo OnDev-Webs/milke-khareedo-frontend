@@ -59,7 +59,9 @@ export default function ValuesAchievements() {
               </div>
 
               <div className="flex flex-col justify-center">
-                <h3 className=" leading-12 font-bold text-4xl text-heading-secondary-text">{item.title}</h3>
+                <h3 className=" leading-12 font-bold text-4xl text-heading-secondary-text">
+                  {item.title}
+                </h3>
                 <p className="mt-2 text-xl font-normal text-heading-secondary-muted-text leading-8">
                   {item.desc}
                 </p>

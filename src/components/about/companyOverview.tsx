@@ -17,7 +17,9 @@ export default function CompanyOverview() {
 
         <div className="grid items-start gap-12 md:grid-cols-2">
           <div>
-            <h3 className="leading-12 font-bold text-4xl text-heading-secondary-text">Heading</h3>
+            <h3 className="leading-12 font-bold text-4xl text-heading-secondary-text">
+              Heading
+            </h3>
 
             <p className="mt-3 max-w-xl text-xl font-normal text-heading-secondary-muted-text leading-8">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi
@@ -47,7 +49,9 @@ export default function CompanyOverview() {
                     <h4 className="leading-12 font-bold text-4xl text-heading-secondary-text">
                       {item.title}
                     </h4>
-                    <p className="text-xl font-normal text-heading-secondary-muted-text leading-8">{item.desc}</p>
+                    <p className="text-xl font-normal text-heading-secondary-muted-text leading-8">
+                      {item.desc}
+                    </p>
                   </div>
                 </div>
               ))}

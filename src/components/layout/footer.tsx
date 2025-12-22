@@ -1,7 +1,6 @@
 "use client";
 
 export default function FooterSection() {
-
   return (
     <section className="relative bg-[#d9d9dd] py-20">
       <div className="mx-auto flex w-300 flex-col gap-12 md:flex-row">
@@ -43,14 +42,10 @@ export default function FooterSection() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
-            {[1, 2, 3, ].map((idx) => (
+            {[1, 2, 3].map((idx) => (
               <div key={idx} className="space-y-3">
                 {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <div
-                    key={i}
-                    className="h-4 rounded bg-[#ececf0]"
-                    
-                  />
+                  <div key={i} className="h-4 rounded bg-[#ececf0]" />
                 ))}
               </div>
             ))}

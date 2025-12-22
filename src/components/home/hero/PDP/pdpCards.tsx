@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import dummySvg from "@/assests/Image icon.svg";
+import dummySvg from "@/assets/Image icon.svg";
 
 const cards = [
   { id: 1, title: "Body Text", subtitle: "Sub Text", cta: "Button" },

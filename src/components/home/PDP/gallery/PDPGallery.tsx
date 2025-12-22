@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logo from "@/assests/Image icon.svg";
+import logo from "@/assets/Image icon.svg";
 
 export default function PDPGallery() {
   return (

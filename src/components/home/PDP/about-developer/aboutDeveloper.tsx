@@ -3,15 +3,15 @@ export default function PDPAboutDeveloper() {
     <section className="w-full px-4 py-6">
       <div className="mx-auto max-w-300 rounded-2xl bg-white shadow-sm">
         <div className="rounded-t-2xl bg-gray-200/80 px-6 py-3">
-          <h3 className="font-semibold text-3xl">
-            About Developer
-          </h3>
+          <h3 className="font-semibold text-3xl">About Developer</h3>
         </div>
 
         <div className="flex flex-col gap-6 px-6 py-6 md:flex-row md:items-start">
           <div className="md:flex-1">
             <div className="mb-3">
-              <div className="text-3xl font-bold text-heading-primary-text">Logo</div>
+              <div className="text-3xl font-bold text-heading-primary-text">
+                Logo
+              </div>
             </div>
 
             <p className="max-w-2xl text-sm leading-relaxed text-gray-600">

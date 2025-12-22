@@ -1,4 +1,4 @@
-import upSvg from "@/assests/upPrice.svg"
+import upSvg from "@/assets/upPrice.svg";
 
 export default function PDPHeader() {
   const bhkOptions = ["1 BHK", "2 BHK", "3 BHK", "4 BHK"];
@@ -12,9 +12,7 @@ export default function PDPHeader() {
             <h1 className="text-3xl font-bold text-gray-900">
               Swastik Heights
             </h1>
-            <p className="mt-1 text-gray-600">
-              Keshvas park, New Delhi, Delhi
-            </p>
+            <p className="mt-1 text-gray-600">Keshvas park, New Delhi, Delhi</p>
 
             <div className="mt-4 flex flex-wrap items-center gap-3">
               {bhkOptions.map((opt) => (
@@ -35,9 +33,7 @@ export default function PDPHeader() {
           <div className="rounded-xl border border-gray-100 bg-gray-50 p-4">
             <div className="flex items-center justify-between">
               <div className=" text-gray-500">Target Price</div>
-              <div className=" text-gray-500 text-right">
-                Developer price
-              </div>
+              <div className=" text-gray-500 text-right">Developer price</div>
             </div>
 
             <div className="mt-2 flex items-baseline justify-between gap-4">
@@ -48,9 +44,7 @@ export default function PDPHeader() {
               </div>
 
               <div className="text-right">
-                <div className="line-through text-gray-400">
-                  ₹ 5.31 Crore
-                </div>
+                <div className="line-through text-gray-400">₹ 5.31 Crore</div>
               </div>
             </div>
             <div className="flex justify-between mt-2 border-t border-gray-300 pt-2">
@@ -58,9 +52,7 @@ export default function PDPHeader() {
                 <img src={upSvg.src} alt="up" />
                 Up to 63.28 L off
               </div>
-              <div className="mt-1 text-gray-500">
-                Get upto 12% discount
-              </div>
+              <div className="mt-1 text-gray-500">Get upto 12% discount</div>
             </div>
           </div>
         </div>

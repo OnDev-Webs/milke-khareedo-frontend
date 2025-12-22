@@ -1,6 +1,6 @@
 "use client";
 
-import svg from "@/assests/Image icon.svg";
+import svg from "@/assets/Image icon.svg";
 const places = ["School", "Restaurant", "Hospital", "Hotels", "Cafe"];
 
 export default function PDPNeighborhood() {

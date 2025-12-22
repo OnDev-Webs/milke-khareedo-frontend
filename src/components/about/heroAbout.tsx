@@ -1,4 +1,3 @@
-
 export default function AboutHero() {
   return (
     <section className="w-full bg-primary py-16">

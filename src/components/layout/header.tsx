@@ -25,7 +25,7 @@ export default function Header() {
     <header className="w-full border-gray-100 bg-white px-30">
       <div className="w-300 mx-auto ">
         <div className=" flex items-center justify-between py-7.5">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/public" className="flex items-center gap-2">
           <div className="text-heading-primary-text flex flex-col leading-none font-semibold text-[40px]">
             Logo
           </div>

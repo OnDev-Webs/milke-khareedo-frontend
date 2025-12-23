@@ -1,4 +1,7 @@
-"use client";
+import CompanyOverviewImg from "@/assets/about-us/company-overview.png";
+import Image from "next/image";
+import Heading from "@/components/typography/heading";
+import Title from "@/components/typography/title";
 
 export default function CompanyOverview() {
   const features = [
@@ -10,18 +13,18 @@ export default function CompanyOverview() {
 
   return (
     <section className="w-full bg-white py-16">
-      <div className="mx-auto max-w-6xl px-4">
-        <h2 className="mb-12 text-center leading-12 font-bold text-4xl text-heading-secondary-text">
-          Company Overview
-        </h2>
+      <div className="mx-auto container px-4">
+        <div className="flex items-center justify-center gap-12 mb-12 md:mb-20 w-fit mx-auto">
+          <Title text={"Company"} drawLineText={"Overview"} isDrawLine />
+        </div>
 
         <div className="grid items-start gap-12 md:grid-cols-2">
           <div>
-            <h3 className="leading-12 font-bold text-4xl text-heading-secondary-text">
+            <Heading variant={"h3"} className="leading-12 text-black">
               Heading
-            </h3>
+            </Heading>
 
-            <p className="mt-3 max-w-xl text-xl font-normal text-heading-secondary-muted-text leading-8">
+            <p className="mt-3 max-w-xl text-[18px] font-normal text-[#373737] leading-8">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi
               hic, beatae placeat eveniet quisquam similique dolores explicabo
               sit velit nam vitae cum eum minus veritatis reiciendis voluptates
@@ -46,10 +49,10 @@ export default function CompanyOverview() {
                   </div>
 
                   <div>
-                    <h4 className="leading-12 font-bold text-4xl text-heading-secondary-text">
+                    <Heading variant={"h5"} className="text-black">
                       {item.title}
-                    </h4>
-                    <p className="text-xl font-normal text-heading-secondary-muted-text leading-8">
+                    </Heading>
+                    <p className="text-xl font-normal text-[#c6bdf5]">
                       {item.desc}
                     </p>
                   </div>
@@ -58,17 +61,13 @@ export default function CompanyOverview() {
             </div>
           </div>
 
-          <div className="flex justify-center md:justify-end">
-            <div className="flex h-[340px] w-full max-w-[360px] items-center justify-center rounded-4xl bg-[#f7f5ff] shadow-[0_18px_40px_rgba(0,0,0,0.05)]">
-              <svg
-                viewBox="0 0 24 24"
-                className="h-16 w-16 text-[#d4cfee]"
-                fill="currentColor"
-              >
-                <path d="M21 19l-5.5-7-3.5 4.5-2.5-3L3 19z" />
-                <circle cx="9" cy="8" r="2" />
-              </svg>
-            </div>
+          <div className="flex justify-center md:justify-end rounded-[40px]">
+            <Image
+              src={CompanyOverviewImg}
+              alt={"Company Overview Image"}
+              width={585}
+              height={553}
+            />
           </div>
         </div>
       </div>

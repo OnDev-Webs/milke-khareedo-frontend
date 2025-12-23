@@ -1,35 +1,39 @@
+import AboutHeroBg from "@/assets/about-us/about-hero-bg.png";
+import Heading from "@/components/typography/heading";
+
 export default function AboutHero() {
   return (
-      <>
-        <section className="w-full py-16 bg-[../assets/about-hero-bg.png]">
-          <div className="mx-auto flex max-w-5xl flex-col items-center gap-10 px-4 md:flex-row">
-            <div className="flex w-full justify-center md:w-1/2">
-              <div className="flex h-96 w-full max-w-92 items-center justify-center rounded-4xl bg-[#f7f7fb] shadow-[0_18px_40px_rgba(0,0,0,0.06)]">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-12 w-12 text-[#d4cfee]"
-                  fill="currentColor"
-                >
-                  <path d="M21 19l-5.5-7-3.5 4.5-2.5-3L3 19z" />
-                  <circle cx="9" cy="8" r="2" />
-                </svg>
+    <>
+      <section
+        style={{
+          backgroundImage: `url(${AboutHeroBg.src})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+        className="w-full py-[128px]"
+      >
+        <div className="container mx-auto">
+          <div className="self-stretch flex flex-col justify-center items-center gap-2.5">
+            <div className="size- px-5 py-2.5 rounded-[70px] outline outline-1 outline-offset-[-1px] outline-red-400 inline-flex justify-center items-center gap-2.5">
+              <div className="justify-start text-white text-base font-medium">
+                About US
               </div>
             </div>
-
-            <div className="w-full text-center md:w-1/2 md:text-left">
-              <h2 className="text-[55px] font-semibold text-heading-primary-text">
-                Body Text
-              </h2>
-              <p className="mt-2 text-gray-500">
-                Sub Text
-              </p>
-
-              <button className="mt-6 rounded-full border border-primary-border bg-white px-10 py-3 font-semibold text-heading-primary-text shadow-sm">
-                Button
-              </button>
-            </div>
+            <Heading
+              variant={"h3"}
+              className="self-stretch text-center justify-start"
+            >
+              <span className="text-white font-bold">Lorem Ipsum is </span>
+              <span className="text-red-400 font-bold">Simply Dummy</span>
+            </Heading>
+            <p className="justify-start text-white text-xl font-medium leading-9">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry.
+            </p>
           </div>
-        </section>
-      </>
+        </div>
+      </section>
+    </>
   );
 }

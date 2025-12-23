@@ -78,7 +78,7 @@ export default function Founders() {
 
           <div className="grid gap-6 md:grid-cols-2">
             {founders.map((founder, i) => (
-                <FounderCard key={i} founder={founder} />
+              <FounderCard key={i} founder={founder} />
             ))}
           </div>
 

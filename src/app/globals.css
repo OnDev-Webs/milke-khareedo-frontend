@@ -167,3 +167,27 @@
     @apply bg-background text-foreground;
   }
 }
+
+.not-found::before,
+.not-found::after {
+  content: "";
+  position: absolute;
+  width: 435px;
+  height: 699px;
+  bottom: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.not-found::before {
+  left: 0;
+  background-image: url("../assets/not-found-vector-left.png");
+}
+
+.not-found::after {
+  right: 0;
+  background-image: url("../assets/not-found-vector-right.png");
+}

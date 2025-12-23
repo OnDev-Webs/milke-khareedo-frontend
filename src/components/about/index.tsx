@@ -2,7 +2,7 @@ import CompanyOverview from "./CompanyOverview";
 import Founders from "./Founders";
 import AboutHero from "./HeroAbout";
 import MissionVision from "./MissionVission";
-import TopDeveloperLogos from "./TopDevelopers";
+import TopDevelopers from "./TopDevelopers";
 import ValuesAchievements from "./ValuesAchievements";
 
 export default function About() {
@@ -12,7 +12,7 @@ export default function About() {
       <CompanyOverview />
       <MissionVision />
       <ValuesAchievements />
-      <TopDeveloperLogos />
+      <TopDevelopers />
       <Founders />
     </>
   );

@@ -3,7 +3,7 @@ import Logo from "@/assets/logo.svg";
 import Image from "next/image";
 import { Marquee } from "@/components/ui/marquee";
 
-export default function TopDeveloperLogos() {
+export default function TopDevelopers() {
   return (
     <section className="w-full bg-white py-14">
       <div className="px-4">

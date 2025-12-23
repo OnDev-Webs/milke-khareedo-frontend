@@ -1,13 +1,18 @@
 import Title from "@/components/typography/title";
-import Logo from "@/assets/logo.svg"
+import Logo from "@/assets/logo.svg";
 import Image from "next/image";
-import {Marquee} from "@/components/ui/marquee";
+import { Marquee } from "@/components/ui/marquee";
 
 export default function TopDeveloperLogos() {
   return (
     <section className="w-full bg-white py-14">
       <div className="px-4">
-        <Title text={"Top"} isDrawLine drawLineText={"Developer Logos"} className="text-center mb-12 md:mb-20" />
+        <Title
+          text={"Top"}
+          isDrawLine
+          drawLineText={"Developer Logos"}
+          className="text-center mb-12 md:mb-20"
+        />
 
         <Marquee>
           {[1, 2, 3, 4, 5, 6].map((_, i) => (

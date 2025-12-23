@@ -1,4 +1,4 @@
-import AboutHero from "@/components/about/heroAbout";
+import AboutHero from "@/components/about/HeroAbout";
 
 const contactMethods = [
   { label: "Address", desc: "Description" },

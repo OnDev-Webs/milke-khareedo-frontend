@@ -11,11 +11,11 @@ export default function AboutHero() {
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
-        className="w-full py-[128px]"
+        className="w-full py-32"
       >
         <div className="container mx-auto">
           <div className="self-stretch flex flex-col justify-center items-center gap-2.5">
-            <div className="size- px-5 py-2.5 rounded-[70px] outline outline-1 outline-offset-[-1px] outline-red-400 inline-flex justify-center items-center gap-2.5">
+            <div className="size- px-5 py-2.5 rounded-[70px] outline-1 -outline-offset-1 outline-red-400 inline-flex justify-center items-center gap-2.5">
               <div className="justify-start text-white text-base font-medium">
                 About US
               </div>

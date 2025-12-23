@@ -1,5 +1,5 @@
 import React from "react";
-import {cn} from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   /**
@@ -38,16 +38,14 @@ const Heading = ({
     h1: "text-[56px] font-bold",
     h2: "text-5xl font-semibold", // 48px
     h3: "text-4xl font-bold", // 36px
-    h4: "",
+    h4: "text-3xl font-bold", // 30px
     h5: "text-2xl font-bold", // 24px
     h6: "text-xl font-normal", // 20px
   };
 
   const Tag = variant; // Dynamically determines the tag (h1-h6)
 
-  return (
-    <Tag className={cn(baseClasses[variant], className)}>{children}</Tag>
-  );
+  return <Tag className={cn(baseClasses[variant], className)}>{children}</Tag>;
 };
 
 export default Heading;

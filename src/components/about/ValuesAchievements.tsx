@@ -1,4 +1,4 @@
-import CompanyOverviewImg from "@/assets/about-us/company-overview.png"
+import CompanyOverviewImg from "@/assets/about-us/company-overview.png";
 import Title from "@/components/typography/title";
 import Image from "next/image";
 import Heading from "@/components/typography/heading";
@@ -45,8 +45,13 @@ const items = [
 export default function ValuesAchievements() {
   return (
     <section className="w-full bg-[#FFF9F6] py-16 mt-[100px]">
-      <div className="mx-auto max-w-6xl px-4">
-        <Title text={"Values"} drawLineText={"Achievements"} isDrawLine className="text-center mb-12 md:mb-20" />
+      <div className="mx-auto container px-4">
+        <Title
+          text={"Values"}
+          drawLineText={"Achievements"}
+          isDrawLine
+          className="text-center mb-12 md:mb-20"
+        />
 
         <div className="grid gap-6 md:grid-cols-2">
           {items.map((item) => (
@@ -54,7 +59,12 @@ export default function ValuesAchievements() {
               key={item.id}
               className="flex items-stretch rounded-3xl bg-white p-4 shadow-[0_12px_30px_rgba(0,0,0,0.06)] gap-5"
             >
-              <Image src={item.img} alt={"achievement image"} width={168} height={183} />
+              <Image
+                src={item.img}
+                alt={"achievement image"}
+                width={168}
+                height={183}
+              />
 
               <div className="flex flex-col justify-center">
                 <Heading variant={"h6"} className="text-black font-bold">

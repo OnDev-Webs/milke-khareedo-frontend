@@ -1,57 +1,141 @@
-"use client";
+import FooterLogo from "@/assets/footer-logo.svg";
+import Link from "next/link";
+import Image from "next/image";
+import FacebookIcon from "@/components/icons/FacebookIcon";
+import TwitterIcon from "@/components/icons/TwitterIcon";
+import LinkedinIcon from "@/components/icons/LinkedinIcon";
+import InstagramIcon from "@/components/icons/InstagramIcon";
 
-export default function FooterSection() {
+const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <section className="relative bg-[#d9d9dd] py-20">
-      <div className="mx-auto flex w-300 flex-col gap-12 md:flex-row">
-        <div className="w-full md:w-4/12">
-          <h2 className="text-2xl font-semibold text-gray-700">Logo</h2>
-          <p className="mt-4 text-sm leading-relaxed text-gray-600">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo
-            doloribus iste iusto nam dolores. Maxime corporis inventore
-            excepturi magnam hic?Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Dolorem, id!
-          </p>
-
-          <div className="mt-6 flex gap-3">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div
-                key={i}
-                className="flex h-12 w-12 items-center justify-center rounded-md bg-[#f0f0f2] shadow-sm"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-8 w-8 text-gray-400"
-                  fill="currentColor"
-                >
-                  <path d="M12 12a4 4 0 10-4-4 4 4 0 004 4zm0 2c-3.33 0-6 1.34-6 3v1h12v-1c0-1.66-2.67-3-6-3z" />
-                </svg>
+    <footer>
+      <div className="bg-neutral-800 py-20 pb-[50px]">
+        <div className="container mx-auto">
+          <div className="w-full inline-flex justify-between items-start">
+            <div className="w-96 inline-flex flex-col justify-start items-start gap-7">
+              <div className="self-stretch h-60 flex flex-col justify-start items-start gap-7">
+                <Link href="/">
+                  <Image
+                    src={FooterLogo}
+                    alt="Footer Logo"
+                    width={303}
+                    height={72}
+                  />
+                </Link>
+                <p className="self-stretch justify-start text-white text-lg font-medium leading-7">
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the industry's
+                  standard dummy text ever since the 1500s, when an unknown
+                  printer took a galley of type and scrambled it ....
+                </p>
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="w-full md:w-8/12">
-          <div className="mb-6 flex flex-wrap gap-4">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="h-5 flex-1 rounded bg-[#ececf0] md:max-w-50"
-              />
-            ))}
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-3">
-            {[1, 2, 3].map((idx) => (
-              <div key={idx} className="space-y-3">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <div key={i} className="h-4 rounded bg-[#ececf0]" />
-                ))}
+              <div className="size- inline-flex justify-start items-center gap-2.5 py-[30px]">
+                <Link href="/" className="size- p-3.5 bg-white rounded-[110px] flex justify-center items-center gap-2.5">
+                  <FacebookIcon />
+                </Link>
+                <Link href="/" className="size- p-3.5 bg-white rounded-[110px] flex justify-center items-center gap-2.5">
+                  <TwitterIcon />
+                </Link>
+                <Link href="/" className="size- p-3.5 bg-white rounded-[110px] flex justify-center items-center gap-2.5">
+                  <LinkedinIcon />
+                </Link>
+                <Link href="/" className="size- p-3.5 bg-white rounded-[110px] flex justify-center items-center gap-2.5">
+                  <InstagramIcon />
+                </Link>
               </div>
-            ))}
+            </div>
+            <div className="size- flex justify-start items-center gap-5">
+              <div className="w-48 inline-flex flex-col justify-start items-start gap-7">
+                <h6 className="self-stretch justify-start text-white text-2xl font-semibold">
+                  Links
+                </h6>
+                <div className="self-stretch flex flex-col justify-start items-start gap-5">
+                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                    Link Name
+                  </Link>
+                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                    Link Name
+                  </Link>
+                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                    Link Name
+                  </Link>
+                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                    Link Name
+                  </Link>
+                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                    Link Name
+                  </Link>
+                </div>
+              </div>
+              <div className="w-48 inline-flex flex-col justify-start items-start gap-7">
+                <h6 className="self-stretch justify-start text-white text-2xl font-semibold">
+                  Links
+                </h6>
+                <div className="self-stretch flex flex-col justify-start items-start gap-5">
+                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                    Link Name
+                  </Link>
+                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                    Link Name
+                  </Link>
+                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                    Link Name
+                  </Link>
+                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                    Link Name
+                  </Link>
+                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                    Link Name
+                  </Link>
+                </div>
+              </div>
+              <div className="w-48 inline-flex flex-col justify-start items-start gap-7">
+                <h6 className="self-stretch justify-start text-white text-2xl font-semibold">
+                  Links
+                </h6>
+                <div className="self-stretch flex flex-col justify-start items-start gap-5">
+                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                    Link Name
+                  </Link>
+                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                    Link Name
+                  </Link>
+                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                    Link Name
+                  </Link>
+                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                    Link Name
+                  </Link>
+                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                    Link Name
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+      <div className="py-5 w-full bg-white inline-flex flex-col justify-start items-start gap-2.5">
+        <div className="container mx-auto">
+          <div className="w-full inline-flex justify-between items-center">
+            <p className="justify-start text-zinc-400 text-base font-normal">
+              © Copyright {currentYear} MILKE KHEREEDO
+            </p>
+            <div className="size- flex justify-start items-center gap-3.5">
+              <Link href="/terms-and-conditions" className="justify-start text-zinc-400 text-base font-normal">
+                Terms of use
+              </Link>
+              <Link href="/privacy-policy" className="justify-start text-zinc-400 text-base font-normal">
+                Privacy policy
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
-}
+};
+
+export default Footer;

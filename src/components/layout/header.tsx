@@ -16,6 +16,8 @@ const navLinks = [
 
 export default function Header() {
   const pathname = usePathname();
+  const isDashboard = pathname?.startsWith("/dashboard");
+
   const [open, setOpen] = useState(false);
 
   const isActive = (href: string) =>
@@ -29,23 +31,23 @@ export default function Header() {
             <Image src={Logo} alt={"logo"} width={216} height={52} />
           </Link>
 
-          <nav className="hidden items-center gap-10  text-gray-600 lg:flex">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`relative pb-1 transition-colors ${
-                  isActive(link.href) ? "text-black" : "hover:text-black"
-                }`}
-              >
-                {link.label}
-                {isActive(link.href) && (
-                  <span className="absolute inset-x-0 bottom-0.5 h-0.5 bg-[#f15a29]" />
-                )}
-              </Link>
-            ))}
-          </nav>
-
+          {!isDashboard && (
+            <nav className="hidden items-center gap-10  text-gray-600 lg:flex">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`relative pb-1 transition-colors ${isActive(link.href) ? "text-black" : "hover:text-black"
+                    }`}
+                >
+                  {link.label}
+                  {isActive(link.href) && (
+                    <span className="absolute inset-x-0 bottom-0.5 h-0.5 bg-[#f15a29]" />
+                  )}
+                </Link>
+              ))}
+            </nav>
+          )}
           <div className="hidden items-center gap-3 lg:flex">
             <Link
               href="/signin"
@@ -70,7 +72,7 @@ export default function Header() {
           </button>
         </div>
 
-        {open && (
+        {open &&  !isDashboard && (
           <div className="border-t border-gray-100 bg-white pb-3 lg:hidden">
             <nav className="flex flex-col px-4 pt-2  text-gray-700">
               {navLinks.map((link) => (
@@ -78,9 +80,8 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`py-2 ${
-                    isActive(link.href) ? "font-semibold text-black" : ""
-                  }`}
+                  className={`py-2 ${isActive(link.href) ? "font-semibold text-black" : ""
+                    }`}
                 >
                   {link.label}
                 </Link>

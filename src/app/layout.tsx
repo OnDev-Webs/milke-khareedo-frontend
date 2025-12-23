@@ -5,6 +5,7 @@ import Header from "@/components/layout/header";
 import FooterSection from "@/components/layout/footer";
 import CopyRight from "@/components/layout/copyRight";
 import React from "react";
+import FooterWrapper from "@/components/layout/FooterWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,8 +34,7 @@ export default function RootLayout({
       >
         <Header />
         {children}
-        <FooterSection />
-        <CopyRight />
+        <FooterWrapper />
       </body>
     </html>
   );

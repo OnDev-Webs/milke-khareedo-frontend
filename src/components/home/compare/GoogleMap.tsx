@@ -1,10 +1,10 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import { API_CONFIG } from "@/lib/api/config";
 
-// Default center (Mumbai, India)
+// Default center (Mumbai, India) - fallback if geolocation is not available
 const defaultCenter = {
     lat: 19.0760,
     lng: 72.8777,
@@ -18,12 +18,48 @@ interface GoogleMapProps {
 }
 
 export default function GoogleMapComponent({
-    center = defaultCenter,
+    center,
     zoom = 12,
     markers = [],
     className = "",
 }: GoogleMapProps) {
+    const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
     const apiKey = API_CONFIG.GOOGLE_MAPS_API_KEY;
+
+    // Get user's current location
+    useEffect(() => {
+        if (typeof window !== "undefined" && "geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    setUserLocation({
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    });
+                    console.log("User location:", {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    });
+                },
+                (error) => {
+                    console.error("Error getting user location:", error);
+                    // Use default center if geolocation fails
+                    setUserLocation(null);
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0,
+                }
+            );
+        }
+    }, []);
+
+    // Determine the map center: use provided center, or user location, or default
+    const mapCenter = useMemo(() => {
+        if (center) return center;
+        if (userLocation) return userLocation;
+        return defaultCenter;
+    }, [center, userLocation]);
 
     if (!apiKey) {
         return (
@@ -73,7 +109,7 @@ export default function GoogleMapComponent({
     return (
         <GoogleMap
             mapContainerStyle={{ width: "100%", height: "100%" }}
-            center={center}
+            center={mapCenter}
             zoom={zoom}
             options={mapOptions}
         >

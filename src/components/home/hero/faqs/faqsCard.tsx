@@ -9,7 +9,7 @@ type Props = {
 
 export default function FAQSCard({ data }: Props) {
   return (
-    <div className="w-300 max-w-300 rounded-4xl bg-[#FFFFFF]">
+    <div className="w-250 max-w-250 rounded-4xl bg-[#FFFFFF]">
       <div className="flex justify-between items-center py-8.5 px-10">
         <div className="">
           <h2 className="text-[#828282] py-1 font-semibold text-4xl leading-[100%]">

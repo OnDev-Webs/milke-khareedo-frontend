@@ -1,67 +1,132 @@
 "use client";
+import Image from "next/image";
 
 export default function AboutSection() {
+  const points = [
+    {
+      title: "Explore & Shortlist",
+      desc: "Explore and shortlist properties easily using our search, map view, and virtual site visits.",
+    },
+    {
+      title: "Show interest. No commitment yet.",
+      desc: "Once you shortlist a few projects, simply show interest. We add you to a buyer group — nothing is final at this stage.",
+    },
+    {
+      title: "Buyers come together",
+      desc: "You join a private buyer group on our platform to stay informed, share views, and move forward together.",
+    },
+    {
+      title: "Unlock better pricing options",
+      desc: "When buyers come together, better pricing becomes possible — helping you save much more than individual buying.",
+    },
+    {
+      title: "You decide. No pressure.",
+      desc: "Once the group deal is ready, you complete your purchase with confidence — knowing you’re getting the best value available.",
+    },
+  ];
+
   return (
-    <section className="w-full bg-white py-16">
-      <div className="mx-auto w-300">
-        <h2 className="mb-10 text-center text-2xl font-semibold text-[#5b567a]">
-          About
-        </h2>
+    <section className="w-full py-16 px-4 md:px-10"
+      style={{
+        backgroundColor: "#F2F5F9",
+        backgroundImage: "radial-gradient(#d1d5db 1px, transparent 1px)",
+        backgroundSize: "20px 20px",
+      }}>
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch">
 
-        <div className="grid items-center gap-10 grid-cols-1 md:grid-cols-2">
-          <div className="flex justify-center">
-            <div className="relative h-[360px] w-full max-w-[260px] rounded-4xl bg-[#f7f5ff] ">
-              <div className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#e3ddff] shadow">
+          {/* LEFT SIDE */}
+          <div className="ps-0 md:ps-10">
+            <h3 className="text-[24px] md:text-[30px] font-semibold text-[#000] mb-6 md:mb-8 pe-0 md:pe-0">
+              How <span className="text-[#FF765E]"> Milke Khareedo</span> Makes 
+              <span className="relative inline-block pe-2">
+                Buying
                 <svg
-                  viewBox="0 0 24 24"
-                  className="h-4 w-4 text-white"
-                  fill="currentColor"
+                  className="absolute left-0 -bottom-3.5 w-[90px] md:w-[112px] h-[11px]"
+                  viewBox="0 0 228 11"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path d="M21 19l-5.5-7-3.5 4.5-2.5-3L3 19z" />
-                  <circle cx="9" cy="8" r="2" />
+                  <path
+                    d="M2 6 C40 10, 80 2, 120 5 C160 8, 190 3, 226 6"
+                    stroke="#FF765E"
+                    strokeWidth="6"
+                    strokeLinecap="round"
+                  />
                 </svg>
-              </div>
+              </span>
+              Easier
+            </h3>
 
-              <div className="flex h-full flex-col items-center justify-center gap-4">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#ebe7ff]">
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-8 w-8 text-[#c6bdf5]"
-                    fill="currentColor"
-                  >
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
+            <div className="space-y-3 md:space-y-2">
+              {points.map((item, i) => (
+                <div key={i} className="flex items-start gap-3 md:gap-4">
+
+                  {/* Icon */}
+                  <div className="flex h-10 md:h-12 w-10 md:w-12 items-center justify-center rounded-xl bg-[#FFF1EE]">
+                    <svg
+                      className="h-5 md:h-6 w-5 md:w-6 text-[#FF765E]"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path d="M4 12h16M12 4v16" />
+                    </svg>
+                  </div>
+
+                  {/* Text */}
+                  <div>
+                    <h5 className="text-[14px] md:text-[18px] font-semibold text-black">
+                      {item.title}
+                    </h5>
+                    <p className="text-[11px] md:text-[12.5px] text-[#373737] mt-1 md:mt-1">
+                      {item.desc}
+                    </p>
+                  </div>
+
                 </div>
-                <p className="text-base font-semibold text-[#6b6491]">
-                  Intro Video
-                </p>
-              </div>
-
-              <div className="absolute bottom-4 left-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#e3ddff] shadow">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-4 w-4 text-white"
-                  fill="currentColor"
-                >
-                  <path d="M21 19l-5.5-7-3.5 4.5-2.5-3L3 19z" />
-                  <circle cx="9" cy="8" r="2" />
-                </svg>
-              </div>
+              ))}
             </div>
           </div>
 
-          <div className="text-center md:text-left">
-            <h3 className="text-2xl font-semibold text-[#5b567a]">
-              Your Home Buying Journey
-            </h3>
-            <p className="mt-3 max-w-md text-sm text-gray-500 md:mt-4">
-              description description description description description
-              description description description
-            </p>
+          {/* RIGHT SIDE */}
+          <div className="flex justify-center h-[350px] md:h-[500px]">
+            <div className="relative w-full max-w-[220px] md:max-w-[300px] h-full rounded-3xl overflow-hidden shadow-lg">
 
-            <button className="mt-6 rounded-full border border-gray-400 px-10 py-3 text-sm font-semibold text-gray-600">
-              Button
-            </button>
+              {/* Image */}
+              <Image
+                src="/images/about.jpg"
+                alt="About"
+                fill
+                priority
+                className="object-cover scale-[1.25] md:scale-[1.25] translate-x-[20px] md:translate-x-[38px]"
+              />
+
+              {/* Top Left */}
+              <div className="absolute top-2 md:top-4 left-2 md:left-4 flex items-center gap-2 bg-white/90 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-semibold">
+                <svg className="h-3 md:h-4 w-3 md:w-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3 6h18M3 12h18M3 18h18" />
+                </svg>
+                Milke Khareedo
+              </div>
+
+              {/* Top Right */}
+              <div className="absolute top-2 md:top-4 right-2 md:right-4 flex gap-2">
+                <div className="h-7 md:h-9 w-7 md:w-9 bg-white rounded-full flex items-center justify-center shadow">
+                  <svg className="h-3 md:h-4 w-3 md:w-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M11 5L6 9H2v6h4l5 4z" />
+                  </svg>
+                </div>
+
+                <div className="h-7 md:h-9 w-7 md:w-9 bg-white rounded-full flex items-center justify-center shadow">
+                  <svg className="h-3 md:h-4 w-3 md:w-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zm6 10v6h-6v-2h4v-4zM4 14h2v4h4v2H4z" />
+                  </svg>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>

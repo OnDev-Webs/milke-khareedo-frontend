@@ -13,11 +13,11 @@ export default function Hero() {
     <section className="relative w-full py-10">
 
       {/* HERO CONTAINER */}
-      <div className="relative mx-auto w-[1100px] h-[500px]  overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-10 shadow-md">
+      <div className="relative mx-auto w-[1200px] h-[500px]  overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-10 shadow-md">
 
         {/* CONTENT */}
         <div className="relative z-10 w-[60%] pt-16 ps-6">
-          <h1 className="text-4xl font-bold text-gray-700 pe-60">
+          <h1 className="text-4xl font-bold text-gray-700 pe-68">
             Lorem Ipsum is <span style={{ 'color': '#FF765E' }}>Simply Dummy</span>
           </h1>
 
@@ -60,7 +60,7 @@ export default function Hero() {
         </div>
 
         {/* IMAGE (OVERLAPPED & BLENDED) */}
-        <div className="absolute top-[30px] left-[445px]">
+        <div className="absolute top-[30px] left-[500px]">
           <div className="relative w-[635px] h-[434px] overflow-hidden">
             <Image
               src="/images/banner.jpg"
@@ -76,7 +76,7 @@ export default function Hero() {
       </div>
 
       {/* SEARCH BAR (OVERLAP FULL WIDTH) */}
-      <div className="absolute bottom-[-20px] left-1/2 w-[1050px] max-w-6xl -translate-x-1/2 px-6 z-20">
+      <div className="absolute bottom-[-14px] left-1/2 w-[1150px] max-w-6xl -translate-x-1/2 px-6 z-20">
         <div className="flex items-center gap-4 rounded-2xl bg-white/80 backdrop-blur-md p-4 shadow-lg">
 
           {/* CITY DROPDOWN */}

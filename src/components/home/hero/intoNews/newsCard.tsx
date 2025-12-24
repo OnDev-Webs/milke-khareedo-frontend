@@ -3,11 +3,11 @@ export default function NewsCard() {
     <div
       className="shadow-[0_0_10px_rgba(0,0,0,0.08)] 
     p-7.5
-     rounded-4xl w-148 max-w-148 
+     rounded-4xl w-100 max-w-100 
     "
     >
       <div className=" rounded-4xl bg-[#FFFFFF] flex flex-col items-center justify-center gap-5 ">
-        <div className="w-132.5 h-87.5 bg-[#F9F9FF] flex items-center justify-center rounded-4xl ">
+        <div className="w-100 h-87.5 bg-[#F9F9FF] flex items-center justify-center rounded-4xl ">
           <svg
             viewBox="0 0 24 24"
             fill="currentColor"

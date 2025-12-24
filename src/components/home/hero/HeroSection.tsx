@@ -17,22 +17,21 @@ export default function Hero() {
 
         {/* CONTENT */}
         <div className="relative z-10 w-[60%] pt-16 ps-6">
-          <h1 className="text-4xl font-bold text-gray-700 pe-68">
-            Lorem Ipsum is <span style={{ 'color': '#FF765E' }}>Simply Dummy</span>
+          <p className="font-medium text-[#585981] mb-2">
+            Buying a home is a big decision.
+          </p>
+          <h1 className="text-4xl font-bold text-[#151516] pe-68">
+           <span className="text-[#FF765E]"> Milke Khereedo </span>Makes it easier.
           </h1>
 
-          <p className="mt-3 text-gray-600 pe-70">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry
+          <p className="mt-3 text-[#585981] font-medium">
+            Buy together. Save more than buying alone.
           </p>
 
           {/* Buttons */}
           <div className="mt-6 flex gap-4">
             <button className="rounded-full bg-[#FF765E] px-8 py-3 text-sm font-medium text-white shadow">
-              Button
-            </button>
-
-            <button className="rounded-full border border-white bg-white px-8 py-3 text-sm font-medium text-gray-700">
-              Button
+              Want to see how it works?
             </button>
           </div>
 

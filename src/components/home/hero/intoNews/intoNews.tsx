@@ -38,8 +38,7 @@ export default function IntoNews() {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6 lg:gap-8">
-          <NewsCard />
+        <div className="gap-5 md:gap-6 ">
           <NewsCard />
         </div>
       </div>

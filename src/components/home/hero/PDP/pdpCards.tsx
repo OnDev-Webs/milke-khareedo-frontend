@@ -5,17 +5,16 @@ import { FaPhoneAlt } from "react-icons/fa";
 
 const tabs = [
   "All Properties",
-  "Localities",
-  "Luxury Homes",
-  "Apartments",
-  "Villas",
-  "Plots",
-  "Off Plan",
-  "Ready to Move",
-  "Commercial",
-  "Affordable",
-  "Top Rated",
-  "Premium",
+  "Gachibowli",
+  "Kondapur",
+  "Manikonda",
+  "Nallagandla",
+  "Tellapur",
+  "Bachupally",
+  "Sangareddy",
+  "Yadagirigutta",
+  "Medchal",
+  "Nanakramguda",
 ];
 
 const properties = [
@@ -179,7 +178,7 @@ export default function TopProperties() {
               onClick={() => setActiveTab(tab)}
               className={`relative pb-2 text-sm font-medium transition-colors ${activeTab === tab
                 ? "text-[#f15a29]"
-                : "text-gray-600 hover:text-black"
+                : "text-[#818181] hover:text-black"
                 }`}>
               {tab}
               {activeTab === tab && (

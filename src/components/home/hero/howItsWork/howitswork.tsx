@@ -61,7 +61,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="w-full bg-[#F2F5F9] py-14 px-4 md:px-16">
+    <section className="w-full bg-white py-14 px-4 md:px-16">
       <div className="mx-auto max-w-7xl">
         {/* Heading */}
         <h2 className="text-[24px] md:text-[30px] font-semibold text-[#000000] mb-2">

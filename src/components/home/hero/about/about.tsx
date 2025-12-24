@@ -38,7 +38,7 @@ export default function AboutSection() {
           {/* LEFT SIDE */}
           <div className="ps-0 md:ps-10">
             <h3 className="text-[24px] md:text-[30px] font-semibold text-[#000] mb-6 md:mb-8 pe-0 md:pe-0">
-              How <span className="text-[#FF765E]"> Milke Khareedo</span> Makes 
+              How <span className="text-[#FF765E]"> Milke Khareedo</span> Makes
               <span className="relative inline-block pe-2">
                 Buying
                 <svg
@@ -60,19 +60,11 @@ export default function AboutSection() {
 
             <div className="space-y-3 md:space-y-2">
               {points.map((item, i) => (
-                <div key={i} className="flex items-start gap-3 md:gap-4">
+                <div key={i} className="flex items-center gap-3 md:gap-4">
 
-                  {/* Icon */}
-                  <div className="flex h-10 md:h-12 w-10 md:w-12 items-center justify-center rounded-xl bg-[#FFF1EE]">
-                    <svg
-                      className="h-5 md:h-6 w-5 md:w-6 text-[#FF765E]"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M4 12h16M12 4v16" />
-                    </svg>
+                  {/* Number */}
+                  <div className="flex h-8 w-8 md:h-8 md:w-8 shrink-0 items-center justify-center rounded-full bg-[#FF765E] text-black font-bold text-sm md:text-base leading-none">
+                    {i + 1}
                   </div>
 
                   {/* Text */}
@@ -80,7 +72,7 @@ export default function AboutSection() {
                     <h5 className="text-[14px] md:text-[18px] font-semibold text-black">
                       {item.title}
                     </h5>
-                    <p className="text-[11px] md:text-[12.5px] text-[#373737] mt-1 md:mt-1">
+                    <p className="text-[11px] md:text-[12.5px] text-[#373737] mt-1">
                       {item.desc}
                     </p>
                   </div>
@@ -104,8 +96,8 @@ export default function AboutSection() {
               />
 
               {/* Top Left */}
-              <div className="absolute top-2 md:top-4 left-2 md:left-4 flex items-center gap-2 bg-white/90 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-semibold">
-                <svg className="h-3 md:h-4 w-3 md:w-4" viewBox="0 0 24 24" fill="currentColor">
+              <div className="absolute top-2 md:top-4 left-2 md:left-4 flex text-white items-center gap-2  px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-semibold">
+                <svg className="h-3 md:h-4 w-3 md:w-4 bg-white/90 text-black" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M3 6h18M3 12h18M3 18h18" />
                 </svg>
                 Milke Khareedo

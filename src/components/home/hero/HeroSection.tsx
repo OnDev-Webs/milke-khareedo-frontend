@@ -62,7 +62,7 @@ export default function Hero() {
         <div className="absolute top-[30px] left-[500px]">
           <div className="relative w-[635px] h-[434px] overflow-hidden">
             <Image
-              src="/images/banner.jpg"
+              src="/images/banner1.png"
               alt="Hero Image"
               fill
               priority

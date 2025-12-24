@@ -25,7 +25,7 @@ export default function FooterSection() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#2b2b2b] transition-colors hover:bg-gray-200"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#FF765E] transition-colors hover:bg-gray-200"
                 aria-label="Twitter"
               >
                 <FaTwitter className="h-5 w-5" />
@@ -34,7 +34,7 @@ export default function FooterSection() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#2b2b2b] transition-colors hover:bg-gray-200"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#FF765E] transition-colors hover:bg-gray-200"
                 aria-label="Facebook"
               >
                 <FaFacebookF className="h-5 w-5" />
@@ -43,7 +43,7 @@ export default function FooterSection() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#2b2b2b] transition-colors hover:bg-gray-200"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#FF765E] transition-colors hover:bg-gray-200"
                 aria-label="LinkedIn"
               >
                 <FaLinkedinIn className="h-5 w-5" />
@@ -52,7 +52,7 @@ export default function FooterSection() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#2b2b2b] transition-colors hover:bg-gray-200"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#FF765E] transition-colors hover:bg-gray-200"
                 aria-label="Instagram"
               >
                 <FaInstagram className="h-5 w-5" />

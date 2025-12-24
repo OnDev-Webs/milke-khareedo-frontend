@@ -5,17 +5,16 @@ import { FaPhoneAlt } from "react-icons/fa";
 
 const tabs = [
   "All Properties",
-  "Localities",
-  "Luxury Homes",
-  "Apartments",
-  "Villas",
-  "Plots",
-  "Off Plan",
-  "Ready to Move",
-  "Commercial",
-  "Affordable",
-  "Top Rated",
-  "Premium",
+  "Gachibowli",
+  "Kondapur",
+  "Manikonda",
+  "Nallagandla",
+  "Tellapur",
+  "Bachupally",
+  "Sangareddy",
+  "Yadagirigutta",
+  "Medchal",
+  "Nanakramguda",
 ];
 
 const properties = [
@@ -27,6 +26,7 @@ const properties = [
     groupSize: "8 Members",
     opening: "01 Left",
     targetPrice: "$200,000",
+    targetOffer: "Save $20,000",
     developerPrice: "$250,000",
     offer: "10% Off",
   },
@@ -38,6 +38,7 @@ const properties = [
     groupSize: "12 Members",
     opening: "03 Left",
     targetPrice: "$150,000",
+    targetOffer: "Save $20,000",
     developerPrice: "$180,000",
     offer: "15% Off",
   },
@@ -49,6 +50,7 @@ const properties = [
     groupSize: "10 Members",
     opening: "02 Left",
     targetPrice: "$180,000",
+    targetOffer: "Save $20,000",
     developerPrice: "$210,000",
     offer: "12% Off",
   },
@@ -60,6 +62,7 @@ const properties = [
     groupSize: "10 Members",
     opening: "02 Left",
     targetPrice: "$180,000",
+    targetOffer: "Save $20,000",
     developerPrice: "$210,000",
     offer: "12% Off",
   },
@@ -71,6 +74,7 @@ const properties = [
     groupSize: "10 Members",
     opening: "02 Left",
     targetPrice: "$180,000",
+    targetOffer: "Save $20,000",
     developerPrice: "$210,000",
     offer: "12% Off",
   },
@@ -82,6 +86,55 @@ const properties = [
     groupSize: "10 Members",
     opening: "02 Left",
     targetPrice: "$180,000",
+    targetOffer: "Save $20,000",
+    developerPrice: "$210,000",
+    offer: "12% Off",
+  },
+  {
+    id: 7,
+    title: "Modern House",
+    subtitle: "Suburban Area",
+    image: "/images/tp6.jpg",
+    groupSize: "10 Members",
+    opening: "02 Left",
+    targetPrice: "$180,000",
+    targetOffer: "Save $20,000",
+    developerPrice: "$210,000",
+    offer: "12% Off",
+  },
+  {
+    id: 8,
+    title: "Modern House",
+    subtitle: "Suburban Area",
+    image: "/images/tp6.jpg",
+    groupSize: "10 Members",
+    opening: "02 Left",
+    targetPrice: "$180,000",
+    targetOffer: "Save $20,000",
+    developerPrice: "$210,000",
+    offer: "12% Off",
+  },
+  {
+    id: 9,
+    title: "Modern House",
+    subtitle: "Suburban Area",
+    image: "/images/tp6.jpg",
+    groupSize: "10 Members",
+    opening: "02 Left",
+    targetPrice: "$180,000",
+    targetOffer: "Save $20,000",
+    developerPrice: "$210,000",
+    offer: "12% Off",
+  },
+  {
+    id: 10,
+    title: "Modern House",
+    subtitle: "Suburban Area",
+    image: "/images/tp6.jpg",
+    groupSize: "10 Members",
+    opening: "02 Left",
+    targetPrice: "$180,000",
+    targetOffer: "Save $20,000",
     developerPrice: "$210,000",
     offer: "12% Off",
   },
@@ -89,27 +142,50 @@ const properties = [
 
 export default function TopProperties() {
   const [activeTab, setActiveTab] = useState(tabs[0]);
+  const [visibleCount, setVisibleCount] = useState(6);
 
   return (
-    <section className="w-full py-16 bg-gray-50">
+    <section className="w-full py-16 bg-gray-50 px-6">
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Heading */}
-        <h2 className="text-3xl font-bold text-gray-700 mb-6">Top Properties</h2>
+        <h2 className="text-3xl font-bold text-black mb-6">
+          Top{" "}
+          <span className="relative inline-block text-[#FF765E] font-bold">
+            Properties
+            <svg
+              className="absolute left-0 -bottom-2"
+              width="155"
+              height="6"
+              viewBox="0 0 155 6"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1 3.5 C25 5, 50 2, 75 3.5 C95 4.5, 115 2.5, 135 3.5 C145 4, 150 3, 154 3.5"
+                stroke="#FF765E"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                fill="none"
+              />
+            </svg>
+          </span>
+        </h2>
 
         {/* Tabs */}
-        <div className="flex flex-wrap gap-6 mb-8 border-b border-gray-200 py-2">
+        <div className="flex flex-wrap gap-6 mb-8 py-2">
           {tabs.map((tab, idx) => (
             <button
               key={idx}
               onClick={() => setActiveTab(tab)}
               className={`relative pb-2 text-sm font-medium transition-colors ${activeTab === tab
-                ? "text-[#f15a29]"
-                : "text-gray-600 hover:text-black"
-                }`}>
+                ? "text-[#FF765E]"
+                : "text-[#818181]"
+                }`}
+            >
               {tab}
               {activeTab === tab && (
-                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#f15a29] rounded-full" />
+                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#FF765E]" />
               )}
             </button>
           ))}
@@ -117,7 +193,7 @@ export default function TopProperties() {
 
         {/* Cards Grid */}
         <div className="grid gap-6 md:grid-cols-3">
-          {properties.map((prop) => (
+          {properties.slice(0, visibleCount).map((prop) => (
             <div key={prop.id} className="flex flex-col rounded-3xl bg-white shadow-lg p-4" >
               {/* Image */}
               <div className="relative h-52 w-full mb-4 rounded-xl bg-gray-100 flex items-center justify-center overflow-hidden">
@@ -147,7 +223,6 @@ export default function TopProperties() {
                   <span className="text-[14px] text-black font-semibold">Group Size</span>
                   <span className="text-xs font-semibold text-[#525252]">{prop.groupSize}</span>
                 </button>
-
                 <button className="flex flex-col items-center bg-[#F2F6FF] px-4 py-2 rounded-lg text-center">
                   <span className="text-[14px] text-black font-semibold">Opening</span>
                   <span className="text-xs font-semibold text-[#525252]">{prop.opening}</span>
@@ -155,21 +230,32 @@ export default function TopProperties() {
               </div>
 
               {/* Target Price + Developer Price */}
-              <div className="flex justify-between mt-2 mb-2 gap-2">
-                <div className="flex flex-col items-start">
-                  <span className="text-[14px] text-black font-[400]">Target Price</span>
-                  <span className="text-[20px] font-bold text-black">{prop.targetPrice}</span>
+              <div className="flex justify-between items-start mt-3">
+
+                {/* Target Price */}
+                <div>
+                  <span className="text-xs text-gray-500">Target Price</span>
+                  <div className="text-base font-bold text-gray-800">
+                    {prop.targetPrice}
+                  </div>
+                  <span className="mt-1 inline-block bg-[#FFFFFF] border border-[#F6F6F6] rounded-xl pe-10 ps-1 py-0.5 text-xs font-semibold text-[#66AE39]">
+                    {prop.targetOffer}
+                  </span>
                 </div>
 
-                <div className="flex flex-col items-end">
-                  <span className="text-[14px] text-black font-[400]">Developer Price</span>
-                  <span className="text-[16px] font-SemiBold text-[#4B4B4B] line-through">{prop.developerPrice}</span>
+                {/* Developer Price */}
+                <div className="text-right">
+                  <span className="text-xs text-gray-500">Developer Price</span>
+                  <div className="text-sm font-semibold text-gray-400 line-through">
+                    {prop.developerPrice}
+                  </div>
+                  <span className="mt-1 inline-block rounded-full bg-white border border-[#F6F6F6] px-2 py-0.5 text-xs font-semibold text-[#FF3232]">
+                    {prop.offer}
+                  </span>
                 </div>
+
               </div>
 
-
-              {/* Offer */}
-              <div className="mt-1 text-sm font-semibold text-red-500">{prop.offer}</div>
 
               {/* Join Group Button */}
               <button className="mt-4 w-full bg-[#FF765E] text-white py-3 rounded-3xl font-semibold hover:bg-[#e86b50]">
@@ -177,6 +263,18 @@ export default function TopProperties() {
               </button>
             </div>
           ))}
+          {/* Load More Button */}
+          {visibleCount < properties.length && (
+            <div className="md:col-span-3 col-span-1 flex justify-center mt-8">
+              <button
+                onClick={() => setVisibleCount(properties.length)}
+                className="px-8 py-3 rounded-full border border-[#F5F5F5] text-[#2D2D2D] bg-white font-semibold"
+              >
+                Load More
+              </button>
+            </div>
+          )}
+
         </div>
       </div>
     </section>

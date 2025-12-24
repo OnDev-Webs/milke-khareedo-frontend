@@ -13,26 +13,25 @@ export default function Hero() {
     <section className="relative w-full py-10">
 
       {/* HERO CONTAINER */}
-      <div className="relative mx-auto w-[1100px] h-[500px]  overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-10 shadow-md">
+      <div className="relative mx-auto w-[1200px] h-[500px]  overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-10 shadow-md">
 
         {/* CONTENT */}
         <div className="relative z-10 w-[60%] pt-16 ps-6">
-          <h1 className="text-4xl font-bold text-gray-700 pe-60">
-            Lorem Ipsum is <span style={{ 'color': '#FF765E' }}>Simply Dummy</span>
+          <p className="font-medium text-[#585981] mb-2">
+            Buying a home is a big decision.
+          </p>
+          <h1 className="text-4xl font-bold text-[#151516] pe-68">
+           <span className="text-[#FF765E]"> Milke Khereedo </span>Makes it easier.
           </h1>
 
-          <p className="mt-3 text-gray-600 pe-70">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry
+          <p className="mt-3 text-[#585981] font-medium">
+            Buy together. Save more than buying alone.
           </p>
 
           {/* Buttons */}
           <div className="mt-6 flex gap-4">
             <button className="rounded-full bg-[#FF765E] px-8 py-3 text-sm font-medium text-white shadow">
-              Button
-            </button>
-
-            <button className="rounded-full border border-white bg-white px-8 py-3 text-sm font-medium text-gray-700">
-              Button
+              Want to see how it works?
             </button>
           </div>
 
@@ -60,7 +59,7 @@ export default function Hero() {
         </div>
 
         {/* IMAGE (OVERLAPPED & BLENDED) */}
-        <div className="absolute top-[30px] left-[445px]">
+        <div className="absolute top-[30px] left-[500px]">
           <div className="relative w-[635px] h-[434px] overflow-hidden">
             <Image
               src="/images/banner.jpg"
@@ -76,7 +75,7 @@ export default function Hero() {
       </div>
 
       {/* SEARCH BAR (OVERLAP FULL WIDTH) */}
-      <div className="absolute bottom-[-20px] left-1/2 w-[1050px] max-w-6xl -translate-x-1/2 px-6 z-20">
+      <div className="absolute bottom-[-14px] left-1/2 w-[1150px] max-w-6xl -translate-x-1/2 px-6 z-20">
         <div className="flex items-center gap-4 rounded-2xl bg-white/80 backdrop-blur-md p-4 shadow-lg">
 
           {/* CITY DROPDOWN */}

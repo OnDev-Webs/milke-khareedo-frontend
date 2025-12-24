@@ -15,7 +15,7 @@ export default function CompareIcon() {
                 href="/compare"
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
-                className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+                className="relative flex h-10 w-10 items-center justify-center rounded-full bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors"
                 aria-label="Compare properties"
             >
                 <MdCompareArrows className="h-5 w-5" />

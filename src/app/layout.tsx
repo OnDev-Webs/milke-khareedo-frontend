@@ -6,6 +6,7 @@ import FooterSection from "@/components/layout/footer";
 import CopyRight from "@/components/layout/copyRight";
 import React from "react";
 import FooterWrapper from "@/components/layout/FooterWrapper";
+import { CompareProvider } from "@/contexts/CompareContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,9 +33,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
-        {children}
-        <FooterWrapper />
+        <CompareProvider>
+          <Header />
+          {children}
+          <FooterWrapper />
+        </CompareProvider>
       </body>
     </html>
   );

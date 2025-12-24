@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Logo from "@/assets/logo.svg";
 import Image from "next/image";
+import CompareIcon from "./CompareIcon";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -49,6 +50,7 @@ export default function Header() {
             </nav>
           )}
           <div className="hidden items-center gap-3 lg:flex">
+            {!isDashboard && <CompareIcon />}
             <Link
               href="/signin"
               className="rounded-full bg-[#f15a29] px-7.5 py-2.5  font-semibold text-white shadow-sm hover:bg-[#e14f20] text-xl"

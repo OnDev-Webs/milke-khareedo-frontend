@@ -15,6 +15,9 @@ export const API_CONFIG = {
     "Content-Type": "application/json",
     Accept: "application/json",
   },
+  
+  // Google Maps API Key
+  GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
 } as const;
 
 /**

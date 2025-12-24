@@ -149,40 +149,43 @@ export default function TopProperties() {
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Heading */}
-        <h2 className="text-3xl font-bold text-gray-700 mb-6">Top
-          <span className="relative inline-block text-[#FF765E] font-bold px-4">
+        <h2 className="text-3xl font-bold text-black mb-6">
+          Top{" "}
+          <span className="relative inline-block text-[#FF765E] font-bold">
             Properties
             <svg
-              className="absolute left-4 -bottom-3.5"
-              width="160"
-              height="11"
-              viewBox="0 0 228 11"
+              className="absolute left-0 -bottom-2"
+              width="155"
+              height="6"
+              viewBox="0 0 155 6"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M2 6 C40 10, 80 2, 120 5 C160 8, 190 3, 226 6"
+                d="M1 3.5 C25 5, 50 2, 75 3.5 C95 4.5, 115 2.5, 135 3.5 C145 4, 150 3, 154 3.5"
                 stroke="#FF765E"
-                strokeWidth="3"
+                strokeWidth="2.5"
                 strokeLinecap="round"
+                fill="none"
               />
             </svg>
           </span>
         </h2>
 
         {/* Tabs */}
-        <div className="flex flex-wrap gap-6 mb-8 border-b border-gray-200 py-2">
+        <div className="flex flex-wrap gap-6 mb-8 py-2">
           {tabs.map((tab, idx) => (
             <button
               key={idx}
               onClick={() => setActiveTab(tab)}
               className={`relative pb-2 text-sm font-medium transition-colors ${activeTab === tab
-                ? "text-[#f15a29]"
-                : "text-[#818181] hover:text-black"
-                }`}>
+                ? "text-[#FF765E]"
+                : "text-[#818181]"
+                }`}
+            >
               {tab}
               {activeTab === tab && (
-                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#f15a29] rounded-full" />
+                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#FF765E]" />
               )}
             </button>
           ))}

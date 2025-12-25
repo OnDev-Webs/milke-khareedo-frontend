@@ -36,7 +36,7 @@ export interface Property {
   targetPrice: PropertyPrice;
   developerPrice: PropertyPrice;
   discount: PropertyDiscount | null;
-  offerPrice: string | number | null;
+  offerPrice: PropertyPrice | null;
   discountPercentage: string;
   configurations: string[];
   configurationsFormatted: string;
@@ -125,6 +125,67 @@ export interface EMICalculatorRequest {
 }
 
 /**
+ * Compare API types
+ */
+export interface CompareRequest {
+  propertyIds: string[];
+}
+
+export interface BudgetRange {
+  min: number;
+  max: number;
+  formatted: string;
+}
+
+export interface AreaRange {
+  min: number;
+  max: number;
+  formatted: string;
+}
+
+export interface CompareProperty {
+  id: string;
+  projectId: string;
+  projectName: string;
+  location: string;
+  latitude: number | null;
+  longitude: number | null;
+  mainImage: string | null;
+  developer: string;
+  developerId?: string;
+  developerPrice: string | number;
+  offerPrice: number | null;
+  discountPercentage: string;
+  budget: BudgetRange;
+  area: AreaRange;
+  configurations: string[];
+  configurationsFormatted: string;
+  propertyType: string;
+  possessionStatus: string;
+  possessionDate?: string;
+  possessionDateFormatted?: string;
+  floorPlans?: Array<{
+    image: string;
+    unitType: string;
+    carpetArea: string;
+    price: number;
+    availabilityStatus: string;
+  }>;
+  relationshipManager?: {
+    id: string;
+    name: string;
+    email: string;
+    phone?: string;
+  } | null;
+  [key: string]: unknown; // For additional comparison fields
+}
+
+export interface CompareResponse {
+  properties: CompareProperty[];
+  comparison: Record<string, unknown>; // Comparison data structure
+}
+
+/**
  * Home API Service
  * All home-related API calls
  */
@@ -178,8 +239,52 @@ export const homeService = {
     );
   },
 
-  // Add more home-related API methods here
-  // getFeaturedProperties: async (): Promise<ApiResponse<Property[]>> => {
-  //   return apiClient.get<Property[]>(API_ENDPOINTS.HOME.GET_FEATURED_PROPERTIES);
-  // },
+  /**
+   * Get properties for comparison
+   * Example: GET /api/home/properties?latitude=28.4089&longitude=77.0418&page=1&limit=3&search=property_name
+   */
+  getProperties: async (params?: {
+    latitude?: number;
+    longitude?: number;
+    page?: number;
+    limit?: number;
+    search?: string;
+  }): Promise<ApiResponse<TopPropertiesResponse>> => {
+    const queryParams = new URLSearchParams();
+
+    if (params?.latitude !== undefined) {
+      queryParams.append("latitude", params.latitude.toString());
+    }
+    if (params?.longitude !== undefined) {
+      queryParams.append("longitude", params.longitude.toString());
+    }
+    if (params?.page) {
+      queryParams.append("page", params.page.toString());
+    }
+    if (params?.limit) {
+      queryParams.append("limit", params.limit.toString());
+    }
+    if (params?.search) {
+      queryParams.append("search", params.search);
+    }
+
+    const endpoint = queryParams.toString()
+      ? `${API_ENDPOINTS.HOME.GET_PROPERTIES}?${queryParams.toString()}`
+      : API_ENDPOINTS.HOME.GET_PROPERTIES;
+
+    return apiClient.get<TopPropertiesResponse>(endpoint);
+  },
+
+  /**
+   * Compare properties
+   * Example: POST /api/home/compare
+   */
+  compareProperties: async (
+    data: CompareRequest
+  ): Promise<ApiResponse<CompareResponse>> => {
+    return apiClient.post<CompareResponse>(
+      API_ENDPOINTS.HOME.POST_COMPARE,
+      data
+    );
+  },
 };

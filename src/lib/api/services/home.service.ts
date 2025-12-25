@@ -85,6 +85,46 @@ export interface LocationsResponse {
 }
 
 /**
+ * EMI Calculator API types
+ */
+export interface EMIAmount {
+  value: number;
+  formatted: string;
+  display?: string;
+}
+
+export interface EMIBreakdown {
+  principal: number;
+  interest: number;
+  principalPercentage: number;
+  interestPercentage: number;
+}
+
+export interface EMIInput {
+  loanAmount: number;
+  rateOfInterest: number;
+  loanTenure: number;
+  currency: string;
+}
+
+export interface EMICalculatorResponse {
+  monthlyEMI: EMIAmount;
+  principalAmount: EMIAmount;
+  totalInterest: EMIAmount;
+  totalAmountPayable: EMIAmount;
+  emiBreakdown: EMIBreakdown;
+  input: EMIInput;
+  totalPrincipalPaid: EMIAmount;
+  disclaimer: string;
+}
+
+export interface EMICalculatorRequest {
+  loanAmount: string;
+  rateOfInterest: number;
+  loanTenure: number;
+}
+
+/**
  * Home API Service
  * All home-related API calls
  */
@@ -123,6 +163,19 @@ export const homeService = {
    */
   getLocations: async (): Promise<ApiResponse<LocationsResponse>> => {
     return apiClient.get<LocationsResponse>(API_ENDPOINTS.HOME.GET_LOCATIONS);
+  },
+
+  /**
+   * Calculate EMI
+   * Example: POST /api/home/emi-calculator
+   */
+  calculateEMI: async (
+    data: EMICalculatorRequest
+  ): Promise<ApiResponse<EMICalculatorResponse>> => {
+    return apiClient.post<EMICalculatorResponse>(
+      API_ENDPOINTS.HOME.POST_EMI_CALCULATOR,
+      data
+    );
   },
 
   // Add more home-related API methods here

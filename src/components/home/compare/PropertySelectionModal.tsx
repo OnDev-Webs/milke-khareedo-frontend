@@ -18,7 +18,7 @@ export default function PropertySelectionModal({
     onClose,
     onSelect,
 }: PropertySelectionModalProps) {
-    const { isInCompare } = useCompare();
+    const { isInCompare, compareItems } = useCompare();
     const [searchQuery, setSearchQuery] = useState("");
     const [properties, setProperties] = useState<Property[]>([]);
     const [loading, setLoading] = useState(false);
@@ -129,6 +129,22 @@ export default function PropertySelectionModal({
         return () => clearTimeout(timer);
     }, [searchQuery, isOpen, userLocation, fetchProperties]);
 
+    // Sync selected properties with already compared items when properties are loaded
+    useEffect(() => {
+        if (isOpen && properties.length > 0) {
+            setSelectedProperties((prev) => {
+                const merged = new Map(prev);
+                // Add properties that are already in compare to selectedProperties
+                properties.forEach((property) => {
+                    if (isInCompare(property.id)) {
+                        merged.set(String(property.id), property);
+                    }
+                });
+                return merged;
+            });
+        }
+    }, [isOpen, properties, compareItems, isInCompare]);
+
     // Reset state when modal closes (but preserve selections until modal closes)
     useEffect(() => {
         if (!isOpen) {
@@ -140,12 +156,20 @@ export default function PropertySelectionModal({
     }, [isOpen]);
 
     const handlePropertyToggle = (property: Property) => {
+        const alreadyInCompare = isInCompare(property.id);
+        
+        // If already in compare, don't allow toggling (it's permanently selected)
+        if (alreadyInCompare) {
+            return;
+        }
+
         setSelectedProperties((prev) => {
             const newMap = new Map(prev);
-            if (newMap.has(property.id)) {
-                newMap.delete(property.id);
+            const propertyId = String(property.id);
+            if (newMap.has(propertyId)) {
+                newMap.delete(propertyId);
             } else {
-                newMap.set(property.id, property);
+                newMap.set(propertyId, property);
             }
             return newMap;
         });
@@ -196,11 +220,18 @@ export default function PropertySelectionModal({
                         <h2 className="text-lg font-bold text-gray-800 sm:text-xl md:text-2xl">
                             Select Properties to Compare
                         </h2>
-                        {selectedProperties.size > 0 && (
-                            <span className="rounded-full bg-[#f15a29] px-3 py-1 text-xs font-semibold text-white">
-                                {selectedProperties.size} selected
-                            </span>
-                        )}
+                        {(() => {
+                            // Count unique selected properties (newly selected + already in compare)
+                            const totalSelected = new Set([
+                                ...compareItems.map(item => String(item.id)),
+                                ...Array.from(selectedProperties.keys())
+                            ]).size;
+                            return totalSelected > 0 ? (
+                                <span className="rounded-full bg-[#f15a29] px-3 py-1 text-xs font-semibold text-white">
+                                    {totalSelected} selected
+                                </span>
+                            ) : null;
+                        })()}
                     </div>
                     <button
                         onClick={onClose}
@@ -256,51 +287,47 @@ export default function PropertySelectionModal({
                             {/* Properties Grid */}
                             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
                                 {properties.map((property) => {
-                                    const isSelected = selectedProperties.has(property.id);
                                     const alreadyInCompare = isInCompare(property.id);
+                                    // Property is selected if it's in selectedProperties OR already in compare
+                                    const isSelected = selectedProperties.has(String(property.id)) || alreadyInCompare;
 
                                     return (
                                         <div
                                             key={property.id}
-                                            className={`group relative cursor-pointer rounded-lg border-2 bg-white p-3 transition-all sm:rounded-xl sm:p-4 ${isSelected
-                                                ? "border-[#f15a29] shadow-lg"
-                                                : "border-gray-200 hover:border-[#f15a29] hover:shadow-lg"
-                                                } ${alreadyInCompare ? "opacity-50" : ""}`}
-                                            onClick={() =>
-                                                !alreadyInCompare && handlePropertyToggle(property)
-                                            }
+                                            className={`group relative cursor-pointer rounded-lg border-2 bg-white p-3 transition-all sm:rounded-xl sm:p-4 ${
+                                                isSelected
+                                                    ? "border-[#f15a29] bg-[#f15a29]/5 shadow-lg"
+                                                    : "border-gray-200 hover:border-[#f15a29] hover:shadow-lg"
+                                            } ${alreadyInCompare ? "cursor-default" : "cursor-pointer"}`}
+                                            onClick={() => handlePropertyToggle(property)}
                                         >
-                                            {/* Selection Checkbox */}
-                                            {!alreadyInCompare && (
-                                                <div
-                                                    className={`absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full border-2 transition-colors ${isSelected
-                                                        ? "border-[#f15a29] bg-[#f15a29]"
-                                                        : "border-gray-300 bg-white"
-                                                        }`}
-                                                >
-                                                    {isSelected && (
-                                                        <svg
-                                                            className="h-4 w-4 text-white"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            stroke="currentColor"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                strokeWidth={2}
-                                                                d="M5 13l4 4L19 7"
-                                                            />
-                                                        </svg>
-                                                    )}
-                                                </div>
-                                            )}
-
-                                            {alreadyInCompare && (
-                                                <div className="absolute right-2 top-2 rounded-full bg-gray-500 px-2 py-1 text-[10px] font-medium text-white">
-                                                    Added
-                                                </div>
-                                            )}
+                                            {/* Selection Indicator - Show for both newly selected and already in compare */}
+                                            <div
+                                                className={`absolute right-2 top-2 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold transition-colors shadow-sm ${
+                                                    isSelected
+                                                        ? "bg-[#f15a29] text-white"
+                                                        : "border-2 border-gray-300 bg-white text-gray-600"
+                                                }`}
+                                            >
+                                                {isSelected && (
+                                                    <svg
+                                                        className="h-3 w-3 text-white"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke="currentColor"
+                                                        strokeWidth={3}
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            d="M5 13l4 4L19 7"
+                                                        />
+                                                    </svg>
+                                                )}
+                                                <span>
+                                                    {alreadyInCompare ? "Selected" : isSelected ? "Selected" : "Select"}
+                                                </span>
+                                            </div>
 
                                             {/* Property Image */}
                                             {property.image && (
@@ -392,7 +419,12 @@ export default function PropertySelectionModal({
                     <div className="border-t border-gray-200 bg-gray-50 p-4 sm:p-6">
                         <div className="flex items-center justify-between">
                             <p className="text-sm text-gray-600">
-                                {selectedProperties.size} property(ies) selected
+                                {selectedProperties.size} new property(ies) selected
+                                {compareItems.length > 0 && (
+                                    <span className="ml-2 text-xs text-gray-500">
+                                        ({compareItems.length} already in compare)
+                                    </span>
+                                )}
                             </p>
                             <button
                                 onClick={handleAddSelected}

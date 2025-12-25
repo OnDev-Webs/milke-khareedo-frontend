@@ -18,6 +18,7 @@ export interface CompareProperty {
 interface CompareContextType {
   compareItems: CompareProperty[];
   addToCompare: (property: CompareProperty) => void;
+  clearAndAddToCompare: (property: CompareProperty) => void; // Clear old data and add new property
   removeFromCompare: (id: string | number) => void;
   clearCompare: () => void;
   isInCompare: (id: string | number) => boolean;
@@ -75,6 +76,11 @@ export function CompareProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
+  // Clear old compare data and add new property (for new page comparisons)
+  const clearAndAddToCompare = useCallback((property: CompareProperty) => {
+    setCompareItems([property]);
+  }, []);
+
   const removeFromCompare = useCallback((id: string | number) => {
     setCompareItems((prev) => prev.filter((item) => item.id !== id));
   }, []);
@@ -95,6 +101,7 @@ export function CompareProvider({ children }: { children: React.ReactNode }) {
       value={{
         compareItems,
         addToCompare,
+        clearAndAddToCompare,
         removeFromCompare,
         clearCompare,
         isInCompare,

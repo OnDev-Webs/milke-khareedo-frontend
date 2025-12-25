@@ -28,6 +28,7 @@ export interface Property {
   latitude: number | null;
   longitude: number | null;
   image: string | null;
+  images?: string[]; // Array of images for slider
   lastDayToJoin: string;
   groupSize: number;
   groupSizeFormatted: string;

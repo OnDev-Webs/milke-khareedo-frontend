@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import Logo from "@/assets/logo.svg";
+import Logo from "@/assets/footer-logo.svg";
 import {
   FaTwitter,
   FaFacebookF,

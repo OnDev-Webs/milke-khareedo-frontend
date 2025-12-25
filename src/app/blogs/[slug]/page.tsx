@@ -10,6 +10,7 @@ import Heading from "@/components/typography/heading";
 import Image from "next/image";
 import BlogImg from "@/assets/blog.png";
 import ContactForm from "@/components/home/contact-us/ContactForm";
+import RecentBlog from "@/components/sections/RecentBlog";
 
 export default function Page() {
   return (
@@ -37,7 +38,7 @@ export default function Page() {
             Residential Investment
           </Heading>
 
-          <div className="grid grid-cols-3 gap-5 mt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 mt-4">
             <div className="col-span-2">
               <div className="w-full inline-flex flex-col justify-start items-start gap-10">
                 <Image
@@ -202,6 +203,8 @@ export default function Page() {
               <ContactForm />
             </div>
           </div>
+
+          <RecentBlog />
         </div>
       </section>
     </>

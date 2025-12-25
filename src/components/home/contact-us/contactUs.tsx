@@ -1,4 +1,5 @@
-import AboutHero from "@/components/about/HeroAbout";
+import AboutHeroBg from "@/assets/about-us/about-hero-bg.png";
+import HeroSection from "@/components/sections/HeroSection";
 
 const contactMethods = [
   { label: "Address", desc: "Description" },
@@ -9,7 +10,14 @@ const contactMethods = [
 export default function ConnectWithUs() {
   return (
     <>
-      <AboutHero />
+      <HeroSection
+        backgroundImage={AboutHeroBg}
+        badgeText="Contact Us"
+        title="Lorem Ipsum is"
+        highlightText="Simply Dummy"
+        description="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        headingVariant="h3"
+      />
       <section className="w-full bg-white py-16">
         <div className="mx-auto max-w-6xl px-4">
           <h2 className="mb-8 text-center text-2xl font-semibold text-[#5b567a]">

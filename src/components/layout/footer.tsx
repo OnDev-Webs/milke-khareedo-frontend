@@ -32,16 +32,28 @@ const Footer = () => {
                 </p>
               </div>
               <div className="size- inline-flex justify-start items-center gap-2.5 py-[30px]">
-                <Link href="/" className="size- p-3.5 bg-white rounded-[110px] flex justify-center items-center gap-2.5">
+                <Link
+                  href="/"
+                  className="size- p-3.5 bg-white rounded-[110px] flex justify-center items-center gap-2.5"
+                >
                   <FacebookIcon />
                 </Link>
-                <Link href="/" className="size- p-3.5 bg-white rounded-[110px] flex justify-center items-center gap-2.5">
+                <Link
+                  href="/"
+                  className="size- p-3.5 bg-white rounded-[110px] flex justify-center items-center gap-2.5"
+                >
                   <TwitterIcon />
                 </Link>
-                <Link href="/" className="size- p-3.5 bg-white rounded-[110px] flex justify-center items-center gap-2.5">
+                <Link
+                  href="/"
+                  className="size- p-3.5 bg-white rounded-[110px] flex justify-center items-center gap-2.5"
+                >
                   <LinkedinIcon />
                 </Link>
-                <Link href="/" className="size- p-3.5 bg-white rounded-[110px] flex justify-center items-center gap-2.5">
+                <Link
+                  href="/"
+                  className="size- p-3.5 bg-white rounded-[110px] flex justify-center items-center gap-2.5"
+                >
                   <InstagramIcon />
                 </Link>
               </div>
@@ -52,41 +64,34 @@ const Footer = () => {
                   Links
                 </h6>
                 <div className="self-stretch flex flex-col justify-start items-start gap-5">
-                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                  <Link
+                    href="/"
+                    className="self-stretch justify-start text-white text-lg font-medium"
+                  >
                     Link Name
                   </Link>
-                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                  <Link
+                    href="/"
+                    className="self-stretch justify-start text-white text-lg font-medium"
+                  >
                     Link Name
                   </Link>
-                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                  <Link
+                    href="/"
+                    className="self-stretch justify-start text-white text-lg font-medium"
+                  >
                     Link Name
                   </Link>
-                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                  <Link
+                    href="/"
+                    className="self-stretch justify-start text-white text-lg font-medium"
+                  >
                     Link Name
                   </Link>
-                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
-                    Link Name
-                  </Link>
-                </div>
-              </div>
-              <div className="w-48 inline-flex flex-col justify-start items-start gap-7">
-                <h6 className="self-stretch justify-start text-white text-2xl font-semibold">
-                  Links
-                </h6>
-                <div className="self-stretch flex flex-col justify-start items-start gap-5">
-                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
-                    Link Name
-                  </Link>
-                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
-                    Link Name
-                  </Link>
-                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
-                    Link Name
-                  </Link>
-                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
-                    Link Name
-                  </Link>
-                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                  <Link
+                    href="/"
+                    className="self-stretch justify-start text-white text-lg font-medium"
+                  >
                     Link Name
                   </Link>
                 </div>
@@ -96,19 +101,71 @@ const Footer = () => {
                   Links
                 </h6>
                 <div className="self-stretch flex flex-col justify-start items-start gap-5">
-                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                  <Link
+                    href="/"
+                    className="self-stretch justify-start text-white text-lg font-medium"
+                  >
                     Link Name
                   </Link>
-                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                  <Link
+                    href="/"
+                    className="self-stretch justify-start text-white text-lg font-medium"
+                  >
                     Link Name
                   </Link>
-                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                  <Link
+                    href="/"
+                    className="self-stretch justify-start text-white text-lg font-medium"
+                  >
                     Link Name
                   </Link>
-                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                  <Link
+                    href="/"
+                    className="self-stretch justify-start text-white text-lg font-medium"
+                  >
                     Link Name
                   </Link>
-                  <Link href="/" className="self-stretch justify-start text-white text-lg font-medium">
+                  <Link
+                    href="/"
+                    className="self-stretch justify-start text-white text-lg font-medium"
+                  >
+                    Link Name
+                  </Link>
+                </div>
+              </div>
+              <div className="w-48 inline-flex flex-col justify-start items-start gap-7">
+                <h6 className="self-stretch justify-start text-white text-2xl font-semibold">
+                  Links
+                </h6>
+                <div className="self-stretch flex flex-col justify-start items-start gap-5">
+                  <Link
+                    href="/"
+                    className="self-stretch justify-start text-white text-lg font-medium"
+                  >
+                    Link Name
+                  </Link>
+                  <Link
+                    href="/"
+                    className="self-stretch justify-start text-white text-lg font-medium"
+                  >
+                    Link Name
+                  </Link>
+                  <Link
+                    href="/"
+                    className="self-stretch justify-start text-white text-lg font-medium"
+                  >
+                    Link Name
+                  </Link>
+                  <Link
+                    href="/"
+                    className="self-stretch justify-start text-white text-lg font-medium"
+                  >
+                    Link Name
+                  </Link>
+                  <Link
+                    href="/"
+                    className="self-stretch justify-start text-white text-lg font-medium"
+                  >
                     Link Name
                   </Link>
                 </div>
@@ -124,10 +181,16 @@ const Footer = () => {
               © Copyright {currentYear} MILKE KHEREEDO
             </p>
             <div className="size- flex justify-start items-center gap-3.5">
-              <Link href="/terms-and-conditions" className="justify-start text-zinc-400 text-base font-normal">
+              <Link
+                href="/terms-and-conditions"
+                className="justify-start text-zinc-400 text-base font-normal"
+              >
                 Terms of use
               </Link>
-              <Link href="/privacy-policy" className="justify-start text-zinc-400 text-base font-normal">
+              <Link
+                href="/privacy-policy"
+                className="justify-start text-zinc-400 text-base font-normal"
+              >
                 Privacy policy
               </Link>
             </div>

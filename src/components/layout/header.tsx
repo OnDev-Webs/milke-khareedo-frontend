@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import Logo from "@/assets/logo.svg";
 import Image from "next/image";
@@ -21,6 +21,7 @@ const navLinks = [
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const isDashboard = pathname?.startsWith("/dashboard");
   const { isAuthenticated, user, logout } = useAuthContext();
   const [open, setOpen] = useState(false);
@@ -93,7 +94,7 @@ export default function Header() {
                           className="fixed inset-0 z-40"
                           onClick={() => setProfileDropdownOpen(false)}
                         />
-                        <div className="absolute right-0 top-12 z-50 min-w-[160px] rounded-lg bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5">
+                        <div className="absolute right-0 top-12 z-50 min-w-[200px] rounded-lg bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5">
                           <div className="px-4 py-2 border-b border-gray-100">
                             <p className="text-sm font-medium text-gray-800">
                               {user?.name || "User"}
@@ -105,18 +106,20 @@ export default function Header() {
                             )}
                           </div>
                           <Link
-                            href="/dashboard/profile"
+                            href="/dashboard"
                             onClick={() => setProfileDropdownOpen(false)}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
                           >
-                            Profile
+                            Dashboard
                           </Link>
                           <button
                             onClick={() => {
                               logout();
                               setProfileDropdownOpen(false);
+                              // Redirect to home page after logout
+                              router.push("/");
                             }}
-                            className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                            className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 transition-colors"
                           >
                             Sign Out
                           </button>

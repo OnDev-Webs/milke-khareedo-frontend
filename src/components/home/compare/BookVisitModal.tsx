@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { IoClose, IoCalendarOutline, IoTimeOutline, IoLocationOutline, IoBusinessOutline, IoCheckmarkCircle } from "react-icons/io5";
+import {
+  IoClose,
+  IoCalendarOutline,
+  IoTimeOutline,
+  IoLocationOutline,
+  IoBusinessOutline,
+  IoCheckmarkCircle,
+} from "react-icons/io5";
 import { homeService } from "@/lib/api/services/home.service";
 
 interface BookVisitModalProps {
@@ -44,7 +51,7 @@ export default function BookVisitModal({
 
   // Get today's date in YYYY-MM-DD format
   const today = new Date().toISOString().split("T")[0];
-  
+
   // Get date 30 days from now for max date
   const maxDate = new Date();
   maxDate.setDate(maxDate.getDate() + 30);
@@ -121,8 +128,12 @@ export default function BookVisitModal({
           <div className="p-6 sm:p-8 lg:p-10">
             {/* Header */}
             <div className="mb-8">
-              <h2 className="mb-2 text-3xl font-bold text-gray-900">Book A Site Visit</h2>
-              <p className="text-gray-600">Schedule your visit to explore this property</p>
+              <h2 className="mb-2 text-3xl font-bold text-gray-900">
+                Book A Site Visit
+              </h2>
+              <p className="text-gray-600">
+                Schedule your visit to explore this property
+              </p>
             </div>
 
             {/* Property Details Card */}
@@ -135,13 +146,15 @@ export default function BookVisitModal({
                 {propertyDeveloper && (
                   <p className="text-sm text-gray-700 flex items-center gap-2">
                     <IoBusinessOutline className="h-4 w-4 text-gray-500" />
-                    <span className="font-medium">Developer:</span> {propertyDeveloper}
+                    <span className="font-medium">Developer:</span>{" "}
+                    {propertyDeveloper}
                   </p>
                 )}
                 {propertyLocation && (
                   <p className="text-sm text-gray-700 flex items-center gap-2">
                     <IoLocationOutline className="h-4 w-4 text-gray-500" />
-                    <span className="font-medium">Location:</span> {propertyLocation}
+                    <span className="font-medium">Location:</span>{" "}
+                    {propertyLocation}
                   </p>
                 )}
               </div>
@@ -304,4 +317,3 @@ export default function BookVisitModal({
     </>
   );
 }
-

@@ -235,11 +235,11 @@ export const homeService = {
    * Example: POST /api/home/emi-calculator
    */
   calculateEMI: async (
-    data: EMICalculatorRequest
+    data: EMICalculatorRequest,
   ): Promise<ApiResponse<EMICalculatorResponse>> => {
     return apiClient.post<EMICalculatorResponse>(
       API_ENDPOINTS.HOME.POST_EMI_CALCULATOR,
-      data
+      data,
     );
   },
 
@@ -284,11 +284,11 @@ export const homeService = {
    * Example: POST /api/home/compare
    */
   compareProperties: async (
-    data: CompareRequest
+    data: CompareRequest,
   ): Promise<ApiResponse<CompareResponse>> => {
     return apiClient.post<CompareResponse>(
       API_ENDPOINTS.HOME.POST_COMPARE,
-      data
+      data,
     );
   },
 
@@ -297,11 +297,11 @@ export const homeService = {
    * POST /api/home/property/favorite
    */
   toggleFavorite: async (
-    propertyId: string
+    propertyId: string,
   ): Promise<ApiResponse<{ message: string; isFavorite: boolean }>> => {
     return apiClient.post<{ message: string; isFavorite: boolean }>(
       API_ENDPOINTS.HOME.POST_FAVORITE,
-      { propertyId }
+      { propertyId },
     );
   },
 
@@ -316,7 +316,7 @@ export const homeService = {
   }): Promise<ApiResponse<{ message: string }>> => {
     return apiClient.post<{ message: string }>(
       API_ENDPOINTS.HOME.POST_VISIT,
-      data
+      data,
     );
   },
 };

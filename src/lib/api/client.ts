@@ -9,7 +9,12 @@ export class ApiClientError extends Error {
   code?: string | number;
   errors?: Record<string, string[]>;
 
-  constructor(message: string, status: number, code?: string | number, errors?: Record<string, string[]>) {
+  constructor(
+    message: string,
+    status: number,
+    code?: string | number,
+    errors?: Record<string, string[]>,
+  ) {
     super(message);
     this.name = "ApiClientError";
     this.status = status;
@@ -74,9 +79,13 @@ class ApiClient {
    */
   private buildUrl(endpoint: string): string {
     // Remove leading slash from endpoint if present
-    const cleanEndpoint = endpoint.startsWith("/") ? endpoint.slice(1) : endpoint;
+    const cleanEndpoint = endpoint.startsWith("/")
+      ? endpoint.slice(1)
+      : endpoint;
     // Ensure baseUrl doesn't end with slash
-    const cleanBaseUrl = this.baseUrl.endsWith("/") ? this.baseUrl.slice(0, -1) : this.baseUrl;
+    const cleanBaseUrl = this.baseUrl.endsWith("/")
+      ? this.baseUrl.slice(0, -1)
+      : this.baseUrl;
     return `${cleanBaseUrl}/${cleanEndpoint}`;
   }
 
@@ -88,14 +97,11 @@ class ApiClient {
     const isJson = contentType?.includes("application/json");
 
     let data: unknown;
-    
+
     try {
       data = isJson ? await response.json() : await response.text();
     } catch (error) {
-      throw new ApiClientError(
-        "Failed to parse response",
-        response.status
-      );
+      throw new ApiClientError("Failed to parse response", response.status);
     }
 
     if (!response.ok) {
@@ -104,7 +110,7 @@ class ApiClient {
         error.message || `Request failed with status ${response.status}`,
         response.status,
         error.code,
-        error.errors
+        error.errors,
       );
     }
 
@@ -126,7 +132,7 @@ class ApiClient {
   private async fetchWithTimeout(
     url: string,
     config: RequestInit,
-    timeout: number
+    timeout: number,
   ): Promise<Response> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeout);
@@ -152,7 +158,7 @@ class ApiClient {
    */
   private async request<T>(
     endpoint: string,
-    config: RequestConfig = {}
+    config: RequestConfig = {},
   ): Promise<ApiResponse<T>> {
     try {
       const url = this.buildUrl(endpoint);
@@ -165,7 +171,7 @@ class ApiClient {
           ...config,
           headers,
         },
-        timeout
+        timeout,
       );
 
       return await this.handleResponse<T>(response);
@@ -177,7 +183,7 @@ class ApiClient {
       // Handle network errors
       throw new ApiClientError(
         error instanceof Error ? error.message : "Network error occurred",
-        0
+        0,
       );
     }
   }
@@ -185,7 +191,10 @@ class ApiClient {
   /**
    * GET request
    */
-  async get<T>(endpoint: string, config?: RequestConfig): Promise<ApiResponse<T>> {
+  async get<T>(
+    endpoint: string,
+    config?: RequestConfig,
+  ): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, {
       ...config,
       method: "GET",
@@ -198,7 +207,7 @@ class ApiClient {
   async post<T>(
     endpoint: string,
     data?: unknown,
-    config?: RequestConfig
+    config?: RequestConfig,
   ): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, {
       ...config,
@@ -213,7 +222,7 @@ class ApiClient {
   async put<T>(
     endpoint: string,
     data?: unknown,
-    config?: RequestConfig
+    config?: RequestConfig,
   ): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, {
       ...config,
@@ -228,7 +237,7 @@ class ApiClient {
   async patch<T>(
     endpoint: string,
     data?: unknown,
-    config?: RequestConfig
+    config?: RequestConfig,
   ): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, {
       ...config,
@@ -240,7 +249,10 @@ class ApiClient {
   /**
    * DELETE request
    */
-  async delete<T>(endpoint: string, config?: RequestConfig): Promise<ApiResponse<T>> {
+  async delete<T>(
+    endpoint: string,
+    config?: RequestConfig,
+  ): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, {
       ...config,
       method: "DELETE",

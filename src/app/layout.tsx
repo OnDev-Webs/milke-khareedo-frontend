@@ -17,7 +17,6 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

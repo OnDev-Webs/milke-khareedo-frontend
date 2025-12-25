@@ -15,7 +15,8 @@ export default function Heading() {
             <span className="text-[#FF765E] ps-2">Smarter.</span>
           </h2>
           <p className="text-[#373737] text-[14px] md:text-[16px] font-medium pe-20">
-            Get updates on group-buying deals and pricing insights that help you save more.
+            Get updates on group-buying deals and pricing insights that help you
+            save more.
           </p>
         </div>
         {/* Right Side: Email Input + Image */}

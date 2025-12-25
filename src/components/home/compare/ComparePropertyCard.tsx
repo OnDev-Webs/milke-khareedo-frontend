@@ -3,7 +3,12 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { FaPhoneAlt } from "react-icons/fa";
-import { IoHeartOutline, IoHeart, IoChevronBack, IoChevronForward } from "react-icons/io5";
+import {
+  IoHeartOutline,
+  IoHeart,
+  IoChevronBack,
+  IoChevronForward,
+} from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { homeService } from "@/lib/api/services/home.service";
@@ -55,7 +60,9 @@ export default function ComparePropertyCard({
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showBookVisitModal, setShowBookVisitModal] = useState(false);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
-  const [pendingAction, setPendingAction] = useState<"favorite" | "visit" | null>(null);
+  const [pendingAction, setPendingAction] = useState<
+    "favorite" | "visit" | null
+  >(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Update isFavorite when property.isFavorite changes (e.g., when API data is loaded)
@@ -66,11 +73,12 @@ export default function ComparePropertyCard({
   }, [property.isFavorite]);
 
   // Get floor plans array - use floorPlans if available, otherwise fallback to floorPlanImage
-  const floorPlans = property.floorPlans && property.floorPlans.length > 0
-    ? property.floorPlans
-    : property.floorPlanImage
-    ? [{ image: property.floorPlanImage }]
-    : [];
+  const floorPlans =
+    property.floorPlans && property.floorPlans.length > 0
+      ? property.floorPlans
+      : property.floorPlanImage
+        ? [{ image: property.floorPlanImage }]
+        : [];
 
   const hasMultiplePlans = floorPlans.length > 1;
 
@@ -191,7 +199,9 @@ export default function ComparePropertyCard({
 
       {/* Property Name with Call and Heart */}
       <div className="mb-2 flex items-center justify-between gap-2 sm:mb-2.5 md:mb-3 lg:mb-4">
-        <h3 className="text-sm font-semibold text-gray-800 leading-snug line-clamp-2 sm:text-base md:text-lg">{property.title}</h3>
+        <h3 className="text-sm font-semibold text-gray-800 leading-snug line-clamp-2 sm:text-base md:text-lg">
+          {property.title}
+        </h3>
         <div className="flex shrink-0 items-center gap-1 sm:gap-1.5 md:gap-2">
           <button
             onClick={handleFavoriteClick}
@@ -201,7 +211,9 @@ export default function ComparePropertyCard({
                 ? "border-[#f15a29] bg-[#f15a29] text-white hover:bg-[#e14f20]"
                 : "border-gray-300 bg-white text-gray-600 hover:bg-gray-50"
             } disabled:opacity-50 disabled:cursor-not-allowed`}
-            aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+            aria-label={
+              isFavorite ? "Remove from favorites" : "Add to favorites"
+            }
           >
             {isFavorite ? (
               <IoHeart className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-4 md:w-4" />
@@ -230,28 +242,52 @@ export default function ComparePropertyCard({
       {/* Property Details - Key Value Pairs */}
       <div className="mb-2.5 space-y-2 sm:mb-3 sm:space-y-2.5 md:mb-4 md:space-y-3 lg:mb-6 lg:space-y-4">
         <div className="flex justify-between gap-2">
-          <span className="text-xs text-gray-600 sm:text-xs md:text-sm">Developer:</span>
-          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">{property.developer}</span>
+          <span className="text-xs text-gray-600 sm:text-xs md:text-sm">
+            Developer:
+          </span>
+          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">
+            {property.developer}
+          </span>
         </div>
         <div className="flex justify-between gap-2">
-          <span className="text-xs text-gray-600 sm:text-xs md:text-sm">Budget:</span>
-          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">{property.price}</span>
+          <span className="text-xs text-gray-600 sm:text-xs md:text-sm">
+            Budget:
+          </span>
+          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">
+            {property.price}
+          </span>
         </div>
         <div className="flex justify-between gap-2">
-          <span className="text-xs text-gray-600 sm:text-xs md:text-sm">Area/Size:</span>
-          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">{property.area}</span>
+          <span className="text-xs text-gray-600 sm:text-xs md:text-sm">
+            Area/Size:
+          </span>
+          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">
+            {property.area}
+          </span>
         </div>
         <div className="flex justify-between gap-2">
-          <span className="text-xs text-gray-600 sm:text-xs md:text-sm">Property Config:</span>
-          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">{property.config}</span>
+          <span className="text-xs text-gray-600 sm:text-xs md:text-sm">
+            Property Config:
+          </span>
+          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">
+            {property.config}
+          </span>
         </div>
         <div className="flex justify-between gap-2">
-          <span className="text-xs text-gray-600 sm:text-xs md:text-sm">Location:</span>
-          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">{property.location}</span>
+          <span className="text-xs text-gray-600 sm:text-xs md:text-sm">
+            Location:
+          </span>
+          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">
+            {property.location}
+          </span>
         </div>
         <div className="flex justify-between gap-2">
-          <span className="text-xs text-gray-600 sm:text-xs md:text-sm">Property Type:</span>
-          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">{property.propertyType}</span>
+          <span className="text-xs text-gray-600 sm:text-xs md:text-sm">
+            Property Type:
+          </span>
+          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">
+            {property.propertyType}
+          </span>
         </div>
       </div>
 
@@ -260,7 +296,9 @@ export default function ComparePropertyCard({
 
       {/* Floor Plan Section */}
       <div className="mb-2.5 sm:mb-3 md:mb-4 lg:mb-6">
-        <h4 className="mb-1.5 text-xs font-semibold text-gray-800 sm:mb-2 sm:text-sm md:mb-3 md:text-base">Floor Plan</h4>
+        <h4 className="mb-1.5 text-xs font-semibold text-gray-800 sm:mb-2 sm:text-sm md:mb-3 md:text-base">
+          Floor Plan
+        </h4>
         <div className="relative">
           {/* Scrollable Container */}
           <div
@@ -272,15 +310,18 @@ export default function ComparePropertyCard({
               WebkitOverflowScrolling: "touch",
             }}
           >
-            <div className="flex h-full" style={{ width: `${floorPlans.length * 100}%` }}>
+            <div
+              className="flex h-full"
+              style={{ width: `${floorPlans.length * 100}%` }}
+            >
               {floorPlans.length > 0 ? (
                 floorPlans.map((plan, index) => (
                   <div
                     key={index}
                     className="relative h-full flex-shrink-0"
-                    style={{ 
+                    style={{
                       scrollSnapAlign: "start",
-                      width: `${100 / floorPlans.length}%`
+                      width: `${100 / floorPlans.length}%`,
                     }}
                   >
                     <Image
@@ -354,7 +395,9 @@ export default function ComparePropertyCard({
 
       {/* Possession Status */}
       <div>
-        <h4 className="mb-1.5 text-xs font-semibold text-gray-800 sm:mb-2 sm:text-sm md:mb-3 md:text-base">Possession Status</h4>
+        <h4 className="mb-1.5 text-xs font-semibold text-gray-800 sm:mb-2 sm:text-sm md:mb-3 md:text-base">
+          Possession Status
+        </h4>
         <div className="space-y-0.5 sm:space-y-1 md:space-y-2">
           <p className="text-xs font-semibold text-gray-800 sm:text-sm">
             {property.possessionDate || "Jan 2027"}
@@ -387,4 +430,3 @@ export default function ComparePropertyCard({
     </div>
   );
 }
-

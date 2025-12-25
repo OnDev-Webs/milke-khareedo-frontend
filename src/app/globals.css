@@ -193,7 +193,6 @@
   background-image: url("../assets/not-found-vector-right.png");
 }
 
-
 .custom-swiper-scrollbar {
   width: 1130px !important;
   height: 4px;
@@ -202,7 +201,7 @@
 }
 
 .custom-swiper-scrollbar .swiper-scrollbar-drag {
-  background: #FF765E;
+  background: #ff765e;
   border-radius: 9999px;
 }
 

@@ -20,20 +20,16 @@ const reviews = [
   {
     rating: 5,
     title: "Clear process from start to end.",
-    text1:
-      "We always knew what was happening next.",
-    text2:
-      "Buying together made pricing feel more transparent.",
+    text1: "We always knew what was happening next.",
+    text2: "Buying together made pricing feel more transparent.",
     user: "User Name",
     avatar: "/images/user1.jpg",
   },
   {
     rating: 4,
     title: "Didn’t feel like I was negotiating alone.",
-    text1:
-      "Normally, pricing conversations are uncomfortable",
-    text2:
-      " Here, it felt calmer and more balanced.",
+    text1: "Normally, pricing conversations are uncomfortable",
+    text2: " Here, it felt calmer and more balanced.",
     user: "User Name",
     avatar: "/images/user3.jpg",
   },
@@ -42,68 +38,55 @@ const reviews = [
     title: "No sales pressure, which I really appreciated.",
     text1:
       "We were given time to understand and decide.That made all the difference.",
-    text2:
-      "Saved me a lot of time and confusion.",
+    text2: "Saved me a lot of time and confusion.",
     user: "User Name",
     avatar: "/images/user4.jpg",
   },
   {
     rating: 5,
     title: "Trustworthy & easy",
-    text1:
-      "Everything was explained clearly and professionally.",
-    text2:
-      "Saved me a lot of time and confusion.",
+    text1: "Everything was explained clearly and professionally.",
+    text2: "Saved me a lot of time and confusion.",
     user: "User Name",
     avatar: "/images/user.jpg",
   },
   {
     rating: 5,
     title: "Trustworthy & easy",
-    text1:
-      "Everything was explained clearly and professionally.",
-    text2:
-      "Saved me a lot of time and confusion.",
+    text1: "Everything was explained clearly and professionally.",
+    text2: "Saved me a lot of time and confusion.",
     user: "User Name",
     avatar: "/images/user1.jpg",
   },
   {
     rating: 5,
     title: "Trustworthy & easy",
-    text1:
-      "Everything was explained clearly and professionally.",
-    text2:
-      "Saved me a lot of time and confusion.",
+    text1: "Everything was explained clearly and professionally.",
+    text2: "Saved me a lot of time and confusion.",
     user: "User Name",
     avatar: "/images/user3.jpg",
   },
   {
     rating: 5,
     title: "Trustworthy & easy",
-    text1:
-      "Everything was explained clearly and professionally.",
-    text2:
-      "Saved me a lot of time and confusion.",
+    text1: "Everything was explained clearly and professionally.",
+    text2: "Saved me a lot of time and confusion.",
     user: "User Name",
     avatar: "/images/user4.jpg",
   },
   {
     rating: 5,
     title: "Trustworthy & easy",
-    text1:
-      "Everything was explained clearly and professionally.",
-    text2:
-      "Saved me a lot of time and confusion.",
+    text1: "Everything was explained clearly and professionally.",
+    text2: "Saved me a lot of time and confusion.",
     user: "User Name",
     avatar: "/images/user.jpg",
   },
   {
     rating: 5,
     title: "Trustworthy & easy",
-    text1:
-      "Everything was explained clearly and professionally.",
-    text2:
-      "Saved me a lot of time and confusion.",
+    text1: "Everything was explained clearly and professionally.",
+    text2: "Saved me a lot of time and confusion.",
     user: "User Name",
     avatar: "/images/user1.jpg",
   },
@@ -113,7 +96,6 @@ export default function Testimonials() {
   return (
     <section className="w-full bg-white pb-16 px-6 md:px-10">
       <div className="mx-auto max-w-[1200px]">
-
         {/* Heading */}
         <div className="flex items-center justify-between mb-10">
           <h2 className="text-3xl font-bold text-gray-700">
@@ -169,7 +151,6 @@ export default function Testimonials() {
           {reviews.map((review, index) => (
             <SwiperSlide key={index} className="!h-auto mb-10">
               <div className="h-full min-h-[310px] rounded-2xl bg-white p-6 shadow-[0_18px_40px_rgba(0,0,0,0.05)] flex flex-col">
-
                 {/* Rating */}
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: review.rating }).map((_, i) => (
@@ -208,12 +189,10 @@ export default function Testimonials() {
                     {review.user}
                   </span>
                 </div>
-
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
-
       </div>
     </section>
   );

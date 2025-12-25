@@ -3,9 +3,5 @@ export default function DashboardCard({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="rounded-2xl bg-white p-8 shadow-md">
-      {children}
-    </div>
-  );
+  return <div className="rounded-2xl bg-white p-8 shadow-md">{children}</div>;
 }

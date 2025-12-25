@@ -6,7 +6,10 @@ export default function CompanyOverview() {
   const features = [
     { title: "Who We Are", desc: "We bring buyers together for better value." },
     { title: "What We Do", desc: "We bring buyers together for better prices" },
-    { title: "How We Do IT", desc: "Clear steps, honest guidance, no pressure." },
+    {
+      title: "How We Do IT",
+      desc: "Clear steps, honest guidance, no pressure.",
+    },
     { title: "Why With Us", desc: "Buying together unlocks you more savings." },
   ];
 
@@ -20,7 +23,6 @@ export default function CompanyOverview() {
 
         {/* Content */}
         <div className="flex flex-col md:flex-row md:items-stretch gap-12">
-          
           {/* LEFT SIDE */}
           <div className="flex flex-col gap-8 w-full md:w-1/2 h-full">
             <h3 className="text-[30px] font-bold text-black">
@@ -29,7 +31,9 @@ export default function CompanyOverview() {
 
             <p className="text-[18px] font-normal text-[#373737]">
               Buying property together gives buyers more power. At
-              <span className="text-[#FF765E]"> Milke Khareedo,</span> we bring buyers together so better pricing and clearer decisions become possible.
+              <span className="text-[#FF765E]"> Milke Khareedo,</span> we bring
+              buyers together so better pricing and clearer decisions become
+              possible.
             </p>
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 max-w-md">
@@ -67,7 +71,6 @@ export default function CompanyOverview() {
               className="object-cover rounded-3xl"
             />
           </div>
-
         </div>
       </div>
     </section>

@@ -12,9 +12,9 @@ export default function About() {
       <HeroSection
         backgroundImage={AboutHeroBg}
         badgeText="About Us"
-        title="Lorem Ipsum is"
-        highlightText="Simply Dummy"
-        description="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        title="We make property"
+        highlightText="Buying Easier."
+        description="We bring buyers together to help you save more, negotiate better, and buy with confidence."
         headingVariant="h3"
       />
       <CompanyOverview />

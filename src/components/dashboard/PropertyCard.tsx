@@ -57,20 +57,16 @@ export default function PropertyCard({
 
         <div className="grid grid-cols-2 gap-2">
           <StatBox label="Group Size" value={`${groupSize} Members`} />
-          <StatBox label="Opening"  value={`${openingLeft} Left`} />
+          <StatBox label="Opening" value={`${openingLeft} Left`} />
         </div>
 
         <div>
           <p className="text-xs text-gray-500">Target Price</p>
           <p className="text-lg font-semibold">{targetPrice}</p>
 
-          <p className="text-xs text-gray-400 line-through">
-            {developerPrice}
-          </p>
+          <p className="text-xs text-gray-400 line-through">{developerPrice}</p>
 
-          <p className="mt-1 text-xs text-green-600">
-            Up to 63.28% off
-          </p>
+          <p className="mt-1 text-xs text-green-600">Up to 63.28% off</p>
 
           <p className="mt-1 text-xs text-red-500">
             Get upto 12% discount on this property
@@ -86,13 +82,8 @@ export default function PropertyCard({
   );
 }
 
-
 function IconButton({ icon }: { icon: React.ReactNode }) {
-  return (
-    <button className="rounded-full bg-white p-2 shadow">
-      {icon}
-    </button>
-  );
+  return <button className="rounded-full bg-white p-2 shadow">{icon}</button>;
 }
 
 type StatBoxProps = {
@@ -101,20 +92,11 @@ type StatBoxProps = {
   className?: string;
 };
 
- function StatBox({
-  label,
-  value,
-  className = "bg-[#EBEBEB]",
-}: StatBoxProps) {
+function StatBox({ label, value, className = "bg-[#EBEBEB]" }: StatBoxProps) {
   return (
-    <div
-      className={`rounded-xl px-4 py-3 text-center ${className}`}
-    >
+    <div className={`rounded-xl px-4 py-3 text-center ${className}`}>
       <p className="text-xs text-gray-500">{label}</p>
-      <p className="mt-1 text-sm font-semibold text-gray-900">
-        {value}
-      </p>
+      <p className="mt-1 text-sm font-semibold text-gray-900">{value}</p>
     </div>
   );
 }
-

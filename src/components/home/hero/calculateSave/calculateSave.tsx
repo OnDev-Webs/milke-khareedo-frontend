@@ -2,7 +2,10 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useMutation } from "@/lib/api/hooks/useApi";
-import { homeService, type EMICalculatorResponse } from "@/lib/api/services/home.service";
+import {
+  homeService,
+  type EMICalculatorResponse,
+} from "@/lib/api/services/home.service";
 import { HiLightBulb } from "react-icons/hi";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import { useRouter } from "next/navigation";
@@ -37,9 +40,15 @@ export default function CalculateSave() {
   const tenureRange = { min: 12, max: 60 };
 
   // Calculate slider percentages
-  const loanAmountPercent = ((loanAmount - loanAmountRange.min) / (loanAmountRange.max - loanAmountRange.min)) * 100;
-  const ratePercent = ((rateOfInterest - rateRange.min) / (rateRange.max - rateRange.min)) * 100;
-  const tenurePercent = ((loanTenure - tenureRange.min) / (tenureRange.max - tenureRange.min)) * 100;
+  const loanAmountPercent =
+    ((loanAmount - loanAmountRange.min) /
+      (loanAmountRange.max - loanAmountRange.min)) *
+    100;
+  const ratePercent =
+    ((rateOfInterest - rateRange.min) / (rateRange.max - rateRange.min)) * 100;
+  const tenurePercent =
+    ((loanTenure - tenureRange.min) / (tenureRange.max - tenureRange.min)) *
+    100;
 
   // Format loan amount for display
   const formatLoanAmount = (amount: number) => {
@@ -53,14 +62,16 @@ export default function CalculateSave() {
   };
 
   // EMI calculation mutation
-  const { mutate: calculateEMI, loading: calculating, data: emiResponseData } = useMutation<
+  const {
+    mutate: calculateEMI,
+    loading: calculating,
+    data: emiResponseData,
+  } = useMutation<
     EMICalculatorResponse,
     { loanAmount: string; rateOfInterest: number; loanTenure: number }
-  >(
-    async (params) => {
-      return homeService.calculateEMI(params);
-    }
-  );
+  >(async (params) => {
+    return homeService.calculateEMI(params);
+  });
 
   // Update emiData when API response changes
   useEffect(() => {
@@ -112,7 +123,8 @@ export default function CalculateSave() {
   };
 
   // Get pie chart percentages from API response
-  const principalPercentage = emiData?.emiBreakdown?.principalPercentage || 80.5;
+  const principalPercentage =
+    emiData?.emiBreakdown?.principalPercentage || 80.5;
   const interestPercentage = emiData?.emiBreakdown?.interestPercentage || 19.5;
 
   return (
@@ -142,13 +154,15 @@ export default function CalculateSave() {
                     className="absolute inset-0 rounded-full"
                     style={{
                       background: `conic-gradient(#38BA50 0% ${principalPercentage}%, #FFA322 ${principalPercentage}% 100%)`,
-                    }}>
-                  </div>
+                    }}
+                  ></div>
                   <div className="absolute inset-[12%] flex flex-col items-center justify-center rounded-full bg-white text-center shadow-sm">
                     <p className="text-base sm:text-lg md:text-xl font-bold text-black leading-tight px-2">
                       {emiData?.monthlyEMI?.formatted || "₹ 7,47,873.00"}
                     </p>
-                    <p className="text-[10px] sm:text-xs text-gray-600 mt-0.5 px-2">Your Monthly EMI</p>
+                    <p className="text-[10px] sm:text-xs text-gray-600 mt-0.5 px-2">
+                      Your Monthly EMI
+                    </p>
                   </div>
                 </div>
 
@@ -164,7 +178,8 @@ export default function CalculateSave() {
                         <span>●</span> Principal Amount
                       </p>
                       <span className="font-semibold text-black text-sm sm:text-base">
-                        {emiData?.principalAmount?.formatted || "₹ 3,61,11,931.00"}
+                        {emiData?.principalAmount?.formatted ||
+                          "₹ 3,61,11,931.00"}
                       </span>
                     </div>
 
@@ -173,7 +188,8 @@ export default function CalculateSave() {
                         <span>●</span> Total Interest
                       </p>
                       <span className="font-semibold text-black text-sm sm:text-base">
-                        + {emiData?.totalInterest?.formatted || "₹ 87,60,442.00"}
+                        +{" "}
+                        {emiData?.totalInterest?.formatted || "₹ 87,60,442.00"}
                       </span>
                     </div>
                   </div>
@@ -181,7 +197,8 @@ export default function CalculateSave() {
                   <div className="flex items-center justify-between gap-4 px-2 py-2 sm:gap-6">
                     <p className="text-sm text-gray-600">Total Amount</p>
                     <p className="text-base sm:text-lg font-semibold text-black">
-                      {emiData?.totalAmountPayable?.formatted || "₹ 4,48,72,373.00"}
+                      {emiData?.totalAmountPayable?.formatted ||
+                        "₹ 4,48,72,373.00"}
                     </p>
                   </div>
                 </div>
@@ -193,7 +210,9 @@ export default function CalculateSave() {
                   <button className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 text-gray-400 hover:bg-gray-50 transition-colors">
                     <IoChevronBack className="h-5 w-5" />
                   </button>
-                  <p className="text-base sm:text-lg font-semibold text-black">9.5%</p>
+                  <p className="text-base sm:text-lg font-semibold text-black">
+                    9.5%
+                  </p>
                   <button className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 text-gray-400 hover:bg-gray-50 transition-colors">
                     <IoChevronForward className="h-5 w-5" />
                   </button>
@@ -204,10 +223,12 @@ export default function CalculateSave() {
                   {partnerLogos.slice(0, 4).map((partner, idx) => (
                     <div
                       key={idx}
-                      className={`relative flex h-10 w-10 items-center justify-center rounded-full border-2 ${idx === 0
-                        ? "bg-blue-50 border-blue-300 text-blue-600"
-                        : "bg-gray-100 border-gray-200 text-gray-600"
-                        } text-xs font-semibold`}>
+                      className={`relative flex h-10 w-10 items-center justify-center rounded-full border-2 ${
+                        idx === 0
+                          ? "bg-blue-50 border-blue-300 text-blue-600"
+                          : "bg-gray-100 border-gray-200 text-gray-600"
+                      } text-xs font-semibold`}
+                    >
                       {partner.logo}
                       {/* Indicator dot below first logo */}
                       {idx === 0 && (
@@ -317,7 +338,9 @@ export default function CalculateSave() {
               {/* Loan Tenure Slider */}
               <div>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-6 mb-2">
-                  <h4 className="font-semibold text-black text-sm sm:text-base">Loan Tenure</h4>
+                  <h4 className="font-semibold text-black text-sm sm:text-base">
+                    Loan Tenure
+                  </h4>
                   <button className="bg-[#FF765E] text-white font-semibold px-3 py-1 rounded text-sm sm:text-base">
                     {loanTenure} Months
                   </button>
@@ -351,7 +374,8 @@ export default function CalculateSave() {
               <div className="flex items-start gap-2 text-sm text-gray-600">
                 <HiLightBulb className="h-5 w-5 text-yellow-500 flex-shrink-0 mt-0.5" />
                 <p>
-                  {emiData?.disclaimer || "Calculated EMI result is indicative only."}
+                  {emiData?.disclaimer ||
+                    "Calculated EMI result is indicative only."}
                 </p>
               </div>
 
@@ -359,13 +383,15 @@ export default function CalculateSave() {
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <button
                   onClick={handleReset}
-                  className="rounded-full border-2 border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-700 w-full sm:w-auto hover:bg-gray-50 transition-colors">
+                  className="rounded-full border-2 border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-700 w-full sm:w-auto hover:bg-gray-50 transition-colors"
+                >
                   Reset
                 </button>
                 <button
                   onClick={handleGetLoan}
                   disabled={isCalculating || calculating}
-                  className="rounded-full bg-[#FF765E] px-6 py-3 text-sm font-semibold text-white w-full sm:w-auto hover:bg-[#e86b50] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                  className="rounded-full bg-[#FF765E] px-6 py-3 text-sm font-semibold text-white w-full sm:w-auto hover:bg-[#e86b50] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                   Get a Loan
                 </button>
               </div>

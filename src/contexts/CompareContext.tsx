@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
 
 /**
  * Property interface for compare feature
@@ -55,7 +61,9 @@ const saveCompareItems = (items: CompareProperty[]) => {
 
 export function CompareProvider({ children }: { children: React.ReactNode }) {
   // Initialize from localStorage
-  const [compareItems, setCompareItems] = useState<CompareProperty[]>(() => loadCompareItems());
+  const [compareItems, setCompareItems] = useState<CompareProperty[]>(() =>
+    loadCompareItems(),
+  );
 
   // Save to localStorage whenever compareItems changes
   useEffect(() => {
@@ -93,7 +101,7 @@ export function CompareProvider({ children }: { children: React.ReactNode }) {
     (id: string | number) => {
       return compareItems.some((item) => item.id === id);
     },
-    [compareItems]
+    [compareItems],
   );
 
   return (

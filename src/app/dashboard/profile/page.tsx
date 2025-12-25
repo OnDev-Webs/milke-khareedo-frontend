@@ -2,31 +2,17 @@
 
 export default function ProfilePage() {
   return (
-    <div className="rounded-[24px] bg-white px-10 py-10 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
-      <h2 className="mb-8 text-[22px] font-semibold text-[#2b2b2b]">
+    <div className="rounded-[24px] bg-white px-5 py-8 sm:px-10 sm:py-10 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
+      <h2 className="mb-8 text-[20px] sm:text-[22px] font-semibold text-[#2b2b2b]">
         My Profile
       </h2>
 
       <form className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
-        <FieldInput
-          label="First Name *"
-          placeholder="Enter first name"
-        />
+        <FieldInput label="First Name *" placeholder="Enter first name" />
+        <FieldInput label="Last Name *" placeholder="Enter last name" />
 
-        <FieldInput
-          label="Last Name *"
-          placeholder="Enter last name"
-        />
-
-        <FieldInput
-          label="Email Address *"
-          value="johndeo123@gmail.com"
-        />
-
-        <FieldInput
-          label="Mobile Number *"
-          value="+91 956 264 5987"
-        />
+        <FieldInput label="Email Address *" value="johndeo123@gmail.com" />
+        <FieldInput label="Mobile Number *" value="+91 956 264 5987" />
 
         <FieldInput
           label="Full Address *"
@@ -34,31 +20,16 @@ export default function ProfilePage() {
           className="md:col-span-2"
         />
 
-        <FieldInput
-          label="Pin code *"
-          placeholder="Enter your Pincode"
-        />
-
-        <FieldSelect
-          label="City"
-          placeholder="Select your city"
-        />
-
-        <FieldSelect
-          label="State"
-          placeholder="Select your state"
-        />
-
-        <FieldSelect
-          label="Country"
-          placeholder="Select your country"
-        />
+        <FieldInput label="Pin code *" placeholder="Enter your Pincode" />
+        <FieldSelect label="City" placeholder="Select your city" />
+        <FieldSelect label="State" placeholder="Select your state" />
+        <FieldSelect label="Country" placeholder="Select your country" />
       </form>
 
-      <div className="mt-14">
+      <div className="mt-12">
         <button
           type="submit"
-          className="rounded-full bg-[#ff7a59] px-10 py-3 text-sm font-semibold text-white transition hover:bg-[#ff6844]"
+          className="w-full sm:w-auto rounded-full bg-[#ff7a59] px-12 py-4 text-sm font-semibold text-white transition hover:bg-[#ff6844]"
         >
           Save Profile
         </button>

@@ -1,13 +1,12 @@
+import React from "react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/header";
-import FooterSection from "@/components/layout/footer";
-import CopyRight from "@/components/layout/copyRight";
-import React from "react";
 import FooterWrapper from "@/components/layout/FooterWrapper";
 import { CompareProvider } from "@/contexts/CompareContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { SchemaMarkup, organizationSchema } from "@/lib/schema-markup";
 
 import { Montserrat } from "next/font/google";
 
@@ -28,8 +27,62 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Milke Khareedo",
-  description: "",
+  title: {
+    default: "Milke Khareedo - Buy Smart with Collective Power",
+    template: "%s | Milke Khareedo",
+  },
+  description:
+    "Buy smarter with collective power. Group buying platform for apartments, villas, and plots. Save more, negotiate better, buy with confidence.",
+  keywords: [
+    "group buying",
+    "collective buying",
+    "real estate",
+    "apartments",
+    "villas",
+    "plots",
+    "property",
+    "Hyderabad",
+  ],
+  authors: [{ name: "Milke Khareedo" }],
+  creator: "Milke Khareedo",
+  publisher: "Milke Khareedo",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: "https://milkekhareedo.com",
+    siteName: "Milke Khareedo",
+    title: "Milke Khareedo - Buy Smart with Collective Power",
+    description:
+      "Buy smarter with collective power. Group buying platform for real estate.",
+    images: [
+      {
+        url: "https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Milke Khareedo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@milkekhareedo",
+    creator: "@milkekhareedo",
+  },
+  alternates: {
+    canonical: "https://milkekhareedo.com",
+  },
+  viewport: "width=device-width, initial-scale=1.0",
 };
 
 export default function RootLayout({
@@ -39,13 +92,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="light">
+      <head>
+        <SchemaMarkup type="Organization" data={organizationSchema} />
+        <link rel="canonical" href="https://milkekhareedo.com" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <meta name="theme-color" content="#FF765E" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
       >
         <AuthProvider>
           <CompareProvider>
             <Header />
-            {children}
+            <main>{children}</main>
             <FooterWrapper />
           </CompareProvider>
         </AuthProvider>

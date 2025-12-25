@@ -9,6 +9,7 @@ import {
 import Heading from "@/components/typography/heading";
 import Image from "next/image";
 import BlogImg from "@/assets/blog.png";
+import ContactForm from "@/components/home/contact-us/ContactForm";
 
 export default function Page() {
   return (
@@ -198,6 +199,7 @@ export default function Page() {
                 Let our experts help you answer your questions
               </p>
               {/* Contact Form */}
+              <ContactForm />
             </div>
           </div>
         </div>

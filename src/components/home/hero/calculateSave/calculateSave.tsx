@@ -125,16 +125,18 @@ export default function CalculateSave() {
               {/* Circular Chart and EMI Result */}
               <div className="flex flex-col md:flex-row md:items-center gap-6">
                 {/* Circular Pie Chart */}
-                <div
-                  className="relative flex flex-shrink-0 h-36 w-36 sm:h-44 sm:w-44 items-center justify-center rounded-full"
-                  style={{
-                    background: `conic-gradient(#38BA50 0% ${principalPercentage}%, #FFA322 ${principalPercentage}% 100%)`,
-                  }}>
-                  <div className="flex h-24 w-24 sm:h-28 sm:w-28 flex-col items-center justify-center rounded-full bg-white text-center shadow-sm">
-                    <p className="text-lg sm:text-xl font-bold text-black leading-tight">
+                <div className="relative flex-shrink-0 h-36 w-36 sm:h-44 sm:w-44 md:h-48 md:w-48">
+                  <div
+                    className="absolute inset-0 rounded-full"
+                    style={{
+                      background: `conic-gradient(#38BA50 0% ${principalPercentage}%, #FFA322 ${principalPercentage}% 100%)`,
+                    }}>
+                  </div>
+                  <div className="absolute inset-[12%] flex flex-col items-center justify-center rounded-full bg-white text-center shadow-sm">
+                    <p className="text-base sm:text-lg md:text-xl font-bold text-black leading-tight px-2">
                       {emiData?.monthlyEMI?.formatted || "₹ 7,47,873.00"}
                     </p>
-                    <p className="text-xs text-gray-600 mt-0.5">Your Monthly EMI</p>
+                    <p className="text-[10px] sm:text-xs text-gray-600 mt-0.5 px-2">Your Monthly EMI</p>
                   </div>
                 </div>
 
@@ -191,8 +193,8 @@ export default function CalculateSave() {
                     <div
                       key={idx}
                       className={`relative flex h-10 w-10 items-center justify-center rounded-full border-2 ${idx === 0
-                          ? "bg-blue-50 border-blue-300 text-blue-600"
-                          : "bg-gray-100 border-gray-200 text-gray-600"
+                        ? "bg-blue-50 border-blue-300 text-blue-600"
+                        : "bg-gray-100 border-gray-200 text-gray-600"
                         } text-xs font-semibold`}>
                       {partner.logo}
                       {/* Indicator dot below first logo */}
@@ -256,12 +258,12 @@ export default function CalculateSave() {
                 </div>
 
                 <div className="mt-1 sm:mt-2 flex justify-between text-xs sm:text-sm text-gray-500">
-                  <span>₹ 1k</span>
-                  <span>₹ 10k</span>
-                  <span>₹ 20k</span>
-                  <span>₹ 30k</span>
-                  <span>₹ 40k</span>
-                  <span>₹ 50k</span>
+                  <span>₹ 30L</span>
+                  <span>₹ 1Cr</span>
+                  <span>₹ 10Cr</span>
+                  <span>₹ 20Cr</span>
+                  <span>₹ 30Cr</span>
+                  <span>₹ 50Cr</span>
                 </div>
               </div>
 

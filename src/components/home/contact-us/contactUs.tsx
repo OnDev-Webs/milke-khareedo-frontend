@@ -72,7 +72,7 @@ export default function ConnectWithUs() {
         badgeText="Contact Us"
         title="Talk to us. Buy smarter."
         highlightText="Save more."
-        description="We bring buyers together to help you save more, negotiate better, and buy with confidence."
+        description="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
         headingVariant="h3"
       />
       <section className="w-full bg-white py-16">

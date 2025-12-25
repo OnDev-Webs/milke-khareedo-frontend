@@ -164,6 +164,7 @@
     @apply border-border outline-ring/50;
   }
   body {
+    font-family: var(--font-montserrat);
     @apply bg-background text-foreground;
   }
 }
@@ -190,4 +191,58 @@
 .not-found::after {
   right: 0;
   background-image: url("../assets/not-found-vector-right.png");
+}
+
+
+.custom-swiper-scrollbar {
+  width: 1130px !important;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 9999px;
+}
+
+.custom-swiper-scrollbar .swiper-scrollbar-drag {
+  background: #FF765E;
+  border-radius: 9999px;
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* Thin scrollbar styling */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(75 85 99) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgb(75 85 99);
+  border-radius: 3px;
+}
+
+.scrollbar-thin:hover::-webkit-scrollbar-thumb {
+  background-color: rgb(107 114 128);
+}
+
+.scrollbar-thumb-gray-600::-webkit-scrollbar-thumb {
+  background-color: rgb(75 85 99);
+}
+
+.hover\:scrollbar-thumb-gray-500:hover::-webkit-scrollbar-thumb {
+  background-color: rgb(107 114 128);
 }

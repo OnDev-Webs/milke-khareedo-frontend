@@ -1,104 +1,206 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import Logo from "@/assets/logo.svg";
 import Image from "next/image";
+import CompareIcon from "./CompareIcon";
+import { useAuthContext } from "@/contexts/AuthContext";
+import AuthModal from "@/components/auth/AuthModal";
+import { IoPerson, IoChevronDown } from "react-icons/io5";
+import { HiOutlineMenu } from "react-icons/hi";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Properties", href: "/property-archive" },
   { label: "About Us", href: "/about" },
+  { label: "Properties", href: "/property-archive" },
   { label: "Contact Us", href: "/contact" },
-  { label: "Property", href: "/property-details" },
+  { label: "Blogs", href: "/blogs" },
 ];
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
+  const isDashboard = pathname?.startsWith("/dashboard");
+  const { isAuthenticated, user, logout } = useAuthContext();
   const [open, setOpen] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname?.startsWith(href);
 
   return (
-    <header className="w-full border-gray-100 bg-white px-30">
-      <div className="w-300 mx-auto ">
-        <div className=" flex items-center justify-between py-7.5">
+    <header className="w-full border-b border-gray-100 bg-white">
+      <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between py-4 lg:py-6">
+          {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <Image src={Logo} alt={"logo"} width={216} height={52} />
+            <Image src={Logo} alt="MILKE KHEREEDO logo" width={216} height={52} className="h-8 w-auto sm:h-10 lg:h-[52px]" />
           </Link>
 
-          <nav className="hidden items-center gap-10  text-gray-600 lg:flex">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`relative pb-1 transition-colors ${
-                  isActive(link.href) ? "text-black" : "hover:text-black"
-                }`}
-              >
-                {link.label}
-                {isActive(link.href) && (
-                  <span className="absolute inset-x-0 bottom-0.5 h-0.5 bg-[#f15a29]" />
+          {/* Navigation Links */}
+          {!isDashboard && (
+            <nav className="hidden items-center gap-8 text-gray-600 lg:flex xl:gap-10">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`relative pb-1 text-sm transition-colors xl:text-base ${isActive(link.href) ? "font-semibold text-[#f15a29]" : "hover:text-[#f15a29]"
+                    }`}
+                >
+                  {link.label}
+                  {isActive(link.href) && (
+                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#f15a29]" />
+                  )}
+                </Link>
+              ))}
+            </nav>
+          )}
+
+          {/* Right Side Icons */}
+          <div className="flex items-center gap-3">
+            {!isDashboard && (
+              <>
+                {/* Compare Icon */}
+                <CompareIcon />
+
+                {/* Profile Icon or Sign In Button */}
+                {isAuthenticated ? (
+                  <div className="relative">
+                    <button
+                      onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                      className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[#f15a29] text-white transition-colors hover:bg-[#e14f20] overflow-hidden"
+                      aria-label="Profile menu"
+                    >
+                      {user?.profileImage ? (
+                        <Image
+                          src={user.profileImage}
+                          alt={user.name || "Profile"}
+                          fill
+                          className="object-cover"
+                        />
+                      ) : (
+                        <IoPerson className="h-5 w-5" />
+                      )}
+                      <IoChevronDown className="absolute bottom-0.5 right-0.5 h-2.5 w-2.5" />
+                    </button>
+
+                    {/* Profile Dropdown Menu */}
+                    {profileDropdownOpen && (
+                      <>
+                        <div
+                          className="fixed inset-0 z-40"
+                          onClick={() => setProfileDropdownOpen(false)}
+                        />
+                        <div className="absolute right-0 top-12 z-50 min-w-[200px] rounded-lg bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5">
+                          <div className="px-4 py-2 border-b border-gray-100">
+                            <p className="text-sm font-medium text-gray-800">
+                              {user?.name || "User"}
+                            </p>
+                            {user?.phoneNumber && (
+                              <p className="text-xs text-gray-500">
+                                {user.countryCode} {user.phoneNumber}
+                              </p>
+                            )}
+                          </div>
+                          <Link
+                            href="/dashboard"
+                            onClick={() => setProfileDropdownOpen(false)}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                          >
+                            Dashboard
+                          </Link>
+                          <button
+                            onClick={() => {
+                              logout();
+                              setProfileDropdownOpen(false);
+                              // Redirect to home page after logout
+                              router.push("/");
+                            }}
+                            className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                          >
+                            Sign Out
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setShowAuthModal(true)}
+                    className="rounded-full bg-[#f15a29] px-6 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#e14f20] lg:px-7.5 lg:py-2.5 lg:text-base"
+                  >
+                    Sign In
+                  </button>
                 )}
-              </Link>
-            ))}
-          </nav>
+              </>
+            )}
 
-          <div className="hidden items-center gap-3 lg:flex">
-            <Link
-              href="/signin"
-              className="rounded-full bg-[#f15a29] px-7.5 py-2.5  font-semibold text-white shadow-sm hover:bg-[#e14f20] text-xl"
+            {/* Mobile Menu Button */}
+            <button
+              type="button"
+              aria-label="Toggle navigation"
+              onClick={() => setOpen((o) => !o)}
+              className="inline-flex items-center justify-center rounded-md p-2 text-gray-600 lg:hidden"
             >
-              Sign In
-            </Link>
+              <HiOutlineMenu className="h-6 w-6" />
+            </button>
           </div>
-
-          <button
-            type="button"
-            aria-label="Toggle navigation"
-            onClick={() => setOpen((o) => !o)}
-            className="inline-flex items-center justify-center rounded-md border border-gray-200 p-2 lg:hidden"
-          >
-            <span className="sr-only">Open main menu</span>
-            <span className="flex flex-col gap-[5px]">
-              <span className="h-0.5 w-5 rounded bg-gray-800" />
-              <span className="h-0.5 w-5 rounded bg-gray-800" />
-              <span className="h-0.5 w-5 rounded bg-gray-800" />
-            </span>
-          </button>
         </div>
 
-        {open && (
-          <div className="border-t border-gray-100 bg-white pb-3 lg:hidden">
-            <nav className="flex flex-col px-4 pt-2  text-gray-700">
+        {/* Mobile Menu */}
+        {open && !isDashboard && (
+          <div className="border-t border-gray-100 bg-white pb-4 lg:hidden">
+            <nav className="flex flex-col px-4 pt-3 text-gray-700">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`py-2 ${
-                    isActive(link.href) ? "font-semibold text-black" : ""
-                  }`}
+                  className={`py-2.5 text-sm ${isActive(link.href) ? "font-semibold text-[#f15a29]" : ""
+                    }`}
                 >
                   {link.label}
                 </Link>
               ))}
 
-              <div className="mt-2 flex flex-col gap-2">
-                <Link
-                  href="/signin"
-                  onClick={() => setOpen(false)}
-                  className="w-full rounded-full bg-[#f15a29] px-4 py-2 text-center  font-semibold text-white shadow-sm"
-                >
-                  Sign In
-                </Link>
+              <div className="mt-4 flex items-center gap-3 border-t border-gray-100 pt-4">
+                {!isDashboard && <CompareIcon />}
+                {isAuthenticated ? (
+                  <Link
+                    href="/dashboard/profile"
+                    onClick={() => setOpen(false)}
+                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#f15a29] px-4 py-2.5 text-sm font-semibold text-white"
+                  >
+                    <IoPerson className="h-5 w-5" />
+                    Profile
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setOpen(false);
+                      setShowAuthModal(true);
+                    }}
+                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#f15a29] px-4 py-2.5 text-sm font-semibold text-white"
+                  >
+                    <IoPerson className="h-5 w-5" />
+                    Sign In
+                  </button>
+                )}
               </div>
             </nav>
           </div>
         )}
       </div>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        onSuccess={() => setShowAuthModal(false)}
+      />
     </header>
   );
 }

@@ -1,4 +1,4 @@
-import CompanyOverviewImg from "@/assets/about-us/company-overview.png";
+import CompanyOverviewImg from "@/assets/about-us/company-overview.png"
 import Title from "@/components/typography/title";
 import Image from "next/image";
 import Heading from "@/components/typography/heading";
@@ -6,46 +6,52 @@ import Heading from "@/components/typography/heading";
 const items = [
   {
     id: 1,
-    img: CompanyOverviewImg,
-    title: "Heading",
-    desc: "description description description description description description description",
+    img: "/images/value1.jpg",
+    title: "Real Savings Created",
+    desc: "By bringing buyers together, we’ve helped unlock better pricing than individual buying — turning collective demand into meaningful cost savings for homebuyers.",
   },
   {
     id: 2,
-    img: CompanyOverviewImg,
-    title: "Heading",
-    desc: "description description description description description description description",
+    img: "/images/value2.jpg",
+    title: "Better Buying Options",
+    desc: "Buyers gain access to clearer comparisons, shared insights, and stronger negotiating power — leading to better project options, not rushed compromises.",
   },
   {
     id: 3,
-    img: CompanyOverviewImg,
-    title: "Heading",
-    desc: "description description description description description description description",
+    img: "/images/value3.jpg",
+    title: "Stronger Buyer Leverage",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it ....",
   },
   {
     id: 4,
-    img: CompanyOverviewImg,
-    title: "Heading",
-    desc: "description description description description description description description",
-  },
-  {
-    id: 5,
-    img: CompanyOverviewImg,
-    title: "Heading",
-    desc: "description description description description description description description",
-  },
-  {
-    id: 6,
-    img: CompanyOverviewImg,
-    title: "Heading",
-    desc: "description description description description description description description",
+    img: "/images/value4.jpg",
+    title: "Confident Decisions",
+    desc: "With transparent steps, shared context, and no pressure, buyers move forward only when they’re confident they’re getting fair value.",
   },
 ];
 
 export default function ValuesAchievements() {
   return (
-    <section className="w-full bg-[#FFF9F6] py-16 mt-[100px]">
-      <div className="mx-auto container px-4">
+    <section className="relative w-full bg-[#FFF9F6] py-16 mt-[100px] overflow-hidden">
+      <svg
+        className="absolute inset-0 w-[1500px] h-[1500px] opacity-20 pointer-events-none"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 100 100"
+      >
+        <defs>
+          <pattern
+            id="squarePattern"
+            width="1.8"
+            height="1.8"
+            patternUnits="userSpaceOnUse"
+          >
+            <rect x="0" y="0" width="1.5" height="1.5" fill="#f0e7e3ff" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#squarePattern)" />
+      </svg>
+
+      <div className="mx-auto max-w-6xl px-4">
         <Title
           text={"Values"}
           drawLineText={"Achievements"}
@@ -53,24 +59,29 @@ export default function ValuesAchievements() {
           className="text-center mb-12 md:mb-20"
         />
 
-        <div className="grid gap-6 md:grid-cols-2">
+        {/* Responsive Grid */}
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
           {items.map((item) => (
             <div
               key={item.id}
-              className="flex items-stretch rounded-3xl bg-white p-4 shadow-[0_12px_30px_rgba(0,0,0,0.06)] gap-5"
+              className="flex flex-col md:flex-row items-start md:items-stretch rounded-3xl bg-white p-4 shadow-[0_12px_30px_rgba(0,0,0,0.06)] gap-5"
             >
-              <Image
-                src={item.img}
-                alt={"achievement image"}
-                width={168}
-                height={183}
-              />
+              {/* Image container with fixed size */}
+              <div className="relative w-32 h-32 md:w-40 md:h-40 flex-shrink-0 rounded-2xl overflow-hidden">
+                <Image
+                  src={item.img}
+                  alt={"achievement image"}
+                  fill
+                  className="object-cover"
+                />
+              </div>
 
-              <div className="flex flex-col justify-center">
-                <Heading variant={"h6"} className="text-black font-bold">
+              {/* Content */}
+              <div className="flex flex-col justify-center w-full">
+                <Heading variant={"h6"} className="text-black font-bold text-[16px] md:text-[18px]">
                   {item.title}
                 </Heading>
-                <p className="mt-2 text-base font-normal text-[#373737]">
+                <p className="mt-2 text-[14px] md:text-[14px] font-normal text-[#373737] leading-relaxed text-left">
                   {item.desc}
                 </p>
               </div>

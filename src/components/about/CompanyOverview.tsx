@@ -1,46 +1,47 @@
 import CompanyOverviewImg from "@/assets/about-us/company-overview.png";
 import Image from "next/image";
-import Heading from "@/components/typography/heading";
 import Title from "@/components/typography/title";
 
 export default function CompanyOverview() {
   const features = [
-    { title: "Title", desc: "Description" },
-    { title: "Title", desc: "Description" },
-    { title: "Title", desc: "Description" },
-    { title: "Title", desc: "Description" },
+    { title: "Who We Are", desc: "We bring buyers together for better value." },
+    { title: "What We Do", desc: "We bring buyers together for better prices" },
+    { title: "How We Do IT", desc: "Clear steps, honest guidance, no pressure." },
+    { title: "Why With Us", desc: "Buying together unlocks you more savings." },
   ];
 
   return (
-    <section className="w-full bg-white py-16">
-      <div className="mx-auto container px-4">
-        <div className="flex items-center justify-center gap-12 mb-12 md:mb-20 w-fit mx-auto">
+    <section className="w-full bg-white py-16 px-10 md:px-12">
+      <div className="mx-auto container">
+        {/* Title */}
+        <div className="flex items-center justify-center mb-12 md:mb-20 w-fit mx-auto">
           <Title text={"Company"} drawLineText={"Overview"} isDrawLine />
         </div>
 
-        <div className="grid items-start gap-12 md:grid-cols-2">
-          <div>
-            <Heading variant={"h3"} className="leading-12 text-black">
-              Heading
-            </Heading>
+        {/* Content */}
+        <div className="flex flex-col md:flex-row md:items-stretch gap-12">
+          
+          {/* LEFT SIDE */}
+          <div className="flex flex-col gap-8 w-full md:w-1/2 h-full">
+            <h3 className="text-[30px] font-bold text-black">
+              Built to help buyers save more — together.
+            </h3>
 
-            <p className="mt-3 max-w-xl text-[18px] font-normal text-[#373737] leading-8">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi
-              hic, beatae placeat eveniet quisquam similique dolores explicabo
-              sit velit nam vitae cum eum minus veritatis reiciendis voluptates
-              quas commodi saepe!
+            <p className="text-[18px] font-normal text-[#373737]">
+              Buying property together gives buyers more power. At
+              <span className="text-[#FF765E]"> Milke Khareedo,</span> we bring buyers together so better pricing and clearer decisions become possible.
             </p>
 
-            <div className="mt-8 grid grid-cols-2 gap-4 max-w-md">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 max-w-md">
               {features.map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-3 rounded-2xl bg-[#f7f5ff] p-4 shadow-[0_10px_20px_rgba(0,0,0,0.04)]"
+                  className="flex items-center gap-3 rounded-2xl bg-[#F2F6FF] p-4 shadow-[0_10px_20px_rgba(0,0,0,0.04)]"
                 >
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#ebe7ff]">
                     <svg
                       viewBox="0 0 24 24"
-                      className="h-5 w-5 text-[#c6bdf5]"
+                      className="h-10 w-10 text-[#c6bdf5]"
                       fill="currentColor"
                     >
                       <path d="M21 19l-5.5-7-3.5 4.5-2.5-3L3 19z" />
@@ -49,26 +50,24 @@ export default function CompanyOverview() {
                   </div>
 
                   <div>
-                    <Heading variant={"h5"} className="text-black">
-                      {item.title}
-                    </Heading>
-                    <p className="text-xl font-normal text-[#c6bdf5]">
-                      {item.desc}
-                    </p>
+                    <h5 className="font-bold text-black">{item.title}</h5>
+                    <p className="text-[14px] text-[#9795B5]">{item.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="flex justify-center md:justify-end rounded-[40px]">
+          {/* RIGHT SIDE */}
+          <div className="relative w-full md:w-1/2 h-[400px] md:h-auto">
             <Image
               src={CompanyOverviewImg}
-              alt={"Company Overview Image"}
-              width={585}
-              height={553}
+              alt="Company Overview Image"
+              fill
+              className="object-cover rounded-3xl"
             />
           </div>
+
         </div>
       </div>
     </section>

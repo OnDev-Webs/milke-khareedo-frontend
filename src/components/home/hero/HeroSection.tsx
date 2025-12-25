@@ -1,87 +1,113 @@
-import dummySvg from "@/assets/Image icon.svg";
 import Image from "next/image";
+import { FaChevronDown, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 
 export default function Hero() {
+  const group_deals = [
+    "/images/gd.jpg",
+    "/images/gd1.jpg",
+    "/images/gd2.jpg",
+    "/images/gd3.jpg",
+  ];
+
   return (
-    <section className="relative w-full bg-[#e2e2e2] py-20 ">
-      <div className="mx-auto w-300 text-center flex flex-col items-center">
-        <div className="mb-6 flex h-72 w-72 items-center justify-center rounded-3xl bg-[#f7f7fb] shadow-md">
-          <Image src={dummySvg} alt="HeroImg" />
-        </div>
+    <section className="relative w-full py-10">
 
-        <h1 className="text-3xl md:text-4xl font-bold text-[#828282]">
-          Body Text
-        </h1>
-        <p className="mt-2 text-gray-500 text-base">Sub Text</p>
+      <div className="relative mx-auto w-full max-w-[1200px] h-auto md:h-[450px] overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-6 shadow-md">
+        <div className="relative z-10 w-full md:w-[60%] pt-10 md:pt-10 ps-4 md:ps-6">
+          <p className="font-medium text-[#585981] mb-2">
+            Buying a home is a big decision.
+          </p>
 
-        <div className="mt-6 flex flex-wrap justify-center gap-4">
-          <button className="rounded-full border border-gray-400 bg-white px-8 py-3 text-sm text-[#828282] font-medium">
-            Button
-          </button>
-          <button className="rounded-full border border-gray-400 bg-white px-8 py-3 text-sm text-[#828282] font-medium">
-            Button
-          </button>
-        </div>
+          <h1 className="text-3xl md:text-4xl font-bold text-[#151516] md:pe-68">
+            <span className="text-[#FF765E]"> Milke Khereedo </span>
+            Makes it easier.
+          </h1>
 
-        <div className="my-10  flex items-center gap-3 rounded-full bg-white px-5 py-3 shadow-sm">
-          <div className="flex -space-x-2">
-            {[1, 2, 3, 4].map((i) => (
-              <div
-                key={i}
-                className="h-8 w-8 rounded-full border border-white bg-gray-300"
-              />
-            ))}
+          <p className="mt-3 text-[#585981] font-medium">
+            Buy together. Save more than buying alone.
+          </p>
+
+          <div className="mt-6">
+            <button className="rounded-full bg-[#FF765E] px-8 py-3 text-sm font-medium text-white shadow">
+              Want to see how it works?
+            </button>
           </div>
 
-          <span className="text-sm font-medium text-gray-700">
-            Explore 100+ Group Deals
-          </span>
+          <div className="my-6 inline-flex items-center gap-3 rounded-full bg-white px-5 py-3">
+            <div className="flex -space-x-2">
+              {group_deals.map((img, index) => (
+                <div
+                  key={index}
+                  className="relative h-8 w-8 overflow-hidden rounded-full border-2 border-white"
+                >
+                  <Image src={img} alt="User" fill className="object-cover" />
+                </div>
+              ))}
+            </div>
+
+            <span className="text-sm font-medium text-gray-700">
+              Explore 100+ Group Deals
+            </span>
+          </div>
+        </div>
+
+        <div className="hidden md:block absolute top-[-32px] left-[530px]">
+          <div className="relative w-[600px] h-[480px] overflow-hidden">
+            <Image
+              src="/images/banner1.png"
+              alt="Hero Image"
+              fill
+              priority
+              className="object-cover object-[50%_80%]"
+              style={{ transform: "scale(1.4)" }}
+            />
+          </div>
+        </div>
+
+        <div className="block md:hidden mt-10 relative w-[400px] top-[-100px] left-[-40px] h-[260px]">
+          <Image
+            src="/images/banner1.png"
+            alt="Hero Image"
+            fill
+            priority
+            className="object-cover object-[50%_80%]"
+          />
         </div>
       </div>
 
-      <div className="absolute -bottom-22 left-1/2 w-300 -translate-x-1/2 rounded-3xl bg-white p-10 shadow-lg">
-        <div className="flex flex-col md:flex-row items-center gap-4">
-          <div className="flex w-156 items-center gap-3 rounded-xl bg-gray-200 p-4 h-25">
-            <svg
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="size-10 text-gray-500"
-            >
-              <path d="M21 20l-5.5-5.5a7 7 0 10-1.5 1.5L20 21zM10 15a5 5 0 110-10 5 5 0 010 10z" />
-            </svg>
-
-            <input
-              placeholder="Search here"
-              className="w-full bg-transparent outline-none text-sm text-gray-600 h-10 placeholder:text-gray-500"
-            />
+      <div className="absolute bottom-[-20px] left-1/2 w-[95%] md:w-[1150px] -translate-x-1/2 px-4 md:px-6 z-20">
+        <div
+          className="flex flex-col md:flex-row items-center gap-4 rounded-2xl bg-white/70 backdrop-blur-[5px] p-4 shadow-lg ring-1 ring-white/30">
+          {/* CITY SELECT */}
+          <div className="relative h-14 w-full md:w-56">
+            <select
+              defaultValue="Delhi"
+              className="h-full w-full appearance-none rounded-xl bg-transparent px-4 pr-10 text-sm text-gray-800 outline-none border-none focus:outline-none focus:ring-0 cursor-pointer">
+              <option value="Delhi">City | Delhi</option>
+              <option value="Mumbai">City | Mumbai</option>
+              <option value="Bangalore">City | Bangalore</option>
+              <option value="Pune">City | Pune</option>
+            </select>
+            <FaChevronDown className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 text-xs" />
           </div>
 
-          <div className="flex w-80 items-center gap-3 rounded-xl bg-gray-200 p-4 h-25">
-            <svg
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="size-10 text-gray-500"
-            >
-              <path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7zm0 9.5a2.5 2.5 0 112.5-2.5 2.5 2.5 0 01-2.5 2.5z" />
-            </svg>
-
+          {/* INPUT */}
+          <div className="relative flex-1 w-full">
+            <FaMapMarkerAlt className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600" />
             <input
-              placeholder="Location"
-              className="w-full bg-transparent outline-none text-sm text-gray-600 placeholder:text-gray-500 h-25"
-            />
+              type="text"
+              placeholder="Find Your Dream Home"
+              className="h-14 w-full rounded-xl bg-transparent pl-12 pr-4 text-sm text-gray-800 outline-none border-none focus:outline-none focus:ring-0"/>
           </div>
 
-          <button className="flex size-25 items-center justify-center rounded-xl bg-gray-200">
-            <svg
-              viewBox="0 0 24 24"
-              fill="white"
-              className="h-6 w-6 text-gray-500"
-            >
-              <path d="M21 20l-5.5-5.5a7 7 0 10-1.5 1.5L20 21z" />
-            </svg>
+          {/* BUTTON */}
+          <button className="h-12 w-full md:w-28 rounded-full bg-[#FF765E] text-white flex items-center justify-center shadow-md">
+            <FaSearch />
+            <span className="ps-2">Search</span>
           </button>
         </div>
       </div>
+
     </section>
   );
 }

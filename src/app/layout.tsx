@@ -2,8 +2,21 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/header";
-import Footer from "@/components/layout/footer";
+import FooterSection from "@/components/layout/footer";
+import CopyRight from "@/components/layout/copyRight";
 import React from "react";
+import FooterWrapper from "@/components/layout/FooterWrapper";
+import { CompareProvider } from "@/contexts/CompareContext";
+import { AuthProvider } from "@/contexts/AuthContext";
+
+import { Montserrat } from "next/font/google";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-montserrat",
+});
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,11 +41,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="light">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
       >
-        <Header />
-        {children}
-        <Footer />
+        <AuthProvider>
+          <CompareProvider>
+            <Header />
+            {children}
+            <FooterWrapper />
+          </CompareProvider>
+        </AuthProvider>
       </body>
     </html>
   );

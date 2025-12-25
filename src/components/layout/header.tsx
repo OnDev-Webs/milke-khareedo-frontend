@@ -6,7 +6,8 @@ import { useState } from "react";
 import Logo from "@/assets/logo.svg";
 import Image from "next/image";
 import CompareIcon from "./CompareIcon";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuthContext } from "@/contexts/AuthContext";
+import AuthModal from "@/components/auth/AuthModal";
 import { IoPerson, IoChevronDown } from "react-icons/io5";
 import { HiOutlineMenu } from "react-icons/hi";
 
@@ -21,9 +22,10 @@ const navLinks = [
 export default function Header() {
   const pathname = usePathname();
   const isDashboard = pathname?.startsWith("/dashboard");
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user, logout } = useAuthContext();
   const [open, setOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname?.startsWith(href);
@@ -68,10 +70,19 @@ export default function Header() {
                   <div className="relative">
                     <button
                       onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                      className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[#f15a29] text-white transition-colors hover:bg-[#e14f20]"
+                      className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[#f15a29] text-white transition-colors hover:bg-[#e14f20] overflow-hidden"
                       aria-label="Profile menu"
                     >
-                      <IoPerson className="h-5 w-5" />
+                      {user?.profileImage ? (
+                        <Image
+                          src={user.profileImage}
+                          alt={user.name || "Profile"}
+                          fill
+                          className="object-cover"
+                        />
+                      ) : (
+                        <IoPerson className="h-5 w-5" />
+                      )}
                       <IoChevronDown className="absolute bottom-0.5 right-0.5 h-2.5 w-2.5" />
                     </button>
 
@@ -83,6 +94,16 @@ export default function Header() {
                           onClick={() => setProfileDropdownOpen(false)}
                         />
                         <div className="absolute right-0 top-12 z-50 min-w-[160px] rounded-lg bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5">
+                          <div className="px-4 py-2 border-b border-gray-100">
+                            <p className="text-sm font-medium text-gray-800">
+                              {user?.name || "User"}
+                            </p>
+                            {user?.phoneNumber && (
+                              <p className="text-xs text-gray-500">
+                                {user.countryCode} {user.phoneNumber}
+                              </p>
+                            )}
+                          </div>
                           <Link
                             href="/dashboard/profile"
                             onClick={() => setProfileDropdownOpen(false)}
@@ -92,11 +113,8 @@ export default function Header() {
                           </Link>
                           <button
                             onClick={() => {
-                              if (typeof window !== "undefined") {
-                                localStorage.removeItem("auth_token");
-                                window.dispatchEvent(new Event("auth-changed"));
-                                setProfileDropdownOpen(false);
-                              }
+                              logout();
+                              setProfileDropdownOpen(false);
                             }}
                             className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
                           >
@@ -107,12 +125,12 @@ export default function Header() {
                     )}
                   </div>
                 ) : (
-                  <Link
-                    href="/signin"
+                  <button
+                    onClick={() => setShowAuthModal(true)}
                     className="rounded-full bg-[#f15a29] px-6 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#e14f20] lg:px-7.5 lg:py-2.5 lg:text-base"
                   >
                     Sign In
-                  </Link>
+                  </button>
                 )}
               </>
             )}
@@ -157,20 +175,29 @@ export default function Header() {
                     Profile
                   </Link>
                 ) : (
-                  <Link
-                    href="/signin"
-                    onClick={() => setOpen(false)}
+                  <button
+                    onClick={() => {
+                      setOpen(false);
+                      setShowAuthModal(true);
+                    }}
                     className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#f15a29] px-4 py-2.5 text-sm font-semibold text-white"
                   >
                     <IoPerson className="h-5 w-5" />
                     Sign In
-                  </Link>
+                  </button>
                 )}
               </div>
             </nav>
           </div>
         )}
       </div>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        onSuccess={() => setShowAuthModal(false)}
+      />
     </header>
   );
 }

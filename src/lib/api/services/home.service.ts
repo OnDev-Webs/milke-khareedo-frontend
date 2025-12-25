@@ -46,6 +46,7 @@ export interface Property {
   reraId: string;
   description: string;
   relationshipManager: string;
+  isFavorite?: boolean; // Favorite status from API
 }
 
 export interface PaginationInfo {
@@ -150,6 +151,7 @@ export interface CompareProperty {
   location: string;
   latitude: number | null;
   longitude: number | null;
+  pinLabel?: string; // Label for map pin (A, B, C, D, etc.)
   mainImage: string | null;
   developer: string;
   developerId?: string;
@@ -164,6 +166,7 @@ export interface CompareProperty {
   possessionStatus: string;
   possessionDate?: string;
   possessionDateFormatted?: string;
+  isFavorite?: boolean; // Favorite status from API
   floorPlans?: Array<{
     image: string;
     unitType: string;
@@ -284,6 +287,34 @@ export const homeService = {
   ): Promise<ApiResponse<CompareResponse>> => {
     return apiClient.post<CompareResponse>(
       API_ENDPOINTS.HOME.POST_COMPARE,
+      data
+    );
+  },
+
+  /**
+   * Add/Remove property from favorites
+   * POST /api/home/property/favorite
+   */
+  toggleFavorite: async (
+    propertyId: string
+  ): Promise<ApiResponse<{ message: string; isFavorite: boolean }>> => {
+    return apiClient.post<{ message: string; isFavorite: boolean }>(
+      API_ENDPOINTS.HOME.POST_FAVORITE,
+      { propertyId }
+    );
+  },
+
+  /**
+   * Book a visit
+   * POST /api/home/property/visit
+   */
+  bookVisit: async (data: {
+    propertyId: string;
+    visitDate: string;
+    visitTime: string;
+  }): Promise<ApiResponse<{ message: string }>> => {
+    return apiClient.post<{ message: string }>(
+      API_ENDPOINTS.HOME.POST_VISIT,
       data
     );
   },

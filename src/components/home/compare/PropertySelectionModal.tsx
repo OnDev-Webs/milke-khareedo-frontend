@@ -29,8 +29,9 @@ export default function PropertySelectionModal({
         latitude: number;
         longitude: number;
     } | null>(null);
-    const [selectedProperties, setSelectedProperties] = useState<Set<string>>(
-        new Set()
+    // Store full property objects, not just IDs, so selections persist across pages
+    const [selectedProperties, setSelectedProperties] = useState<Map<string, Property>>(
+        new Map()
     );
 
     const limit = 3;
@@ -128,38 +129,37 @@ export default function PropertySelectionModal({
         return () => clearTimeout(timer);
     }, [searchQuery, isOpen, userLocation, fetchProperties]);
 
-    // Reset state when modal closes
+    // Reset state when modal closes (but preserve selections until modal closes)
     useEffect(() => {
         if (!isOpen) {
             setSearchQuery("");
             setCurrentPage(1);
-            setSelectedProperties(new Set());
+            setSelectedProperties(new Map());
             setError(null);
         }
     }, [isOpen]);
 
-    const handlePropertyToggle = (propertyId: string) => {
+    const handlePropertyToggle = (property: Property) => {
         setSelectedProperties((prev) => {
-            const newSet = new Set(prev);
-            if (newSet.has(propertyId)) {
-                newSet.delete(propertyId);
+            const newMap = new Map(prev);
+            if (newMap.has(property.id)) {
+                newMap.delete(property.id);
             } else {
-                newSet.add(propertyId);
+                newMap.set(property.id, property);
             }
-            return newSet;
+            return newMap;
         });
     };
 
     const handleAddSelected = () => {
         let addedCount = 0;
-        selectedProperties.forEach((propertyId) => {
-            const property = properties.find((p) => p.id === propertyId);
-            if (property && !isInCompare(propertyId)) {
+        selectedProperties.forEach((property) => {
+            if (property && !isInCompare(property.id)) {
                 onSelect(property);
                 addedCount++;
             }
         });
-        setSelectedProperties(new Set());
+        setSelectedProperties(new Map());
         // Close modal if properties were added
         if (addedCount > 0) {
             onClose();
@@ -192,9 +192,16 @@ export default function PropertySelectionModal({
             <div className="fixed left-1/2 top-1/2 z-50 max-h-[90vh] w-[95%] max-w-4xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl bg-white shadow-2xl">
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-gray-200 p-4 sm:p-6">
-                    <h2 className="text-lg font-bold text-gray-800 sm:text-xl md:text-2xl">
-                        Select Properties to Compare
-                    </h2>
+                    <div className="flex items-center gap-3">
+                        <h2 className="text-lg font-bold text-gray-800 sm:text-xl md:text-2xl">
+                            Select Properties to Compare
+                        </h2>
+                        {selectedProperties.size > 0 && (
+                            <span className="rounded-full bg-[#f15a29] px-3 py-1 text-xs font-semibold text-white">
+                                {selectedProperties.size} selected
+                            </span>
+                        )}
+                    </div>
                     <button
                         onClick={onClose}
                         className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
@@ -260,7 +267,7 @@ export default function PropertySelectionModal({
                                                 : "border-gray-200 hover:border-[#f15a29] hover:shadow-lg"
                                                 } ${alreadyInCompare ? "opacity-50" : ""}`}
                                             onClick={() =>
-                                                !alreadyInCompare && handlePropertyToggle(property.id)
+                                                !alreadyInCompare && handlePropertyToggle(property)
                                             }
                                         >
                                             {/* Selection Checkbox */}
@@ -391,7 +398,7 @@ export default function PropertySelectionModal({
                                 onClick={handleAddSelected}
                                 className="rounded-full bg-[#f15a29] px-6 py-2 text-sm font-semibold text-white hover:bg-[#e14f20] transition-colors"
                             >
-                                Add to Compare
+                                Add {selectedProperties.size} to Compare
                             </button>
                         </div>
                     </div>

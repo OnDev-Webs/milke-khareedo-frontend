@@ -7,6 +7,7 @@ import CopyRight from "@/components/layout/copyRight";
 import React from "react";
 import FooterWrapper from "@/components/layout/FooterWrapper";
 import { CompareProvider } from "@/contexts/CompareContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 import { Montserrat } from "next/font/google";
 
@@ -42,11 +43,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
       >
-        <CompareProvider>
-          <Header />
-          {children}
-          <FooterWrapper />
-        </CompareProvider>
+        <AuthProvider>
+          <CompareProvider>
+            <Header />
+            {children}
+            <FooterWrapper />
+          </CompareProvider>
+        </AuthProvider>
       </body>
     </html>
   );

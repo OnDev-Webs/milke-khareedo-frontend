@@ -38,8 +38,9 @@ class ApiClient {
    * Override this method if you need to get token from storage
    */
   private getAuthToken(): string | null {
-    // Example: return localStorage.getItem("authToken");
-    // For now, return null
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("auth_token");
+    }
     return null;
   }
 

@@ -51,31 +51,94 @@ export default function ComparePage() {
     fetchComparison();
   }, [compareItems]);
 
-  // Calculate map center based on compared properties
-  const mapCenter = useMemo(() => {
-    if (comparisonData.length > 0) {
-      const firstProperty = comparisonData[0];
-      if (firstProperty.latitude && firstProperty.longitude) {
-        return {
-          lat: firstProperty.latitude,
-          lng: firstProperty.longitude,
-        };
-      }
-    }
-    // Default to Delhi
-    return { lat: 28.4089, lng: 77.0418 };
-  }, [comparisonData]);
-
-  // Get markers for compared properties
+  // Get markers for compared properties with labels
+  // Use compareItems as source of truth - create markers for ALL items in compareItems
   const mapMarkers = useMemo(() => {
-    return comparisonData
-      .filter((prop) => prop.latitude && prop.longitude)
-      .map((prop) => ({
-        lat: prop.latitude!,
-        lng: prop.longitude!,
-        title: prop.projectName,
-      }));
-  }, [comparisonData]);
+    // If no items to compare, return empty array
+    if (compareItems.length === 0) {
+      return [];
+    }
+
+    // Create markers array ensuring proper label assignment
+    // Iterate through compareItems (source of truth) and find matching data in comparisonData
+    const markers = compareItems
+      .map((compareItem, index) => {
+        // Find the property in comparisonData that matches this compareItem
+        const prop = comparisonData.find((p) => String(p.id) === String(compareItem.id));
+
+        // If property not found in comparisonData yet (still loading), skip for now
+        // But we'll still try to create a marker if we have coordinates from somewhere else
+        if (!prop) {
+          // Log for debugging - property might still be loading
+          console.warn(`Property ${compareItem.id} not found in comparisonData yet`);
+          return null;
+        }
+
+        // Validate coordinates - must have both lat and lng
+        const hasValidCoords =
+          prop.latitude !== null &&
+          prop.latitude !== undefined &&
+          prop.longitude !== null &&
+          prop.longitude !== undefined &&
+          !isNaN(Number(prop.latitude)) &&
+          !isNaN(Number(prop.longitude)) &&
+          Number(prop.latitude) !== 0 &&
+          Number(prop.longitude) !== 0; // Exclude 0,0 coordinates (invalid)
+
+        if (!hasValidCoords) {
+          // Log for debugging - property doesn't have valid coordinates
+          console.warn(`Property ${compareItem.id} (${prop.projectName || compareItem.title}) does not have valid coordinates`);
+          return null;
+        }
+
+        // Use pinLabel from API response, fallback to generated label if not provided
+        const label = prop.pinLabel || String.fromCharCode(65 + index);
+
+        return {
+          id: String(prop.id),
+          lat: Number(prop.latitude),
+          lng: Number(prop.longitude),
+          title: prop.projectName || compareItem.title,
+          label: label,
+        };
+      })
+      .filter((marker): marker is NonNullable<typeof marker> => marker !== null);
+
+    // Debug log to verify all markers are created
+    if (markers.length !== compareItems.length) {
+      console.warn(
+        `Expected ${compareItems.length} markers but created ${markers.length}. ` +
+        `Some properties may not have valid coordinates or are still loading.`
+      );
+    } else {
+      console.log(`✅ Successfully created ${markers.length} markers using pinLabel from API:`,
+        markers.map(m => `${m.label} (${m.title})`).join(', ')
+      );
+    }
+
+    return markers;
+  }, [comparisonData, compareItems]);
+
+  // Calculate map center based on actual markers being displayed
+  const mapCenter = useMemo(() => {
+    if (mapMarkers.length === 0) {
+      // Default to Delhi if no markers
+      return { lat: 28.4089, lng: 77.0418 };
+    }
+
+    if (mapMarkers.length === 1) {
+      return {
+        lat: mapMarkers[0].lat,
+        lng: mapMarkers[0].lng,
+      };
+    }
+
+    // Calculate average center for multiple markers
+    const avgLat = mapMarkers.reduce((sum, marker) => sum + marker.lat, 0) / mapMarkers.length;
+    const avgLng = mapMarkers.reduce((sum, marker) => sum + marker.lng, 0) / mapMarkers.length;
+
+    return { lat: avgLat, lng: avgLng };
+  }, [mapMarkers]);
 
   const handlePropertySelect = (property: Property) => {
     addToCompare({
@@ -113,6 +176,7 @@ export default function ComparePage() {
         possessionStatus: apiProperty.possessionStatus,
         floorPlanImage: apiProperty.floorPlans?.[0]?.image || undefined,
         floorPlans: apiProperty.floorPlans || undefined,
+        isFavorite: apiProperty.isFavorite ?? false, // Use isFavorite from API response
       };
     }
 
@@ -130,6 +194,7 @@ export default function ComparePage() {
       possessionDate: undefined,
       possessionStatus: undefined,
       floorPlanImage: undefined,
+      isFavorite: false, // Default to false if API data not available
     };
   };
 
@@ -209,8 +274,10 @@ export default function ComparePage() {
             <div className="grid gap-2 grid-cols-1 sm:gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-3 xl:grid-cols-3 lg:gap-6">
               {/* Render compared properties */}
               {compareItems.map((item, index) => {
-                // Generate label (A, B, C, D)
-                const label = String.fromCharCode(65 + index);
+                // Find the property in comparisonData to get pinLabel from API
+                const apiProperty = comparisonData.find((p) => String(p.id) === String(item.id));
+                // Use pinLabel from API response, fallback to generated label if not provided
+                const label = apiProperty?.pinLabel || String.fromCharCode(65 + index);
                 const propertyData = getPropertyForCard(item);
 
                 return (

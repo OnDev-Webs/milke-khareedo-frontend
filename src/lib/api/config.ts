@@ -32,6 +32,14 @@ export const API_ENDPOINTS = {
     POST_EMI_CALCULATOR: "/home/emi-calculator",
     GET_PROPERTIES: "/home/properties",
     POST_COMPARE: "/home/compare",
+    POST_FAVORITE: "/home/property/favorite",
+    POST_VISIT: "/home/property/visit",
+  },
+  // Auth endpoints
+  AUTH: {
+    LOGIN_OR_REGISTER: "/users/login-or-register",
+    VERIFY_OTP: "/users/verify-otp",
+    RESEND_OTP: "/users/resend-otp",
   },
 
   // Add more endpoint groups as needed

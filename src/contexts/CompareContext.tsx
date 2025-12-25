@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useCallback } from "react";
+import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
 
 /**
  * Property interface for compare feature
@@ -18,6 +18,7 @@ export interface CompareProperty {
 interface CompareContextType {
   compareItems: CompareProperty[];
   addToCompare: (property: CompareProperty) => void;
+  clearAndAddToCompare: (property: CompareProperty) => void; // Clear old data and add new property
   removeFromCompare: (id: string | number) => void;
   clearCompare: () => void;
   isInCompare: (id: string | number) => boolean;
@@ -26,8 +27,40 @@ interface CompareContextType {
 
 const CompareContext = createContext<CompareContextType | undefined>(undefined);
 
+const STORAGE_KEY = "compare_items";
+
+// Load compare items from localStorage
+const loadCompareItems = (): CompareProperty[] => {
+  if (typeof window === "undefined") return [];
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+  } catch (error) {
+    console.error("Error loading compare items from localStorage:", error);
+  }
+  return [];
+};
+
+// Save compare items to localStorage
+const saveCompareItems = (items: CompareProperty[]) => {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  } catch (error) {
+    console.error("Error saving compare items to localStorage:", error);
+  }
+};
+
 export function CompareProvider({ children }: { children: React.ReactNode }) {
-  const [compareItems, setCompareItems] = useState<CompareProperty[]>([]);
+  // Initialize from localStorage
+  const [compareItems, setCompareItems] = useState<CompareProperty[]>(() => loadCompareItems());
+
+  // Save to localStorage whenever compareItems changes
+  useEffect(() => {
+    saveCompareItems(compareItems);
+  }, [compareItems]);
 
   const addToCompare = useCallback((property: CompareProperty) => {
     setCompareItems((prev) => {
@@ -41,6 +74,11 @@ export function CompareProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prev, property];
     });
+  }, []);
+
+  // Clear old compare data and add new property (for new page comparisons)
+  const clearAndAddToCompare = useCallback((property: CompareProperty) => {
+    setCompareItems([property]);
   }, []);
 
   const removeFromCompare = useCallback((id: string | number) => {
@@ -63,6 +101,7 @@ export function CompareProvider({ children }: { children: React.ReactNode }) {
       value={{
         compareItems,
         addToCompare,
+        clearAndAddToCompare,
         removeFromCompare,
         clearCompare,
         isInCompare,

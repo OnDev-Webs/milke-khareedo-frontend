@@ -12,42 +12,35 @@ export default function Hero() {
   return (
     <section className="relative w-full py-10">
 
-      {/* HERO CONTAINER */}
-      <div className="relative mx-auto w-[1200px] h-[500px]  overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-10 shadow-md">
-
-        {/* CONTENT */}
-        <div className="relative z-10 w-[60%] pt-16 ps-6">
+      <div className="relative mx-auto w-full max-w-[1200px] h-auto md:h-[450px] overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-6 shadow-md">
+        <div className="relative z-10 w-full md:w-[60%] pt-10 md:pt-10 ps-4 md:ps-6">
           <p className="font-medium text-[#585981] mb-2">
             Buying a home is a big decision.
           </p>
-          <h1 className="text-4xl font-bold text-[#151516] pe-68">
-           <span className="text-[#FF765E]"> Milke Khereedo </span>Makes it easier.
+
+          <h1 className="text-3xl md:text-4xl font-bold text-[#151516] md:pe-68">
+            <span className="text-[#FF765E]"> Milke Khereedo </span>
+            Makes it easier.
           </h1>
 
           <p className="mt-3 text-[#585981] font-medium">
             Buy together. Save more than buying alone.
           </p>
 
-          {/* Buttons */}
-          <div className="mt-6 flex gap-4">
+          <div className="mt-6">
             <button className="rounded-full bg-[#FF765E] px-8 py-3 text-sm font-medium text-white shadow">
               Want to see how it works?
             </button>
           </div>
 
-          {/* Explore */}
-          <div className="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-5 py-3">
+          <div className="my-6 inline-flex items-center gap-3 rounded-full bg-white px-5 py-3">
             <div className="flex -space-x-2">
               {group_deals.map((img, index) => (
                 <div
                   key={index}
-                  className="relative h-8 w-8 overflow-hidden rounded-full border-2 border-white">
-                  <Image
-                    src={img}
-                    alt="User"
-                    fill
-                    className="object-cover"
-                  />
+                  className="relative h-8 w-8 overflow-hidden rounded-full border-2 border-white"
+                >
+                  <Image src={img} alt="User" fill className="object-cover" />
                 </div>
               ))}
             </div>
@@ -58,11 +51,10 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* IMAGE (OVERLAPPED & BLENDED) */}
-        <div className="absolute top-[30px] left-[500px]">
-          <div className="relative w-[635px] h-[434px] overflow-hidden">
+        <div className="hidden md:block absolute top-[-32px] left-[530px]">
+          <div className="relative w-[600px] h-[480px] overflow-hidden">
             <Image
-              src="/images/banner.jpg"
+              src="/images/banner1.png"
               alt="Hero Image"
               fill
               priority
@@ -72,44 +64,50 @@ export default function Hero() {
           </div>
         </div>
 
+        <div className="block md:hidden mt-10 relative w-[400px] top-[-100px] left-[-40px] h-[260px]">
+          <Image
+            src="/images/banner1.png"
+            alt="Hero Image"
+            fill
+            priority
+            className="object-cover object-[50%_80%]"
+          />
+        </div>
       </div>
 
-      {/* SEARCH BAR (OVERLAP FULL WIDTH) */}
-      <div className="absolute bottom-[-14px] left-1/2 w-[1150px] max-w-6xl -translate-x-1/2 px-6 z-20">
-        <div className="flex items-center gap-4 rounded-2xl bg-white/80 backdrop-blur-md p-4 shadow-lg">
-
-          {/* CITY DROPDOWN */}
-          <div className="relative h-14 w-56">
+      <div className="absolute bottom-[-20px] left-1/2 w-[95%] md:w-[1150px] -translate-x-1/2 px-4 md:px-6 z-20">
+        <div
+          className="flex flex-col md:flex-row items-center gap-4 rounded-2xl bg-white/70 backdrop-blur-[5px] p-4 shadow-lg ring-1 ring-white/30">
+          {/* CITY SELECT */}
+          <div className="relative h-14 w-full md:w-56">
             <select
               defaultValue="Delhi"
-              className="h-full w-full appearance-none rounded-xl bg-white px-4 pr-10 text-sm text-gray-700 shadow-sm outline-none cursor-pointer"
-            >
+              className="h-full w-full appearance-none rounded-xl bg-transparent px-4 pr-10 text-sm text-gray-800 outline-none border-none focus:outline-none focus:ring-0 cursor-pointer">
               <option value="Delhi">City | Delhi</option>
               <option value="Mumbai">City | Mumbai</option>
               <option value="Bangalore">City | Bangalore</option>
               <option value="Pune">City | Pune</option>
             </select>
-            {/* DROPDOWN ICON */}
-            <FaChevronDown className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs" />
+            <FaChevronDown className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 text-xs" />
           </div>
 
           {/* INPUT */}
-          <div className="relative flex-1">
-            <FaMapMarkerAlt className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+          <div className="relative flex-1 w-full">
+            <FaMapMarkerAlt className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600" />
             <input
               type="text"
               placeholder="Find Your Dream Home"
-              className="h-14 w-full rounded-xl bg-white pl-12 pr-4 text-sm text-gray-600 outline-none shadow-sm"
-            />
+              className="h-14 w-full rounded-xl bg-transparent pl-12 pr-4 text-sm text-gray-800 outline-none border-none focus:outline-none focus:ring-0"/>
           </div>
 
-          {/* SEARCH BUTTON */}
-          <button className="h-12 w-28 rounded-xl bg-[#FF765E] text-white flex items-center justify-center shadow-md">
-            <FaSearch /> <span className="ps-2 text-center">Search</span>
+          {/* BUTTON */}
+          <button className="h-12 w-full md:w-28 rounded-full bg-[#FF765E] text-white flex items-center justify-center shadow-md">
+            <FaSearch />
+            <span className="ps-2">Search</span>
           </button>
         </div>
       </div>
 
-    </section >
+    </section>
   );
 }

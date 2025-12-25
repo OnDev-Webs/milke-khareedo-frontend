@@ -13,7 +13,7 @@ export default function TopDeveloperLogos() {
           {[1, 2, 3, 4, 5, 6].map((_, i) => (
             <div
               key={i}
-              className="flex px-[42px] py-[84px] shrink-0 items-center justify-center rounded-3xl bg-[#f7f5ff] shadow-[0_10px_22px_rgba(0,0,0,0.04)]"
+              className="flex px-[42px] py-[84px] shrink-0 items-center justify-center rounded-3xl bg-[#F9F9FF] shadow-[0_10px_22px_rgba(0,0,0,0.04)]"
             >
               <Image src={Logo} alt={"logo"} width={216} height={52} />
             </div>

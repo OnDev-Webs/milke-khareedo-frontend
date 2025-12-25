@@ -61,7 +61,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="w-full bg-[#F2F5F9] py-14 px-4 md:px-16">
+    <section className="w-full bg-white py-14 px-4 md:px-16">
       <div className="mx-auto max-w-7xl">
         {/* Heading */}
         <h2 className="text-[24px] md:text-[30px] font-semibold text-[#000000] mb-2">
@@ -69,16 +69,19 @@ export default function HowItWorks() {
           <span className="relative inline-block text-[#FF765E] ps-2">
             Smarter
             <svg
-              className="absolute left-2 -bottom-3.5 w-[90px] md:w-[122px] h-[11px]"
+              className="absolute left-0 -bottom-2"
+              width="150"
+              height="11"
               viewBox="0 0 228 11"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M2 6 C40 10, 80 2, 120 5 C160 8, 190 3, 226 6"
+                d="M2 8.5C60 1.5 170 5.5 226 8.5"
                 stroke="#FF765E"
-                strokeWidth="6"
+                strokeWidth="5"
                 strokeLinecap="round"
+                fill="none"
               />
             </svg>
           </span>

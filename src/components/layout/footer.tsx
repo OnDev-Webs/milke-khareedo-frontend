@@ -161,7 +161,7 @@ export default function FooterSection() {
                 <li>
                   <Link
                     href="/about"
-                    className="text-sm text-white/80 transition-colors hover:text-white lg:text-base"
+                    className="text-sm text-white/80 transition-colors hover:text-white lg:text-base pe-20"
                   >
                     About Milke Khareedo
                   </Link>

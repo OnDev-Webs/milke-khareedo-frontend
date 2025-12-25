@@ -116,14 +116,26 @@ export default function CalculateSave() {
   const interestPercentage = emiData?.emiBreakdown?.interestPercentage || 19.5;
 
   return (
-    <section className="w-full bg-[#383331] py-16">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-[32px] bg-white p-6 sm:p-10 shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
+    <section
+      className="relative w-full py-16 overflow-hidden"
+      style={{
+        backgroundColor: "#383331",
+        backgroundImage: `
+      radial-gradient(circle at 50% 30%, rgba(255,255,255,0.02) 8px, transparent 2px),
+      radial-gradient(circle at 30% 50%, rgba(255,255,255,0.02) 8px, transparent 2px),
+      radial-gradient(circle at 70% 50%, rgba(255,255,255,0.02) 8px, transparent 2px),
+      radial-gradient(circle at 50% 70%, rgba(255,255,255,0.02) 8px, transparent 2px)
+    `,
+        backgroundSize: "60px 60px",
+      }}
+    >
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="rounded-[32px] bg-white p-2 sm:p-8 shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
           <div className="grid gap-8 md:grid-cols-2">
             {/* ================= LEFT SIDE ================= */}
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-4">
               {/* Circular Chart and EMI Result */}
-              <div className="flex flex-col md:flex-row md:items-center gap-6">
+              <div className="flex flex-col md:flex-row p-4 rounded-md bg-[#F2F6FF] md:items-center gap-6">
                 {/* Circular Pie Chart */}
                 <div className="relative flex-shrink-0 h-36 w-36 sm:h-44 sm:w-44 md:h-48 md:w-48">
                   <div
@@ -141,12 +153,12 @@ export default function CalculateSave() {
                 </div>
 
                 {/* EMI Result Breakdown */}
-                <div className="flex-1 w-full md:w-auto">
-                  <h3 className="mb-3 sm:mb-4 text-base sm:text-lg font-semibold text-black">
+                <div className="flex-1 w-full md:w-auto bg-white rounded-md">
+                  <h3 className="mb-3 sm:mb-4 bg-[#F2F6FF] text-base sm:text-lg font-semibold text-black">
                     Calculated EMI Result
                   </h3>
 
-                  <div className="space-y-2 text-sm">
+                  <div className="space-y-2 text-sm px-2">
                     <div className="flex items-center justify-between gap-4 sm:gap-6">
                       <p className="flex items-center gap-2 font-medium text-[#38BA50]">
                         <span>●</span> Principal Amount
@@ -166,7 +178,7 @@ export default function CalculateSave() {
                     </div>
                   </div>
                   <div className="my-3 sm:my-4 h-px w-full bg-gray-200" />
-                  <div className="flex items-center justify-between gap-4 sm:gap-6">
+                  <div className="flex items-center justify-between gap-4 px-2 py-2 sm:gap-6">
                     <p className="text-sm text-gray-600">Total Amount</p>
                     <p className="text-base sm:text-lg font-semibold text-black">
                       {emiData?.totalAmountPayable?.formatted || "₹ 4,48,72,373.00"}
@@ -176,7 +188,7 @@ export default function CalculateSave() {
               </div>
 
               {/* Partner Logos Section */}
-              <div className="flex flex-col items-center gap-3">
+              <div className="flex flex-col items-center gap-3 bg-[#F2F6FF] px-6 py-10 rounded-md">
                 <div className="flex items-center gap-12 sm:gap-20">
                   <button className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 text-gray-400 hover:bg-gray-50 transition-colors">
                     <IoChevronBack className="h-5 w-5" />

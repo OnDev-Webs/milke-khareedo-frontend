@@ -27,7 +27,7 @@ export default function FAQS() {
       title: "Is group buying safe and legal?",
       desciption: "Yes. Each buyer completes their own individual purchase directly with the builder. Group buying only helps bring clarity and better pricing options.",
     },
-     {
+    {
       id: 6,
       title: "What if I’m not comfortable with the final offer?",
       desciption: "We share the details clearly and continue supporting you. You move forward only when you feel confident about the decision.",
@@ -37,21 +37,23 @@ export default function FAQS() {
   return (
     <section id="FAQS" className="py-25 px-30 bg-[#F0F8FF]">
       <div className="gap-12.5 flex flex-col items-center justify-center">
-
         <h2 className="text-[24px] md:text-[30px] font-semibold text-[#000000] mb-2">
           <span className="relative inline-block text-[#FF765E] pe-2">
             Questions
             <svg
-              className="absolute left-2 -bottom-2.5 w-[90px] md:w-[150px] h-[11px]"
+              className="absolute left-0 -bottom-2"
+              width="164"
+              height="11"
               viewBox="0 0 228 11"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M2 6 C40 10, 80 2, 120 5 C160 8, 190 3, 226 6"
+                d="M2 8.5C60 1.5 170 5.5 226 8.5"
                 stroke="#FF765E"
-                strokeWidth="6"
+                strokeWidth="5"
                 strokeLinecap="round"
+                fill="none"
               />
             </svg>
           </span>

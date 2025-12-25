@@ -121,17 +121,19 @@ export default function Testimonials() {
             <span className="relative inline-block text-[#FF765E] font-bold px-2">
               Buyers
               <svg
-                className="absolute left-2 -bottom-3"
-                width="110"
+                className="absolute left-0 -bottom-2"
+                width="130"
                 height="11"
                 viewBox="0 0 228 11"
                 fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M2 6 C40 10, 80 2, 120 5 C160 8, 190 3, 226 6"
+                  d="M2 8.5C60 1.5 170 5.5 226 8.5"
                   stroke="#FF765E"
-                  strokeWidth="3"
+                  strokeWidth="5"
                   strokeLinecap="round"
+                  fill="none"
                 />
               </svg>
             </span>

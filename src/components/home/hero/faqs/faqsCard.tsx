@@ -14,7 +14,7 @@ export default function FAQSCard({ data }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="w-250 max-w-250 rounded-4xl bg-[#FFFFFF] shadow-md">
+    <div className="w-250 max-w-250 max-md:w-[150%] mx-10px rounded-4xl bg-[#FFFFFF] shadow-md">
       {/* Header */}
       <div
         className="flex justify-between items-center py-6 px-8 cursor-pointer"

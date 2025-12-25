@@ -42,16 +42,19 @@ export default function AboutSection() {
               <span className="relative inline-block pe-2">
                 Buying
                 <svg
-                  className="absolute left-0 -bottom-3.5 w-[90px] md:w-[112px] h-[11px]"
+                  className="absolute left-0 -bottom-2"
+                  width="128"
+                  height="11"
                   viewBox="0 0 228 11"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M2 6 C40 10, 80 2, 120 5 C160 8, 190 3, 226 6"
+                    d="M2 8.5C60 1.5 170 5.5 226 8.5"
                     stroke="#FF765E"
                     strokeWidth="6"
                     strokeLinecap="round"
+                    fill="none"
                   />
                 </svg>
               </span>
@@ -96,9 +99,15 @@ export default function AboutSection() {
               />
 
               {/* Top Left */}
-              <div className="absolute top-2 md:top-4 left-2 md:left-4 flex text-white items-center gap-2  px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-semibold">
-                <svg className="h-3 md:h-4 w-3 md:w-4 bg-white/90 text-black" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M3 6h18M3 12h18M3 18h18" />
+              <div className="absolute top-2 md:top-2 left-2 md:left-2 z-20 flex items-center gap-2 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-semibold text-white">
+                <svg
+                  className="h-7 w-7 md:h-9 md:w-9 bg-white/90 rounded-full p-[3px]"
+                  viewBox="0 0 24 24"
+                  fill="#000">
+                  <circle cx="8" cy="8" r="2" />
+                  <circle cx="16" cy="8" r="2" />
+                  <circle cx="8" cy="16" r="2" />
+                  <circle cx="16" cy="16" r="2" />
                 </svg>
                 Milke Khareedo
               </div>

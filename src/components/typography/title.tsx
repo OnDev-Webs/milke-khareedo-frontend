@@ -5,10 +5,15 @@ interface TitleProps {
   text: string;
   drawLineText?: string;
   isDrawLine?: boolean;
-    className?: string;
+  className?: string;
 }
 
-const Title: React.FC<TitleProps> = ({ text, drawLineText, isDrawLine, className = "" }) => {
+const Title: React.FC<TitleProps> = ({
+  text,
+  drawLineText,
+  isDrawLine,
+  className = "",
+}) => {
   return (
     <>
       <Heading variant={"h2"} className={className}>

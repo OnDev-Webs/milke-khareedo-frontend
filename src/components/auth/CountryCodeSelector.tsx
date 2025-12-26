@@ -84,14 +84,15 @@ export default function CountryCodeSelector({
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   // Find selected country
-  const selectedCountry = COUNTRIES.find((c) => c.dialCode === value) || COUNTRIES[0];
+  const selectedCountry =
+    COUNTRIES.find((c) => c.dialCode === value) || COUNTRIES[0];
 
   // Filter countries based on search
   const filteredCountries = COUNTRIES.filter(
     (country) =>
       country.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       country.dialCode.includes(searchQuery) ||
-      country.code.toLowerCase().includes(searchQuery.toLowerCase())
+      country.code.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   // Close dropdown when clicking outside
@@ -185,7 +186,9 @@ export default function CountryCodeSelector({
                   <span className="text-xl">{country.flag}</span>
                   <div className="flex-1">
                     <div className="text-sm font-medium">{country.name}</div>
-                    <div className="text-xs text-gray-400">{country.dialCode}</div>
+                    <div className="text-xs text-gray-400">
+                      {country.dialCode}
+                    </div>
                   </div>
                   {country.dialCode === value && (
                     <svg
@@ -215,4 +218,3 @@ export default function CountryCodeSelector({
     </div>
   );
 }
-

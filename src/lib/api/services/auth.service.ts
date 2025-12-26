@@ -38,12 +38,12 @@ export const authService = {
    * POST /api/users/login-or-register
    */
   loginOrRegister: async (
-    data: LoginOrRegisterRequest
+    data: LoginOrRegisterRequest,
   ): Promise<ApiResponse<AuthResponse>> => {
     return apiClient.post<AuthResponse>(
       API_ENDPOINTS.AUTH.LOGIN_OR_REGISTER,
       data,
-      { skipAuth: true }
+      { skipAuth: true },
     );
   },
 
@@ -52,13 +52,11 @@ export const authService = {
    * POST /api/users/verify-otp
    */
   verifyOTP: async (
-    data: VerifyOTPRequest
+    data: VerifyOTPRequest,
   ): Promise<ApiResponse<AuthResponse>> => {
-    return apiClient.post<AuthResponse>(
-      API_ENDPOINTS.AUTH.VERIFY_OTP,
-      data,
-      { skipAuth: true }
-    );
+    return apiClient.post<AuthResponse>(API_ENDPOINTS.AUTH.VERIFY_OTP, data, {
+      skipAuth: true,
+    });
   },
 
   /**
@@ -66,13 +64,12 @@ export const authService = {
    * POST /api/users/resend-otp
    */
   resendOTP: async (
-    data: ResendOTPRequest
+    data: ResendOTPRequest,
   ): Promise<ApiResponse<{ message: string }>> => {
     return apiClient.post<{ message: string }>(
       API_ENDPOINTS.AUTH.RESEND_OTP,
       data,
-      { skipAuth: true }
+      { skipAuth: true },
     );
   },
 };
-

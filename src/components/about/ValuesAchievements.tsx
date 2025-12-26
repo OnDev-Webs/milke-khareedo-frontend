@@ -1,4 +1,3 @@
-'use client'
 import Title from "@/components/typography/title";
 import Image from "next/image";
 import Heading from "@/components/typography/heading";
@@ -78,7 +77,10 @@ export default function ValuesAchievements() {
 
               {/* Content */}
               <div className="flex flex-col justify-center w-full">
-                <Heading variant={"h6"} className="text-black font-bold text-[16px] md:text-[18px]">
+                <Heading
+                  variant={"h6"}
+                  className="text-black font-bold text-[16px] md:text-[18px]"
+                >
                   {item.title}
                 </Heading>
                 <p className="mt-2 text-[14px] md:text-[14px] font-normal text-[#373737] leading-relaxed text-left">

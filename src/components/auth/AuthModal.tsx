@@ -15,7 +15,11 @@ interface AuthModalProps {
 
 type AuthStep = "phone" | "otp";
 
-export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
+export default function AuthModal({
+  isOpen,
+  onClose,
+  onSuccess,
+}: AuthModalProps) {
   const { login } = useAuthContext();
   const [step, setStep] = useState<AuthStep>("phone");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -30,7 +34,8 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
   const formatPhoneNumber = (value: string) => {
     const cleaned = value.replace(/\D/g, "");
     if (cleaned.length <= 3) return cleaned;
-    if (cleaned.length <= 6) return `${cleaned.slice(0, 3)} ${cleaned.slice(3)}`;
+    if (cleaned.length <= 6)
+      return `${cleaned.slice(0, 3)} ${cleaned.slice(3)}`;
     if (cleaned.length <= 10)
       return `${cleaned.slice(0, 3)} ${cleaned.slice(3, 6)} ${cleaned.slice(6)}`;
     return `${cleaned.slice(0, 3)} ${cleaned.slice(3, 6)} ${cleaned.slice(6, 10)}`;
@@ -64,7 +69,10 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
   // Handle OTP paste
   const handleOtpPaste = (e: React.ClipboardEvent) => {
     e.preventDefault();
-    const pastedData = e.clipboardData.getData("text").slice(0, 6).replace(/\D/g, "");
+    const pastedData = e.clipboardData
+      .getData("text")
+      .slice(0, 6)
+      .replace(/\D/g, "");
     if (pastedData.length > 0) {
       setOtp(pastedData);
       // Focus last input
@@ -74,7 +82,10 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
   };
 
   // Handle backspace in OTP
-  const handleOtpKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleOtpKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       otpInputRefs.current[index - 1]?.focus();
     }
@@ -247,7 +258,9 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
               {step === "phone" ? (
                 <>
                   {/* Phone Number Screen */}
-                  <h2 className="mb-2 text-4xl font-bold text-white">Welcome</h2>
+                  <h2 className="mb-2 text-4xl font-bold text-white">
+                    Welcome
+                  </h2>
                   <p className="mb-8 text-gray-400">
                     Enter your mobile number to get started
                   </p>
@@ -293,9 +306,12 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
               ) : (
                 <>
                   {/* OTP Screen */}
-                  <h2 className="mb-2 text-4xl font-bold text-white">Enter OTP</h2>
+                  <h2 className="mb-2 text-4xl font-bold text-white">
+                    Enter OTP
+                  </h2>
                   <p className="mb-8 text-gray-400">
-                    We&apos;ve sent a verification code to {countryCode} {formatPhoneNumber(phoneNumber)}
+                    We&apos;ve sent a verification code to {countryCode}{" "}
+                    {formatPhoneNumber(phoneNumber)}
                   </p>
 
                   <div className="mb-6">
@@ -311,7 +327,9 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                           inputMode="numeric"
                           maxLength={1}
                           value={otp[index] || ""}
-                          onChange={(e) => handleOtpChange(index, e.target.value)}
+                          onChange={(e) =>
+                            handleOtpChange(index, e.target.value)
+                          }
                           onPaste={handleOtpPaste}
                           onKeyDown={(e) => handleOtpKeyDown(index, e)}
                           className="h-14 w-14 rounded-lg border border-gray-600 bg-[#2a2a2a] text-center text-xl font-bold text-white focus:border-[#f15a29] focus:outline-none"
@@ -335,7 +353,9 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                   <div className="mt-6 text-center text-sm text-gray-400">
                     Didn&apos;t receive the code?{" "}
                     {resendTimer > 0 ? (
-                      <span className="text-[#f15a29]">Resend in {resendTimer}s</span>
+                      <span className="text-[#f15a29]">
+                        Resend in {resendTimer}s
+                      </span>
                     ) : (
                       <button
                         onClick={handleResendOTP}
@@ -367,32 +387,72 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                   {[
                     {
                       icon: (
-                        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        <svg
+                          className="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                          />
                         </svg>
                       ),
                       text: "Buy together. Save more money",
                     },
                     {
                       icon: (
-                        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg
+                          className="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
                         </svg>
                       ),
                       text: "Direct access to verified projects",
                     },
                     {
                       icon: (
-                        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                        <svg
+                          className="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                          />
                         </svg>
                       ),
                       text: "Better pricing through group demand",
                     },
                     {
                       icon: (
-                        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        <svg
+                          className="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                          />
                         </svg>
                       ),
                       text: "Dedicated relationship manager to guide you",
@@ -414,4 +474,3 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
     </>
   );
 }
-

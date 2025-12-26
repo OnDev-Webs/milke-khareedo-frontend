@@ -2,21 +2,34 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import Logo from "@/assets/logo.svg";
-import { FaTwitter, FaFacebookF, FaLinkedinIn, FaInstagram } from "react-icons/fa";
+import Logo from "@/assets/footer-logo.svg";
+import {
+  FaTwitter,
+  FaFacebookF,
+  FaLinkedinIn,
+  FaInstagram,
+} from "react-icons/fa";
 
 export default function FooterSection() {
   return (
     <footer className="w-full bg-[#2b2b2b] text-white">
-      <div className="mx-auto max-w-[1200px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+      <div className="mx-auto container px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           {/* Left Column - Company Info */}
           <div className="lg:col-span-4">
             <Link href="/" className="mb-4 flex items-center gap-2">
-              <Image src={Logo} alt="MILKE KHEREEDO logo" width={200} height={50} className="h-auto w-auto" />
+              <Image
+                src={Logo}
+                alt="MILKE KHEREEDO logo"
+                width={200}
+                height={50}
+                className="h-auto w-auto"
+              />
             </Link>
             <p className="mb-6 text-sm leading-relaxed text-white/90 lg:text-base">
-              Buying property shouldn't feel confusing or lonely. We help buyers come together, understand pricing clearly, and make confident decisions — without pressure.
+              Buying property shouldn't feel confusing or lonely. We help buyers
+              come together, understand pricing clearly, and make confident
+              decisions — without pressure.
             </p>
 
             {/* Social Media Icons */}

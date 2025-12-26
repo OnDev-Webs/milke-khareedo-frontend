@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
@@ -25,7 +25,11 @@ export default function FAQSCard({ data }: Props) {
         </h2>
 
         <div className="text-[#FF765E]">
-          {open ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+          {open ? (
+            <ChevronUp className="w-5 h-5" />
+          ) : (
+            <ChevronDown className="w-5 h-5" />
+          )}
         </div>
       </div>
 

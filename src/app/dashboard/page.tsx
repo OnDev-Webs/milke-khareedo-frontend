@@ -8,8 +8,8 @@ export default function DashboardHomePage() {
       </h2>
 
       <p className="mt-2 text-gray-500">
-        Use the options above to manage your profile, favorites,
-        searches, and preferences.
+        Use the options above to manage your profile, favorites, searches, and
+        preferences.
       </p>
     </DashboardCard>
   );

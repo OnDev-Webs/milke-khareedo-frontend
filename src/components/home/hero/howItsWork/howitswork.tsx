@@ -87,7 +87,8 @@ export default function HowItWorks() {
           </span>
         </h2>
         <p className="pt-2 pb-10 font-medium text-[#110229]">
-          Real buying <span className="text-[#FF765E]">journeys</span>, explained simply.
+          Real buying <span className="text-[#FF765E]">journeys</span>,
+          explained simply.
         </p>
 
         <div className="relative">
@@ -108,19 +109,15 @@ export default function HowItWorks() {
             {steps.map((step, i) => (
               <SwiperSlide key={i}>
                 <div className="flex flex-col bg-white rounded-xl mb-2 p-5 shadow-md min-h-[260px] max-w-[340px]">
-
                   {/* Number with BLUR gradient background */}
                   <div className="relative mb-4 h-12 w-12 flex items-center justify-center">
-
                     {/* Blur background */}
-                    <div className="absolute inset-0 rounded-xl bg-[linear-gradient(-40deg,#0038FF,#FF765E,#FFA08F,#F84C4F)] blur-xs opacity-90">
-                    </div>
+                    <div className="absolute inset-0 rounded-xl bg-[linear-gradient(-40deg,#0038FF,#FF765E,#FFA08F,#F84C4F)] blur-xs opacity-90"></div>
 
                     {/* Number */}
                     <div className="relative z-10 text-white font-bold text-lg">
                       {step.number}
                     </div>
-
                   </div>
 
                   {/* Title */}

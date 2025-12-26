@@ -25,9 +25,7 @@ export default function EmptyState({
           priority
         />
 
-        <h3 className="text-[18px] font-semibold text-[#2b2b2b]">
-          {title}
-        </h3>
+        <h3 className="text-[18px] font-semibold text-[#2b2b2b]">{title}</h3>
 
         <p className="mt-2 text-sm leading-relaxed text-[#6b6b6b]">
           {description}

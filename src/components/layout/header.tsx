@@ -37,7 +37,13 @@ export default function Header() {
         <div className="flex items-center justify-between py-4 lg:py-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <Image src={Logo} alt="MILKE KHEREEDO logo" width={216} height={52} className="h-8 w-auto sm:h-10 lg:h-[52px]" />
+            <Image
+              src={Logo}
+              alt="MILKE KHEREEDO logo"
+              width={216}
+              height={52}
+              className="h-8 w-auto sm:h-10 lg:h-[52px]"
+            />
           </Link>
 
           {/* Navigation Links */}
@@ -47,8 +53,11 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative pb-1 text-sm transition-colors xl:text-base ${isActive(link.href) ? "font-semibold text-[#f15a29]" : "hover:text-[#f15a29]"
-                    }`}
+                  className={`relative pb-1 text-sm transition-colors xl:text-base ${
+                    isActive(link.href)
+                      ? "font-semibold text-[#f15a29]"
+                      : "hover:text-[#f15a29]"
+                  }`}
                 >
                   {link.label}
                   {isActive(link.href) && (
@@ -70,7 +79,9 @@ export default function Header() {
                 {isAuthenticated ? (
                   <div className="relative">
                     <button
-                      onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                      onClick={() =>
+                        setProfileDropdownOpen(!profileDropdownOpen)
+                      }
                       className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[#f15a29] text-white transition-colors hover:bg-[#e14f20] overflow-hidden"
                       aria-label="Profile menu"
                     >
@@ -159,8 +170,9 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`py-2.5 text-sm ${isActive(link.href) ? "font-semibold text-[#f15a29]" : ""
-                    }`}
+                  className={`py-2.5 text-sm ${
+                    isActive(link.href) ? "font-semibold text-[#f15a29]" : ""
+                  }`}
                 >
                   {link.label}
                 </Link>

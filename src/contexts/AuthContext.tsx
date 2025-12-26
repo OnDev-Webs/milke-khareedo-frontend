@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 
 interface User {
   id: string;
@@ -55,7 +61,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setToken(newToken);
     setUser(newUser);
     setIsAuthenticated(true);
-    
+
     // Dispatch custom event for other components
     if (typeof window !== "undefined") {
       window.dispatchEvent(new Event("auth-changed"));
@@ -68,7 +74,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setToken(null);
     setUser(null);
     setIsAuthenticated(false);
-    
+
     // Dispatch custom event for other components
     if (typeof window !== "undefined") {
       window.dispatchEvent(new Event("auth-changed"));
@@ -106,4 +112,3 @@ export function useAuthContext() {
   }
   return context;
 }
-

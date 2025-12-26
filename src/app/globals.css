@@ -61,19 +61,19 @@
   --animate-marquee: marquee var(--duration) infinite linear;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
   @keyframes marquee {
-  from {
-    transform: translateX(0);
+    from {
+      transform: translateX(0);
     }
-  to {
-    transform: translateX(calc(-100% - var(--gap)));
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
     }
   }
   @keyframes marquee-vertical {
-  from {
-    transform: translateY(0);
+    from {
+      transform: translateY(0);
     }
-  to {
-    transform: translateY(calc(-100% - var(--gap)));
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
     }
   }
 }
@@ -169,6 +169,30 @@
   }
 }
 
+.not-found::before,
+.not-found::after {
+  content: "";
+  position: absolute;
+  width: 435px;
+  height: 699px;
+  bottom: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.not-found::before {
+  left: 0;
+  background-image: url("../assets/not-found-vector-left.png");
+}
+
+.not-found::after {
+  right: 0;
+  background-image: url("../assets/not-found-vector-right.png");
+}
+
 .custom-swiper-scrollbar {
   width: 1130px !important;
   height: 4px;
@@ -177,7 +201,7 @@
 }
 
 .custom-swiper-scrollbar .swiper-scrollbar-drag {
-  background: #FF765E;
+  background: #ff765e;
   border-radius: 9999px;
 }
 

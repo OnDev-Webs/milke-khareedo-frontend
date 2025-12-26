@@ -7,31 +7,30 @@ import { useState, useEffect } from "react";
  * Checks for auth token in localStorage
  */
 export function useAuth() {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    useEffect(() => {
-        // Check if auth token exists in localStorage
-        const checkAuth = () => {
-            if (typeof window !== "undefined") {
-                const token = localStorage.getItem("auth_token");
-                setIsAuthenticated(!!token);
-            }
-        };
+  useEffect(() => {
+    // Check if auth token exists in localStorage
+    const checkAuth = () => {
+      if (typeof window !== "undefined") {
+        const token = localStorage.getItem("auth_token");
+        setIsAuthenticated(!!token);
+      }
+    };
 
-        checkAuth();
+    checkAuth();
 
-        // Listen for storage changes to update auth state
-        window.addEventListener("storage", checkAuth);
+    // Listen for storage changes to update auth state
+    window.addEventListener("storage", checkAuth);
 
-        // Also listen for custom auth events
-        window.addEventListener("auth-changed", checkAuth);
+    // Also listen for custom auth events
+    window.addEventListener("auth-changed", checkAuth);
 
-        return () => {
-            window.removeEventListener("storage", checkAuth);
-            window.removeEventListener("auth-changed", checkAuth);
-        };
-    }, []);
+    return () => {
+      window.removeEventListener("storage", checkAuth);
+      window.removeEventListener("auth-changed", checkAuth);
+    };
+  }, []);
 
-    return { isAuthenticated };
+  return { isAuthenticated };
 }
-

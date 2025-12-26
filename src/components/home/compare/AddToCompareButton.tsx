@@ -18,7 +18,8 @@ export default function AddToCompareButton({
   className = "",
   clearOldData = false,
 }: AddToCompareButtonProps) {
-  const { addToCompare, clearAndAddToCompare, removeFromCompare, isInCompare } = useCompare();
+  const { addToCompare, clearAndAddToCompare, removeFromCompare, isInCompare } =
+    useCompare();
   const inCompare = isInCompare(property.id);
 
   const handleClick = () => {

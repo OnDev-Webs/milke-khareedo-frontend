@@ -11,7 +11,6 @@ export default function Hero() {
 
   return (
     <section className="relative w-full py-10">
-
       <div className="relative mx-auto w-full max-w-[1200px] h-auto md:h-[450px] overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-6 shadow-md">
         <div className="relative z-10 w-full md:w-[60%] pt-10 md:pt-10 ps-4 md:ps-6">
           <p className="font-medium text-[#585981] mb-2">
@@ -76,13 +75,13 @@ export default function Hero() {
       </div>
 
       <div className="absolute bottom-[-20px] left-1/2 w-[95%] md:w-[1150px] -translate-x-1/2 px-4 md:px-6 z-20">
-        <div
-          className="flex flex-col md:flex-row items-center gap-4 rounded-2xl bg-white/70 backdrop-blur-[5px] p-4 shadow-lg ring-1 ring-white/30">
+        <div className="flex flex-col md:flex-row items-center gap-4 rounded-2xl bg-white/70 backdrop-blur-[5px] p-4 shadow-lg ring-1 ring-white/30">
           {/* CITY SELECT */}
           <div className="relative h-14 w-full md:w-56">
             <select
               defaultValue="Delhi"
-              className="h-full w-full appearance-none rounded-xl bg-transparent px-4 pr-10 text-sm text-gray-800 outline-none border-none focus:outline-none focus:ring-0 cursor-pointer">
+              className="h-full w-full appearance-none rounded-xl bg-transparent px-4 pr-10 text-sm text-gray-800 outline-none border-none focus:outline-none focus:ring-0 cursor-pointer"
+            >
               <option value="Delhi">City | Delhi</option>
               <option value="Mumbai">City | Mumbai</option>
               <option value="Bangalore">City | Bangalore</option>
@@ -97,7 +96,8 @@ export default function Hero() {
             <input
               type="text"
               placeholder="Find Your Dream Home"
-              className="h-14 w-full rounded-xl bg-transparent pl-12 pr-4 text-sm text-gray-800 outline-none border-none focus:outline-none focus:ring-0"/>
+              className="h-14 w-full rounded-xl bg-transparent pl-12 pr-4 text-sm text-gray-800 outline-none border-none focus:outline-none focus:ring-0"
+            />
           </div>
 
           {/* BUTTON */}
@@ -107,7 +107,6 @@ export default function Hero() {
           </button>
         </div>
       </div>
-
     </section>
   );
 }

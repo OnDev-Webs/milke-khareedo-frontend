@@ -6,10 +6,15 @@ import GoogleMapComponent from "@/components/home/compare/GoogleMap";
 import ComparePropertyCard from "@/components/home/compare/ComparePropertyCard";
 import PropertySelectionModal from "@/components/home/compare/PropertySelectionModal";
 import { useState, useMemo, useEffect } from "react";
-import { homeService, type Property, type CompareProperty } from "@/lib/api/services/home.service";
+import {
+  homeService,
+  type Property,
+  type CompareProperty,
+} from "@/lib/api/services/home.service";
 
 export default function ComparePage() {
-  const { compareItems, removeFromCompare, addToCompare, isInCompare } = useCompare();
+  const { compareItems, removeFromCompare, addToCompare, isInCompare } =
+    useCompare();
   const [showAddPropertyModal, setShowAddPropertyModal] = useState(false);
   const [comparisonData, setComparisonData] = useState<CompareProperty[]>([]);
   const [loading, setLoading] = useState(false);
@@ -40,7 +45,9 @@ export default function ComparePage() {
         }
       } catch (err) {
         setError(
-          err instanceof Error ? err.message : "Failed to fetch comparison data"
+          err instanceof Error
+            ? err.message
+            : "Failed to fetch comparison data",
         );
         setComparisonData([]);
       } finally {
@@ -64,13 +71,17 @@ export default function ComparePage() {
     const markers = compareItems
       .map((compareItem, index) => {
         // Find the property in comparisonData that matches this compareItem
-        const prop = comparisonData.find((p) => String(p.id) === String(compareItem.id));
+        const prop = comparisonData.find(
+          (p) => String(p.id) === String(compareItem.id),
+        );
 
         // If property not found in comparisonData yet (still loading), skip for now
         // But we'll still try to create a marker if we have coordinates from somewhere else
         if (!prop) {
           // Log for debugging - property might still be loading
-          console.warn(`Property ${compareItem.id} not found in comparisonData yet`);
+          console.warn(
+            `Property ${compareItem.id} not found in comparisonData yet`,
+          );
           return null;
         }
 
@@ -87,7 +98,9 @@ export default function ComparePage() {
 
         if (!hasValidCoords) {
           // Log for debugging - property doesn't have valid coordinates
-          console.warn(`Property ${compareItem.id} (${prop.projectName || compareItem.title}) does not have valid coordinates`);
+          console.warn(
+            `Property ${compareItem.id} (${prop.projectName || compareItem.title}) does not have valid coordinates`,
+          );
           return null;
         }
 
@@ -102,17 +115,20 @@ export default function ComparePage() {
           label: label,
         };
       })
-      .filter((marker): marker is NonNullable<typeof marker> => marker !== null);
+      .filter(
+        (marker): marker is NonNullable<typeof marker> => marker !== null,
+      );
 
     // Debug log to verify all markers are created
     if (markers.length !== compareItems.length) {
       console.warn(
         `Expected ${compareItems.length} markers but created ${markers.length}. ` +
-        `Some properties may not have valid coordinates or are still loading.`
+          `Some properties may not have valid coordinates or are still loading.`,
       );
     } else {
-      console.log(`✅ Successfully created ${markers.length} markers using pinLabel from API:`,
-        markers.map(m => `${m.label} (${m.title})`).join(', ')
+      console.log(
+        `✅ Successfully created ${markers.length} markers using pinLabel from API:`,
+        markers.map((m) => `${m.label} (${m.title})`).join(", "),
       );
     }
 
@@ -134,8 +150,12 @@ export default function ComparePage() {
     }
 
     // Calculate average center for multiple markers
-    const avgLat = mapMarkers.reduce((sum, marker) => sum + marker.lat, 0) / mapMarkers.length;
-    const avgLng = mapMarkers.reduce((sum, marker) => sum + marker.lng, 0) / mapMarkers.length;
+    const avgLat =
+      mapMarkers.reduce((sum, marker) => sum + marker.lat, 0) /
+      mapMarkers.length;
+    const avgLng =
+      mapMarkers.reduce((sum, marker) => sum + marker.lng, 0) /
+      mapMarkers.length;
 
     return { lat: avgLat, lng: avgLng };
   }, [mapMarkers]);
@@ -144,7 +164,10 @@ export default function ComparePage() {
     addToCompare({
       id: property.id,
       title: property.projectName,
-      price: property.targetPrice?.formatted || property.offerPrice?.formatted || "Price on request",
+      price:
+        property.targetPrice?.formatted ||
+        property.offerPrice?.formatted ||
+        "Price on request",
       location: property.location,
       developer: property.developer,
       image: property.image || undefined,
@@ -158,8 +181,10 @@ export default function ComparePage() {
     return "Price on request";
   };
 
-  const getPropertyForCard = (compareItem: typeof compareItems[0]) => {
-    const apiProperty = comparisonData.find((p) => p.id === String(compareItem.id));
+  const getPropertyForCard = (compareItem: (typeof compareItems)[0]) => {
+    const apiProperty = comparisonData.find(
+      (p) => p.id === String(compareItem.id),
+    );
 
     if (apiProperty) {
       return {
@@ -170,9 +195,13 @@ export default function ComparePage() {
         location: apiProperty.location,
         image: apiProperty.mainImage || undefined,
         area: apiProperty.area?.formatted || "N/A",
-        config: apiProperty.configurationsFormatted || apiProperty.configurations?.join(", ") || "N/A",
+        config:
+          apiProperty.configurationsFormatted ||
+          apiProperty.configurations?.join(", ") ||
+          "N/A",
         propertyType: apiProperty.propertyType || "Residential",
-        possessionDate: apiProperty.possessionDateFormatted || apiProperty.possessionDate,
+        possessionDate:
+          apiProperty.possessionDateFormatted || apiProperty.possessionDate,
         possessionStatus: apiProperty.possessionStatus,
         floorPlanImage: apiProperty.floorPlans?.[0]?.image || undefined,
         floorPlans: apiProperty.floorPlans || undefined,
@@ -267,7 +296,9 @@ export default function ComparePage() {
             <div className="flex items-center justify-center py-12">
               <div className="text-center">
                 <div className="mb-4 inline-block h-8 w-8 animate-spin rounded-full border-4 border-[#f15a29] border-t-transparent"></div>
-                <p className="text-sm text-gray-600">Loading comparison data...</p>
+                <p className="text-sm text-gray-600">
+                  Loading comparison data...
+                </p>
               </div>
             </div>
           ) : (
@@ -275,9 +306,12 @@ export default function ComparePage() {
               {/* Render compared properties */}
               {compareItems.map((item, index) => {
                 // Find the property in comparisonData to get pinLabel from API
-                const apiProperty = comparisonData.find((p) => String(p.id) === String(item.id));
+                const apiProperty = comparisonData.find(
+                  (p) => String(p.id) === String(item.id),
+                );
                 // Use pinLabel from API response, fallback to generated label if not provided
-                const label = apiProperty?.pinLabel || String.fromCharCode(65 + index);
+                const label =
+                  apiProperty?.pinLabel || String.fromCharCode(65 + index);
                 const propertyData = getPropertyForCard(item);
 
                 return (

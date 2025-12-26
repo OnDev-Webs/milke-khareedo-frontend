@@ -1,9 +1,11 @@
-import SearchHeader from "@/components/search/SearchHeader";
+import SearchResultsGrid from "@/components/search/SearchResultsGrid";
 
 export default function Page() {
   return (
     <>
-      <SearchHeader />
+      <div className="w-full px-4 py-8">
+        <SearchResultsGrid />
+      </div>
     </>
   );
 }

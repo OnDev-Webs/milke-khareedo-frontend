@@ -92,7 +92,7 @@ export default function Hero() {
       <div className="absolute bottom-[-20px] left-1/2 w-[95%] md:w-[1150px] -translate-x-1/2 px-4 md:px-6 z-20">
         <div className="flex flex-col md:flex-row items-stretch rounded-2xl bg-white/70 backdrop-blur-md p-0 shadow-lg overflow-visible">
           {/* CITY SELECT SECTION */}
-          <div className="relative flex flex-col justify-center px-6 py-4 border-r border-gray-200 min-w-[200px]">
+          <div className="relative flex flex-col justify-center ps-6 pe-4 py-4 min-w-[130px]">
             <label className="text-sm font-bold text-gray-800 mb-2.5">City</label>
             <div className="relative" style={{ zIndex: 1000 }}>
               <CitySelector
@@ -102,10 +102,12 @@ export default function Hero() {
                 showLabel={false}
               />
             </div>
+            <span className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2
+                   h-10 w-[2px] bg-[#DCDCEB]" />
           </div>
 
           {/* SEARCH INPUT SECTION */}
-          <div className="relative flex-1 flex flex-col justify-center px-6 py-4">
+          <div className="relative flex-1 flex flex-col justify-start ps-4 pe-6 py-4">
             <div className="relative">
               <input
                 ref={searchInputRef}
@@ -126,7 +128,7 @@ export default function Hero() {
 
           {/* SEARCH BUTTON SECTION */}
           <div className="flex items-center px-6 py-4">
-            <button className="h-12 w-full md:w-auto md:min-w-[140px] rounded-xl bg-[#FF765E] text-white flex items-center justify-center gap-2 font-medium shadow-md hover:bg-[#e66a4f] transition-colors">
+            <button className="h-12 w-full md:w-auto md:min-w-[140px] rounded-full bg-[#FF765E] text-white flex items-center justify-center gap-2 font-medium shadow-md hover:bg-[#e66a4f] transition-colors">
               <FaSearch className="text-white text-sm" />
               <span className="text-sm">Search</span>
             </button>

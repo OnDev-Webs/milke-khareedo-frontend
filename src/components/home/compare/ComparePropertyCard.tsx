@@ -166,7 +166,7 @@ export default function ComparePropertyCard({
       {/* Remove Component Button */}
       <button
         onClick={onRemove}
-        className="mb-1.5 self-start rounded-full bg-[#5DADE2] px-2.5 py-0.5 text-[10px] font-medium text-white hover:bg-[#4A9BC8] transition-colors sm:mb-2 sm:px-3 sm:py-1 sm:text-xs md:mb-3 md:px-4 md:py-1.5"
+        className="mb-1.5 self-start rounded-full w-full bg-[#FFF0F0] px-2.5 py-1 text-[10px] font-semibold text-[#FB4848] sm:mb-2 sm:px-3 sm:py-1 sm:text-[16px] md:mb-3 md:px-4 md:py-2"
       >
         Remove Component
       </button>
@@ -203,14 +203,17 @@ export default function ComparePropertyCard({
           {property.title}
         </h3>
         <div className="flex shrink-0 items-center gap-1 sm:gap-1.5 md:gap-2">
+          <button className="flex items-center gap-0.5 rounded-full bg-[#66AE39] px-2 py-0.5 text-[10px] font-medium text-white hover:bg-[#5a9a32] transition-colors sm:gap-1 sm:px-2.5 sm:py-1 sm:text-xs md:gap-1.5 md:px-3 md:py-1.5">
+            <FaPhoneAlt className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3 md:w-3" />
+            <span className="hidden sm:inline">Call</span>
+          </button>
           <button
             onClick={handleFavoriteClick}
             disabled={favoriteLoading}
-            className={`flex h-6 w-6 items-center justify-center rounded-full border transition-colors sm:h-7 sm:w-7 md:h-8 md:w-8 ${
-              isFavorite
-                ? "border-[#f15a29] bg-[#f15a29] text-white hover:bg-[#e14f20]"
-                : "border-gray-300 bg-white text-gray-600 hover:bg-gray-50"
-            } disabled:opacity-50 disabled:cursor-not-allowed`}
+            className={`flex h-6 w-6 items-center justify-center rounded-full border transition-colors sm:h-7 sm:w-7 md:h-8 md:w-8 ${isFavorite
+              ? "border-[#f15a29] bg-[#f15a29] text-white hover:bg-[#e14f20]"
+              : "border-gray-300 bg-[#F2F6FF] text-gray-600 hover:bg-gray-50"
+              } disabled:opacity-50 disabled:cursor-not-allowed`}
             aria-label={
               isFavorite ? "Remove from favorites" : "Add to favorites"
             }
@@ -220,10 +223,6 @@ export default function ComparePropertyCard({
             ) : (
               <IoHeartOutline className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-4 md:w-4" />
             )}
-          </button>
-          <button className="flex items-center gap-0.5 rounded-full bg-[#66AE39] px-2 py-0.5 text-[10px] font-medium text-white hover:bg-[#5a9a32] transition-colors sm:gap-1 sm:px-2.5 sm:py-1 sm:text-xs md:gap-1.5 md:px-3 md:py-1.5">
-            <FaPhoneAlt className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3 md:w-3" />
-            <span className="hidden sm:inline">Call</span>
           </button>
         </div>
       </div>
@@ -236,63 +235,67 @@ export default function ComparePropertyCard({
         Book A Visit
       </button>
 
-      {/* Dotted Separator */}
-      <div className="mb-2.5 border-t-2 border-dotted border-gray-300 sm:mb-3 md:mb-4 lg:mb-6"></div>
-
       {/* Property Details - Key Value Pairs */}
       <div className="mb-2.5 space-y-2 sm:mb-3 sm:space-y-2.5 md:mb-4 md:space-y-3 lg:mb-6 lg:space-y-4">
-        <div className="flex justify-between gap-2">
+        <div className="flex flex-col gap-1 pb-2 border-b border-gray-200">
           <span className="text-xs text-gray-600 sm:text-xs md:text-sm">
-            Developer:
+            Project Name
           </span>
-          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">
+
+          <span className="text-xs font-semibold text-gray-800 break-words sm:text-xs md:text-sm">
+            {property.title}
+          </span>
+        </div>
+
+        <div className="flex flex-col gap-1 pb-2 border-b border-gray-200">
+          <span className="text-xs text-gray-600 sm:text-xs md:text-sm">
+            Developer
+          </span>
+          <span className="text-xs font-semibold text-gray-800 break-words sm:text-xs md:text-sm">
             {property.developer}
           </span>
         </div>
-        <div className="flex justify-between gap-2">
+        <div className="flex flex-col gap-1 pb-2 border-b border-gray-200">
           <span className="text-xs text-gray-600 sm:text-xs md:text-sm">
-            Budget:
+            Budget
           </span>
-          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">
+          <span className="text-xs font-semibold text-gray-800 break-words sm:text-xs md:text-sm">
             {property.price}
           </span>
         </div>
-        <div className="flex justify-between gap-2">
+        <div className="flex flex-col gap-1 pb-2 border-b border-gray-200">
           <span className="text-xs text-gray-600 sm:text-xs md:text-sm">
-            Area/Size:
+            Area/Size
           </span>
-          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">
+          <span className="text-xs font-semibold text-gray-800 break-words sm:text-xs md:text-sm">
             {property.area}
           </span>
         </div>
-        <div className="flex justify-between gap-2">
+        <div className="flex flex-col gap-1 pb-2 border-b border-gray-200">
           <span className="text-xs text-gray-600 sm:text-xs md:text-sm">
-            Property Config:
+            Property Config
           </span>
-          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">
+          <span className="text-xs font-semibold text-gray-800 break-words sm:text-xs md:text-sm">
             {property.config}
           </span>
         </div>
-        <div className="flex justify-between gap-2">
+        <div className="flex flex-col gap-1 pb-2 border-b border-gray-200">
           <span className="text-xs text-gray-600 sm:text-xs md:text-sm">
             Location:
           </span>
-          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">
+          <span className="text-xs font-semibold text-gray-800 break-words sm:text-xs md:text-sm">
             {property.location}
           </span>
         </div>
-        <div className="flex justify-between gap-2">
+        <div className="flex flex-col gap-1 pb-2 border-b border-gray-200">
           <span className="text-xs text-gray-600 sm:text-xs md:text-sm">
             Property Type:
           </span>
-          <span className="text-xs font-semibold text-gray-800 text-right break-words sm:text-xs md:text-sm">
+          <span className="text-xs font-semibold text-gray-800 break-words sm:text-xs md:text-sm">
             {property.propertyType}
           </span>
         </div>
       </div>
-
-      {/* Dotted Separator */}
-      <div className="mb-2.5 border-t-2 border-dotted border-gray-300 sm:mb-3 md:mb-4 lg:mb-6"></div>
 
       {/* Floor Plan Section */}
       <div className="mb-2.5 sm:mb-3 md:mb-4 lg:mb-6">
@@ -377,11 +380,10 @@ export default function ComparePropertyCard({
                 <button
                   key={index}
                   onClick={() => scrollToPlan(index)}
-                  className={`transition-all ${
-                    index === currentFloorPlanIndex
-                      ? "h-1.5 w-6 rounded-full bg-gray-600 sm:h-2 sm:w-8"
-                      : "h-1 w-1 rounded-full bg-gray-300 hover:bg-gray-400 sm:h-1.5 sm:w-1.5"
-                  }`}
+                  className={`transition-all ${index === currentFloorPlanIndex
+                    ? "h-1.5 w-6 rounded-full bg-gray-600 sm:h-2 sm:w-8"
+                    : "h-1 w-1 rounded-full bg-gray-300 hover:bg-gray-400 sm:h-1.5 sm:w-1.5"
+                    }`}
                   aria-label={`Go to floor plan ${index + 1}`}
                 />
               ))}
@@ -391,18 +393,18 @@ export default function ComparePropertyCard({
       </div>
 
       {/* Dotted Separator */}
-      <div className="mb-2.5 border-t-2 border-dotted border-gray-300 sm:mb-3 md:mb-4 lg:mb-6"></div>
+      <div className="mb-2.5 border-b border-gray-200 sm:mb-3 md:mb-4 lg:mb-6"></div>
 
       {/* Possession Status */}
       <div>
-        <h4 className="mb-1.5 text-xs font-semibold text-gray-800 sm:mb-2 sm:text-sm md:mb-3 md:text-base">
+        <h4 className="mb-1.5 text-xs text-[#8F8F8F] sm:mb-2 sm:text-sm md:mb-3 md:text-base">
           Possession Status
         </h4>
         <div className="space-y-0.5 sm:space-y-1 md:space-y-2">
-          <p className="text-xs font-semibold text-gray-800 sm:text-sm">
+          <p className="text-xs font-semibold text-[#000] sm:text-[18px]">
             {property.possessionDate || "Jan 2027"}
           </p>
-          <p className="text-xs text-gray-600 sm:text-sm">
+          <p className="text-xs font-semibold text-[#000] sm:text-[18px]">
             {property.possessionStatus || "Under Construction"}
           </p>
         </div>

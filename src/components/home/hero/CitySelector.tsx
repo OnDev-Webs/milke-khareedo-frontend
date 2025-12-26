@@ -318,7 +318,7 @@ export default function CitySelector({
                         setIsOpen(!isOpen);
                     });
                 }}
-                className="w-full appearance-none bg-transparent text-left outline-none border-none p-0 flex items-center justify-between hover:opacity-80 transition-opacity"
+                className="w-full appearance-none bg-transparent text-left outline-none border-none p-0 flex items-center hover:opacity-80 transition-opacity"
             >
                 <span className="text-base font-medium text-[#FF765E] truncate pr-2">
                     {selectedCity.city}

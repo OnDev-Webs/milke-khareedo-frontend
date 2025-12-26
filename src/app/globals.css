@@ -194,7 +194,7 @@
 }
 
 .custom-swiper-scrollbar {
-  width: 1130px !important;
+  width: 100%x !important;
   height: 4px;
   background: rgba(0, 0, 0, 0.08);
   border-radius: 9999px;

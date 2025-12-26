@@ -7,19 +7,19 @@ import {
   type EMICalculatorResponse,
 } from "@/lib/api/services/home.service";
 import { HiLightBulb } from "react-icons/hi";
-import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 
 // Partner logos data (placeholder - replace with actual data)
 const partnerLogos = [
-  { name: "Partner 1", logo: "🔷" },
-  { name: "Partner 2", logo: "M" },
-  { name: "Norte", logo: "Norte" },
-  { name: "iQ Credit Union", logo: "iQ" },
-  { name: "Partner 5", logo: "🔵" },
-  { name: "Partner 6", logo: "O" },
-  { name: "Partner 7", logo: "W" },
+  { name: "Partner 1", logo: "/images/ins_120033.svg", score: "9.5%" },
+  { name: "Partner 2", logo: "/images/ins_120033 (1).svg", score: "8.7%" },
+  { name: "Norte", logo: "/images/ins_120033 (2).svg", score: "7.9%" },
+  { name: "iQ", logo: "/images/ins_120033 (3).svg", score: "8.3%" },
+  { name: "Partner 5", logo: "/images/ins_120033 (4).svg", score: "9.0%" },
+  { name: "Partner 6", logo: "/images/ins_120033 (5).svg", score: "7.5%" },
+  { name: "Partner 7", logo: "/images/ins_120033 (6).svg", score: "8.8%" },
 ];
+
 
 export default function CalculateSave() {
   const router = useRouter();
@@ -30,7 +30,18 @@ export default function CalculateSave() {
   const [loanTenure, setLoanTenure] = useState(60); // 60 months
   const [currency, setCurrency] = useState("INR");
 
-  // EMI Calculation result state
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev + 1) % partnerLogos.length);
+  };
+
+  const handlePrev = () => {
+    setActiveIndex((prev) =>
+      prev === 0 ? partnerLogos.length - 1 : prev - 1
+    );
+  };
+
   const [emiData, setEmiData] = useState<EMICalculatorResponse | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
 
@@ -132,22 +143,20 @@ export default function CalculateSave() {
       className="relative w-full py-16 overflow-hidden"
       style={{
         backgroundColor: "#383331",
-        backgroundImage: `
-      radial-gradient(circle at 50% 30%, rgba(255,255,255,0.02) 8px, transparent 2px),
-      radial-gradient(circle at 30% 50%, rgba(255,255,255,0.02) 8px, transparent 2px),
-      radial-gradient(circle at 70% 50%, rgba(255,255,255,0.02) 8px, transparent 2px),
-      radial-gradient(circle at 50% 70%, rgba(255,255,255,0.02) 8px, transparent 2px)
-    `,
-        backgroundSize: "60px 60px",
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)),url('/images/CalculatePattern.png')`,
+        backgroundRepeat: "repeat",
+        backgroundSize: "auto",
+        backgroundPosition: "center",
       }}
     >
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-[32px] bg-white p-2 sm:p-8 shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
-          <div className="grid gap-8 md:grid-cols-2">
+        <div className="rounded-[32px] bg-white p-2 sm:p-6 shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
+
+          <div className="grid gap-8 md:grid-cols-2 p-2">
             {/* ================= LEFT SIDE ================= */}
             <div className="flex flex-col gap-4">
               {/* Circular Chart and EMI Result */}
-              <div className="flex flex-col md:flex-row p-4 rounded-md bg-[#F2F6FF] md:items-center gap-6">
+              <div className="flex flex-col md:flex-row p-4 sm:px-3 sm:py-6 rounded-[20px] md:rounded-md bg-[#F2F6FF] md:items-center gap-4 w-full max-w-[58%] md:max-w-full overflow-hidden box-border">
                 {/* Circular Pie Chart */}
                 <div className="relative flex-shrink-0 h-36 w-36 sm:h-44 sm:w-44 md:h-48 md:w-48">
                   <div
@@ -167,75 +176,99 @@ export default function CalculateSave() {
                 </div>
 
                 {/* EMI Result Breakdown */}
-                <div className="flex-1 w-full md:w-auto bg-white rounded-md">
+                <div className="flex-1 w-full md:w-auto rounded-md">
                   <h3 className="mb-3 sm:mb-4 bg-[#F2F6FF] text-base sm:text-lg font-semibold text-black">
                     Calculated EMI Result
                   </h3>
 
-                  <div className="space-y-2 text-sm px-2">
-                    <div className="flex items-center justify-between gap-4 sm:gap-6">
-                      <p className="flex items-center gap-2 font-medium text-[#38BA50]">
-                        <span>●</span> Principal Amount
-                      </p>
-                      <span className="font-semibold text-black text-sm sm:text-base">
-                        {emiData?.principalAmount?.formatted ||
-                          "₹ 3,61,11,931.00"}
-                      </span>
+                  <div className="bg-[#ffffff] py-4 px-2 rounded-md">
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center">
+                        <p className="flex items-center text-[12px] gap-2 font-medium text-[#000000] pe-2">
+                          <span className="text-[#38BA50]">●</span> Principal Amount
+                        </p>
+                        <span className="font-semibold text-black text-[12px]">
+                          {emiData?.principalAmount?.formatted || "₹ 3,61,11,931.00"}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center">
+                        <p className="flex items-center text-[12px] gap-2 font-medium text-[#000000] pe-8">
+                          <span className="text-[#FFA322]">●</span> Total Interest
+                        </p>
+                        <span className="font-semibold text-black text-[12px]">
+                          + {emiData?.totalInterest?.formatted || "₹ 87,60,442.00"}
+                        </span>
+                      </div>
                     </div>
 
-                    <div className="flex items-center justify-between gap-4 sm:gap-6">
-                      <p className="flex items-center gap-2 font-medium text-[#FFA322]">
-                        <span>●</span> Total Interest
+                    <div className="my-2 sm:my-2 h-px w-[200px] mx-6 bg-gray-200" />
+
+                    <div className="flex items-center justify-between">
+                      <p className="text-[14px] text-[#000000] font-semibold">Total Amount</p>
+                      <p className="text-[14px] font-semibold text-black">
+                        {emiData?.totalAmountPayable?.formatted || "₹ 4,48,72,373.00"}
                       </p>
-                      <span className="font-semibold text-black text-sm sm:text-base">
-                        +{" "}
-                        {emiData?.totalInterest?.formatted || "₹ 87,60,442.00"}
-                      </span>
                     </div>
                   </div>
-                  <div className="my-3 sm:my-4 h-px w-full bg-gray-200" />
-                  <div className="flex items-center justify-between gap-4 px-2 py-2 sm:gap-6">
-                    <p className="text-sm text-gray-600">Total Amount</p>
-                    <p className="text-base sm:text-lg font-semibold text-black">
-                      {emiData?.totalAmountPayable?.formatted ||
-                        "₹ 4,48,72,373.00"}
-                    </p>
-                  </div>
                 </div>
+
               </div>
 
-              {/* Partner Logos Section */}
-              <div className="flex flex-col items-center gap-3 bg-[#F2F6FF] px-6 py-10 rounded-md">
-                <div className="flex items-center gap-12 sm:gap-20">
-                  <button className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 text-gray-400 hover:bg-gray-50 transition-colors">
-                    <IoChevronBack className="h-5 w-5" />
+              <div className="bg-[#F2F6FF] px-6 py-10 rounded-md max-w-[58%] md:max-w-full flex flex-col gap-6">
+                <div className="relative flex items-center justify-center mb-4">
+                  <button
+                    onClick={handlePrev}
+                    className="absolute left-0 flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 text-gray-500 hover:bg-white transition"
+                  >
+                    ←
                   </button>
-                  <p className="text-base sm:text-lg font-semibold text-black">
-                    9.5%
+
+                  {/* Active Score */}
+                  <p className="text-lg font-semibold text-black">
+                    {partnerLogos[activeIndex].score}
                   </p>
-                  <button className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 text-gray-400 hover:bg-gray-50 transition-colors">
-                    <IoChevronForward className="h-5 w-5" />
+
+                  {/* Right Arrow */}
+                  <button
+                    onClick={handleNext}
+                    className="absolute right-0 flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 text-gray-500 hover:bg-white transition"
+                  >
+                    →
                   </button>
                 </div>
 
-                {/* Partner Logos */}
-                <div className="relative flex items-center gap-3 flex-wrap justify-center pb-1">
-                  {partnerLogos.slice(0, 4).map((partner, idx) => (
-                    <div
-                      key={idx}
-                      className={`relative flex h-10 w-10 items-center justify-center rounded-full border-2 ${
-                        idx === 0
-                          ? "bg-blue-50 border-blue-300 text-blue-600"
-                          : "bg-gray-100 border-gray-200 text-gray-600"
-                      } text-xs font-semibold`}
-                    >
-                      {partner.logo}
-                      {/* Indicator dot below first logo */}
-                      {idx === 0 && (
-                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-blue-500 rounded-full" />
-                      )}
-                    </div>
-                  ))}
+                <div className="overflow-hidden">
+                  <div
+                    className="flex gap-4 transition-transform duration-300 ease-in-out"
+                    style={{
+                      transform: `translateX(-${activeIndex * 56}px)`,
+                    }}
+                  >
+                    {partnerLogos.map((partner, idx) => {
+                      const isActive = idx === activeIndex;
+                      return (
+                        <div
+                          key={idx}
+                          className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 transition-all ${isActive
+                            ? "scale-110 border-blue-400"
+                            : "bg-gray-100 border-gray-200"
+                            }`}
+                        >
+                          <img
+                            src={partner.logo}
+                            alt={partner.name}
+                            className="h-10 w-10 object-contain"
+                          />
+
+                          {/* Active Dot */}
+                          {isActive && (
+                            <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-2 w-2 rounded-full bg-blue-500" />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
@@ -243,14 +276,14 @@ export default function CalculateSave() {
             {/* ================= RIGHT SIDE ================= */}
             <div className="space-y-6 sm:space-y-8">
               {/* Loan Amount Slider */}
-              <div>
+              <div className="w-[310px] md:w-full">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-6 mb-2">
                   <h4 className="font-semibold text-black text-sm sm:text-base">
                     Loan Amount
                   </h4>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm sm:text-base font-semibold text-black bg-gray-100 px-3 py-1 rounded">
-                      {formatLoanAmount(loanAmount)} {currency}
+                    <span className="text-sm sm:text-base font-semibold text-black bg-[#F2F6FF] px-3 py-1 rounded">
+                      <span className="text-[#FE755E]">{formatLoanAmount(loanAmount)}</span> {currency}
                     </span>
                   </div>
                 </div>
@@ -262,32 +295,9 @@ export default function CalculateSave() {
                     max={loanAmountRange.max}
                     value={loanAmount}
                     onChange={(e) => setLoanAmount(Number(e.target.value))}
-                    className="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
-                    style={{
-                      background: `linear-gradient(to right, #FF765E 0%, #FF765E ${loanAmountPercent}%, #E5E7EB ${loanAmountPercent}%, #E5E7EB 100%)`,
-                    }}
+                    className="w-full h-4 rounded-full appearance-none cursor-pointer slider"
+                    style={{ background: `linear-gradient(to right,#FF765E 0%,#FF765E ${loanAmountPercent}%,#E5E7EB ${loanAmountPercent}%,#E5E7EB 100%)`, }}
                   />
-                  <style jsx>{`
-                    .slider::-webkit-slider-thumb {
-                      appearance: none;
-                      width: 20px;
-                      height: 20px;
-                      border-radius: 50%;
-                      background: #374151;
-                      cursor: pointer;
-                      border: 3px solid white;
-                      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-                    }
-                    .slider::-moz-range-thumb {
-                      width: 20px;
-                      height: 20px;
-                      border-radius: 50%;
-                      background: #374151;
-                      cursor: pointer;
-                      border: 3px solid white;
-                      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-                    }
-                  `}</style>
                 </div>
 
                 <div className="mt-1 sm:mt-2 flex justify-between text-xs sm:text-sm text-gray-500">
@@ -301,12 +311,12 @@ export default function CalculateSave() {
               </div>
 
               {/* Rate of Interest Slider */}
-              <div>
+              <div className="w-[310px] md:w-full">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-6 mb-2">
                   <h4 className="font-semibold text-black text-sm sm:text-base">
                     Rate of Interest <span className="text-[10px]">(%P.A)</span>
                   </h4>
-                  <button className="bg-[#FF765E] text-white font-semibold px-3 py-1 rounded text-sm sm:text-base">
+                  <button className="bg-[#F2F6FF] text-[#FF765E] font-semibold px-3 py-1 rounded text-sm sm:text-base">
                     {rateOfInterest.toFixed(1)} %
                   </button>
                 </div>
@@ -319,7 +329,7 @@ export default function CalculateSave() {
                     step={0.1}
                     value={rateOfInterest}
                     onChange={(e) => setRateOfInterest(Number(e.target.value))}
-                    className="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
+                    className="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
                     style={{
                       background: `linear-gradient(to right, #FF765E 0%, #FF765E ${ratePercent}%, #E5E7EB ${ratePercent}%, #E5E7EB 100%)`,
                     }}
@@ -336,13 +346,13 @@ export default function CalculateSave() {
               </div>
 
               {/* Loan Tenure Slider */}
-              <div>
+              <div className="w-[310px] md:w-full">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-6 mb-2">
                   <h4 className="font-semibold text-black text-sm sm:text-base">
                     Loan Tenure
                   </h4>
-                  <button className="bg-[#FF765E] text-white font-semibold px-3 py-1 rounded text-sm sm:text-base">
-                    {loanTenure} Months
+                  <button className="bg-[#F2F6FF] text-black font-medium px-3 py-1 rounded text-sm sm:text-base">
+                    <span className="text-[#FF765E]">{loanTenure} </span>Months
                   </button>
                 </div>
 
@@ -354,7 +364,7 @@ export default function CalculateSave() {
                     step={6}
                     value={loanTenure}
                     onChange={(e) => setLoanTenure(Number(e.target.value))}
-                    className="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
+                    className="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
                     style={{
                       background: `linear-gradient(to right, #FF765E 0%, #FF765E ${tenurePercent}%, #E5E7EB ${tenurePercent}%, #E5E7EB 100%)`,
                     }}
@@ -380,25 +390,48 @@ export default function CalculateSave() {
               </div>
 
               {/* Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <div className="flex flex-row gap-3 sm:gap-4">
                 <button
                   onClick={handleReset}
-                  className="rounded-full border-2 border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-700 w-full sm:w-auto hover:bg-gray-50 transition-colors"
-                >
+                  className="w-[150px] sm:w-1/2 rounded-full border-2 border-[#F3F3F3] bg-[#F3F3F3] px-6 py-3 text-[16px] font-bold text-black">
                   Reset
                 </button>
+
                 <button
                   onClick={handleGetLoan}
                   disabled={isCalculating || calculating}
-                  className="rounded-full bg-[#FF765E] px-6 py-3 text-sm font-semibold text-white w-full sm:w-auto hover:bg-[#e86b50] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
+                  className="w-[150px] sm:w-1/2 rounded-full bg-[#FF765E] px-6 py-3 text-[16px] font-bold text-white hover:bg-[#e86b50] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                   Get a Loan
                 </button>
               </div>
             </div>
           </div>
+
         </div>
       </div>
+
+      <style jsx>{`
+            .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 34px;
+            height: 18px;
+            border-radius: 999px;
+            background: #FE755E;          
+            border: 3px solid #313131;    
+            cursor: pointer;
+            box-shadow:0 0 0 1px #ffffff,0 2px 6px rgba(0,0,0,0.25);
+          }
+          .slider::-moz-range-thumb {
+            width: 34px;
+            height: 18px;
+            border-radius: 999px;
+            background: #FE755E;
+            border: 3px solid #313131;
+            cursor: pointer;
+            box-shadow:0 0 0 1px #ffffff,0 2px 6px rgba(0,0,0,0.25);
+          }
+        `}</style>
     </section>
   );
 }
+

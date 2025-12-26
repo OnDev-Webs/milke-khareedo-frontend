@@ -108,25 +108,23 @@ export default function HowItWorks() {
           >
             {steps.map((step, i) => (
               <SwiperSlide key={i}>
-                <div className="flex flex-col bg-white rounded-xl mb-2 p-5 shadow-md min-h-[260px] max-w-[340px]">
-                  {/* Number with BLUR gradient background */}
+                <div className="flex flex-col bg-white rounded-xl mb-2 p-5 shadow-md min-h-[230px] max-h-[230px] max-w-[340px] overflow-hidden">
                   <div className="relative mb-4 h-12 w-12 flex items-center justify-center">
-                    {/* Blur background */}
-                    <div className="absolute inset-0 rounded-xl bg-[linear-gradient(-40deg,#0038FF,#FF765E,#FFA08F,#F84C4F)] blur-xs opacity-90"></div>
-
-                    {/* Number */}
-                    <div className="relative z-10 text-white font-bold text-lg">
+                    <img
+                      src="/images/LightGradient.png"
+                      alt=""
+                      className="absolute inset-0 w-full h-full object-contain opacity-90"
+                    />
+                    <div className="relative z-10 text-white font-bold text-[24px]">
                       {step.number}
                     </div>
                   </div>
 
-                  {/* Title */}
                   <h3 className="text-[#000000] font-bold text-[17px] mb-2 leading-snug">
                     {step.title}
                   </h3>
 
-                  {/* Description */}
-                  <p className="text-[#373737] text-medium text-[14px] leading-relaxed">
+                  <p className="text-[#373737] text-[14px] leading-relaxed line-clamp-3">
                     {step.desc}
                   </p>
                 </div>
@@ -134,7 +132,7 @@ export default function HowItWorks() {
             ))}
           </Swiper>
 
-          <div className="custom-swiper-scrollbar mt-6 mx-auto"></div>
+          <div className="custom-swiper-scrollbar mt-6 mx-0"></div>
         </div>
       </div>
     </section>

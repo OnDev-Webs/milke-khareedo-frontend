@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +18,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { Progress } from "../ui/progress";
+import { homeService, type Property } from "@/lib/api/services/home.service";
+import { useSearchParams } from "next/navigation";
+import SearchPropertyCard from "./SearchPropertyCard";
+import { getPropertyImages } from "@/lib/utils/getPropertyImages";
 
 export default function SearchResultsGrid() {
   const [selectedCity, setSelectedCity] = useState("India, Delhi");
@@ -35,6 +38,43 @@ export default function SearchResultsGrid() {
   const [selectedPossession, setSelectedPossession] = useState(
     "Ready to Move",
   );
+  const [results, setResults] = useState<Property[] | null>(null)
+  console.log("results", results)
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    // try sessionStorage first
+    const cached = sessionStorage.getItem("searchResults");
+    if (cached) {
+      try {
+        const parsed = JSON.parse(cached);
+        // parsed.results should match what HeroSection stored
+        setResults(parsed.results?.data ?? parsed.results ?? []);
+        return;
+      } catch (e) {
+        console.warn("Invalid cached searchResults", e);
+      }
+    }
+
+    // fallback: fetch based on query params
+    const city = searchParams.get("city") ?? undefined;
+    const q = searchParams.get("search") ?? undefined;
+    if (city || q) {
+      (async () => {
+        const resp = await homeService.searchProperties({
+          city,
+          searchText: q,
+          page: Number(searchParams.get("page") || 1),
+          limit: Number(searchParams.get("limit") || 10),
+        });
+        if (resp.success && resp.data) setResults(resp.data);
+        else setResults([]);
+      })();
+    } else {
+      setResults([]);
+    }
+  }, [searchParams]);
 
   const getImageIndex = (propertyId: string) =>
     currentImageIndex[propertyId] || 0;
@@ -59,7 +99,7 @@ export default function SearchResultsGrid() {
 
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between border-b border-[#F3F3F3] mb-5">
         <div className="inline-flex w-full max-w-md">
           <div className="relative flex flex-col justify-center ps-6 pe-4 py-4 min-w-[130px]">
             <label className="text-sm font-bold text-gray-800 mb-2.5">
@@ -247,14 +287,30 @@ export default function SearchResultsGrid() {
           <p className="mb-6 text-sm text-[#141414]">Showing 4 of 4 Projects</p>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {/* Property Card */}
+            {/* Property Cards */}
+            {results && results.length > 0 ? (
+              results.map((property) => {
+                const images = getPropertyImages(property);
+                return (
+                  <SearchPropertyCard
+                    key={property.id}
+                    property={property}
+                    images={images}
+                  />
+                );
+              })
+            ) : (
+              <div className="col-span-2 text-center py-10">
+                <p className="text-gray-500">No properties found</p>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Map Sidebar */}
         <div className="hidden w-96 lg:block">
           <div className="sticky top-20 overflow-hidden rounded-2xl bg-gray-200">
-            {/*<PropertyMap />*/}
+            <PropertyMap properties={results} />
           </div>
         </div>
       </div>

@@ -9,17 +9,11 @@ import {
 import { useMemo, Fragment } from "react";
 import PriceMarker from "./PriceMarker";
 import { propertyMapStyle } from "@/components/map/mapStyles";
+import { Property } from "@/lib/api/services/home.service";
 
 const containerStyle = {
   width: "100%",
   height: "100%",
-};
-
-type Property = {
-  id: string;
-  lat: number;
-  lng: number;
-  price: number;
 };
 
 export default function PropertyMap({
@@ -27,17 +21,31 @@ export default function PropertyMap({
   activeId,
   onMarkerClick,
 }: {
-  properties: Property[];
+  properties: Property[] | null;
   activeId?: string;
-  onMarkerClick: (id: string) => void;
+  onMarkerClick?: (id: string) => void;
 }) {
+  // Filter properties that have valid coordinates
+  const validProperties = useMemo(() => {
+    if (!properties || !Array.isArray(properties)) return [];
+    return properties.filter((p) => p.latitude && p.longitude);
+  }, [properties]);
+
   const center = useMemo(
     () => ({
-      lat: properties[0]?.lat ?? 28.6139,
-      lng: properties[0]?.lng ?? 77.209,
+      lat: validProperties?.[0]?.latitude ?? 28.6139,
+      lng: validProperties?.[0]?.longitude ?? 77.209,
     }),
-    [properties],
+    [validProperties],
   );
+
+  if (!validProperties || validProperties.length === 0) {
+    return (
+      <div className="w-full h-full flex items-center justify-center bg-gray-100">
+        <p className="text-gray-500">No properties with location data</p>
+      </div>
+    );
+  }
 
   return (
     <GoogleMap
@@ -53,16 +61,16 @@ export default function PropertyMap({
       <MarkerClusterer>
         {(clusterer) => (
           <Fragment>
-            {properties.map((p) => (
+            {validProperties.map((p) => (
               <OverlayView
                 key={p.id}
-                position={{ lat: p.lat, lng: p.lng }}
+                position={{ lat: p.latitude, lng: p.longitude }}
                 mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
               >
                 <PriceMarker
-                  price={p.price}
+                  price={p.targetPrice?.value ?? 0}
                   active={activeId === p.id}
-                  onClick={() => onMarkerClick(p.id)}
+                  onClick={() => onMarkerClick?.(p.id)}
                 />
               </OverlayView>
             ))}

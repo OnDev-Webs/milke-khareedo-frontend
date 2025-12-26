@@ -72,13 +72,13 @@ export default function PropertyCard({
         )}
 
         {/* Last Day to join Banner */}
-        {property.lastDayToJoin && (
+        {/* {property.lastDayToJoin && (
           <div className="absolute top-3 left-3 bg-white rounded-lg px-3 py-1.5 shadow-md z-10">
             <span className="text-xs font-medium text-black">
               Last Day to join: {formatDate(property.lastDayToJoin)}
             </span>
           </div>
-        )}
+        )} */}
 
         {/* Action Icons - Right Side (Stacked) - Only visible on hover */}
         <div

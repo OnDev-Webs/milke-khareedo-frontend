@@ -319,4 +319,38 @@ export const homeService = {
       data,
     );
   },
+
+  /**
+   * Search properties
+   * GET /api/home/search-properties
+   */
+  searchProperties: async (params: {
+    city?: string;
+    searchText?: string;
+    priceMin?: string;
+    priceMax?: string;
+    bhk?: string;
+    projectStatus?: string;
+    sortBy?: string;
+    page?: number;
+    limit?: number;
+  }): Promise<ApiResponse<TopPropertiesResponse>> => {
+    const queryParams = new URLSearchParams();
+
+    if (params.city) queryParams.append("city", params.city);
+    if (params.searchText) queryParams.append("searchText", params.searchText);
+    if (params.priceMin) queryParams.append("priceMin", params.priceMin);
+    if (params.priceMax) queryParams.append("priceMax", params.priceMax);
+    if (params.bhk) queryParams.append("bhk", params.bhk);
+    if (params.projectStatus) queryParams.append("projectStatus", params.projectStatus);
+    if (params.sortBy) queryParams.append("sortBy", params.sortBy);
+    if (params.page) queryParams.append("page", params.page.toString());
+    if (params.limit) queryParams.append("limit", params.limit.toString());
+
+    const endpoint = queryParams.toString()
+      ? `${API_ENDPOINTS.HOME.SEARCH_PROPERTIES}?${queryParams.toString()}`
+      : API_ENDPOINTS.HOME.SEARCH_PROPERTIES;
+
+    return apiClient.get<TopPropertiesResponse>(endpoint);
+  },
 };

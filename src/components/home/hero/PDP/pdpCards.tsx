@@ -7,6 +7,7 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import AuthModal from "@/components/auth/AuthModal";
 import { useRouter } from "next/navigation";
 import PropertyCard from "@/components/cards/PropertyCard";
+import getPropertyImages from "@/utils/getPropertyImages";
 
 export default function TopProperties() {
   const LIMIT = 6;
@@ -240,17 +241,6 @@ export default function TopProperties() {
     } catch {
       return dateString;
     }
-  };
-
-  // Get images array for a property (use images array if available, otherwise use single image)
-  const getPropertyImages = (property: Property): string[] => {
-    if (property.images && property.images.length > 0) {
-      return property.images;
-    }
-    if (property.image) {
-      return [property.image];
-    }
-    return [];
   };
 
   // Navigate to specific image

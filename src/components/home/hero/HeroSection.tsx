@@ -3,18 +3,75 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import { FaMapMarkerAlt, FaSearch } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 import CitySelector from "./CitySelector";
+import { homeService } from "@/lib/api/services/home.service";
 
 export default function Hero() {
+  const router = useRouter();
   const [selectedCity, setSelectedCity] = useState("India, Delhi");
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [isSearching, setIsSearching] = useState(false);
+  console.log("searchQuery", searchQuery)
 
   const handleCityChange = (cityValue: string) => {
     setSelectedCity(cityValue);
-    // You can add additional logic here, such as filtering properties based on city
-    console.log("Selected city:", cityValue);
+    setSearchQuery(cityValue);
+  };
+
+  const handleSearch = async () => {
+    // Prefer reading current input value from the ref to avoid stale/null state
+    // const rawInput = searchInputRef.current?.value ?? searchQuery ?? "";
+    const query = String(searchQuery).trim();
+    if (!query) {
+      alert("Please enter a search query");
+      return;
+    }
+
+    setIsSearching(true);
+    try {
+      // Extract city name from selectedCity (e.g., "India, Delhi" -> "Delhi")
+      const cityName = selectedCity.split(",").pop()?.trim() || selectedCity;
+
+      const response = await homeService.searchProperties({
+        city: cityName,
+        // searchText: query,
+        sortBy: "newAdded",
+        page: 1,
+        limit: 10,
+      });
+
+      if (response.success && response.data) {
+        // Store search results in sessionStorage
+        sessionStorage.setItem(
+          "searchResults",
+          JSON.stringify({
+            query,
+            city: cityName,
+            results: response.data,
+          })
+        );
+        // Navigate to search results page
+        router.push(
+          `/search-results?city=${encodeURIComponent(cityName)}&search=${encodeURIComponent(query)}`
+        );
+      } else {
+        alert("No properties found");
+      }
+    } catch (error) {
+      console.error("Search error:", error);
+      alert("Error performing search. Please try again.");
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSearch();
+    }
   };
 
   const group_deals = [
@@ -114,10 +171,10 @@ export default function Hero() {
           <div className="relative flex-1 flex flex-col justify-start ps-4 pe-6 py-4">
             <div className="relative">
               <input
-                ref={searchInputRef}
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
                 placeholder="Find your Dream Home"
@@ -134,9 +191,13 @@ export default function Hero() {
 
           {/* SEARCH BUTTON SECTION */}
           <div className="flex items-center px-6 py-4">
-            <button className="h-12 w-full md:w-auto md:min-w-[140px] rounded-full bg-[#FF765E] text-white flex items-center justify-center gap-2 font-medium shadow-md hover:bg-[#e66a4f] transition-colors">
+            <button
+              onClick={handleSearch}
+              disabled={isSearching}
+              className="h-12 w-full md:w-auto md:min-w-[140px] rounded-full bg-[#FF765E] text-white flex items-center justify-center gap-2 font-medium shadow-md hover:bg-[#e66a4f] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <FaSearch className="text-white text-sm" />
-              <span className="text-sm">Search</span>
+              <span className="text-sm">{isSearching ? "Searching..." : "Search"}</span>
             </button>
           </div>
         </div>

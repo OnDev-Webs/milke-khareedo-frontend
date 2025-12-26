@@ -15,7 +15,7 @@ export default function PropertyGrid({ properties }: { properties: any[] }) {
                 max-w-[360px]
               "
             >
-              <PropertyCard {...property}  />
+              <PropertyCard {...property} />
             </div>
           ))}
         </div>

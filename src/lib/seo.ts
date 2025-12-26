@@ -51,7 +51,8 @@ export function generateMetadata(config: SEOConfig): Metadata {
   };
 }
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://milkekhareedo.com";
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://milkekhareedo.com";
 
 export const socialLinks = {
   facebook: "https://facebook.com/milkekhareedo",

@@ -4,11 +4,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/header";
 import FooterWrapper from "@/components/layout/FooterWrapper";
-import { CompareProvider } from "@/contexts/CompareContext";
-import { AuthProvider } from "@/contexts/AuthContext";
 import { SchemaMarkup, organizationSchema } from "@/lib/schema-markup";
-
 import { Montserrat } from "next/font/google";
+import { Providers } from "@/app/providers";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -102,13 +100,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
       >
-        <AuthProvider>
-          <CompareProvider>
-            <Header />
-            <main>{children}</main>
-            <FooterWrapper />
-          </CompareProvider>
-        </AuthProvider>
+        <Providers>
+          <Header />
+          <main>{children}</main>
+          <FooterWrapper />
+        </Providers>
       </body>
     </html>
   );

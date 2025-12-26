@@ -20,7 +20,6 @@ const partnerLogos = [
   { name: "Partner 7", logo: "/images/ins_120033 (6).svg", score: "8.8%" },
 ];
 
-
 export default function CalculateSave() {
   const router = useRouter();
 
@@ -37,9 +36,7 @@ export default function CalculateSave() {
   };
 
   const handlePrev = () => {
-    setActiveIndex((prev) =>
-      prev === 0 ? partnerLogos.length - 1 : prev - 1
-    );
+    setActiveIndex((prev) => (prev === 0 ? partnerLogos.length - 1 : prev - 1));
   };
 
   const [emiData, setEmiData] = useState<EMICalculatorResponse | null>(null);
@@ -151,7 +148,6 @@ export default function CalculateSave() {
     >
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="rounded-[32px] bg-white p-2 sm:p-6 shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
-
           <div className="grid gap-8 md:grid-cols-2 p-2">
             {/* ================= LEFT SIDE ================= */}
             <div className="flex flex-col gap-4">
@@ -185,19 +181,24 @@ export default function CalculateSave() {
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center">
                         <p className="flex items-center text-[12px] gap-2 font-medium text-[#000000] pe-2">
-                          <span className="text-[#38BA50]">●</span> Principal Amount
+                          <span className="text-[#38BA50]">●</span> Principal
+                          Amount
                         </p>
                         <span className="font-semibold text-black text-[12px]">
-                          {emiData?.principalAmount?.formatted || "₹ 3,61,11,931.00"}
+                          {emiData?.principalAmount?.formatted ||
+                            "₹ 3,61,11,931.00"}
                         </span>
                       </div>
 
                       <div className="flex items-center">
                         <p className="flex items-center text-[12px] gap-2 font-medium text-[#000000] pe-8">
-                          <span className="text-[#FFA322]">●</span> Total Interest
+                          <span className="text-[#FFA322]">●</span> Total
+                          Interest
                         </p>
                         <span className="font-semibold text-black text-[12px]">
-                          + {emiData?.totalInterest?.formatted || "₹ 87,60,442.00"}
+                          +{" "}
+                          {emiData?.totalInterest?.formatted ||
+                            "₹ 87,60,442.00"}
                         </span>
                       </div>
                     </div>
@@ -205,14 +206,16 @@ export default function CalculateSave() {
                     <div className="my-2 sm:my-2 h-px w-[200px] mx-6 bg-gray-200" />
 
                     <div className="flex items-center justify-between">
-                      <p className="text-[14px] text-[#000000] font-semibold">Total Amount</p>
+                      <p className="text-[14px] text-[#000000] font-semibold">
+                        Total Amount
+                      </p>
                       <p className="text-[14px] font-semibold text-black">
-                        {emiData?.totalAmountPayable?.formatted || "₹ 4,48,72,373.00"}
+                        {emiData?.totalAmountPayable?.formatted ||
+                          "₹ 4,48,72,373.00"}
                       </p>
                     </div>
                   </div>
                 </div>
-
               </div>
 
               <div className="bg-[#F2F6FF] px-6 py-10 rounded-md max-w-[58%] md:max-w-full flex flex-col gap-6">
@@ -250,10 +253,11 @@ export default function CalculateSave() {
                       return (
                         <div
                           key={idx}
-                          className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 transition-all ${isActive
-                            ? "scale-110 border-blue-400"
-                            : "bg-gray-100 border-gray-200"
-                            }`}
+                          className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 transition-all ${
+                            isActive
+                              ? "scale-110 border-blue-400"
+                              : "bg-gray-100 border-gray-200"
+                          }`}
                         >
                           <img
                             src={partner.logo}
@@ -283,7 +287,10 @@ export default function CalculateSave() {
                   </h4>
                   <div className="flex items-center gap-2">
                     <span className="text-sm sm:text-base font-semibold text-black bg-[#F2F6FF] px-3 py-1 rounded">
-                      <span className="text-[#FE755E]">{formatLoanAmount(loanAmount)}</span> {currency}
+                      <span className="text-[#FE755E]">
+                        {formatLoanAmount(loanAmount)}
+                      </span>{" "}
+                      {currency}
                     </span>
                   </div>
                 </div>
@@ -296,7 +303,9 @@ export default function CalculateSave() {
                     value={loanAmount}
                     onChange={(e) => setLoanAmount(Number(e.target.value))}
                     className="w-full h-4 rounded-full appearance-none cursor-pointer slider"
-                    style={{ background: `linear-gradient(to right,#FF765E 0%,#FF765E ${loanAmountPercent}%,#E5E7EB ${loanAmountPercent}%,#E5E7EB 100%)`, }}
+                    style={{
+                      background: `linear-gradient(to right,#FF765E 0%,#FF765E ${loanAmountPercent}%,#E5E7EB ${loanAmountPercent}%,#E5E7EB 100%)`,
+                    }}
                   />
                 </div>
 
@@ -393,20 +402,21 @@ export default function CalculateSave() {
               <div className="flex flex-row gap-3 sm:gap-4">
                 <button
                   onClick={handleReset}
-                  className="w-[150px] sm:w-1/2 rounded-full border-2 border-[#F3F3F3] bg-[#F3F3F3] px-6 py-3 text-[16px] font-bold text-black">
+                  className="w-[150px] sm:w-1/2 rounded-full border-2 border-[#F3F3F3] bg-[#F3F3F3] px-6 py-3 text-[16px] font-bold text-black"
+                >
                   Reset
                 </button>
 
                 <button
                   onClick={handleGetLoan}
                   disabled={isCalculating || calculating}
-                  className="w-[150px] sm:w-1/2 rounded-full bg-[#FF765E] px-6 py-3 text-[16px] font-bold text-white hover:bg-[#e86b50] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                  className="w-[150px] sm:w-1/2 rounded-full bg-[#FF765E] px-6 py-3 text-[16px] font-bold text-white hover:bg-[#e86b50] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                   Get a Loan
                 </button>
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -434,4 +444,3 @@ export default function CalculateSave() {
     </section>
   );
 }
-

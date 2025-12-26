@@ -51,7 +51,8 @@ export const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: "Milke Khareedo",
-  image: "https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/logo.png",
+  image:
+    "https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/logo.png",
   description:
     "Buy smarter with collective power. Group buying platform for real estate.",
   address: {
@@ -66,7 +67,13 @@ export const localBusinessSchema = {
   email: "support@milkekhareedo.com",
 };
 
-export function WebPageSchema({ title, description }: { title: string; description: string }) {
+export function WebPageSchema({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
   return {
     "@context": "https://schema.org",
     "@type": "WebPage",

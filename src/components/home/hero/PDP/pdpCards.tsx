@@ -330,9 +330,8 @@ export default function TopProperties() {
                 onClick={() => handleTabChange(tab)}
                 className={`relative px-1 pb-1 text-sm font-medium transition-colors
           ${isActive ? "text-[#FF765E]" : "text-[#818181]"}
-        `}>
-
-
+        `}
+              >
                 {tab}
 
                 {isActive && (
@@ -394,10 +393,11 @@ export default function TopProperties() {
 
                     {/* Action Icons - Right Side (Stacked) - Only visible on hover */}
                     <div
-                      className={`absolute top-3 right-3 flex flex-col gap-2 z-20 transition-all duration-300 ${hoveredProperty === prop.id
-                        ? "opacity-100 visible translate-y-0"
-                        : "opacity-0 invisible -translate-y-2 pointer-events-none"
-                        }`}
+                      className={`absolute top-3 right-3 flex flex-col gap-2 z-20 transition-all duration-300 ${
+                        hoveredProperty === prop.id
+                          ? "opacity-100 visible translate-y-0"
+                          : "opacity-0 invisible -translate-y-2 pointer-events-none"
+                      }`}
                     >
                       {/* Heart Icon (Favorite) */}
                       <button
@@ -406,10 +406,11 @@ export default function TopProperties() {
                           handleFavoriteClick(prop);
                         }}
                         disabled={isLoading}
-                        className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all ${isFavorite
-                          ? "border-[#f15a29] bg-[#f15a29] text-white"
-                          : "border-white bg-white/90 text-gray-700 hover:bg-white"
-                          } disabled:opacity-50 disabled:cursor-not-allowed shadow-md`}
+                        className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all ${
+                          isFavorite
+                            ? "border-[#f15a29] bg-[#f15a29] text-white"
+                            : "border-white bg-white/90 text-gray-700 hover:bg-white"
+                        } disabled:opacity-50 disabled:cursor-not-allowed shadow-md`}
                         aria-label={
                           isFavorite
                             ? "Remove from favorites"
@@ -457,10 +458,11 @@ export default function TopProperties() {
                             e.stopPropagation();
                             goToPreviousImage(prop.id, images.length);
                           }}
-                          className={`absolute left-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 hover:bg-white shadow-lg transition-all duration-300 z-10 border border-gray-200 backdrop-blur-sm ${hoveredProperty === prop.id
-                            ? "opacity-0 invisible scale-90 pointer-events-none"
-                            : "opacity-100 visible scale-100"
-                            }`}
+                          className={`absolute left-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 hover:bg-white shadow-lg transition-all duration-300 z-10 border border-gray-200 backdrop-blur-sm ${
+                            hoveredProperty === prop.id
+                              ? "opacity-0 invisible scale-90 pointer-events-none"
+                              : "opacity-100 visible scale-100"
+                          }`}
                           aria-label="Previous image"
                         >
                           <IoChevronBack className="h-5 w-5" />
@@ -472,10 +474,11 @@ export default function TopProperties() {
                             e.stopPropagation();
                             goToNextImage(prop.id, images.length);
                           }}
-                          className={`absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 hover:bg-white shadow-lg transition-all duration-300 z-10 border border-gray-200 backdrop-blur-sm ${hoveredProperty === prop.id
-                            ? "opacity-0 invisible scale-90 pointer-events-none"
-                            : "opacity-100 visible scale-100"
-                            }`}
+                          className={`absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 hover:bg-white shadow-lg transition-all duration-300 z-10 border border-gray-200 backdrop-blur-sm ${
+                            hoveredProperty === prop.id
+                              ? "opacity-0 invisible scale-90 pointer-events-none"
+                              : "opacity-100 visible scale-100"
+                          }`}
                           aria-label="Next image"
                         >
                           <IoChevronForward className="h-5 w-5" />
@@ -492,10 +495,11 @@ export default function TopProperties() {
                             onClick={() =>
                               goToImage(prop.id, index, images.length)
                             }
-                            className={`transition-all ${index === currentIndex
-                              ? "h-1.5 w-6 rounded-full bg-[#f15a29]"
-                              : "h-1.5 w-1.5 rounded-full bg-white hover:bg-white/80"
-                              }`}
+                            className={`transition-all ${
+                              index === currentIndex
+                                ? "h-1.5 w-6 rounded-full bg-[#f15a29]"
+                                : "h-1.5 w-1.5 rounded-full bg-white hover:bg-white/80"
+                            }`}
                             aria-label={`Go to image ${index + 1}`}
                           />
                         ))}

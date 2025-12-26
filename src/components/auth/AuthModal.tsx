@@ -317,7 +317,10 @@ export default function AuthModal({
 
                   <p className="mt-6 text-[12px] text-[white] text-center mx-4">
                     By continuing, you agree to our{" "}
-                    <a href="/terms" className="text-[white] font-bold hover:underline">
+                    <a
+                      href="/terms"
+                      className="text-[white] font-bold hover:underline"
+                    >
                       Terms & Conditions
                     </a>
                   </p>
@@ -410,7 +413,6 @@ export default function AuthModal({
                 <div className="space-y-2">
                   {features.map((feature, index) => (
                     <div key={index} className="flex items-center gap-2">
-
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center">
                         <Image
                           src={feature.icon}
@@ -421,13 +423,10 @@ export default function AuthModal({
                         />
                       </div>
 
-                      <p className="text-white text-[16px]">
-                        {feature.text}
-                      </p>
+                      <p className="text-white text-[16px]">{feature.text}</p>
                     </div>
                   ))}
                 </div>
-
               </div>
             </div>
           </div>

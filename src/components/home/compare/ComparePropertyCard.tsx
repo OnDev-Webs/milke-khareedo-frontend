@@ -210,10 +210,11 @@ export default function ComparePropertyCard({
           <button
             onClick={handleFavoriteClick}
             disabled={favoriteLoading}
-            className={`flex h-6 w-6 items-center justify-center rounded-full border transition-colors sm:h-7 sm:w-7 md:h-8 md:w-8 ${isFavorite
-              ? "border-[#f15a29] bg-[#f15a29] text-white hover:bg-[#e14f20]"
-              : "border-gray-300 bg-[#F2F6FF] text-gray-600 hover:bg-gray-50"
-              } disabled:opacity-50 disabled:cursor-not-allowed`}
+            className={`flex h-6 w-6 items-center justify-center rounded-full border transition-colors sm:h-7 sm:w-7 md:h-8 md:w-8 ${
+              isFavorite
+                ? "border-[#f15a29] bg-[#f15a29] text-white hover:bg-[#e14f20]"
+                : "border-gray-300 bg-[#F2F6FF] text-gray-600 hover:bg-gray-50"
+            } disabled:opacity-50 disabled:cursor-not-allowed`}
             aria-label={
               isFavorite ? "Remove from favorites" : "Add to favorites"
             }
@@ -380,10 +381,11 @@ export default function ComparePropertyCard({
                 <button
                   key={index}
                   onClick={() => scrollToPlan(index)}
-                  className={`transition-all ${index === currentFloorPlanIndex
-                    ? "h-1.5 w-6 rounded-full bg-gray-600 sm:h-2 sm:w-8"
-                    : "h-1 w-1 rounded-full bg-gray-300 hover:bg-gray-400 sm:h-1.5 sm:w-1.5"
-                    }`}
+                  className={`transition-all ${
+                    index === currentFloorPlanIndex
+                      ? "h-1.5 w-6 rounded-full bg-gray-600 sm:h-2 sm:w-8"
+                      : "h-1 w-1 rounded-full bg-gray-300 hover:bg-gray-400 sm:h-1.5 sm:w-1.5"
+                  }`}
                   aria-label={`Go to floor plan ${index + 1}`}
                 />
               ))}

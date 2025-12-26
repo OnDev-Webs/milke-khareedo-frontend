@@ -93,7 +93,9 @@ export default function Hero() {
         <div className="flex flex-col md:flex-row items-stretch rounded-2xl bg-white/70 backdrop-blur-md p-0 shadow-lg overflow-visible">
           {/* CITY SELECT SECTION */}
           <div className="relative flex flex-col justify-center ps-6 pe-4 py-4 min-w-[130px]">
-            <label className="text-sm font-bold text-gray-800 mb-2.5">City</label>
+            <label className="text-sm font-bold text-gray-800 mb-2.5">
+              City
+            </label>
             <div className="relative" style={{ zIndex: 1000 }}>
               <CitySelector
                 value={selectedCity}
@@ -102,8 +104,10 @@ export default function Hero() {
                 showLabel={false}
               />
             </div>
-            <span className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2
-                   h-10 w-[2px] bg-[#DCDCEB]" />
+            <span
+              className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2
+                   h-10 w-[2px] bg-[#DCDCEB]"
+            />
           </div>
 
           {/* SEARCH INPUT SECTION */}
@@ -119,7 +123,9 @@ export default function Hero() {
                 placeholder="Find your Dream Home"
                 className="w-full bg-transparent text-base font-bold text-gray-800 outline-none border-none focus:outline-none focus:ring-0 placeholder:text-base placeholder:font-bold placeholder:text-gray-800 transition-all duration-300 min-h-[24px]"
               />
-              <div className={`absolute left-0 top-full mt-1.5 flex items-center gap-1.5 text-xs text-gray-500 pointer-events-none transition-opacity duration-300 ${searchQuery || isSearchFocused ? 'opacity-0' : 'opacity-100'}`}>
+              <div
+                className={`absolute left-0 top-full mt-1.5 flex items-center gap-1.5 text-xs text-gray-500 pointer-events-none transition-opacity duration-300 ${searchQuery || isSearchFocused ? "opacity-0" : "opacity-100"}`}
+              >
                 <FaMapMarkerAlt className="text-gray-500 text-xs flex-shrink-0" />
                 <span>Search for Developers, Location, Projects</span>
               </div>

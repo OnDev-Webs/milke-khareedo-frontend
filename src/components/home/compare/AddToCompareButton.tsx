@@ -9,21 +9,29 @@ interface AddToCompareButtonProps {
   property: CompareProperty;
   variant?: "icon" | "button";
   className?: string;
+  clearOldData?: boolean; // If true, clears old compare data before adding (for new page comparisons)
 }
 
 export default function AddToCompareButton({
   property,
   variant = "icon",
   className = "",
+  clearOldData = false,
 }: AddToCompareButtonProps) {
-  const { addToCompare, removeFromCompare, isInCompare } = useCompare();
+  const { addToCompare, clearAndAddToCompare, removeFromCompare, isInCompare } =
+    useCompare();
   const inCompare = isInCompare(property.id);
 
   const handleClick = () => {
     if (inCompare) {
       removeFromCompare(property.id);
     } else {
-      addToCompare(property);
+      // If clearOldData is true, clear old data first (for new page comparisons)
+      if (clearOldData) {
+        clearAndAddToCompare(property);
+      } else {
+        addToCompare(property);
+      }
     }
   };
 

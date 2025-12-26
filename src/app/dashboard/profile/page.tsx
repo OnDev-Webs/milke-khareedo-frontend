@@ -77,7 +77,6 @@ function FieldInput({
   );
 }
 
-
 function FieldSelect({
   label,
   placeholder,
@@ -115,4 +114,3 @@ function FieldSelect({
     </div>
   );
 }
-

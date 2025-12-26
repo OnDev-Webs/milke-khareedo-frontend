@@ -37,7 +37,7 @@ export default function ViewedPropertiesPage() {
 
     if (viewedProperties.length === 0) {
         return (
-            <div className="rounded-[24px] bg-white px-6 py-10 shadow sm:px-10">
+            <div className="rounded-[24px] bg-white px-6 py-10 shadow-[0_8px_24px_rgba(0,0,0,0.06)] sm:px-10">
                 <EmptyState
                     imageSrc="/images/empty_property.png"
                     title="Find a place you like and save it!"
@@ -48,26 +48,8 @@ export default function ViewedPropertiesPage() {
     }
 
     return (
-        <>
-            <div className="block sm:hidden">
-                <PropertyGrid
-                    properties={viewedProperties.map(p => ({
-                        ...p,
-                        showDiscount: true,
-                    }))}
-                />
-            </div>
-
-            <div className="hidden sm:block rounded-[24px] bg-[#f8fbff] px-10 py-10 shadow">
-                <PropertyGrid
-                    properties={viewedProperties.map(p => ({
-                        ...p,
-                        showDiscount: true,
-                    }))}
-                />
-            </div>
-        </>
+        <div className="rounded-[24px] bg-white px-6 py-8 shadow-[0_8px_24px_rgba(0,0,0,0.06)] sm:px-10 sm:py-10">
+            <PropertyGrid properties={viewedProperties} />
+        </div>
     );
-
-
 }

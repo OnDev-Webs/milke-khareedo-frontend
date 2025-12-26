@@ -1,79 +1,149 @@
-import AboutHero from "@/components/about/heroAbout";
+import Title from "@/components/typography/title";
+import Image from "next/image";
+import { Phone, Mail } from "lucide-react";
+import AboutHeroBg from "@/assets/about-us/about-hero-bg.png";
+import HeroSection from "@/components/sections/HeroSection";
+import ContactForm from "@/components/home/contact-us/ContactForm";
 
 const contactMethods = [
-  { label: "Address", desc: "Description" },
-  { label: "Mobile No", desc: "Description" },
-  { label: "Email", desc: "Description" },
+  {
+    type: "normal",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        className="h-14 w-14 text-[#c6bdf5]"
+        fill="currentColor"
+      >
+        <path d="M21 19l-5.5-7-3.5 4.5-2.5-3L3 19z" />
+        <circle cx="9" cy="8" r="2" />
+      </svg>
+    ),
+    title: "What We Help With",
+    desc: "Help with apartments, villas, and plots — from shortlisting to better group pricing.",
+  },
+
+  {
+    type: "contact",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        className="h-14 w-14 text-[#c6bdf5]"
+        fill="currentColor"
+      >
+        <path d="M21 19l-5.5-7-3.5 4.5-2.5-3L3 19z" />
+        <circle cx="9" cy="8" r="2" />
+      </svg>
+    ),
+    title: "How to Reach Us",
+    details: [
+      {
+        icon: <Phone size={18} />,
+        value: "+91 XXXXXXXXXX",
+      },
+      {
+        icon: <Mail size={18} />,
+        value: "support@milkekhereedo.com",
+      },
+    ],
+  },
+
+  {
+    type: "normal",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        className="h-14 w-14 text-[#c6bdf5]"
+        fill="currentColor"
+      >
+        <path d="M21 19l-5.5-7-3.5 4.5-2.5-3L3 19z" />
+        <circle cx="9" cy="8" r="2" />
+      </svg>
+    ),
+    title: "Where We Are",
+    desc: "Tk Residency , Friends Colony Rd, Friends Colony, Indira Nagar Colony, Miyapur, Hyderabad, Telangana 500049",
+  },
 ];
 
 export default function ConnectWithUs() {
   return (
     <>
-      <AboutHero />
+      <HeroSection
+        backgroundImage={AboutHeroBg}
+        badgeText="Contact Us"
+        title="Talk to us. Buy smarter."
+        highlightText="Save more."
+        description="We bring buyers together to help you save more, negotiate better, and buy with confidence."
+        headingVariant="h3"
+      />
       <section className="w-full bg-white py-16">
         <div className="mx-auto max-w-6xl px-4">
-          <h2 className="mb-8 text-center text-2xl font-semibold text-[#5b567a]">
-            Connect With Us On
-          </h2>
+          {/* Title */}
+          <div className="flex justify-center mb-12 md:mb-20">
+            <Title text="Company" isDrawLine drawLineText="Overview" />
+          </div>
 
-          <div className="mb-10 flex justify-center gap-4 w-full">
-            {contactMethods.map((item) => (
+          {/* Top cards */}
+          <div className="flex flex-col md:flex-row justify-center gap-6 mb-16">
+            {contactMethods.map((item, index) => (
               <div
-                key={item.label}
-                className="flex min-w-[180px] h-full w-full items-center gap-3 rounded-2xl bg-[#f7f5ff] p-8"
+                key={index}
+                className="bg-[#F2F6FF] p-6 rounded-2xl md:w-[32%]"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-14 w-14 text-[#c6bdf5]"
-                  fill="currentColor"
-                >
-                  <path d="M21 19l-5.5-7-3.5 4.5-2.5-3L3 19z" />
-                  <circle cx="9" cy="8" r="2" />
-                </svg>
+                {item.icon}
 
-                <div>
-                  <p className="font-semibold text-[#5b567a] text-2xl">
-                    {item.label}
+                <p className="font-bold text-black text-xl mt-2">
+                  {item.title}
+                </p>
+
+                {item.type === "normal" && (
+                  <p className="text-[#514F6F] mt-2 text-[14.5px]">
+                    {item.desc}
                   </p>
-                  <p className="text-gray-500">{item.desc}</p>
-                </div>
+                )}
+
+                {item.type === "contact" && (
+                  <div className="mt-2">
+                    {item.details?.map((d, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-1 text-[#514F6F]"
+                      >
+                        <div className="h-8 w-8 rounded-full flex items-center justify-center">
+                          {d.icon}
+                        </div>
+                        <span className="text-sm font-medium">{d.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="rounded-[28px] bg-white p-7 border border-[#d9d9d9]">
-              <h3 className="font-semibold text-[#5b567a] text-2xl">Title</h3>
-              <p className="mt-1 text-gray-500 ">Description</p>
+          {/* Form + Image */}
+          <div className="flex flex-col-reverse md:flex-row gap-8 items-stretch">
+            {/* LEFT – FORM */}
+            <div className="md:w-1/2 flex">
+              <div className="w-full bg-white p-6 rounded-[28px] border border-[#DDDDDD] flex flex-col justify-center">
+                <h3 className="font-bold text-black text-[28px] mb-2 text-left">
+                  Let’s find the right deal for you
+                </h3>
+                <p className="text-[#373737] font-medium text-[16px] mb-6 text-left">
+                  Fill out the form, and we’ll reach out within 24 hours.
+                </p>
 
-              <div className="mt-6 space-y-4">
-                <div className="flex gap-4">
-                  <div className="h-10 flex-1 rounded-full bg-[#dedde3]" />
-                  <div className="h-10 flex-1 rounded-full bg-[#dedde3]" />
-                </div>
-                <div className="flex gap-4">
-                  <div className="h-10 flex-1 rounded-full bg-[#dedde3]" />
-                  <div className="h-10 flex-1 rounded-full bg-[#dedde3]" />
-                </div>
-                <div className="h-44 w-full rounded-2xl bg-[#dedde3]" />
+                <ContactForm />
               </div>
-
-              <button className="mt-6 rounded-full border border-gray-400 px-14 py-3 text-xl font-semibold text-gray-600">
-                Button
-              </button>
             </div>
-
-            <div className="flex rounded-[28px] bg-[#f7f5ff] p-7 border border-[#d9d9d9]">
-              <div className="flex h-full w-full flex-col items-center justify-center">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-24 w-24 text-[#c6bdf5]"
-                  fill="currentColor"
-                >
-                  <path d="M21 19l-5.5-7-3.5 4.5-2.5-3L3 19z" />
-                  <circle cx="9" cy="8" r="2" />
-                </svg>
-                <p className="font-semibold text-[#5b567a] text-4xl">Map</p>
+            {/* RIGHT – IMAGE */}
+            <div className="md:w-1/2 flex items-center justify-center">
+              <div className="relative w-full h-[260px] sm:h-80 md:h-full rounded-2xl overflow-hidden">
+                <Image
+                  src="/images/contact.jpg"
+                  alt="Contact"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
           </div>

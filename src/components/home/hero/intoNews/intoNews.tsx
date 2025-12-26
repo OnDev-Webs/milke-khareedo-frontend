@@ -11,16 +11,19 @@ export default function IntoNews() {
           <span className="relative inline-block text-[#FF765E] ps-2">
             Buy
             <svg
-              className="absolute left-2 -bottom-2.5 w-[90px] md:w-[60px] h-[11px]"
+              className="absolute left-0 -bottom-2"
+              width="74"
+              height="11"
               viewBox="0 0 228 11"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M2 6 C40 10, 80 2, 120 5 C160 8, 190 3, 226 6"
+                d="M2 8.5C60 1.5 170 5.5 226 8.5"
                 stroke="#FF765E"
-                strokeWidth="12"
+                strokeWidth="9"
                 strokeLinecap="round"
+                fill="none"
               />
             </svg>
           </span>

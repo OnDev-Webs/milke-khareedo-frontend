@@ -26,32 +26,36 @@ export default function AboutSection() {
   ];
 
   return (
-    <section className="w-full py-16 px-4 md:px-10"
+    <section
+      className="w-full py-16 px-4 md:px-10"
       style={{
         backgroundColor: "#F2F5F9",
         backgroundImage: "radial-gradient(#d1d5db 1px, transparent 1px)",
         backgroundSize: "20px 20px",
-      }}>
+      }}
+    >
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch">
-
           {/* LEFT SIDE */}
           <div className="ps-0 md:ps-10">
             <h3 className="text-[24px] md:text-[30px] font-semibold text-[#000] mb-6 md:mb-8 pe-0 md:pe-0">
-              How <span className="text-[#FF765E]"> Milke Khareedo</span> Makes 
+              How <span className="text-[#FF765E]"> Milke Khareedo</span> Makes
               <span className="relative inline-block pe-2">
                 Buying
                 <svg
-                  className="absolute left-0 -bottom-3.5 w-[90px] md:w-[112px] h-[11px]"
+                  className="absolute left-0 -bottom-2"
+                  width="128"
+                  height="11"
                   viewBox="0 0 228 11"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M2 6 C40 10, 80 2, 120 5 C160 8, 190 3, 226 6"
+                    d="M2 8.5C60 1.5 170 5.5 226 8.5"
                     stroke="#FF765E"
                     strokeWidth="6"
                     strokeLinecap="round"
+                    fill="none"
                   />
                 </svg>
               </span>
@@ -60,19 +64,10 @@ export default function AboutSection() {
 
             <div className="space-y-3 md:space-y-2">
               {points.map((item, i) => (
-                <div key={i} className="flex items-start gap-3 md:gap-4">
-
-                  {/* Icon */}
-                  <div className="flex h-10 md:h-12 w-10 md:w-12 items-center justify-center rounded-xl bg-[#FFF1EE]">
-                    <svg
-                      className="h-5 md:h-6 w-5 md:w-6 text-[#FF765E]"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M4 12h16M12 4v16" />
-                    </svg>
+                <div key={i} className="flex items-center gap-3 md:gap-4">
+                  {/* Number */}
+                  <div className="flex h-8 w-8 md:h-8 md:w-8 shrink-0 items-center justify-center rounded-full bg-[#FF765E] text-black font-bold text-sm md:text-base leading-none">
+                    {i + 1}
                   </div>
 
                   {/* Text */}
@@ -80,11 +75,10 @@ export default function AboutSection() {
                     <h5 className="text-[14px] md:text-[18px] font-semibold text-black">
                       {item.title}
                     </h5>
-                    <p className="text-[11px] md:text-[12.5px] text-[#373737] mt-1 md:mt-1">
+                    <p className="text-[11px] md:text-[12.5px] text-[#373737] mt-1">
                       {item.desc}
                     </p>
                   </div>
-
                 </div>
               ))}
             </div>
@@ -93,7 +87,6 @@ export default function AboutSection() {
           {/* RIGHT SIDE */}
           <div className="flex justify-center h-[350px] md:h-[500px]">
             <div className="relative w-full max-w-[220px] md:max-w-[300px] h-full rounded-3xl overflow-hidden shadow-lg">
-
               {/* Image */}
               <Image
                 src="/images/about.jpg"
@@ -104,9 +97,16 @@ export default function AboutSection() {
               />
 
               {/* Top Left */}
-              <div className="absolute top-2 md:top-4 left-2 md:left-4 flex items-center gap-2 bg-white/90 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-semibold">
-                <svg className="h-3 md:h-4 w-3 md:w-4" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M3 6h18M3 12h18M3 18h18" />
+              <div className="absolute top-2 md:top-2 left-2 md:left-2 z-20 flex items-center gap-2 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-semibold text-white">
+                <svg
+                  className="h-7 w-7 md:h-9 md:w-9 bg-white/90 rounded-full p-[3px]"
+                  viewBox="0 0 24 24"
+                  fill="#000"
+                >
+                  <circle cx="8" cy="8" r="2" />
+                  <circle cx="16" cy="8" r="2" />
+                  <circle cx="8" cy="16" r="2" />
+                  <circle cx="16" cy="16" r="2" />
                 </svg>
                 Milke Khareedo
               </div>
@@ -114,18 +114,25 @@ export default function AboutSection() {
               {/* Top Right */}
               <div className="absolute top-2 md:top-4 right-2 md:right-4 flex gap-2">
                 <div className="h-7 md:h-9 w-7 md:w-9 bg-white rounded-full flex items-center justify-center shadow">
-                  <svg className="h-3 md:h-4 w-3 md:w-4" viewBox="0 0 24 24" fill="currentColor">
+                  <svg
+                    className="h-3 md:h-4 w-3 md:w-4"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
                     <path d="M11 5L6 9H2v6h4l5 4z" />
                   </svg>
                 </div>
 
                 <div className="h-7 md:h-9 w-7 md:w-9 bg-white rounded-full flex items-center justify-center shadow">
-                  <svg className="h-3 md:h-4 w-3 md:w-4" viewBox="0 0 24 24" fill="currentColor">
+                  <svg
+                    className="h-3 md:h-4 w-3 md:w-4"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
                     <path d="M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zm6 10v6h-6v-2h4v-4zM4 14h2v4h4v2H4z" />
                   </svg>
                 </div>
               </div>
-
             </div>
           </div>
         </div>

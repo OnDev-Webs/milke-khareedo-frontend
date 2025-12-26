@@ -5,7 +5,8 @@ import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 
 export default function CompareOverlay() {
-  const { compareItems, removeFromCompare, clearCompare, compareCount } = useCompare();
+  const { compareItems, removeFromCompare, clearCompare, compareCount } =
+    useCompare();
 
   return (
     <div className="w-[340px] rounded-2xl bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)]">

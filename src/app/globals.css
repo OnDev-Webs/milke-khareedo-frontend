@@ -61,19 +61,19 @@
   --animate-marquee: marquee var(--duration) infinite linear;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
   @keyframes marquee {
-  from {
-    transform: translateX(0);
+    from {
+      transform: translateX(0);
     }
-  to {
-    transform: translateX(calc(-100% - var(--gap)));
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
     }
   }
   @keyframes marquee-vertical {
-  from {
-    transform: translateY(0);
+    from {
+      transform: translateY(0);
     }
-  to {
-    transform: translateY(calc(-100% - var(--gap)));
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
     }
   }
 }
@@ -169,14 +169,127 @@
   }
 }
 
+.not-found::before,
+.not-found::after {
+  content: "";
+  position: absolute;
+  width: 435px;
+  height: 699px;
+  bottom: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.not-found::before {
+  left: 0;
+  background-image: url("../assets/not-found-vector-left.png");
+}
+
+.not-found::after {
+  right: 0;
+  background-image: url("../assets/not-found-vector-right.png");
+}
+
 .custom-swiper-scrollbar {
-  width: 980px !important;
+  width: 100%x !important;
   height: 4px;
   background: rgba(0, 0, 0, 0.08);
   border-radius: 9999px;
 }
 
 .custom-swiper-scrollbar .swiper-scrollbar-drag {
-  background: #FF765E;
+  background: #ff765e;
   border-radius: 9999px;
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* Thin scrollbar styling */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(75 85 99) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgb(75 85 99);
+  border-radius: 3px;
+}
+
+.scrollbar-thin:hover::-webkit-scrollbar-thumb {
+  background-color: rgb(107 114 128);
+}
+
+.scrollbar-thumb-gray-600::-webkit-scrollbar-thumb {
+  background-color: rgb(75 85 99);
+}
+
+.hover\:scrollbar-thumb-gray-500:hover::-webkit-scrollbar-thumb {
+  background-color: rgb(107 114 128);
+}
+
+/* Orange theme scrollbar for city selector */
+.city-selector-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 118, 94, 0.3) transparent;
+}
+
+.city-selector-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.city-selector-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.city-selector-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 118, 94, 0.3);
+  border-radius: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.city-selector-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 118, 94, 0.5);
+}
+
+/* Dropdown slide down animation */
+@keyframes dropdownSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Search input hint visibility */
+.search-hint {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+input:focus ~ .search-hint,
+input:not(:placeholder-shown) ~ .search-hint {
+  opacity: 0;
+  pointer-events: none;
 }

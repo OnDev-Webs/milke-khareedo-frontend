@@ -1,115 +1,230 @@
 "use client";
 
 import { useCompare } from "@/contexts/CompareContext";
-import Link from "next/link";
-import { IoClose } from "react-icons/io5";
 import { IoAdd } from "react-icons/io5";
-import Image from "next/image";
 import GoogleMapComponent from "@/components/home/compare/GoogleMap";
 import ComparePropertyCard from "@/components/home/compare/ComparePropertyCard";
-import { useState, useMemo } from "react";
-
-// Sample properties data - replace with API call
-const availableProperties = [
-  {
-    id: 1,
-    title: "Godrej South Estate",
-    developer: "Mahindra Lifespaces",
-    price: "₹4.68 Cr - 4.85 Cr",
-    location: "Kandhivali East",
-    image: "/images/tp1.jpg",
-    area: "652 - 1254 sqft",
-    config: "2 BHK, 3 BHK, 4 BHK",
-    propertyType: "Residential",
-    possessionDate: "Jan 2027",
-    possessionStatus: "Under Construction",
-    floorPlanImage: "/images/tp1.jpg",
-    lat: 28.5355,
-    lng: 77.3910,
-  },
-  {
-    id: 2,
-    title: "Shree Gopaldham",
-    developer: "Ruparel Group",
-    price: "₹3.68 Cr - 3.85 Cr",
-    location: "Byculla East",
-    image: "/images/tp2.jpg",
-    area: "752 - 6354 sqft",
-    config: "2 BHK, 3 BHK, 4 BHK",
-    propertyType: "Residential",
-    possessionDate: "Jan 2027",
-    possessionStatus: "Under Construction",
-    floorPlanImage: "/images/tp2.jpg",
-    lat: 19.2056,
-    lng: 72.8637,
-  },
-  {
-    id: 3,
-    title: "Nirban Bismillah Cast.",
-    developer: "Star Group",
-    price: "₹2.68 Cr - 2.85 Cr",
-    location: "Borivalli",
-    image: "/images/tp3.jpg",
-    area: "452 - 3254 sqft",
-    config: "2 BHK, 3 BHK, 4 BHK",
-    propertyType: "Residential",
-    possessionDate: "Jan 2027",
-    possessionStatus: "Under Construction",
-    floorPlanImage: "/images/tp3.jpg",
-    lat: 19.1364,
-    lng: 72.8297,
-  },
-];
+import PropertySelectionModal from "@/components/home/compare/PropertySelectionModal";
+import { useState, useMemo, useEffect } from "react";
+import {
+  homeService,
+  type Property,
+  type CompareProperty,
+} from "@/lib/api/services/home.service";
 
 export default function ComparePage() {
-  const { compareItems, removeFromCompare, addToCompare, isInCompare } = useCompare();
+  const { compareItems, removeFromCompare, addToCompare, isInCompare } =
+    useCompare();
   const [showAddPropertyModal, setShowAddPropertyModal] = useState(false);
+  const [comparisonData, setComparisonData] = useState<CompareProperty[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Calculate map center based on compared properties
-  const mapCenter = useMemo(() => {
-    if (compareItems.length > 0) {
-      // Use first property's location or average of all
-      const firstProperty = availableProperties.find(
-        (p) => p.id === compareItems[0].id
-      );
-      if (firstProperty) {
-        return { lat: firstProperty.lat, lng: firstProperty.lng };
+  // Fetch comparison data when compareItems change
+  useEffect(() => {
+    const fetchComparison = async () => {
+      if (compareItems.length === 0) {
+        setComparisonData([]);
+        return;
       }
-    }
-    // Default to Mumbai
-    return { lat: 19.0760, lng: 72.8777 };
+
+      setLoading(true);
+      setError(null);
+
+      try {
+        const propertyIds = compareItems.map((item) => String(item.id));
+        const response: any = await homeService.compareProperties({
+          propertyIds,
+        });
+
+        if (response.success && response.data) {
+          setComparisonData(response.data || []);
+        } else {
+          setError("Failed to fetch comparison data");
+          setComparisonData([]);
+        }
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Failed to fetch comparison data",
+        );
+        setComparisonData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchComparison();
   }, [compareItems]);
 
-  // Get markers for compared properties
+  // Get markers for compared properties with labels
+  // Use compareItems as source of truth - create markers for ALL items in compareItems
   const mapMarkers = useMemo(() => {
-    return compareItems
-      .map((item) => {
-        const prop = availableProperties.find((p) => p.id === item.id);
-        return prop
-          ? {
-            lat: prop.lat,
-            lng: prop.lng,
-            title: prop.title,
-          }
-          : null;
-      })
-      .filter((marker) => marker !== null) as Array<{
-        lat: number;
-        lng: number;
-        title: string;
-      }>;
-  }, [compareItems]);
+    // If no items to compare, return empty array
+    if (compareItems.length === 0) {
+      return [];
+    }
 
-  const handleAddProperty = (property: typeof availableProperties[0]) => {
+    // Create markers array ensuring proper label assignment
+    // Iterate through compareItems (source of truth) and find matching data in comparisonData
+    const markers = compareItems
+      .map((compareItem, index) => {
+        // Find the property in comparisonData that matches this compareItem
+        const prop = comparisonData.find(
+          (p) => String(p.id) === String(compareItem.id),
+        );
+
+        // If property not found in comparisonData yet (still loading), skip for now
+        // But we'll still try to create a marker if we have coordinates from somewhere else
+        if (!prop) {
+          // Log for debugging - property might still be loading
+          console.warn(
+            `Property ${compareItem.id} not found in comparisonData yet`,
+          );
+          return null;
+        }
+
+        // Validate coordinates - must have both lat and lng
+        const hasValidCoords =
+          prop.latitude !== null &&
+          prop.latitude !== undefined &&
+          prop.longitude !== null &&
+          prop.longitude !== undefined &&
+          !isNaN(Number(prop.latitude)) &&
+          !isNaN(Number(prop.longitude)) &&
+          Number(prop.latitude) !== 0 &&
+          Number(prop.longitude) !== 0; // Exclude 0,0 coordinates (invalid)
+
+        if (!hasValidCoords) {
+          // Log for debugging - property doesn't have valid coordinates
+          console.warn(
+            `Property ${compareItem.id} (${prop.projectName || compareItem.title}) does not have valid coordinates`,
+          );
+          return null;
+        }
+
+        // Use pinLabel from API response, fallback to generated label if not provided
+        const label = prop.pinLabel || String.fromCharCode(65 + index);
+
+        return {
+          id: String(prop.id),
+          lat: Number(prop.latitude),
+          lng: Number(prop.longitude),
+          title: prop.projectName || compareItem.title,
+          label: label,
+        };
+      })
+      .filter(
+        (marker): marker is NonNullable<typeof marker> => marker !== null,
+      );
+
+    // Debug log to verify all markers are created
+    if (markers.length !== compareItems.length) {
+      console.warn(
+        `Expected ${compareItems.length} markers but created ${markers.length}. ` +
+          `Some properties may not have valid coordinates or are still loading.`,
+      );
+    } else {
+      console.log(
+        `✅ Successfully created ${markers.length} markers using pinLabel from API:`,
+        markers.map((m) => `${m.label} (${m.title})`).join(", "),
+      );
+    }
+
+    return markers;
+  }, [comparisonData, compareItems]);
+
+  // Calculate map center based on actual markers being displayed
+  const mapCenter = useMemo(() => {
+    if (mapMarkers.length === 0) {
+      // Default to Delhi if no markers
+      return { lat: 28.4089, lng: 77.0418 };
+    }
+
+    if (mapMarkers.length === 1) {
+      return {
+        lat: mapMarkers[0].lat,
+        lng: mapMarkers[0].lng,
+      };
+    }
+
+    // Calculate average center for multiple markers
+    const avgLat =
+      mapMarkers.reduce((sum, marker) => sum + marker.lat, 0) /
+      mapMarkers.length;
+    const avgLng =
+      mapMarkers.reduce((sum, marker) => sum + marker.lng, 0) /
+      mapMarkers.length;
+
+    return { lat: avgLat, lng: avgLng };
+  }, [mapMarkers]);
+
+  const handlePropertySelect = (property: Property) => {
     addToCompare({
       id: property.id,
-      title: property.title,
-      price: property.price,
+      title: property.projectName,
+      price:
+        property.targetPrice?.formatted ||
+        property.offerPrice?.formatted ||
+        "Price on request",
       location: property.location,
       developer: property.developer,
-      image: property.image,
+      image: property.image || undefined,
     });
-    setShowAddPropertyModal(false);
+  };
+
+  const formatPrice = (property: CompareProperty) => {
+    if (property.budget) {
+      return property.budget.formatted;
+    }
+    return "Price on request";
+  };
+
+  const getPropertyForCard = (compareItem: (typeof compareItems)[0]) => {
+    const apiProperty = comparisonData.find(
+      (p) => p.id === String(compareItem.id),
+    );
+
+    if (apiProperty) {
+      return {
+        id: apiProperty.id,
+        title: apiProperty.projectName,
+        developer: apiProperty.developer,
+        price: formatPrice(apiProperty),
+        location: apiProperty.location,
+        image: apiProperty.mainImage || undefined,
+        area: apiProperty.area?.formatted || "N/A",
+        config:
+          apiProperty.configurationsFormatted ||
+          apiProperty.configurations?.join(", ") ||
+          "N/A",
+        propertyType: apiProperty.propertyType || "Residential",
+        possessionDate:
+          apiProperty.possessionDateFormatted || apiProperty.possessionDate,
+        possessionStatus: apiProperty.possessionStatus,
+        floorPlanImage: apiProperty.floorPlans?.[0]?.image || undefined,
+        floorPlans: apiProperty.floorPlans || undefined,
+        isFavorite: apiProperty.isFavorite ?? false, // Use isFavorite from API response
+      };
+    }
+
+    // Fallback to compareItem data if API data not available
+    return {
+      id: String(compareItem.id),
+      title: compareItem.title,
+      developer: compareItem.developer || "N/A",
+      price: compareItem.price,
+      location: compareItem.location || "N/A",
+      image: compareItem.image,
+      area: "N/A",
+      config: "N/A",
+      propertyType: "Residential",
+      possessionDate: undefined,
+      possessionStatus: undefined,
+      floorPlanImage: undefined,
+      isFavorite: false, // Default to false if API data not available
+    };
   };
 
   return (
@@ -143,6 +258,13 @@ export default function ComparePage() {
             )}
           </div>
 
+          {/* Error Message */}
+          {error && (
+            <div className="mb-4 rounded-lg bg-red-50 border border-red-200 p-4">
+              <p className="text-sm text-red-600">{error}</p>
+            </div>
+          )}
+
           {/* Properties Grid */}
           {compareItems.length === 0 ? (
             // Empty State - Add Property Card
@@ -170,33 +292,32 @@ export default function ComparePage() {
                 </button>
               </div>
             </div>
+          ) : loading ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="text-center">
+                <div className="mb-4 inline-block h-8 w-8 animate-spin rounded-full border-4 border-[#f15a29] border-t-transparent"></div>
+                <p className="text-sm text-gray-600">
+                  Loading comparison data...
+                </p>
+              </div>
+            </div>
           ) : (
             <div className="grid gap-2 grid-cols-1 sm:gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-3 xl:grid-cols-3 lg:gap-6">
               {/* Render compared properties */}
               {compareItems.map((item, index) => {
-                const property = availableProperties.find((p) => p.id === item.id);
-                if (!property) return null;
-
-                // Generate label (A, B, C, D)
-                const label = String.fromCharCode(65 + index);
+                // Find the property in comparisonData to get pinLabel from API
+                const apiProperty = comparisonData.find(
+                  (p) => String(p.id) === String(item.id),
+                );
+                // Use pinLabel from API response, fallback to generated label if not provided
+                const label =
+                  apiProperty?.pinLabel || String.fromCharCode(65 + index);
+                const propertyData = getPropertyForCard(item);
 
                 return (
                   <ComparePropertyCard
                     key={item.id}
-                    property={{
-                      id: property.id,
-                      title: property.title,
-                      developer: property.developer,
-                      price: property.price,
-                      location: property.location,
-                      image: property.image,
-                      area: property.area,
-                      config: property.config,
-                      propertyType: property.propertyType,
-                      possessionDate: property.possessionDate,
-                      possessionStatus: property.possessionStatus,
-                      floorPlanImage: property.floorPlanImage,
-                    }}
+                    property={propertyData}
                     label={label}
                     onRemove={() => removeFromCompare(item.id)}
                   />
@@ -225,70 +346,12 @@ export default function ComparePage() {
         </div>
       </div>
 
-      {/* Add Property Modal */}
-      {showAddPropertyModal && (
-        <>
-          <div
-            className="fixed inset-0 z-40 bg-black/50"
-            onClick={() => setShowAddPropertyModal(false)}
-          />
-          <div className="fixed left-1/2 top-1/2 z-50 max-h-[90vh] w-[95%] max-w-4xl -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl bg-white p-4 shadow-2xl sm:p-6">
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-lg font-bold text-gray-800 sm:text-xl md:text-2xl">
-                Select Properties to Compare
-              </h2>
-              <button
-                onClick={() => setShowAddPropertyModal(false)}
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200"
-              >
-                <IoClose className="h-5 w-5" />
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-              {availableProperties
-                .filter((prop) => !isInCompare(prop.id))
-                .map((property) => (
-                  <div
-                    key={property.id}
-                    className="group cursor-pointer rounded-lg border-2 border-gray-200 bg-white p-3 transition-all hover:border-[#f15a29] hover:shadow-lg sm:rounded-xl sm:p-4"
-                    onClick={() => handleAddProperty(property)}
-                  >
-                    {property.image && (
-                      <div className="relative mb-2 h-32 w-full overflow-hidden rounded-lg bg-gray-100 sm:mb-3 sm:h-36 md:h-40">
-                        <Image
-                          src={property.image}
-                          alt={property.title}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                    )}
-                    <h4 className="mb-1 line-clamp-2 text-sm font-semibold text-gray-800 sm:text-base">
-                      {property.title}
-                    </h4>
-                    <p className="mb-2 line-clamp-1 text-xs text-gray-600 sm:text-sm">
-                      {property.developer}
-                    </p>
-                    <p className="text-xs font-medium text-gray-900 sm:text-sm">
-                      {property.price}
-                    </p>
-                    <p className="mt-1 line-clamp-1 text-xs text-gray-500">
-                      {property.location}
-                    </p>
-                  </div>
-                ))}
-            </div>
-
-            {availableProperties.filter((prop) => !isInCompare(prop.id))
-              .length === 0 && (
-                <p className="py-8 text-center text-gray-500">
-                  All available properties have been added to comparison
-                </p>
-              )}
-          </div>
-        </>
-      )}
+      {/* Property Selection Modal */}
+      <PropertySelectionModal
+        isOpen={showAddPropertyModal}
+        onClose={() => setShowAddPropertyModal(false)}
+        onSelect={handlePropertySelect}
+      />
     </div>
   );
 }

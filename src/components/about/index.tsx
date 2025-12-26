@@ -1,21 +1,27 @@
-import CompanyOverview from "./companyOverview";
-import Founders from "./founders";
-import AboutHero from "./heroAbout";
-import MissionVision from "./missionVission";
-import RestOfTeam from "./restOfTheTeam";
-import TopDeveloperLogos from "./topDevelopers";
-import ValuesAchievements from "./valuesAchievements";
+import CompanyOverview from "./CompanyOverview";
+import Founders from "./Founders";
+import MissionVision from "./MissionVission";
+import TopDevelopers from "./TopDevelopers";
+import ValuesAchievements from "./ValuesAchievements";
+import HeroSection from "@/components/sections/HeroSection";
+import AboutHeroBg from "@/assets/about-us/about-hero-bg.png";
 
 export default function About() {
   return (
     <>
-      <AboutHero />
+      <HeroSection
+        backgroundImage={AboutHeroBg}
+        badgeText="About Us"
+        title="We make property"
+        highlightText="Buying Easier."
+        description="We bring buyers together to help you save more, negotiate better, and buy with confidence."
+        headingVariant="h3"
+      />
       <CompanyOverview />
       <MissionVision />
       <ValuesAchievements />
-      <TopDeveloperLogos />
+      <TopDevelopers />
       <Founders />
-      <RestOfTeam />
     </>
   );
 }

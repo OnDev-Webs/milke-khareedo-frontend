@@ -52,7 +52,6 @@ export default function NewsCard() {
 
   return (
     <div className="w-full">
-
       {/* Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {cards.slice(0, visibleCount).map((item) => (
@@ -61,7 +60,6 @@ export default function NewsCard() {
             className="shadow-[0_0_10px_rgba(0,0,0,0.08)] p-6 rounded-4xl w-full"
           >
             <div className="bg-white flex flex-col rounded-4xl overflow-hidden gap-4">
-
               {/* Image */}
               <div className="w-full h-56 bg-[#F9F9FF] rounded-4xl overflow-hidden">
                 <div className="relative w-full h-full">
@@ -88,8 +86,6 @@ export default function NewsCard() {
                   Read More
                 </button>
               </div>
-
-
             </div>
           </div>
         ))}
@@ -106,7 +102,6 @@ export default function NewsCard() {
           </button>
         </div>
       )}
-
     </div>
   );
 }

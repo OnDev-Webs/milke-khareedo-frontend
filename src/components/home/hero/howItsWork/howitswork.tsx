@@ -61,7 +61,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="w-full bg-[#F2F5F9] py-14 px-4 md:px-16">
+    <section className="w-full bg-white py-14 px-4 md:px-16">
       <div className="mx-auto max-w-7xl">
         {/* Heading */}
         <h2 className="text-[24px] md:text-[30px] font-semibold text-[#000000] mb-2">
@@ -69,22 +69,26 @@ export default function HowItWorks() {
           <span className="relative inline-block text-[#FF765E] ps-2">
             Smarter
             <svg
-              className="absolute left-2 -bottom-3.5 w-[90px] md:w-[122px] h-[11px]"
+              className="absolute left-0 -bottom-2"
+              width="150"
+              height="11"
               viewBox="0 0 228 11"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M2 6 C40 10, 80 2, 120 5 C160 8, 190 3, 226 6"
+                d="M2 8.5C60 1.5 170 5.5 226 8.5"
                 stroke="#FF765E"
-                strokeWidth="6"
+                strokeWidth="5"
                 strokeLinecap="round"
+                fill="none"
               />
             </svg>
           </span>
         </h2>
         <p className="pt-2 pb-10 font-medium text-[#110229]">
-          Real buying <span className="text-[#FF765E]">journeys</span>, explained simply.
+          Real buying <span className="text-[#FF765E]">journeys</span>,
+          explained simply.
         </p>
 
         <div className="relative">
@@ -104,29 +108,23 @@ export default function HowItWorks() {
           >
             {steps.map((step, i) => (
               <SwiperSlide key={i}>
-                <div className="flex flex-col bg-white rounded-xl mb-2 p-5 shadow-md min-h-[260px] max-w-[340px]">
-
-                  {/* Number with BLUR gradient background */}
+                <div className="flex flex-col bg-white rounded-xl mb-2 p-5 shadow-md min-h-[230px] max-h-[230px] max-w-[340px] overflow-hidden">
                   <div className="relative mb-4 h-12 w-12 flex items-center justify-center">
-
-                    {/* Blur background */}
-                    <div className="absolute inset-0 rounded-xl bg-[linear-gradient(-40deg,#0038FF,#FF765E,#FFA08F,#F84C4F)] blur-xs opacity-90">
-                    </div>
-
-                    {/* Number */}
-                    <div className="relative z-10 text-white font-bold text-lg">
+                    <img
+                      src="/images/LightGradient.png"
+                      alt=""
+                      className="absolute inset-0 w-full h-full object-contain opacity-90"
+                    />
+                    <div className="relative z-10 text-white font-bold text-[24px]">
                       {step.number}
                     </div>
-
                   </div>
 
-                  {/* Title */}
                   <h3 className="text-[#000000] font-bold text-[17px] mb-2 leading-snug">
                     {step.title}
                   </h3>
 
-                  {/* Description */}
-                  <p className="text-[#373737] text-medium text-[14px] leading-relaxed">
+                  <p className="text-[#373737] text-[14px] leading-relaxed line-clamp-3">
                     {step.desc}
                   </p>
                 </div>
@@ -134,7 +132,7 @@ export default function HowItWorks() {
             ))}
           </Swiper>
 
-          <div className="custom-swiper-scrollbar mt-6 mx-auto"></div>
+          <div className="custom-swiper-scrollbar mt-6 mx-0"></div>
         </div>
       </div>
     </section>

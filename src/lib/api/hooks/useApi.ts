@@ -20,7 +20,7 @@ export interface UseApiState<T> {
  */
 export function useApi<T>(
   apiCall: () => Promise<ApiResponse<T>>,
-  immediate = true
+  immediate = true,
 ) {
   const [state, setState] = useState<UseApiState<T>>({
     data: null,
@@ -34,7 +34,7 @@ export function useApi<T>(
 
     try {
       const response = await apiCall();
-      
+
       if (response.success && response.data !== undefined) {
         setState({
           data: response.data,
@@ -55,7 +55,7 @@ export function useApi<T>(
         error instanceof ApiClientError
           ? error.message
           : "An unexpected error occurred";
-      
+
       setState({
         data: null,
         loading: false,
@@ -93,7 +93,7 @@ export function useApi<T>(
  * Returns a function to trigger the API call
  */
 export function useMutation<T, P = void>(
-  apiCall: (params: P) => Promise<ApiResponse<T>>
+  apiCall: (params: P) => Promise<ApiResponse<T>>,
 ) {
   const [state, setState] = useState<UseApiState<T>>({
     data: null,
@@ -108,7 +108,7 @@ export function useMutation<T, P = void>(
 
       try {
         const response = await apiCall(params);
-        
+
         if (response.success && response.data !== undefined) {
           setState({
             data: response.data,
@@ -118,7 +118,8 @@ export function useMutation<T, P = void>(
           });
           return response.data;
         } else {
-          const errorMessage = response.message || response.error || "Unknown error occurred";
+          const errorMessage =
+            response.message || response.error || "Unknown error occurred";
           setState({
             data: null,
             loading: false,
@@ -132,9 +133,9 @@ export function useMutation<T, P = void>(
           error instanceof ApiClientError
             ? error.message
             : error instanceof Error
-            ? error.message
-            : "An unexpected error occurred";
-        
+              ? error.message
+              : "An unexpected error occurred";
+
         setState({
           data: null,
           loading: false,
@@ -144,7 +145,7 @@ export function useMutation<T, P = void>(
         throw error;
       }
     },
-    [apiCall]
+    [apiCall],
   );
 
   const reset = useCallback(() => {

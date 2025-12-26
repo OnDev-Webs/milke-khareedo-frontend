@@ -110,20 +110,25 @@ interface CitySelectorProps {
     value?: string;
     onChange?: (value: string) => void;
     className?: string;
+    showLabel?: boolean;
 }
 
 export default function CitySelector({
     value,
     onChange,
     className = "",
+    showLabel = true,
 }: CitySelectorProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [cities, setCities] = useState<City[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedCity, setSelectedCity] = useState<City | null>(null);
+    const [visibleRange, setVisibleRange] = useState({ start: 0, end: 5 });
     const dropdownRef = useRef<HTMLDivElement>(null);
     const searchInputRef = useRef<HTMLInputElement>(null);
+    const listContainerRef = useRef<HTMLDivElement>(null);
+    const dropdownContainerRef = useRef<HTMLDivElement>(null);
     const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     // Fetch cities on component mount - use setTimeout to prevent blocking
@@ -202,35 +207,73 @@ export default function CitySelector({
         };
     }, [searchQuery]);
 
-    // Memoized filtered cities for performance - optimized for instant rendering
+    // Memoized filtered cities for performance
     const filteredCities = useMemo(() => {
         if (cities.length === 0) return [];
 
         if (!debouncedSearchQuery.trim()) {
-            // Show first 50 cities when no search (for instant dropdown opening)
-            return cities.slice(0, 50);
+            return cities;
         }
 
         const query = debouncedSearchQuery.toLowerCase();
-        const filtered = cities.filter((city) => {
+        return cities.filter((city) => {
             return (
                 city.city.toLowerCase().includes(query) ||
                 city.country.toLowerCase().includes(query) ||
                 city.value.toLowerCase().includes(query)
             );
         });
-
-        // Limit to 100 results for smooth scrolling
-        return filtered.slice(0, 100);
     }, [cities, debouncedSearchQuery]);
 
-    // Focus search input when dropdown opens
+    // Reset visible range when search changes
     useEffect(() => {
-        if (isOpen && searchInputRef.current) {
-            // Small delay to ensure dropdown is rendered
-            setTimeout(() => {
-                searchInputRef.current?.focus();
-            }, 100);
+        if (debouncedSearchQuery.trim()) {
+            // Show more results when searching
+            setVisibleRange({ start: 0, end: 50 });
+        } else {
+            // Show only 5 cities initially when no search
+            setVisibleRange({ start: 0, end: 5 });
+        }
+    }, [debouncedSearchQuery]);
+
+    // Visible cities for rendering (windowing for performance)
+    const visibleCities = useMemo(() => {
+        return filteredCities.slice(visibleRange.start, visibleRange.end);
+    }, [filteredCities, visibleRange]);
+
+    // Handle scroll to load more cities
+    const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+        const target = e.currentTarget;
+        const scrollBottom = target.scrollHeight - target.scrollTop - target.clientHeight;
+
+        // Load more when near bottom (within 100px)
+        if (scrollBottom < 100 && visibleRange.end < filteredCities.length) {
+            const increment = debouncedSearchQuery.trim() ? 50 : 10; // Load more when searching
+            setVisibleRange(prev => ({
+                start: prev.start,
+                end: Math.min(prev.end + increment, filteredCities.length)
+            }));
+        }
+    }, [filteredCities.length, visibleRange.end, debouncedSearchQuery]);
+
+    // Focus search input when dropdown opens and reset visible range
+    useEffect(() => {
+        if (isOpen) {
+            // Reset visible range when opening - show only 5 cities initially
+            setVisibleRange({ start: 0, end: 5 });
+
+            // Update dropdown width to match parent container
+            if (dropdownRef.current && dropdownContainerRef.current) {
+                const parentWidth = dropdownRef.current.offsetWidth;
+                dropdownContainerRef.current.style.width = `${parentWidth}px`;
+            }
+
+            // Focus search input after dropdown is rendered
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    searchInputRef.current?.focus();
+                }, 50);
+            });
         }
     }, [isOpen]);
 
@@ -255,8 +298,8 @@ export default function CitySelector({
     if (!selectedCity) {
         return (
             <div className={`relative ${className}`}>
-                <div className="h-14 w-full rounded-xl bg-transparent px-4 flex items-center">
-                    <span className="text-sm text-gray-500">Loading cities...</span>
+                <div className="w-full bg-transparent flex items-center">
+                    <span className="text-base font-medium text-[#FF765E]">Loading...</span>
                 </div>
             </div>
         );
@@ -270,15 +313,18 @@ export default function CitySelector({
                 onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    setIsOpen(!isOpen);
+                    // Open instantly without blocking
+                    requestAnimationFrame(() => {
+                        setIsOpen(!isOpen);
+                    });
                 }}
-                className="h-14 w-full appearance-none rounded-xl bg-transparent px-4 pr-10 text-left text-sm text-gray-800 outline-none border-none focus:outline-none focus:ring-0 cursor-pointer hover:bg-gray-50 transition-colors flex items-center"
+                className="w-full appearance-none bg-transparent text-left outline-none border-none p-0 flex items-center justify-between hover:opacity-80 transition-opacity"
             >
-                <span className="flex-1 truncate">
-                    {selectedCity.country} | {selectedCity.city}
+                <span className="text-base font-medium text-[#FF765E] truncate pr-2">
+                    {selectedCity.city}
                 </span>
                 <FaChevronDown
-                    className={`pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 text-xs transition-transform ${isOpen ? "rotate-180" : ""
+                    className={`pointer-events-none text-gray-800 text-xs transition-transform duration-200 flex-shrink-0 ${isOpen ? "rotate-180" : ""
                         }`}
                 />
             </button>
@@ -295,11 +341,19 @@ export default function CitySelector({
                         }}
                     />
                     <div
-                        className="absolute left-0 top-full z-[9999] mt-2 w-full rounded-xl bg-white shadow-xl ring-1 ring-black ring-opacity-5 max-h-[400px] overflow-hidden"
+                        ref={dropdownContainerRef}
+                        className="absolute left-0 top-full z-[9999] mt-1 rounded-xl bg-white shadow-2xl border-2 border-gray-100 max-h-[280px] overflow-hidden"
                         onClick={(e) => e.stopPropagation()}
+                        style={{
+                            maxHeight: '280px',
+                            width: dropdownRef.current?.offsetWidth || '200px',
+                            minWidth: '200px',
+                            transform: 'translateY(0)',
+                            animation: 'dropdownSlideDown 0.2s ease-out'
+                        }}
                     >
                         {/* Search Input */}
-                        <div className="sticky top-0 bg-white p-3 border-b border-gray-100 z-10">
+                        <div className="sticky top-0 bg-white p-3 border-b-2 border-gray-100 z-10">
                             <div className="relative">
                                 <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm" />
                                 <input
@@ -308,7 +362,7 @@ export default function CitySelector({
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     placeholder="Search city or country..."
-                                    className="w-full rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-4 text-sm text-gray-800 placeholder-gray-400 focus:border-[#FF765E] focus:outline-none focus:ring-2 focus:ring-[#FF765E]/20"
+                                    className="w-full rounded-lg border-2 border-gray-200 bg-gray-50 py-2 pl-10 pr-3 text-sm text-gray-800 placeholder-gray-400 focus:border-[#FF765E] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#FF765E]/20 transition-all"
                                     onKeyDown={(e) => handleKeyDown(e)}
                                     onClick={(e) => e.stopPropagation()}
                                 />
@@ -316,42 +370,72 @@ export default function CitySelector({
                         </div>
 
                         {/* City List */}
-                        <div className="max-h-[320px] overflow-y-auto">
+                        <div
+                            ref={listContainerRef}
+                            className="max-h-[200px] overflow-y-auto city-selector-scrollbar"
+                            onScroll={handleScroll}
+                            style={{ maxHeight: '200px' }}
+                        >
                             {loading ? (
-                                <div className="px-4 py-8 text-center text-sm text-gray-500">
-                                    Loading cities...
+                                <div className="px-4 py-12 text-center">
+                                    <div className="inline-flex items-center gap-2 text-sm text-gray-500">
+                                        <div className="h-4 w-4 border-2 border-[#FF765E] border-t-transparent rounded-full animate-spin"></div>
+                                        <span>Loading cities...</span>
+                                    </div>
                                 </div>
                             ) : filteredCities.length === 0 ? (
-                                <div className="px-4 py-8 text-center text-sm text-gray-500">
-                                    {cities.length === 0
-                                        ? "No cities available"
-                                        : "No cities found"}
+                                <div className="px-4 py-12 text-center">
+                                    <p className="text-sm text-gray-500">
+                                        {cities.length === 0
+                                            ? "No cities available"
+                                            : "No cities found"}
+                                    </p>
                                 </div>
                             ) : (
-                                filteredCities.map((city, index) => {
-                                    const isSelected = selectedCity?.value === city.value;
-                                    return (
-                                        <button
-                                            key={`${city.city}-${city.country}-${index}`}
-                                            type="button"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleSelectCity(city);
-                                            }}
-                                            onKeyDown={(e) => handleKeyDown(e, city)}
-                                            className={`w-full px-4 py-3 text-left text-sm transition-colors ${isSelected
-                                                ? "bg-blue-600 text-white"
-                                                : "text-gray-800 hover:bg-gray-100"
-                                                }`}
-                                        >
-                                            <div className="flex items-center justify-between">
-                                                <span className="font-medium">
-                                                    {city.country} | {city.city}
-                                                </span>
-                                            </div>
-                                        </button>
-                                    );
-                                })
+                                <div className="py-1">
+                                    {visibleCities.map((city, index) => {
+                                        const isSelected = selectedCity?.value === city.value;
+                                        return (
+                                            <button
+                                                key={`${city.city}-${city.country}-${visibleRange.start + index}`}
+                                                type="button"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleSelectCity(city);
+                                                }}
+                                                onKeyDown={(e) => handleKeyDown(e, city)}
+                                                className={`w-full px-4 py-3 text-left text-sm transition-all duration-150 ${isSelected
+                                                    ? "bg-[#FF765E] text-white font-semibold"
+                                                    : "text-gray-700 hover:bg-[#FF765E]/5 hover:text-[#FF765E]"
+                                                    }`}
+                                            >
+                                                <div className="flex items-center justify-between">
+                                                    <span className={`font-medium ${isSelected ? "text-white" : ""}`}>
+                                                        {city.country} | {city.city}
+                                                    </span>
+                                                    {isSelected && (
+                                                        <svg
+                                                            className="w-5 h-5 text-white"
+                                                            fill="none"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth="2"
+                                                            viewBox="0 0 24 24"
+                                                            stroke="currentColor"
+                                                        >
+                                                            <path d="M5 13l4 4L19 7"></path>
+                                                        </svg>
+                                                    )}
+                                                </div>
+                                            </button>
+                                        );
+                                    })}
+                                    {visibleRange.end < filteredCities.length && (
+                                        <div className="px-4 py-2 text-center text-xs text-gray-400">
+                                            Scroll for more cities ({visibleRange.end} of {filteredCities.length})
+                                        </div>
+                                    )}
+                                </div>
                             )}
                         </div>
                     </div>

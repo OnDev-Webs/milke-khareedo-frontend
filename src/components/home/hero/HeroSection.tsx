@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import { FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 import CitySelector from "./CitySelector";
 
 export default function Hero() {
   const [selectedCity, setSelectedCity] = useState("India, Delhi");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const handleCityChange = (cityValue: string) => {
     setSelectedCity(cityValue);
@@ -87,31 +90,47 @@ export default function Hero() {
       </div>
 
       <div className="absolute bottom-[-20px] left-1/2 w-[95%] md:w-[1150px] -translate-x-1/2 px-4 md:px-6 z-20">
-        <div className="flex flex-col md:flex-row items-center gap-4 rounded-2xl bg-white/70 backdrop-blur-[5px] p-4 shadow-lg ring-1 ring-white/30">
-          {/* CITY SELECT */}
-          <div className="relative h-14 w-full md:w-56" style={{ zIndex: 1000 }}>
-            <CitySelector
-              value={selectedCity}
-              onChange={handleCityChange}
-              className="h-full"
-            />
+        <div className="flex flex-col md:flex-row items-stretch rounded-2xl bg-white/70 backdrop-blur-md p-0 shadow-lg overflow-visible">
+          {/* CITY SELECT SECTION */}
+          <div className="relative flex flex-col justify-center px-6 py-4 border-r border-gray-200 min-w-[200px]">
+            <label className="text-sm font-bold text-gray-800 mb-2.5">City</label>
+            <div className="relative" style={{ zIndex: 1000 }}>
+              <CitySelector
+                value={selectedCity}
+                onChange={handleCityChange}
+                className="h-auto"
+                showLabel={false}
+              />
+            </div>
           </div>
 
-          {/* INPUT */}
-          <div className="relative flex-1 w-full">
-            <FaMapMarkerAlt className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600" />
-            <input
-              type="text"
-              placeholder="Find Your Dream Home"
-              className="h-14 w-full rounded-xl bg-transparent pl-12 pr-4 text-sm text-gray-800 outline-none border-none focus:outline-none focus:ring-0"
-            />
+          {/* SEARCH INPUT SECTION */}
+          <div className="relative flex-1 flex flex-col justify-center px-6 py-4">
+            <div className="relative">
+              <input
+                ref={searchInputRef}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setIsSearchFocused(true)}
+                onBlur={() => setIsSearchFocused(false)}
+                placeholder="Find your Dream Home"
+                className="w-full bg-transparent text-base font-bold text-gray-800 outline-none border-none focus:outline-none focus:ring-0 placeholder:text-base placeholder:font-bold placeholder:text-gray-800 transition-all duration-300 min-h-[24px]"
+              />
+              <div className={`absolute left-0 top-full mt-1.5 flex items-center gap-1.5 text-xs text-gray-500 pointer-events-none transition-opacity duration-300 ${searchQuery || isSearchFocused ? 'opacity-0' : 'opacity-100'}`}>
+                <FaMapMarkerAlt className="text-gray-500 text-xs flex-shrink-0" />
+                <span>Search for Developers, Location, Projects</span>
+              </div>
+            </div>
           </div>
 
-          {/* BUTTON */}
-          <button className="h-12 w-full md:w-28 rounded-full bg-[#FF765E] text-white flex items-center justify-center shadow-md">
-            <FaSearch />
-            <span className="ps-2">Search</span>
-          </button>
+          {/* SEARCH BUTTON SECTION */}
+          <div className="flex items-center px-6 py-4">
+            <button className="h-12 w-full md:w-auto md:min-w-[140px] rounded-xl bg-[#FF765E] text-white flex items-center justify-center gap-2 font-medium shadow-md hover:bg-[#e66a4f] transition-colors">
+              <FaSearch className="text-white text-sm" />
+              <span className="text-sm">Search</span>
+            </button>
+          </div>
         </div>
       </div>
     </section>

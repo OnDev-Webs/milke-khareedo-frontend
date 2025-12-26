@@ -75,6 +75,14 @@ export const fetchAllCities = async (): Promise<City[]> => {
                     } else {
                         // All countries processed, sort and cache
                         formattedCities.sort((a, b) => {
+                            const aIsIndia = a.country.toLowerCase() === "india";
+                            const bIsIndia = b.country.toLowerCase() === "india";
+
+                            // Indian cities come first
+                            if (aIsIndia && !bIsIndia) return -1;
+                            if (!aIsIndia && bIsIndia) return 1;
+
+                            // If both are India or both are not India, sort by country then city
                             const countryCompare = a.country.localeCompare(b.country);
                             if (countryCompare !== 0) return countryCompare;
                             return a.city.localeCompare(b.city);

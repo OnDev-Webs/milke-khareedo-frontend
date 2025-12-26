@@ -5,8 +5,8 @@ import { homeService, type Property } from "@/lib/api/services/home.service";
 import { useCompare } from "@/contexts/CompareContext";
 import { useAuthContext } from "@/contexts/AuthContext";
 import AuthModal from "@/components/auth/AuthModal";
-import PropertyCard from "./PropertyCard";
 import { useRouter } from "next/navigation";
+import PropertyCard from "@/components/cards/PropertyCard";
 
 export default function TopProperties() {
   const LIMIT = 6;
@@ -367,9 +367,13 @@ export default function TopProperties() {
                   onFavoriteClick={handleFavoriteClick}
                   onCompareClick={handleCompareClick}
                   onShareClick={handleShareClick}
-                  onGoToImage={(index, totalImages) => goToImage(prop.id, index, totalImages)}
+                  onGoToImage={(index, totalImages) =>
+                    goToImage(prop.id, index, totalImages)
+                  }
                   onGoToNextImage={() => goToNextImage(prop.id, images.length)}
-                  onGoToPreviousImage={() => goToPreviousImage(prop.id, images.length)}
+                  onGoToPreviousImage={() =>
+                    goToPreviousImage(prop.id, images.length)
+                  }
                   formatDate={formatDate}
                 />
               );

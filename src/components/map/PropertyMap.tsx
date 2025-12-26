@@ -8,7 +8,7 @@ import {
 } from "@react-google-maps/api";
 import { useMemo, Fragment } from "react";
 import PriceMarker from "./PriceMarker";
-import {propertyMapStyle} from "@/components/map/mapStyles";
+import { propertyMapStyle } from "@/components/map/mapStyles";
 
 const containerStyle = {
   width: "100%",
@@ -51,7 +51,7 @@ export default function PropertyMap({
       }}
     >
       <MarkerClusterer>
-        {(clusterer) =>
+        {(clusterer) => (
           <Fragment>
             {properties.map((p) => (
               <OverlayView
@@ -67,7 +67,7 @@ export default function PropertyMap({
               </OverlayView>
             ))}
           </Fragment>
-        }
+        )}
       </MarkerClusterer>
     </GoogleMap>
   );

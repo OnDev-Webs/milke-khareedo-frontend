@@ -210,9 +210,9 @@ export default function PropertySelectionModal({
       <div className="fixed inset-0 z-40 bg-black/50" onClick={onClose} />
 
       {/* Modal */}
-      <div className="fixed left-1/2 top-1/2 z-50 max-h-[90vh] w-[95%] max-w-4xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl bg-white shadow-2xl">
+      <div className="fixed left-1/2 top-1/2 z-50 w-[95%] max-w-4xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl bg-white shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-gray-200 p-4 sm:p-6">
+        <div className="flex items-center justify-between border-b border-gray-200 p-4 sm:p-4">
           <div className="flex items-center gap-3">
             <h2 className="text-lg font-bold text-gray-800 sm:text-xl md:text-2xl">
               Select Properties to Compare
@@ -239,7 +239,7 @@ export default function PropertySelectionModal({
         </div>
 
         {/* Search Bar */}
-        <div className="border-b border-gray-200 p-4 sm:p-6">
+        <div className="border-b border-gray-200 p-4 sm:p-4">
           <div className="relative">
             <IoSearch className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
             <input
@@ -337,7 +337,7 @@ export default function PropertySelectionModal({
 
                       {/* Property Image */}
                       {property.image && (
-                        <div className="relative mb-2 h-32 w-full overflow-hidden rounded-lg bg-gray-100 sm:mb-3 sm:h-36 md:h-40">
+                        <div className="relative mb-2 mt-6 h-32 w-full overflow-hidden rounded-lg bg-gray-100 sm:mb-3 sm:h-36 md:h-40">
                           <Image
                             src={property.image}
                             alt={property.projectName}
@@ -351,7 +351,7 @@ export default function PropertySelectionModal({
                       <h4 className="mb-1 line-clamp-2 text-sm font-semibold text-gray-800 sm:text-base">
                         {property.projectName}
                       </h4>
-                      <p className="mb-2 line-clamp-1 text-xs text-gray-600 sm:text-sm">
+                      <p className="mb-1 line-clamp-1 text-xs text-gray-600 sm:text-sm">
                         {property.developer}
                       </p>
                       <p className="text-xs font-medium text-gray-900 sm:text-sm">
@@ -367,7 +367,7 @@ export default function PropertySelectionModal({
 
               {/* Pagination Controls */}
               {totalPages > 1 && (
-                <div className="mt-6 flex items-center justify-between border-t border-gray-200 pt-4">
+                <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-t border-gray-200 pt-4">
                   <button
                     onClick={() =>
                       fetchProperties(currentPage - 1, searchQuery)
@@ -427,7 +427,7 @@ export default function PropertySelectionModal({
 
         {/* Footer with Add Button */}
         {selectedProperties.size > 0 && (
-          <div className="border-t border-gray-200 bg-gray-50 p-4 sm:p-6">
+          <div className="border-t border-gray-200 bg-gray-50 p-4 sm:px-6 sm:py-4">
             <div className="flex items-center justify-between">
               <p className="text-sm text-gray-600">
                 {selectedProperties.size} new property(ies) selected

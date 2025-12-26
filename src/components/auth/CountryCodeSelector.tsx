@@ -132,9 +132,9 @@ export default function CountryCodeSelector({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex h-full min-w-[120px] items-center gap-2 rounded-lg border border-gray-600 bg-[#2a2a2a] px-3 py-3 text-white transition-colors hover:bg-[#333333] focus:border-[#f15a29] focus:outline-none"
+        className="flex h-full min-w-[90px] items-center gap-2 rounded-lg border border-gray-600 bg-[#2a2a2a] px-3 py-3 text-white transition-colors hover:bg-[#333333] focus:border-[#f15a29] focus:outline-none"
       >
-        <span className="text-lg">{selectedCountry.flag}</span>
+        <span className="text-[18px]">{selectedCountry.flag}</span>
         <span className="text-sm font-medium">{selectedCountry.dialCode}</span>
         <IoChevronDown
           className={`ml-auto h-4 w-4 transition-transform ${
@@ -145,7 +145,7 @@ export default function CountryCodeSelector({
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="absolute left-0 top-full z-50 mt-2 w-[320px] rounded-lg border border-gray-600 bg-[#2a2a2a] shadow-2xl">
+        <div className="absolute left-0 top-full z-50 mt-2 w-[230px] rounded-lg border border-gray-600 bg-[#2a2a2a] shadow-2xl">
           {/* Search Input */}
           <div className="sticky top-0 border-b border-gray-600 bg-[#2a2a2a] p-3">
             <div className="relative">

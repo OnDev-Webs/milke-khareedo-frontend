@@ -41,6 +41,13 @@ export default function Heading() {
               priority
               className="object-cover scale-[1.25] md:scale-[1.5] translate-x-[20px] md:translate-x-[38px]"
             />
+            {/* <video
+              src="/videos/sample.mp4" 
+              autoPlay
+              loop
+              muted
+              className="w-full h-full object-cover scale-[1.5] translate-x-[38px]"
+            /> */}
 
             <div className="absolute bottom-2 left-2 z-30">
               <div className="h-8 w-8 md:h-10 md:w-10 bg-white rounded-full flex items-center justify-center shadow">

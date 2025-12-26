@@ -1,7 +1,19 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
-import { FaChevronDown, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
+import { FaMapMarkerAlt, FaSearch } from "react-icons/fa";
+import CitySelector from "./CitySelector";
 
 export default function Hero() {
+  const [selectedCity, setSelectedCity] = useState("India, Delhi");
+
+  const handleCityChange = (cityValue: string) => {
+    setSelectedCity(cityValue);
+    // You can add additional logic here, such as filtering properties based on city
+    console.log("Selected city:", cityValue);
+  };
+
   const group_deals = [
     "/images/gd.jpg",
     "/images/gd1.jpg",
@@ -77,17 +89,12 @@ export default function Hero() {
       <div className="absolute bottom-[-20px] left-1/2 w-[95%] md:w-[1150px] -translate-x-1/2 px-4 md:px-6 z-20">
         <div className="flex flex-col md:flex-row items-center gap-4 rounded-2xl bg-white/70 backdrop-blur-[5px] p-4 shadow-lg ring-1 ring-white/30">
           {/* CITY SELECT */}
-          <div className="relative h-14 w-full md:w-56">
-            <select
-              defaultValue="Delhi"
-              className="h-full w-full appearance-none rounded-xl bg-transparent px-4 pr-10 text-sm text-gray-800 outline-none border-none focus:outline-none focus:ring-0 cursor-pointer"
-            >
-              <option value="Delhi">City | Delhi</option>
-              <option value="Mumbai">City | Mumbai</option>
-              <option value="Bangalore">City | Bangalore</option>
-              <option value="Pune">City | Pune</option>
-            </select>
-            <FaChevronDown className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 text-xs" />
+          <div className="relative h-14 w-full md:w-56" style={{ zIndex: 1000 }}>
+            <CitySelector
+              value={selectedCity}
+              onChange={handleCityChange}
+              className="h-full"
+            />
           </div>
 
           {/* INPUT */}

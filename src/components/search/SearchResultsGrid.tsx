@@ -39,7 +39,6 @@ export default function SearchResultsGrid() {
     "Ready to Move",
   );
   const [results, setResults] = useState<Property[] | null>(null)
-  console.log("results", results)
 
   const searchParams = useSearchParams();
 

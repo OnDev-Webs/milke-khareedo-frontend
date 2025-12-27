@@ -82,7 +82,7 @@ export default function CompareIcon() {
               <div className="flex items-center gap-2">
                 <h3 className="text-base font-bold text-gray-900">Compare</h3>
                 {compareCount > 0 && (
-                  <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-[#f15a29] px-2 text-xs font-semibold text-white">
+                  <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-[#1C4692] px-2 text-xs font-semibold text-white">
                     {compareCount}
                   </span>
                 )}
@@ -164,7 +164,7 @@ export default function CompareIcon() {
               <div className="border-t border-gray-200 p-4 bg-gray-50">
                 <button
                   onClick={handleCompareClick}
-                  className="w-full rounded-xl bg-gradient-to-b from-[#f15a29] to-[#e14f20] px-6 py-3 text-base font-bold text-white shadow-lg hover:shadow-xl transition-all hover:from-[#e14f20] hover:to-[#d1441a]"
+                  className="w-full rounded-xl bg-gradient-to-b from-[#1C4692] to-[#e14f20] px-6 py-3 text-base font-bold text-white shadow-lg hover:shadow-xl transition-all hover:from-[#e14f20] hover:to-[#d1441a]"
                 >
                   Compare
                 </button>

@@ -140,7 +140,7 @@ export default function SearchResultsGrid() {
         <div className="flex items-center gap-2">
           {/* Price Range Popover */}
           <Popover>
-            <PopoverTrigger className="bg-[#FDF6F4] rounded-[16px] px-5 py-[17px] text-sm font-medium">50L-100 CR</PopoverTrigger>
+            <PopoverTrigger className="bg-[#EEF4FF] rounded-[16px] px-5 py-[17px] text-sm font-medium">50L-100 CR</PopoverTrigger>
             <PopoverContent className="w-80">
               {/* inside PopoverContent for Price */}
               <div className="px-4 py-4">
@@ -155,7 +155,7 @@ export default function SearchResultsGrid() {
                     onChange={(e) => setPriceValue(Number(e.target.value))}
                     className="w-full"
                   />
-                  <div className="min-w-[90px] text-sm text-[#FF765E] font-semibold text-center">
+                  <div className="min-w-[90px] text-sm text-[#1C4692] font-semibold text-center">
                     {priceValue}%{/* or format to currency if you map percent -> amount */}
                   </div>
                 </div>
@@ -165,7 +165,7 @@ export default function SearchResultsGrid() {
 
           {/* BHK Popover */}
           <Popover>
-            <PopoverTrigger className="bg-[#FDF6F4] rounded-[16px] px-5 py-[17px] text-sm font-medium">{selectedBhk}</PopoverTrigger>
+            <PopoverTrigger className="bg-[#EEF4FF] rounded-[16px] px-5 py-[17px] text-sm font-medium">{selectedBhk}</PopoverTrigger>
             <PopoverContent className="w-96">
               <div className="p-6">
                 <div className="grid grid-cols-3 gap-4 max-h-56 overflow-y-auto pr-2">
@@ -192,7 +192,7 @@ export default function SearchResultsGrid() {
                       className={cn(
                         "py-3 px-6 rounded-full text-sm font-medium",
                         selectedBhk === bhk
-                          ? "bg-[#FF765E] text-white"
+                          ? "bg-[#1C4692] text-white"
                           : "bg-[#F7F9FB] text-black",
                       )}
                     >
@@ -206,7 +206,7 @@ export default function SearchResultsGrid() {
 
           {/* Super Area Popover */}
           <Popover>
-            <PopoverTrigger className="bg-[#FDF6F4] rounded-[16px] px-5 py-[17px] text-sm font-medium">Super Area sq.ft</PopoverTrigger>
+            <PopoverTrigger className="bg-[#EEF4FF] rounded-[16px] px-5 py-[17px] text-sm font-medium">Super Area sq.ft</PopoverTrigger>
             <PopoverContent className="w-80">
               {/* inside PopoverContent for Super Area */}
               <div className="px-4 py-4">
@@ -221,7 +221,7 @@ export default function SearchResultsGrid() {
                     onChange={(e) => setAreaValue(Number(e.target.value))}
                     className="w-full"
                   />
-                  <div className="min-w-[90px] text-sm text-[#FF765E] font-semibold text-center">
+                  <div className="min-w-[90px] text-sm text-[#1C4692] font-semibold text-center">
                     {areaValue}%
                   </div>
                 </div>
@@ -231,7 +231,7 @@ export default function SearchResultsGrid() {
 
           {/* Possession Status Popover */}
           <Popover>
-            <PopoverTrigger className="bg-[#FDF6F4] rounded-[16px] px-5 py-[17px] text-sm font-medium">Possession Status</PopoverTrigger>
+            <PopoverTrigger className="bg-[#EEF4FF] rounded-[16px] px-5 py-[17px] text-sm font-medium">Possession Status</PopoverTrigger>
             <PopoverContent className="w-80">
               <div className="p-6">
                 <div className="flex flex-wrap gap-4">
@@ -242,7 +242,7 @@ export default function SearchResultsGrid() {
                       className={cn(
                         "py-2 px-4 rounded-full text-sm font-medium",
                         selectedPossession === status
-                          ? "bg-[#FF765E] text-white"
+                          ? "bg-[#1C4692] text-white"
                           : "bg-[#F7F9FB] text-black",
                       )}
                     >
@@ -255,7 +255,7 @@ export default function SearchResultsGrid() {
           </Popover>
 
           {/* Search Button */}
-          <button className="ml-2 inline-flex items-center gap-2 bg-[#FF765E] text-white px-6 py-3 rounded-[16px] font-semibold hover:bg-[#e86b50] transition-colors">
+          <button className="ml-2 inline-flex items-center gap-2 bg-[#1C4692] text-white px-6 py-3 rounded-[16px] font-semibold  transition-colors">
             <FaSearch /> Search
           </button>
         </div>
@@ -269,7 +269,7 @@ export default function SearchResultsGrid() {
             </h2>
             <div className="flex items-center gap-2">
               <DropdownMenu>
-                <DropdownMenuTrigger className="bg-[#F2F6FF] rounded-[10px] py-2.5 px-[15px]">Short by: {sortBy}</DropdownMenuTrigger>
+                <DropdownMenuTrigger className="bg-[#EEF4FF] rounded-[10px] py-2.5 px-[15px]">Short by: {sortBy}</DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuItem onClick={() => setSortBy("New Added")}>New Added</DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setSortBy("Price: Low to High")}>Price: Low to High</DropdownMenuItem>

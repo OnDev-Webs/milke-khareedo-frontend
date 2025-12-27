@@ -139,7 +139,7 @@ export default function BookVisitModal({
             {/* Property Details Card */}
             <div className="mb-8 rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 p-6 shadow-sm">
               <h3 className="mb-4 text-xl font-bold text-gray-900 flex items-center gap-2">
-                <IoBusinessOutline className="h-6 w-6 text-[#f15a29]" />
+                <IoBusinessOutline className="h-6 w-6 text-[#1C4692]" />
                 {propertyName}
               </h3>
               <div className="space-y-2">
@@ -186,7 +186,7 @@ export default function BookVisitModal({
                 </p>
                 <button
                   onClick={handleClose}
-                  className="rounded-lg bg-[#f15a29] px-8 py-3 font-semibold text-white hover:bg-[#e14f20] transition-colors"
+                  className="rounded-lg bg-[#1C4692] px-8 py-3 font-semibold text-white hover:bg-[#e14f20] transition-colors"
                 >
                   Close
                 </button>
@@ -196,7 +196,7 @@ export default function BookVisitModal({
                 {/* Date Selection */}
                 <div className="mb-8">
                   <label className="mb-3 flex items-center gap-2 text-base font-semibold text-gray-800">
-                    <IoCalendarOutline className="h-5 w-5 text-[#f15a29]" />
+                    <IoCalendarOutline className="h-5 w-5 text-[#1C4692]" />
                     Select Visit Date <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
@@ -209,7 +209,7 @@ export default function BookVisitModal({
                         setSelectedDate(e.target.value);
                         setError(null);
                       }}
-                      className="w-full rounded-xl border-2 border-gray-300 bg-white px-4 py-4 text-base font-medium text-gray-900 transition-all focus:border-[#f15a29] focus:outline-none focus:ring-4 focus:ring-[#f15a29]/10 hover:border-gray-400"
+                      className="w-full rounded-xl border-2 border-gray-300 bg-white px-4 py-4 text-base font-medium text-gray-900 transition-all focus:border-[#1C4692] focus:outline-none focus:ring-4 focus:ring-[#1C4692]/10 hover:border-gray-400"
                     />
                     {selectedDate && (
                       <div className="mt-2 text-sm text-gray-600">
@@ -230,7 +230,7 @@ export default function BookVisitModal({
                 {/* Time Selection */}
                 <div className="mb-8">
                   <label className="mb-3 flex items-center gap-2 text-base font-semibold text-gray-800">
-                    <IoTimeOutline className="h-5 w-5 text-[#f15a29]" />
+                    <IoTimeOutline className="h-5 w-5 text-[#1C4692]" />
                     Select Visit Time <span className="text-red-500">*</span>
                   </label>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
@@ -243,14 +243,14 @@ export default function BookVisitModal({
                         }}
                         className={`group relative rounded-xl border-2 px-4 py-3 text-sm font-semibold transition-all duration-200 ${
                           selectedTime === time
-                            ? "border-[#f15a29] bg-[#f15a29] text-white shadow-lg shadow-[#f15a29]/30 scale-105"
-                            : "border-gray-300 bg-white text-gray-700 hover:border-[#f15a29] hover:bg-[#f15a29]/5 hover:shadow-md"
+                            ? "border-[#1C4692] bg-[#1C4692] text-white shadow-lg shadow-[#1C4692]/30 scale-105"
+                            : "border-gray-300 bg-white text-gray-700 hover:border-[#1C4692] hover:bg-[#1C4692]/5 hover:shadow-md"
                         }`}
                       >
                         <span className="block">{formatTimeDisplay(time)}</span>
                         {selectedTime === time && (
                           <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-white">
-                            <IoCheckmarkCircle className="h-4 w-4 text-[#f15a29]" />
+                            <IoCheckmarkCircle className="h-4 w-4 text-[#1C4692]" />
                           </div>
                         )}
                       </button>
@@ -278,7 +278,7 @@ export default function BookVisitModal({
                   <button
                     onClick={handleSubmit}
                     disabled={loading || !selectedDate || !selectedTime}
-                    className="flex-1 rounded-xl bg-gradient-to-r from-[#f15a29] to-[#e14f20] px-6 py-4 font-bold text-white shadow-lg shadow-[#f15a29]/30 hover:shadow-xl hover:shadow-[#f15a29]/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+                    className="flex-1 rounded-xl bg-gradient-to-r from-[#1C4692] to-[#e14f20] px-6 py-4 font-bold text-white shadow-lg shadow-[#1C4692]/30 hover:shadow-xl hover:shadow-[#1C4692]/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
                   >
                     {loading ? (
                       <span className="flex items-center justify-center gap-2">

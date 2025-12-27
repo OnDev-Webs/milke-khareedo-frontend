@@ -128,7 +128,7 @@ export default function ContactForm({ className }: ContactFormProps) {
 
         <button
           type="submit"
-          className="w-full py-3 rounded-full bg-[#FF765E] text-white font-semibold text-lg"
+          className="w-full py-3 rounded-full bg-[#1C4692] text-white font-semibold text-lg"
         >
           Submit
         </button>

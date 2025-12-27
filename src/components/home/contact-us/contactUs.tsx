@@ -60,11 +60,11 @@ export default function ConnectWithUs() {
             {contactMethods.map((item, index) => (
               <div
                 key={index}
-                className="bg-[#F2F6FF] p-6 rounded-2xl md:w-[32%]"
+                className="bg-[#EEF4FF] p-6 rounded-2xl md:w-[32%]"
               >
                 <div className="relative flex h-12 w-12 items-center justify-center rounded-xl overflow-hidden">
                   <Image
-                    src="/images/LightGradient.png"
+                    src="/images/LightGradient.svg"
                     alt="LightGradient"
                     width={80}
                     height={48}

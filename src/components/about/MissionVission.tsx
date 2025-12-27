@@ -9,7 +9,7 @@ export default function MissionVision() {
         <div className="flex-1 p-6 md:p-10 bg-white rounded-4xl shadow-[0px_0px_50px_0px_rgba(0,0,0,0.10)] flex flex-col gap-7">
           <div className="relative flex h-24 w-24 items-center justify-center rounded-[18px] overflow-hidden">
             <Image
-              src="/images/LightGradient.png"
+              src="/images/LightGradient.svg"
               alt="LightGradient"
               width={80}
               height={80}
@@ -37,7 +37,7 @@ export default function MissionVision() {
         <div className="flex-1 p-6 md:p-10 bg-white rounded-4xl shadow-[0px_0px_50px_0px_rgba(0,0,0,0.10)] flex flex-col gap-7">
           <div className="relative flex h-24 w-24 items-center justify-center rounded-[18px] overflow-hidden">
             <Image
-              src="/images/LightGradient.png"
+              src="/images/LightGradient.svg"
               alt="LightGradient"
               width={80}
               height={80}

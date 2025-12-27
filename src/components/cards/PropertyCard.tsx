@@ -97,7 +97,7 @@ export default function PropertyCard({
             disabled={isLoading}
             className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all ${
               isFavorite
-                ? "border-[#f15a29] bg-[#f15a29] text-white"
+                ? "border-[#1C4692] bg-[#1C4692] text-white"
                 : "border-white bg-white/90 text-gray-700 hover:bg-white"
             } disabled:opacity-50 disabled:cursor-not-allowed shadow-md`}
             aria-label={
@@ -182,7 +182,7 @@ export default function PropertyCard({
                 onClick={() => onGoToImage(index, images.length)}
                 className={`transition-all ${
                   index === currentIndex
-                    ? "h-1.5 w-6 rounded-full bg-[#f15a29]"
+                    ? "h-1.5 w-6 rounded-full bg-[#1C4692]"
                     : "h-1.5 w-1.5 rounded-full bg-white hover:bg-white/80"
                 }`}
                 aria-label={`Go to image ${index + 1}`}
@@ -211,20 +211,20 @@ export default function PropertyCard({
 
         {/* Group Size + Opening */}
         <div className="flex justify-between mt-2 mb-2 gap-2">
-          <div className="flex flex-col items-center bg-[#F2F6FF] px-4 py-2 rounded-lg text-center flex-1">
+          <div className="flex flex-col items-center bg-[#EEF4FF] px-4 py-2 rounded-lg text-center flex-1">
             <span className="text-[14px] text-black font-semibold">
               Group Size
             </span>
-            <span className="text-base font-bold text-[#f15a29] mt-1">
+            <span className="text-base font-bold text-[#1C4692] mt-1">
               {property.groupSizeFormatted}
             </span>
             <span className="text-xs text-black mt-0.5">Members</span>
           </div>
-          <div className="flex flex-col items-center bg-[#F2F6FF] px-4 py-2 rounded-lg text-center flex-1">
+          <div className="flex flex-col items-center bg-[#EEF4FF] px-4 py-2 rounded-lg text-center flex-1">
             <span className="text-[14px] text-black font-semibold">
               Opening
             </span>
-            <span className="text-base font-bold text-[#f15a29] mt-1">
+            <span className="text-base font-bold text-[#1C4692] mt-1">
               {property.openingFormatted}
             </span>
             <span className="text-xs text-black mt-0.5">Left</span>
@@ -259,7 +259,7 @@ export default function PropertyCard({
         </div>
 
         {/* Join Group Button */}
-        <button className="mt-4 w-full bg-[#FF765E] text-white py-3 rounded-3xl font-semibold hover:bg-[#e86b50] transition-colors">
+        <button className="mt-4 w-full bg-[#1C4692] text-white py-3 rounded-3xl font-semibold transition-colors">
           Join Group
         </button>
       </div>

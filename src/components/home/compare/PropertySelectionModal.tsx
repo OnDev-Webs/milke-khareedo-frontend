@@ -224,7 +224,7 @@ export default function PropertySelectionModal({
                 ...Array.from(selectedProperties.keys()),
               ]).size;
               return totalSelected > 0 ? (
-                <span className="rounded-full bg-[#f15a29] px-3 py-1 text-xs font-semibold text-white">
+                <span className="rounded-full bg-[#1C4692] px-3 py-1 text-xs font-semibold text-white">
                   {totalSelected} selected
                 </span>
               ) : null;
@@ -247,7 +247,7 @@ export default function PropertySelectionModal({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search properties..."
-              className="w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-4 text-sm focus:border-[#f15a29] focus:outline-none focus:ring-2 focus:ring-[#f15a29]/20 sm:py-3 sm:text-base"
+              className="w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-4 text-sm focus:border-[#1C4692] focus:outline-none focus:ring-2 focus:ring-[#1C4692]/20 sm:py-3 sm:text-base"
             />
           </div>
         </div>
@@ -260,7 +260,7 @@ export default function PropertySelectionModal({
           {loading && !properties.length ? (
             <div className="flex items-center justify-center py-12">
               <div className="text-center">
-                <div className="mb-4 inline-block h-8 w-8 animate-spin rounded-full border-4 border-[#f15a29] border-t-transparent"></div>
+                <div className="mb-4 inline-block h-8 w-8 animate-spin rounded-full border-4 border-[#1C4692] border-t-transparent"></div>
                 <p className="text-sm text-gray-600">Loading properties...</p>
               </div>
             </div>
@@ -269,7 +269,7 @@ export default function PropertySelectionModal({
               <p className="text-sm text-red-600">{error}</p>
               <button
                 onClick={() => fetchProperties(currentPage, searchQuery)}
-                className="mt-4 rounded-full bg-[#f15a29] px-4 py-2 text-sm font-semibold text-white hover:bg-[#e14f20] transition-colors"
+                className="mt-4 rounded-full bg-[#1C4692] px-4 py-2 text-sm font-semibold text-white hover:bg-[#e14f20] transition-colors"
               >
                 Retry
               </button>
@@ -298,8 +298,8 @@ export default function PropertySelectionModal({
                       key={property.id}
                       className={`group relative cursor-pointer rounded-lg border-2 bg-white p-3 transition-all sm:rounded-xl sm:p-4 ${
                         isSelected
-                          ? "border-[#f15a29] bg-[#f15a29]/5 shadow-lg"
-                          : "border-gray-200 hover:border-[#f15a29] hover:shadow-lg"
+                          ? "border-[#1C4692] bg-[#1C4692]/5 shadow-lg"
+                          : "border-gray-200 hover:border-[#1C4692] hover:shadow-lg"
                       } ${alreadyInCompare ? "cursor-default" : "cursor-pointer"}`}
                       onClick={() => handlePropertyToggle(property)}
                     >
@@ -307,7 +307,7 @@ export default function PropertySelectionModal({
                       <div
                         className={`absolute right-2 top-2 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold transition-colors shadow-sm ${
                           isSelected
-                            ? "bg-[#f15a29] text-white"
+                            ? "bg-[#1C4692] text-white"
                             : "border-2 border-gray-300 bg-white text-gray-600"
                         }`}
                       >
@@ -399,7 +399,7 @@ export default function PropertySelectionModal({
                           disabled={loading}
                           className={`h-8 w-8 rounded-lg text-sm font-medium transition-colors ${
                             currentPage === pageNum
-                              ? "bg-[#f15a29] text-white"
+                              ? "bg-[#1C4692] text-white"
                               : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                           } disabled:cursor-not-allowed disabled:opacity-50`}
                         >
@@ -439,7 +439,7 @@ export default function PropertySelectionModal({
               </p>
               <button
                 onClick={handleAddSelected}
-                className="rounded-full bg-[#f15a29] px-6 py-2 text-sm font-semibold text-white hover:bg-[#e14f20] transition-colors"
+                className="rounded-full bg-[#1C4692] px-6 py-2 text-sm font-semibold text-white hover:bg-[#e14f20] transition-colors"
               >
                 Add {selectedProperties.size} to Compare
               </button>

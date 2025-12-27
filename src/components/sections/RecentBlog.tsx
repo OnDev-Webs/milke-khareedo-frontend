@@ -25,7 +25,7 @@ const RecentBlog = () => {
             <Heading className="text-black">Recent Blogs</Heading>
             <Button
               variant={"ghost"}
-              className="rounded-[110px] text-base border border-[#F5F5F5] py-[13px] px-[30px] md:text-base"
+              className="rounded-[110px] text-base border border-[#F5F5F5] md:text-base"
             >
               View All
             </Button>
@@ -47,7 +47,7 @@ const RecentBlog = () => {
             <Button
               variant={"ghost"}
               onClick={handleLoadMore}
-              className="mt-8 text-base rounded-[110px] border border-[#F5F5F5] py-[13px] px-[30px] flex mx-auto"
+              className="mt-8 text-base rounded-[110px] border border-[#F5F5F5] flex mx-auto"
             >
               Load More
             </Button>

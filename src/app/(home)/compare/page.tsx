@@ -273,7 +273,7 @@ export default function ComparePage() {
                 <div className="mb-3 flex justify-center sm:mb-4 md:mb-6">
                   <button
                     onClick={() => setShowAddPropertyModal(true)}
-                    className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f15a29] text-white shadow-lg hover:bg-[#e14f20] transition-colors sm:h-16 sm:w-16 md:h-20 md:w-20"
+                    className="flex h-14 w-14 items-center justify-center rounded-full bg-[#1C4692] text-white shadow-lg hover:bg-[#e14f20] transition-colors sm:h-16 sm:w-16 md:h-20 md:w-20"
                   >
                     <IoAdd className="h-7 w-7 sm:h-8 sm:w-8 md:h-10 md:w-10" />
                   </button>
@@ -286,7 +286,7 @@ export default function ComparePage() {
                 </p>
                 <button
                   onClick={() => setShowAddPropertyModal(true)}
-                  className="w-full rounded-full bg-[#f15a29] px-5 py-2 text-xs font-semibold text-white hover:bg-[#e14f20] transition-colors sm:w-auto sm:px-6 sm:py-2.5 sm:text-sm md:px-8 md:py-3"
+                  className="w-full rounded-full bg-[#1C4692] px-5 py-2 text-xs font-semibold text-white hover:bg-[#e14f20] transition-colors sm:w-auto sm:px-6 sm:py-2.5 sm:text-sm md:px-8 md:py-3"
                 >
                   Add Property
                 </button>
@@ -295,7 +295,7 @@ export default function ComparePage() {
           ) : loading ? (
             <div className="flex items-center justify-center py-12">
               <div className="text-center">
-                <div className="mb-4 inline-block h-8 w-8 animate-spin rounded-full border-4 border-[#f15a29] border-t-transparent"></div>
+                <div className="mb-4 inline-block h-8 w-8 animate-spin rounded-full border-4 border-[#1C4692] border-t-transparent"></div>
                 <p className="text-sm text-gray-600">
                   Loading comparison data...
                 </p>
@@ -328,7 +328,7 @@ export default function ComparePage() {
               {compareItems.length < 4 && (
                 <div
                   onClick={() => setShowAddPropertyModal(true)}
-                  className="flex min-h-[350px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-white p-4 transition-colors hover:border-[#f15a29] hover:bg-gray-50 sm:min-h-[450px] sm:rounded-2xl sm:p-6 md:min-h-[550px] md:p-8"
+                  className="flex min-h-[350px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-white p-4 transition-colors hover:border-[#1C4692] hover:bg-gray-50 sm:min-h-[450px] sm:rounded-2xl sm:p-6 md:min-h-[550px] md:p-8"
                 >
                   <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 sm:mb-3 sm:h-12 sm:w-12 md:mb-4 md:h-16 md:w-16">
                     <IoAdd className="h-5 w-5 text-gray-600 sm:h-6 sm:w-6 md:h-8 md:w-8" />

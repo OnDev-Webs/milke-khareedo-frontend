@@ -278,7 +278,7 @@ export default function TopProperties() {
         {/* Heading */}
         <h2 className="text-3xl font-bold text-black mb-6">
           Top{" "}
-          <span className="relative inline-block text-[#FF765E] font-bold">
+          <span className="relative inline-block text-[#1C4692] font-bold">
             Properties
             <svg
               className="absolute left-0 -bottom-2"
@@ -290,7 +290,7 @@ export default function TopProperties() {
             >
               <path
                 d="M2 8.5C60 1.5 170 5.5 226 8.5"
-                stroke="#FF765E"
+                stroke="#1C4692"
                 strokeWidth="3"
                 strokeLinecap="round"
                 fill="none"
@@ -309,13 +309,13 @@ export default function TopProperties() {
                 key={idx}
                 onClick={() => handleTabChange(tab)}
                 className={`relative px-1 pb-1 text-sm font-medium transition-colors
-          ${isActive ? "text-[#FF765E]" : "text-[#818181]"}
+          ${isActive ? "text-[#1C4692]" : "text-[#818181]"}
         `}
               >
                 {tab}
 
                 {isActive && (
-                  <span className="absolute left-0 right-0 -bottom-[9px] h-[2px] bg-[#FF765E]" />
+                  <span className="absolute left-0 right-0 -bottom-[9px] h-[2px] bg-[#1C4692]" />
                 )}
               </button>
             );

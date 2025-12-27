@@ -313,7 +313,7 @@ export default function CitySelector({
     return (
       <div className={`relative ${className}`}>
         <div className="w-full bg-transparent flex items-center">
-          <span className="text-base font-medium text-[#FF765E]">
+          <span className="text-base font-medium text-[#1C4692]">
             Loading...
           </span>
         </div>
@@ -336,7 +336,7 @@ export default function CitySelector({
         }}
         className="w-full appearance-none bg-transparent text-left outline-none border-none p-0 flex items-center hover:opacity-80 transition-opacity"
       >
-        <span className="text-base font-medium text-[#FF765E] truncate pr-2">
+        <span className="text-base font-medium text-[#1C4692] truncate pr-2">
           {selectedCity.city}
         </span>
         <FaChevronDown
@@ -379,7 +379,7 @@ export default function CitySelector({
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search city or country..."
-                  className="w-full rounded-lg border-2 border-gray-200 bg-gray-50 py-2 pl-10 pr-3 text-sm text-gray-800 placeholder-gray-400 focus:border-[#FF765E] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#FF765E]/20 transition-all"
+                  className="w-full rounded-lg border-2 border-gray-200 bg-gray-50 py-2 pl-10 pr-3 text-sm text-gray-800 placeholder-gray-400 focus:border-[#1C4692] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1C4692]/20 transition-all"
                   onKeyDown={(e) => handleKeyDown(e)}
                   onClick={(e) => e.stopPropagation()}
                 />
@@ -396,7 +396,7 @@ export default function CitySelector({
               {loading ? (
                 <div className="px-4 py-12 text-center">
                   <div className="inline-flex items-center gap-2 text-sm text-gray-500">
-                    <div className="h-4 w-4 border-2 border-[#FF765E] border-t-transparent rounded-full animate-spin"></div>
+                    <div className="h-4 w-4 border-2 border-[#1C4692] border-t-transparent rounded-full animate-spin"></div>
                     <span>Loading cities...</span>
                   </div>
                 </div>
@@ -423,8 +423,8 @@ export default function CitySelector({
                         onKeyDown={(e) => handleKeyDown(e, city)}
                         className={`w-full px-4 py-3 text-left text-sm transition-all duration-150 ${
                           isSelected
-                            ? "bg-[#FF765E] text-white font-semibold"
-                            : "text-gray-700 hover:bg-[#FF765E]/5 hover:text-[#FF765E]"
+                            ? "bg-[#1C4692] text-white font-semibold"
+                            : "text-gray-700 hover:bg-[#1C4692]/5 hover:text-[#1C4692]"
                         }`}
                       >
                         <div className="flex items-center justify-between">

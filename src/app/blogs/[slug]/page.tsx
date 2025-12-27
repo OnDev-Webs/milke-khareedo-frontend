@@ -26,7 +26,7 @@ export default function Page() {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage className="text-[#FF765E] font-semibold text-[18px]">
+                <BreadcrumbPage className="text-[#1C4692] font-semibold text-[18px]">
                   Blog Detail
                 </BreadcrumbPage>
               </BreadcrumbItem>

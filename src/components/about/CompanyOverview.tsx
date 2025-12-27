@@ -32,18 +32,18 @@ export default function CompanyOverview() {
 
             <p className="text-[18px] font-normal text-[#373737]">
               Buying property together gives buyers more power. At
-              <span className="text-[#FF765E]"> Milke Khareedo,</span> we bring
+              <span className="text-[#1C4692]"> Milke Khareedo,</span> we bring
               buyers together so better pricing and clearer decisions become
               possible.
             </p>
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {features.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-3 rounded-2xl bg-[#F2F6FF] p-4 shadow-[0_10px_20px_rgba(0,0,0,0.04)]">
+                <div key={idx} className="flex items-center gap-3 rounded-2xl bg-[#EEF4FF] p-4 shadow-[0_10px_20px_rgba(0,0,0,0.04)]">
                   <div className="relative flex h-12 w-20 items-center justify-center rounded-xl overflow-hidden">
                     {/* Fixed-size Background */}
                     <Image
-                      src="/images/LightGradient.png"
+                      src="/images/LightGradient.svg"
                       alt="LightGradient"
                       width={80}     
                       height={48}

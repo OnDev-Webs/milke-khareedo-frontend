@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
-import { IoHeartOutline, IoHeart, IoChevronBack, IoChevronForward } from "react-icons/io5";
+import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import { Property } from "@/lib/api/services/home.service";
 
 interface SearchPropertyCardProps {
@@ -72,7 +72,7 @@ export default function SearchPropertyCard({ property, images }: SearchPropertyC
                 onClick={() => setCurrentIndex(index)}
                 className={`transition-all ${
                   index === currentIndex
-                    ? "h-1.5 w-6 rounded-full bg-[#f15a29]"
+                    ? "h-1.5 w-6 rounded-full bg-[#1C4692]"
                     : "h-1.5 w-1.5 rounded-full bg-white hover:bg-white/80"
                 }`}
                 aria-label={`Go to image ${index + 1}`}
@@ -101,23 +101,23 @@ export default function SearchPropertyCard({ property, images }: SearchPropertyC
 
         {/* Group Size + Opening */}
         <div className="flex justify-between mt-2 mb-2 gap-2">
-          <div className="flex flex-col items-center bg-[#F2F6FF] px-4 py-2 rounded-lg text-center flex-1">
+          <div className="flex flex-col items-center bg-[#EEF4FF] px-4 py-2 rounded-lg text-center flex-1">
             <span className="text-[14px] text-black font-semibold">
               Group Size
             </span>
-            <span className="text-base font-bold text-[#f15a29] mt-1">
+            <span className="text-base font-bold text-[#1C4692] mt-1">
               {property.groupSizeFormatted}
             </span>
-            <span className="text-xs text-black mt-0.5">Members</span>
+            {/* <span className="text-xs text-black mt-0.5">Members</span> */}
           </div>
-          <div className="flex flex-col items-center bg-[#F2F6FF] px-4 py-2 rounded-lg text-center flex-1">
+          <div className="flex flex-col items-center bg-[#EEF4FF] px-4 py-2 rounded-lg text-center flex-1">
             <span className="text-[14px] text-black font-semibold">
               Opening
             </span>
-            <span className="text-base font-bold text-[#f15a29] mt-1">
+            <span className="text-base font-bold text-[#1C4692] mt-1">
               {property.openingFormatted}
             </span>
-            <span className="text-xs text-black mt-0.5">Left</span>
+            {/* <span className="text-xs text-black mt-0.5">Left</span> */}
           </div>
         </div>
 
@@ -147,7 +147,7 @@ export default function SearchPropertyCard({ property, images }: SearchPropertyC
         </div>
 
         {/* Join Group Button */}
-        <button className="mt-4 w-full bg-[#FF765E] text-white py-3 rounded-3xl font-semibold hover:bg-[#e86b50] transition-colors">
+        <button className="mt-4 w-full bg-[#1C4692] text-white py-3 rounded-3xl font-semibold  transition-colors">
           Join Group
         </button>
       </div>

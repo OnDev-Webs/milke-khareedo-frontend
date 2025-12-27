@@ -247,7 +247,7 @@ export default function AuthModal({
             <div className="flex flex-col justify-center p-8 md:p-6 bg-[#303A44] my-4 ms-4 rounded-lg">
               {/* Logo */}
               <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#f15a29]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#1C4692]">
                   <svg
                     className="h-8 w-8 text-white"
                     fill="none"
@@ -298,7 +298,7 @@ export default function AuthModal({
                         value={formatPhoneNumber(phoneNumber)}
                         onChange={handlePhoneChange}
                         placeholder="000 000 0000"
-                        className="flex-1 rounded-lg border border-gray-600 bg-[#2a2a2a] px-3 py-3 text-white placeholder-gray-500 focus:border-[#f15a29] focus:outline-none"
+                        className="flex-1 rounded-lg border border-gray-600 bg-[#2a2a2a] px-3 py-3 text-white placeholder-gray-500 focus:border-[#1C4692] focus:outline-none"
                       />
                     </div>
                   </div>
@@ -310,7 +310,7 @@ export default function AuthModal({
                   <button
                     onClick={handleSendOTP}
                     disabled={loading || phoneNumber.length !== 10}
-                    className="w-full rounded-full bg-[#f15a29] px-6 py-3 text-[12px] font-semibold text-white hover:bg-[#e14f20] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full rounded-full bg-[#1C4692] px-6 py-3 text-[12px] font-semibold text-white hover:bg-[#e14f20] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loading ? "Sending..." : "CONTINUE"}
                   </button>
@@ -356,7 +356,7 @@ export default function AuthModal({
                           }
                           onPaste={handleOtpPaste}
                           onKeyDown={(e) => handleOtpKeyDown(index, e)}
-                          className="h-12 w-12 rounded-lg border border-gray-600 bg-[#2a2a2a] text-center text-xl font-bold text-white focus:border-[#f15a29] focus:outline-none"
+                          className="h-12 w-12 rounded-lg border border-gray-600 bg-[#2a2a2a] text-center text-xl font-bold text-white focus:border-[#1C4692] focus:outline-none"
                         />
                       ))}
                     </div>
@@ -369,7 +369,7 @@ export default function AuthModal({
                   <button
                     onClick={handleVerifyOTP}
                     disabled={loading || otp.length !== 6}
-                    className="w-full rounded-lg bg-[#f15a29] px-6 py-3 text-[12px] font-semibold text-white hover:bg-[#e14f20] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full rounded-lg bg-[#1C4692] px-6 py-3 text-[12px] font-semibold text-white hover:bg-[#e14f20] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loading ? "Verifying..." : "VERIFY OTP"}
                   </button>
@@ -384,7 +384,7 @@ export default function AuthModal({
                       <button
                         onClick={handleResendOTP}
                         disabled={loading}
-                        className="text-[#f15a29] hover:underline disabled:opacity-50"
+                        className="text-[#1C4692] hover:underline disabled:opacity-50"
                       >
                         Resend OTP
                       </button>
@@ -408,7 +408,7 @@ export default function AuthModal({
               <div className="relative z-10">
                 <h3 className="mb-8 text-[24px] font-semibold text-white">
                   How are we different{" "}
-                  <span className="inline-block h-3 w-3 bg-[#f15a29]"></span>
+                  <span className="inline-block h-3 w-3 bg-[#1C4692]"></span>
                 </h3>
                 <div className="space-y-2">
                   {features.map((feature, index) => (

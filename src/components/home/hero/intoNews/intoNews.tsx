@@ -8,7 +8,7 @@ export default function IntoNews() {
         {/* Heading */}
         <h2 className="text-[24px] md:text-[30px] font-semibold text-[#000000] mb-2">
           Understand Before You{" "}
-          <span className="relative inline-block text-[#FF765E] ps-2">
+          <span className="relative inline-block text-[#1C4692] ps-2">
             Buy
             <svg
               className="absolute left-0 -bottom-2"
@@ -20,7 +20,7 @@ export default function IntoNews() {
             >
               <path
                 d="M2 8.5C60 1.5 170 5.5 226 8.5"
-                stroke="#FF765E"
+                stroke="#1C4692"
                 strokeWidth="9"
                 strokeLinecap="round"
                 fill="none"
@@ -32,7 +32,7 @@ export default function IntoNews() {
         {/* Subtitle */}
         <p className="text-center text-[#110229] text-[14px] md:text-[16px] font-medium mb-10">
           Simple reads to help you make smarter property{" "}
-          <span className="text-[#FF765E]">decisions.</span>
+          <span className="text-[#1C4692]">decisions.</span>
         </p>
 
         {/* Banner */}

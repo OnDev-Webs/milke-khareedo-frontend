@@ -70,7 +70,7 @@ export default function CompareOverlay() {
         <div className="border-t border-gray-200 px-5 py-4">
           <Link
             href="/compare"
-            className="block w-full rounded-full bg-[#f15a29] px-6 py-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#e14f20] transition-colors"
+            className="block w-full rounded-full bg-[#1C4692] px-6 py-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#e14f20] transition-colors"
           >
             Compare
           </Link>

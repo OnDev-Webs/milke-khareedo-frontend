@@ -107,7 +107,7 @@ export default function PropertyCard({
                 </div>
 
 
-                <button className="mt-2 rounded-full bg-[#ff7a59] py-2 text-sm font-semibold text-white">
+                <button className="mt-2 rounded-full bg-[#1C4692] py-2 text-sm font-semibold text-white">
                     View Details
                 </button>
             </div>

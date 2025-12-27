@@ -122,7 +122,7 @@ export default function MyPreferencePage() {
                                             toggle(b, selectedBudgets, setSelectedBudgets)
                                         }
                                         className={`rounded-full px-4 py-2 text-xs font-medium transition
-                                                ${active ? "bg-[#ff7a59] text-white"
+                                                ${active ? "bg-[#1C4692] text-white"
                                                 : "bg-white text-gray-700 hover:bg-gray-100"}`}>
                                         {b}
                                     </button>
@@ -149,7 +149,7 @@ export default function MyPreferencePage() {
                                         }
                                         className={`rounded-full px-4 py-2 text-xs font-medium transition
                       ${active
-                                                ? "bg-[#ff7a59] text-white"
+                                                ? "bg-[#1C4692] text-white"
                                                 : "bg-white text-gray-700 hover:bg-gray-100"
                                             }`}
                                     >

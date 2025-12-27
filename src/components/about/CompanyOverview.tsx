@@ -4,13 +4,14 @@ import Title from "@/components/typography/title";
 
 export default function CompanyOverview() {
   const features = [
-    { title: "Who We Are", desc: "We bring buyers together for better value." },
-    { title: "What We Do", desc: "We bring buyers together for better prices" },
+    { title: "Who We Are", desc: "We bring buyers together for better value.", icon: "/images/co1.png", },
+    { title: "What We Do", desc: "We bring buyers together for better prices", icon: "/images/co2.png" },
     {
       title: "How We Do IT",
       desc: "Clear steps, honest guidance, no pressure.",
+      icon: "/images/co3.png"
     },
-    { title: "Why With Us", desc: "Buying together unlocks you more savings." },
+    { title: "Why With Us", desc: "Buying together unlocks you more savings.", icon: "/images/co4.png" },
   ];
 
   return (
@@ -36,21 +37,27 @@ export default function CompanyOverview() {
               possible.
             </p>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 max-w-md">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {features.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center gap-3 rounded-2xl bg-[#F2F6FF] p-4 shadow-[0_10px_20px_rgba(0,0,0,0.04)]"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#ebe7ff]">
-                    <svg
-                      viewBox="0 0 24 24"
-                      className="h-10 w-10 text-[#c6bdf5]"
-                      fill="currentColor"
-                    >
-                      <path d="M21 19l-5.5-7-3.5 4.5-2.5-3L3 19z" />
-                      <circle cx="9" cy="8" r="2" />
-                    </svg>
+                <div key={idx} className="flex items-center gap-3 rounded-2xl bg-[#F2F6FF] p-4 shadow-[0_10px_20px_rgba(0,0,0,0.04)]">
+                  <div className="relative flex h-12 w-20 items-center justify-center rounded-xl overflow-hidden">
+                    {/* Fixed-size Background */}
+                    <Image
+                      src="/images/LightGradient.png"
+                      alt="LightGradient"
+                      width={80}     
+                      height={48}
+                      className="absolute inset-0 object-contain"
+                    />
+
+                    {/* Icon */}
+                    <Image
+                      src={item.icon}
+                      alt={item.title}
+                      width={24}
+                      height={24}
+                      className="relative z-10 object-contain"
+                    />
                   </div>
 
                   <div>

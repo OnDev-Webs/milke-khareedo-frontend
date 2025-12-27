@@ -8,32 +8,14 @@ import ContactForm from "@/components/home/contact-us/ContactForm";
 const contactMethods = [
   {
     type: "normal",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        className="h-14 w-14 text-[#c6bdf5]"
-        fill="currentColor"
-      >
-        <path d="M21 19l-5.5-7-3.5 4.5-2.5-3L3 19z" />
-        <circle cx="9" cy="8" r="2" />
-      </svg>
-    ),
+    icon: '/images/Frame1.png',
     title: "What We Help With",
     desc: "Help with apartments, villas, and plots — from shortlisting to better group pricing.",
   },
 
   {
     type: "contact",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        className="h-14 w-14 text-[#c6bdf5]"
-        fill="currentColor"
-      >
-        <path d="M21 19l-5.5-7-3.5 4.5-2.5-3L3 19z" />
-        <circle cx="9" cy="8" r="2" />
-      </svg>
-    ),
+    icon: '/images/Frame2.png',
     title: "How to Reach Us",
     details: [
       {
@@ -49,16 +31,7 @@ const contactMethods = [
 
   {
     type: "normal",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        className="h-14 w-14 text-[#c6bdf5]"
-        fill="currentColor"
-      >
-        <path d="M21 19l-5.5-7-3.5 4.5-2.5-3L3 19z" />
-        <circle cx="9" cy="8" r="2" />
-      </svg>
-    ),
+    icon: '/images/Frame3.png',
     title: "Where We Are",
     desc: "Tk Residency , Friends Colony Rd, Friends Colony, Indira Nagar Colony, Miyapur, Hyderabad, Telangana 500049",
   },
@@ -89,7 +62,22 @@ export default function ConnectWithUs() {
                 key={index}
                 className="bg-[#F2F6FF] p-6 rounded-2xl md:w-[32%]"
               >
-                {item.icon}
+                <div className="relative flex h-12 w-12 items-center justify-center rounded-xl overflow-hidden">
+                  <Image
+                    src="/images/LightGradient.png"
+                    alt="LightGradient"
+                    width={80}
+                    height={48}
+                    className="absolute inset-0 object-contain"
+                  />
+                  <Image
+                    src={item.icon}
+                    alt={item.title}
+                    width={24}
+                    height={24}
+                    className="relative z-10 object-contain"
+                  />
+                </div>
 
                 <p className="font-bold text-black text-xl mt-2">
                   {item.title}

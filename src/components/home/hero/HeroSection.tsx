@@ -178,7 +178,13 @@ export default function Hero() {
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
                 placeholder="Find your Dream Home"
-                className="w-full bg-transparent text-base font-bold text-gray-800 outline-none border-none focus:outline-none focus:ring-0 placeholder:text-base placeholder:font-bold placeholder:text-gray-800 transition-all duration-300 min-h-[24px]"
+                className={`w-full bg-transparent outline-none border-none focus:ring-0 transition-all duration-300
+                  ${searchQuery || isSearchFocused
+                    ? "text-[30px] font-semibold text-gray-900 text-left"
+                    : "text-base font-bold text-gray-800"
+                  }
+                  placeholder:text-base placeholder:font-bold placeholder:text-gray-800 min-h-[28px]
+                `}
               />
               <div
                 className={`absolute left-0 top-full mt-1.5 flex items-center gap-1.5 text-xs text-gray-500 pointer-events-none transition-opacity duration-300 ${searchQuery || isSearchFocused ? "opacity-0" : "opacity-100"}`}

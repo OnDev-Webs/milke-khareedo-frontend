@@ -29,7 +29,7 @@ export default function ProfilePage() {
       <div className="mt-12">
         <button
           type="submit"
-          className="w-full sm:w-auto rounded-full bg-[#ff7a59] px-12 py-4 text-sm font-semibold text-white transition hover:bg-[#ff6844]"
+          className="w-full sm:w-auto rounded-full bg-[#1C4692] px-12 py-4 text-sm font-semibold text-white transition hover:bg-[#1C4692]"
         >
           Save Profile
         </button>
@@ -69,7 +69,7 @@ function FieldInput({
           text-sm
           text-[#2b2b2b]
           placeholder:text-[#b5b5b5]
-          focus:border-[#ff7a59]
+          focus:border-[#1C4692]
           focus:outline-none
         "
       />
@@ -101,7 +101,7 @@ function FieldSelect({
           px-4
           text-sm
           text-[#9b9b9b]
-          focus:border-[#ff7a59]
+          focus:border-[#1C4692]
           focus:outline-none
         "
       >

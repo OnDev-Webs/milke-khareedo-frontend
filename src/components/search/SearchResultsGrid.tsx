@@ -68,7 +68,7 @@ export default function SearchResultsGrid() {
           page: Number(searchParams.get("page") || 1),
           limit: Number(searchParams.get("limit") || 10),
         });
-        if (resp.success && resp.data) setResults(resp.data);
+        if (resp.success && resp.data) setResults(resp.data.results || resp.data.data || []);
         else setResults([]);
       })();
     } else {
@@ -99,9 +99,9 @@ export default function SearchResultsGrid() {
 
   return (
     <>
-      <div className="flex items-center justify-between border-b border-[#F3F3F3] mb-5">
+      <div className="flex items-center justify-between border-b border-[#F3F3F3] mb-5 px-4">
         <div className="inline-flex w-full max-w-md">
-          <div className="relative flex flex-col justify-center ps-6 pe-4 py-4 min-w-[130px]">
+          <div className="relative flex flex-col justify-center pe-4 py-4 min-w-[130px]">
             <label className="text-sm font-bold text-gray-800 mb-2.5">
               City
             </label>
@@ -261,9 +261,9 @@ export default function SearchResultsGrid() {
           </button>
         </div>
       </div>
-      <div className="flex gap-6">
+      <div className="flex gap-2">
         {/* Properties Grid */}
-        <div className="flex-1">
+        <div className="flex-1 px-4">
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-2xl font-semibold text-black">
               Projects in Mumbai Central, Mumbai
@@ -308,8 +308,8 @@ export default function SearchResultsGrid() {
         </div>
 
         {/* Map Sidebar */}
-        <div className="hidden w-96 lg:block">
-          <div className="sticky top-20 overflow-hidden rounded-2xl bg-gray-200">
+        <div className="w-1/3 h-screen">
+          <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-hidden">
             <PropertyMap properties={results} />
           </div>
         </div>

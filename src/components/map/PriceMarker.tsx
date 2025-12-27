@@ -12,7 +12,7 @@ export default function PriceMarker({
       onClick={onClick}
       className={`
         px-3 py-1 rounded-full text-sm font-semibold cursor-pointer
-        shadow-lg transition-all
+        shadow-lg transition-all w-fit
         ${
           active
             ? "bg-orange-500 text-white scale-110"

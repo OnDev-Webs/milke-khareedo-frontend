@@ -8,7 +8,6 @@ import {
 } from "@react-google-maps/api";
 import { useMemo, Fragment } from "react";
 import PriceMarker from "./PriceMarker";
-import { propertyMapStyle } from "@/components/map/mapStyles";
 import { Property } from "@/lib/api/services/home.service";
 
 const containerStyle = {
@@ -28,7 +27,9 @@ export default function PropertyMap({
   // Filter properties that have valid coordinates
   const validProperties = useMemo(() => {
     if (!properties || !Array.isArray(properties)) return [];
-    return properties.filter((p) => p.latitude && p.longitude);
+    return properties.filter(
+      (p) => typeof p.latitude === "number" && typeof p.longitude === "number"
+    );
   }, [properties]);
 
   const center = useMemo(
@@ -53,7 +54,6 @@ export default function PropertyMap({
       zoom={11}
       center={center}
       options={{
-        styles: propertyMapStyle,
         disableDefaultUI: true,
         zoomControl: true,
       }}
@@ -64,7 +64,7 @@ export default function PropertyMap({
             {validProperties.map((p) => (
               <OverlayView
                 key={p.id}
-                position={{ lat: p.latitude, lng: p.longitude }}
+                position={{ lat: p.latitude!, lng: p.longitude! }}
                 mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
               >
                 <PriceMarker

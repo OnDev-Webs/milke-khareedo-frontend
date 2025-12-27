@@ -6,7 +6,7 @@ import Header from "@/components/layout/header";
 import FooterWrapper from "@/components/layout/FooterWrapper";
 import { SchemaMarkup, organizationSchema } from "@/lib/schema-markup";
 import { Montserrat } from "next/font/google";
-import { Providers } from "@/app/providers";
+import { Providers } from "@/providers/providers";
 
 const montserrat = Montserrat({
   subsets: ["latin"],

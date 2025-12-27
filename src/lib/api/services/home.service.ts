@@ -67,6 +67,7 @@ export interface FiltersInfo {
 }
 
 export interface TopPropertiesResponse {
+  results: Property[];
   data: Property[];
   pagination: PaginationInfo;
   filters: FiltersInfo;

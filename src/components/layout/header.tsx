@@ -53,11 +53,10 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative pb-1 text-sm transition-colors xl:text-base ${
-                    isActive(link.href)
+                  className={`relative pb-1 text-sm transition-colors xl:text-base ${isActive(link.href)
                       ? "font-semibold text-[#f15a29]"
                       : "hover:text-[#f15a29]"
-                  }`}
+                    }`}
                 >
                   {link.label}
                   {isActive(link.href) && (
@@ -70,86 +69,81 @@ export default function Header() {
 
           {/* Right Side Icons */}
           <div className="flex items-center gap-3">
-            {!isDashboard && (
-              <>
-                {/* Compare Icon */}
-                <CompareIcon />
+            {!isDashboard && <CompareIcon />}
 
-                {/* Profile Icon or Sign In Button */}
-                {isAuthenticated ? (
-                  <div className="relative">
-                    <button
-                      onClick={() =>
-                        setProfileDropdownOpen(!profileDropdownOpen)
-                      }
-                      className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[#f15a29] text-white transition-colors hover:bg-[#e14f20] overflow-hidden"
-                      aria-label="Profile menu"
-                    >
-                      {user?.profileImage ? (
-                        <Image
-                          src={user.profileImage}
-                          alt={user.name || "Profile"}
-                          fill
-                          className="object-cover"
-                        />
-                      ) : (
-                        <IoPerson className="h-5 w-5" />
-                      )}
-                      <IoChevronDown className="absolute bottom-0.5 right-0.5 h-2.5 w-2.5" />
-                    </button>
+            {/* Profile / Auth */}
+            {isAuthenticated ? (
+              <div className="relative">
+                <button
+                  onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                  className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-[#f15a29] text-white transition-colors hover:bg-[#e14f20]"
+                  aria-label="Profile menu"
+                >
+                  {user?.profileImage ? (
+                    <Image
+                      src={user.profileImage}
+                      alt={user.name || "Profile"}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <IoPerson className="h-5 w-5" />
+                  )}
+                  <IoChevronDown className="absolute bottom-0.5 right-0.5 h-2.5 w-2.5" />
+                </button>
 
-                    {/* Profile Dropdown Menu */}
-                    {profileDropdownOpen && (
-                      <>
-                        <div
-                          className="fixed inset-0 z-40"
-                          onClick={() => setProfileDropdownOpen(false)}
-                        />
-                        <div className="absolute right-0 top-12 z-50 min-w-[200px] rounded-lg bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5">
-                          <div className="px-4 py-2 border-b border-gray-100">
-                            <p className="text-sm font-medium text-gray-800">
-                              {user?.name || "User"}
-                            </p>
-                            {user?.phoneNumber && (
-                              <p className="text-xs text-gray-500">
-                                {user.countryCode} {user.phoneNumber}
-                              </p>
-                            )}
-                          </div>
-                          <Link
-                            href="/dashboard"
-                            onClick={() => setProfileDropdownOpen(false)}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                          >
-                            Dashboard
-                          </Link>
-                          <button
-                            onClick={() => {
-                              logout();
-                              setProfileDropdownOpen(false);
-                              // Redirect to home page after logout
-                              router.push("/");
-                            }}
-                            className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                          >
-                            Sign Out
-                          </button>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                ) : (
-                  <button
-                    onClick={() => setShowAuthModal(true)}
-                    className="rounded-full bg-[#f15a29] px-6 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#e14f20] lg:px-7.5 lg:py-2.5 lg:text-base"
-                  >
-                    Sign In
-                  </button>
+                {profileDropdownOpen && (
+                  <>
+                    <div
+                      className="fixed inset-0 z-40"
+                      onClick={() => setProfileDropdownOpen(false)}
+                    />
+                    <div className="absolute right-0 top-12 z-50 min-w-[200px] rounded-lg bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5">
+                      <div className="border-b border-gray-100 px-4 py-2">
+                        <p className="text-sm font-medium text-gray-800">
+                          {user?.name || "User"}
+                        </p>
+                        {user?.phoneNumber && (
+                          <p className="text-xs text-gray-500">
+                            {user.countryCode} {user.phoneNumber}
+                          </p>
+                        )}
+                      </div>
+
+                      <Link
+                        href="/dashboard"
+                        onClick={() => setProfileDropdownOpen(false)}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        Dashboard
+                      </Link>
+
+                      <button
+                        onClick={() => {
+                          logout();
+                          setProfileDropdownOpen(false);
+                          router.push("/");
+                        }}
+                        className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        Sign Out
+                      </button>
+                    </div>
+                  </>
                 )}
-              </>
+              </div>
+            ) : (
+              !isDashboard && (
+                <button
+                  onClick={() => setShowAuthModal(true)}
+                  className="rounded-full bg-[#f15a29] px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#e14f20] lg:px-7.5 lg:py-2.5 lg:text-base"
+                >
+                  Sign In
+                </button>
+              )
             )}
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu */}
             <button
               type="button"
               aria-label="Toggle navigation"
@@ -159,6 +153,7 @@ export default function Header() {
               <HiOutlineMenu className="h-6 w-6" />
             </button>
           </div>
+
         </div>
 
         {/* Mobile Menu */}
@@ -170,9 +165,8 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`py-2.5 text-sm ${
-                    isActive(link.href) ? "font-semibold text-[#f15a29]" : ""
-                  }`}
+                  className={`py-2.5 text-sm ${isActive(link.href) ? "font-semibold text-[#f15a29]" : ""
+                    }`}
                 >
                   {link.label}
                 </Link>

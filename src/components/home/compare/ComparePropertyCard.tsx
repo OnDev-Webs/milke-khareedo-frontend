@@ -281,7 +281,7 @@ export default function ComparePropertyCard({
         </div>
         <div className="flex flex-col gap-1 pb-2 border-b border-gray-200">
           <span className="text-xs text-gray-600 sm:text-xs md:text-sm">
-            Location:
+            Location
           </span>
           <span className="text-xs font-semibold text-gray-800 break-words sm:text-xs md:text-sm">
             {property.location}
@@ -289,7 +289,7 @@ export default function ComparePropertyCard({
         </div>
         <div className="flex flex-col gap-1 pb-2 border-b border-gray-200">
           <span className="text-xs text-gray-600 sm:text-xs md:text-sm">
-            Property Type:
+            Property Type
           </span>
           <span className="text-xs font-semibold text-gray-800 break-words sm:text-xs md:text-sm">
             {property.propertyType}

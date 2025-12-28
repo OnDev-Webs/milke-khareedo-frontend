@@ -73,6 +73,13 @@ export interface TopPropertiesResponse {
   filters: FiltersInfo;
 }
 
+export interface PropertyDetailsResponse {
+  data: {
+    property: Property;
+    similarProperties: Property[];
+  };
+}
+
 /**
  * Locations API Response types
  */
@@ -221,6 +228,16 @@ export const homeService = {
       : API_ENDPOINTS.HOME.GET_TOP_PROPERTY;
 
     return apiClient.get<TopPropertiesResponse>(endpoint);
+  },
+
+  /**
+   * Get property by ID
+   * Example: GET /api/home/getPropertyById?id=property_id
+   */
+  getPropertyById: async (id: string): Promise<ApiResponse<PropertyDetailsResponse>> => {
+    return apiClient.get<PropertyDetailsResponse>(
+      `${API_ENDPOINTS.HOME.GET_PROPERTY_BY_ID}/${id}`,
+    );
   },
 
   /**

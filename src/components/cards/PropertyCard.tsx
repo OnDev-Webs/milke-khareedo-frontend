@@ -11,6 +11,7 @@ import {
 } from "react-icons/io5";
 import { MdCompareArrows } from "react-icons/md";
 import { type Property } from "@/lib/api/services/home.service";
+import Link from "next/link";
 
 interface PropertyCardProps {
   property: Property;
@@ -53,10 +54,11 @@ export default function PropertyCard({
 }: PropertyCardProps) {
   return (
     <div
-      className="flex flex-col rounded-3xl bg-white shadow-lg overflow-hidden group"
+      className="flex flex-col rounded-3xl bg-white shadow-lg overflow-hidden group relative cursor-pointer"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
+      <Link href={`/property-details/${property.id}`} className="absolute inset-0 z-10" />
       {/* Image Section with Slider */}
       <div className="relative h-52 w-full bg-gray-100 flex items-center justify-center overflow-hidden">
         {currentImage ? (
@@ -204,7 +206,7 @@ export default function PropertyCard({
               {property.location}
             </p>
           </div>
-          <button className="bg-[#66AE39] text-white px-3 py-2 rounded-full flex items-center gap-1 text-xs shrink-0 ml-2 hover:bg-[#5a9a32] transition-colors">
+          <button className="relative z-20 bg-[#66AE39] text-white px-3 py-2 rounded-full flex items-center gap-1 text-xs shrink-0 ml-2 hover:bg-[#5a9a32] transition-colors">
             <FaPhoneAlt /> Call
           </button>
         </div>
@@ -259,7 +261,7 @@ export default function PropertyCard({
         </div>
 
         {/* Join Group Button */}
-        <button className="mt-4 w-full bg-[#1C4692] hover:bg-[#1c4692e6] text-white py-3 rounded-3xl font-semibold transition-colors">
+        <button className="relative z-20 mt-4 w-full bg-[#1C4692] hover:bg-[#1c4692e6] text-white py-3 rounded-3xl font-semibold transition-colors">
           Join Group
         </button>
       </div>

@@ -178,7 +178,7 @@ export default function TopProperties() {
 
   // Handle share click
   const handleShareClick = async (property: Property) => {
-    const shareUrl = `${window.location.origin}/property-details?id=${property.id}`;
+    const shareUrl = `${window.location.origin}/property-details/${property.id}`;
     const shareText = `Check out ${property.projectName} at ${property.location}`;
 
     if (navigator.share) {

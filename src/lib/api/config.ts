@@ -29,6 +29,7 @@ export const API_ENDPOINTS = {
   // Home endpoints
   HOME: {
     GET_TOP_PROPERTY: "/home/getTopProperty",
+    GET_PROPERTY_BY_ID: "/home/getPropertyById",
     GET_LOCATIONS: "/home/locations",
     POST_EMI_CALCULATOR: "/home/emi-calculator",
     GET_PROPERTIES: "/home/properties",    

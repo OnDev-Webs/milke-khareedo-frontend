@@ -76,7 +76,7 @@ export default function Header() {
               <div className="relative">
                 <button
                   onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                  className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-[#1C4692] text-white transition-colors hover:bg-[#e14f20]"
+                  className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-[#1C4692] text-white transition-colors hover:bg-[#1c4692e6]"
                   aria-label="Profile menu"
                 >
                   {user?.profileImage ? (
@@ -136,7 +136,7 @@ export default function Header() {
               !isDashboard && (
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="rounded-full bg-[#1C4692] px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#e14f20] lg:px-7.5 lg:py-2.5 lg:text-base"
+                  className="rounded-full bg-[#1C4692] px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#1c4692e6] lg:px-7.5 lg:py-2.5 lg:text-base"
                 >
                   Sign In
                 </button>
@@ -178,7 +178,7 @@ export default function Header() {
                   <Link
                     href="/dashboard/profile"
                     onClick={() => setOpen(false)}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1C4692] px-4 py-2.5 text-sm font-semibold text-white"
+                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-4 py-2.5 text-sm font-semibold text-white"
                   >
                     <IoPerson className="h-5 w-5" />
                     Profile
@@ -189,7 +189,7 @@ export default function Header() {
                       setOpen(false);
                       setShowAuthModal(true);
                     }}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1C4692] px-4 py-2.5 text-sm font-semibold text-white"
+                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-4 py-2.5 text-sm font-semibold text-white"
                   >
                     <IoPerson className="h-5 w-5" />
                     Sign In

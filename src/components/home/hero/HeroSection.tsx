@@ -99,7 +99,7 @@ export default function Hero() {
           </p>
 
           <div className="mt-6">
-            <button className="rounded-full bg-[#1C4692] px-8 py-3 text-sm font-medium text-white shadow">
+            <button className="rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-8 py-3 text-sm font-medium text-white shadow">
               Want to see how it works?
             </button>
           </div>
@@ -200,7 +200,7 @@ export default function Hero() {
             <button
               onClick={handleSearch}
               disabled={isSearching}
-              className="h-12 w-full md:w-auto md:min-w-[140px] rounded-full bg-[#1C4692] text-white flex items-center justify-center gap-2 font-medium shadow-md hover:bg-[#e66a4f] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="h-12 w-full md:w-auto md:min-w-[140px] rounded-full bg-[#1C4692] text-white flex items-center justify-center gap-2 font-medium shadow-md hover:bg-[#1C4692] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <FaSearch className="text-white text-sm" />
               <span className="text-sm">{isSearching ? "Searching..." : "Search"}</span>

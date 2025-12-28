@@ -26,7 +26,7 @@ export default function NewsCardBanner() {
             A simple way to understand pricing — and know if you’re overpaying
             or not.
           </p>
-          <button className="mt-4 md:mt-6 rounded-full bg-[#1C4692] px-8 md:px-10 py-2 md:py-3 text-sm md:text-base font-semibold text-white hover:opacity-90 transition">
+          <button className="mt-4 md:mt-6 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-8 md:px-10 py-2 md:py-3 text-sm md:text-base font-semibold text-white hover:opacity-90 transition">
             Read More
           </button>
         </div>

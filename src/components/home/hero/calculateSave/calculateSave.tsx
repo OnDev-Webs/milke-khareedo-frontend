@@ -410,7 +410,7 @@ export default function CalculateSave() {
                 <button
                   onClick={handleGetLoan}
                   disabled={isCalculating || calculating}
-                  className="w-[150px] sm:w-1/2 rounded-full bg-[#1C4692] px-6 py-3 text-[16px] font-bold text-white  transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-[150px] sm:w-1/2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-6 py-3 text-[16px] font-bold text-white  transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Get a Loan
                 </button>

@@ -41,7 +41,7 @@ export default function AddToCompareButton({
         onClick={handleClick}
         className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
           inCompare
-            ? "bg-[#1C4692] text-white hover:bg-[#e14f20]"
+            ? "bg-[#1C4692] text-white hover:bg-[#1c4692e6]"
             : "bg-white text-gray-700 hover:bg-gray-100"
         } ${className}`}
         aria-label={inCompare ? "Remove from compare" : "Add to compare"}
@@ -61,7 +61,7 @@ export default function AddToCompareButton({
       onClick={handleClick}
       className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
         inCompare
-          ? "border-[#1C4692] bg-[#1C4692] text-white hover:bg-[#e14f20]"
+          ? "border-[#1C4692] bg-[#1C4692] text-white hover:bg-[#1c4692e6]"
           : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
       } ${className}`}
     >

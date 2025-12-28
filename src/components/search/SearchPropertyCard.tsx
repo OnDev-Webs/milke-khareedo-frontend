@@ -147,7 +147,7 @@ export default function SearchPropertyCard({ property, images }: SearchPropertyC
         </div>
 
         {/* Join Group Button */}
-        <button className="mt-4 w-full bg-[#1C4692] text-white py-3 rounded-3xl font-semibold  transition-colors">
+        <button className="mt-4 w-full bg-[#1C4692] hover:bg-[#1c4692e6] text-white py-3 rounded-3xl font-semibold  transition-colors">
           Join Group
         </button>
       </div>

@@ -186,7 +186,7 @@ export default function BookVisitModal({
                 </p>
                 <button
                   onClick={handleClose}
-                  className="rounded-lg bg-[#1C4692] px-8 py-3 font-semibold text-white hover:bg-[#e14f20] transition-colors"
+                  className="rounded-lg bg-[#1C4692] px-8 py-3 font-semibold text-white hover:bg-[#1c4692e6] transition-colors"
                 >
                   Close
                 </button>

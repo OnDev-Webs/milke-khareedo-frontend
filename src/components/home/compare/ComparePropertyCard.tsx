@@ -212,7 +212,7 @@ export default function ComparePropertyCard({
             disabled={favoriteLoading}
             className={`flex h-6 w-6 items-center justify-center rounded-full border transition-colors sm:h-7 sm:w-7 md:h-8 md:w-8 ${
               isFavorite
-                ? "border-[#1C4692] bg-[#1C4692] text-white hover:bg-[#e14f20]"
+                ? "border-[#1C4692] bg-[#1C4692] text-white hover:bg-[#1c4692e6]"
                 : "border-gray-300 bg-[#EEF4FF] text-gray-600 hover:bg-gray-50"
             } disabled:opacity-50 disabled:cursor-not-allowed`}
             aria-label={

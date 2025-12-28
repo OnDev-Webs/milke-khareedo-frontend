@@ -28,7 +28,7 @@ export default function Heading() {
               className="w-full h-12 md:h-12 text-[14px] md:text-[16px] px-4 py-8 rounded-[8px] focus:outline-none bg-[#F8FCFF]"
             />
 
-            <button className="md:hidden mt-4 w-full h-12 bg-[#1C4692] text-white rounded-full font-semibold">
+            <button className="md:hidden mt-4 w-full h-12 bg-[#1C4692] hover:bg-[#1c4692e6] text-white rounded-full font-semibold">
               Submit
             </button>
           </div>

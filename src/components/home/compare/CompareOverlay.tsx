@@ -14,7 +14,7 @@ export default function CompareOverlay() {
       <div className="flex items-center justify-between border-b border-gray-200 px-5 py-4">
         <div className="flex items-center gap-2">
           <h3 className="text-lg font-semibold text-gray-800">Compare</h3>
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-semibold text-white">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full hover:bg-[#1c4692e6] bg-[#1C4692] text-xs font-semibold text-white">
             {compareCount}
           </span>
         </div>
@@ -70,7 +70,7 @@ export default function CompareOverlay() {
         <div className="border-t border-gray-200 px-5 py-4">
           <Link
             href="/compare"
-            className="block w-full rounded-full bg-[#1C4692] px-6 py-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#e14f20] transition-colors"
+            className="block w-full rounded-full bg-[#1C4692] px-6 py-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#1c4692e6] transition-colors"
           >
             Compare
           </Link>

@@ -5,7 +5,12 @@ interface GoogleMapsProviderProps {
   children: React.ReactNode;
 }
 
-const GOOGLE_MAPS_LIBRARIES: "places"[] = ["places"];
+const GOOGLE_MAPS_LIBRARIES: (
+  | "places"
+  | "geometry"
+  | "drawing"
+  | "visualization"
+)[] = ["places", "geometry"];
 
 const GoogleMapsProvider: React.FC<GoogleMapsProviderProps> = ({
   children,

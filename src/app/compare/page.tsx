@@ -273,7 +273,7 @@ export default function ComparePage() {
                 <div className="mb-3 flex justify-center sm:mb-4 md:mb-6">
                   <button
                     onClick={() => setShowAddPropertyModal(true)}
-                    className="flex h-14 w-14 items-center justify-center rounded-full bg-[#1C4692] text-white shadow-lg hover:bg-[#e14f20] transition-colors sm:h-16 sm:w-16 md:h-20 md:w-20"
+                    className="flex h-14 w-14 items-center justify-center rounded-full bg-[#1C4692] text-white shadow-lg hover:bg-[#1c4692e6] transition-colors sm:h-16 sm:w-16 md:h-20 md:w-20"
                   >
                     <IoAdd className="h-7 w-7 sm:h-8 sm:w-8 md:h-10 md:w-10" />
                   </button>
@@ -286,7 +286,7 @@ export default function ComparePage() {
                 </p>
                 <button
                   onClick={() => setShowAddPropertyModal(true)}
-                  className="w-full rounded-full bg-[#1C4692] px-5 py-2 text-xs font-semibold text-white hover:bg-[#e14f20] transition-colors sm:w-auto sm:px-6 sm:py-2.5 sm:text-sm md:px-8 md:py-3"
+                  className="w-full rounded-full bg-[#1C4692] px-5 py-2 text-xs font-semibold text-white hover:bg-[#1c4692e6] transition-colors sm:w-auto sm:px-6 sm:py-2.5 sm:text-sm md:px-8 md:py-3"
                 >
                   Add Property
                 </button>

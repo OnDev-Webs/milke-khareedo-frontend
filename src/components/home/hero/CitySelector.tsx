@@ -423,7 +423,7 @@ export default function CitySelector({
                         onKeyDown={(e) => handleKeyDown(e, city)}
                         className={`w-full px-4 py-3 text-left text-sm transition-all duration-150 ${
                           isSelected
-                            ? "bg-[#1C4692] text-white font-semibold"
+                            ? "bg-[#1C4692] hover:bg-[#1c4692e6] text-white font-semibold"
                             : "text-gray-700 hover:bg-[#1C4692]/5 hover:text-[#1C4692]"
                         }`}
                       >

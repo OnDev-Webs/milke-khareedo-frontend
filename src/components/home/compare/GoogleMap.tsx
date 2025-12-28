@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect, useCallback, useRef } from "react";
-import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 import { API_CONFIG } from "@/lib/api/config";
 
 // Default center (Mumbai, India) - fallback if geolocation is not available
@@ -86,11 +86,6 @@ export default function GoogleMapComponent({
     );
   }
 
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: apiKey,
-  });
-
   const mapOptions = useMemo(
     () => ({
       disableDefaultUI: false,
@@ -168,19 +163,6 @@ export default function GoogleMapComponent({
       }, 100);
     }
   }, [map, markers]);
-
-  if (!isLoaded) {
-    return (
-      <div
-        className={`flex items-center justify-center bg-gray-100 ${className}`}
-      >
-        <div className="text-center">
-          <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#1C4692] border-r-transparent"></div>
-          <p className="text-gray-600">Loading map...</p>
-        </div>
-      </div>
-    );
-  }
 
   // Create custom marker icon with label
   const createCustomMarkerIcon = (

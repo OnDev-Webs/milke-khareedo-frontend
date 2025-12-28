@@ -82,7 +82,7 @@ export default function NewsCard() {
                   {item.desc}
                 </p>
 
-                <button className="mt-2 rounded-full bg-[#1C4692] px-8 py-3 text-sm font-semibold text-white hover:opacity-90 transition">
+                <button className="mt-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-8 py-3 text-sm font-semibold text-white hover:opacity-90 transition">
                   Read More
                 </button>
               </div>

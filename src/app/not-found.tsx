@@ -13,7 +13,7 @@ export default function NotFound() {
           </p>
           <Link
             href="/"
-            className="bg-[#1C4692] text-white rounded-[110] text-base font-semibold mt-[50px] w-full text-center py-[13px]"
+            className="bg-[#1C4692] hover:bg-[#1c4692e6] text-white rounded-[110] text-base font-semibold mt-[50px] w-full text-center py-[13px]"
           >
             Go Back
           </Link>

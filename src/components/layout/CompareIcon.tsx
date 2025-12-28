@@ -63,7 +63,7 @@ export default function CompareIcon() {
         >
           <MdCompareArrows className="h-5 w-5" />
           {compareCount > 0 && (
-            <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-semibold text-white">
+            <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] text-xs font-semibold text-white">
               {compareCount}
             </span>
           )}
@@ -148,7 +148,7 @@ export default function CompareIcon() {
                       {/* Remove Button - Red circle with X */}
                       <button
                         onClick={() => removeFromCompare(property.id)}
-                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors shadow-sm"
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full hover:bg-[#1c4692e6] text-white bg-[#1C4692] transition-colors shadow-sm"
                         aria-label={`Remove ${property.title} from comparison`}
                       >
                         <IoClose className="h-4 w-4" />

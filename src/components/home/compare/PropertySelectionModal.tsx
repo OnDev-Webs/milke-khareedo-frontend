@@ -269,7 +269,7 @@ export default function PropertySelectionModal({
               <p className="text-sm text-red-600">{error}</p>
               <button
                 onClick={() => fetchProperties(currentPage, searchQuery)}
-                className="mt-4 rounded-full bg-[#1C4692] px-4 py-2 text-sm font-semibold text-white hover:bg-[#e14f20] transition-colors"
+                className="mt-4 rounded-full bg-[#1C4692] px-4 py-2 text-sm font-semibold text-white hover:bg-[#1c4692e6] transition-colors"
               >
                 Retry
               </button>
@@ -439,7 +439,7 @@ export default function PropertySelectionModal({
               </p>
               <button
                 onClick={handleAddSelected}
-                className="rounded-full bg-[#1C4692] px-6 py-2 text-sm font-semibold text-white hover:bg-[#e14f20] transition-colors"
+                className="rounded-full bg-[#1C4692] px-6 py-2 text-sm font-semibold text-white hover:bg-[#1c4692e6] transition-colors"
               >
                 Add {selectedProperties.size} to Compare
               </button>

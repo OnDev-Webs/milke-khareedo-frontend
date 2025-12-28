@@ -6,7 +6,7 @@ const places = ["School", "Restaurant", "Hospital", "Hotels", "Cafe"];
 export default function PDPNeighborhood() {
   return (
     <section className="w-full bg-secondary py-12">
-      <div className="mx-auto flex max-w-300 flex-col gap-10 max-md:px-4 md:flex-row md:items-start md:justify-between">
+      <div className="mx-auto flex container flex-col gap-10 max-md:px-4 md:flex-row md:items-start md:justify-between">
         <div className="w-full md:w-1/3">
           <h2 className="mb-6 font-semibold text-3xl">The Neighborhood</h2>
 

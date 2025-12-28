@@ -49,7 +49,7 @@ const sample: Project[] = [
 export default function PDPSimilarProjects() {
   return (
     <section className="w-full bg-white py-10">
-      <div className="mx-auto max-w-300">
+      <div className="mx-auto container">
         <h3 className="mb-6 font-semibold text-3xl">Similar Projects</h3>
 
         <div className="overflow-x-auto pb-4 md:overflow-visible">

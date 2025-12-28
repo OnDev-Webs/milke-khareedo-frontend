@@ -58,7 +58,7 @@ const sample: Property[] = [
 export default function PropertyArchive() {
   return (
     <div className="bg-white py-8">
-      <div className="max-w-300 mx-auto max-md:px-4">
+      <div className="container mx-auto max-md:px-4">
         <div className="mb-6 ">
           <div className="border-b flex items-center justify-between">
             <div>

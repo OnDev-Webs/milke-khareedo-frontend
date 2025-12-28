@@ -30,7 +30,7 @@ const arr = [
 export default function PDPHighLights() {
   return (
     <section className="">
-      <div className="mx-auto w-198">
+      <div className="mx-auto container">
         <div className="rounded-2xl bg-white shadow-sm">
           <div className="rounded-t-2xl bg-gray-200/80 px-6 py-4">
             <h3 className="font-semibold text-3xl">Highlights</h3>

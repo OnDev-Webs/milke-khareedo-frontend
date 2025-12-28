@@ -1,7 +1,7 @@
 export default function PDPPropertyDetails() {
   return (
     <section className="">
-      <div className="mx-auto max-w-198 rounded-2xl bg-white shadow-sm">
+      <div className="mx-auto container rounded-2xl bg-white shadow-sm">
         <div className="rounded-t-2xl bg-gray-200/80 px-6 py-4">
           <h3 className="text-lg font-semibold text-gray-800">
             Property Details

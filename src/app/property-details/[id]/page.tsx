@@ -49,7 +49,7 @@ export default function PropertyDetailsPage({
       <PDPHeader />
       <PDPSections />
 
-      <div className="flex w-300 mx-auto py-6 gap-5">
+      <div className="flex container mx-auto py-6 gap-5">
         <div className="flex flex-col gap-4">
           <PDPPropertyDetails />
           <PDPHighLights />

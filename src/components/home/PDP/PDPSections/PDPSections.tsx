@@ -33,13 +33,13 @@ export default function PDPSections() {
   ];
   return (
     <section id="highlighted-sections">
-      <div className=" w-300 mx-auto border-b border-primary flex gap-4">
+      <div className="container mx-auto border-b border-[#F8F8F8] flex gap-4">
         {sections.map((row, index) => (
           <div
             key={row?.id}
             className={`p-4 ${
               row?.isHighlighted
-                ? "font-semibold text-lg border-b bg-linear-to-t from-[#9D9D9D]/50 via-transparent via-40% to-transparent"
+                ? "size- px-3.5 py-4 text-blue-900 text-lg font-semibold bg-gradient-to-b from-white via-indigo-50/50 to-indigo-50/80 border-b-2 border-blue-900 inline-flex justify-center items-center gap-2.5"
                 : ""
             }`}
           >

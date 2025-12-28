@@ -1,6 +1,6 @@
 export default function PDPSupport() {
   return (
-    <div className="w-full max-w-95 rounded-3xl bg-neutral-200 py-6 text-center mx-auto">
+    <div className="w-full container rounded-3xl bg-neutral-200 py-6 text-center mx-auto">
       <p className="text-lg font-semibold text-gray-800">
         Hi, I am here to Answer <br /> all your queries.
       </p>

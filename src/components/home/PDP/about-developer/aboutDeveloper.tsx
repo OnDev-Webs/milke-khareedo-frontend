@@ -1,7 +1,7 @@
 export default function PDPAboutDeveloper() {
   return (
     <section className="w-full px-4 py-6">
-      <div className="mx-auto max-w-300 rounded-2xl bg-white shadow-sm">
+      <div className="mx-auto container rounded-2xl bg-white shadow-sm">
         <div className="rounded-t-2xl bg-gray-200/80 px-6 py-3">
           <h3 className="font-semibold text-3xl">About Developer</h3>
         </div>

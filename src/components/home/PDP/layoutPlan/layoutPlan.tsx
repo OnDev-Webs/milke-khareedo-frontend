@@ -11,7 +11,7 @@ export default function PDPLayoutPlan() {
 
   return (
     <section className="w-full px-4 py-8">
-      <div className="mx-auto max-w-300 rounded-2xl bg-white shadow-sm">
+      <div className="mx-auto container rounded-2xl bg-white shadow-sm">
         <div className="flex items-center justify-between rounded-t-2xl bg-gray-200/80 px-6 py-4">
           <h3 className="text-lg font-semibold text-gray-800">Layout Plan</h3>
 

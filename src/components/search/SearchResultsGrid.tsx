@@ -18,7 +18,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { homeService, type Property } from "@/lib/api/services/home.service";
+import { homeService, PaginationInfo, type Property } from "@/lib/api/services/home.service";
 import { useSearchParams } from "next/navigation";
 import SearchPropertyCard from "./SearchPropertyCard";
 import { getPropertyImages } from "@/lib/utils/getPropertyImages";
@@ -39,6 +39,7 @@ export default function SearchResultsGrid() {
     "Ready to Move",
   );
   const [results, setResults] = useState<Property[] | null>(null)
+  const [paginationData, setPaginationData] = useState<PaginationInfo | null>(null)
 
   const searchParams = useSearchParams();
 
@@ -50,6 +51,7 @@ export default function SearchResultsGrid() {
         const parsed = JSON.parse(cached);
         // parsed.results should match what HeroSection stored
         setResults(parsed.results?.data ?? parsed.results ?? []);
+        setPaginationData(parsed.pagination ?? null);
         return;
       } catch (e) {
         console.warn("Invalid cached searchResults", e);

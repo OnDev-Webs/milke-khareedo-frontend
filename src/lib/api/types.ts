@@ -3,10 +3,13 @@
  * Shared types for API requests and responses
  */
 
+import { PaginationInfo } from "./services";
+
 /**
  * Standard API Response wrapper
  */
 export interface ApiResponse<T = unknown> {
+  pagination?: PaginationInfo;
   success: boolean;
   data?: T;
   message?: string;

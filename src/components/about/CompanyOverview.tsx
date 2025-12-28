@@ -4,14 +4,26 @@ import Title from "@/components/typography/title";
 
 export default function CompanyOverview() {
   const features = [
-    { title: "Who We Are", desc: "We bring buyers together for better value.", icon: "/images/co1.png", },
-    { title: "What We Do", desc: "We bring buyers together for better prices", icon: "/images/co2.png" },
+    {
+      title: "Who We Are",
+      desc: "We bring buyers together for better value.",
+      icon: "/images/co1.png",
+    },
+    {
+      title: "What We Do",
+      desc: "We bring buyers together for better prices",
+      icon: "/images/co2.png",
+    },
     {
       title: "How We Do IT",
       desc: "Clear steps, honest guidance, no pressure.",
-      icon: "/images/co3.png"
+      icon: "/images/co3.png",
     },
-    { title: "Why With Us", desc: "Buying together unlocks you more savings.", icon: "/images/co4.png" },
+    {
+      title: "Why With Us",
+      desc: "Buying together unlocks you more savings.",
+      icon: "/images/co4.png",
+    },
   ];
 
   return (
@@ -39,13 +51,16 @@ export default function CompanyOverview() {
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {features.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-3 rounded-2xl bg-[#EEF4FF] p-4 shadow-[0_10px_20px_rgba(0,0,0,0.04)]">
+                <div
+                  key={idx}
+                  className="flex items-center gap-3 rounded-2xl bg-[#EEF4FF] p-4 shadow-[0_10px_20px_rgba(0,0,0,0.04)]"
+                >
                   <div className="relative flex h-12 w-20 items-center justify-center rounded-xl overflow-hidden">
                     {/* Fixed-size Background */}
                     <Image
                       src="/images/LightGradient.svg"
                       alt="LightGradient"
-                      width={80}     
+                      width={80}
                       height={48}
                       className="absolute inset-0 object-contain"
                     />

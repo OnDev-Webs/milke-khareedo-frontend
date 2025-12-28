@@ -28,7 +28,7 @@ export default function PropertyMap({
   const validProperties = useMemo(() => {
     if (!properties || !Array.isArray(properties)) return [];
     return properties.filter(
-      (p) => typeof p.latitude === "number" && typeof p.longitude === "number"
+      (p) => typeof p.latitude === "number" && typeof p.longitude === "number",
     );
   }, [properties]);
 

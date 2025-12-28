@@ -14,7 +14,7 @@ import RecentBlog from "@/components/sections/RecentBlog";
 import React from "react";
 
 const Page = ({ params }: { params: Promise<{ id: string }> }) => {
-    const unwrappedParams = React.use(params);
+  const unwrappedParams = React.use(params);
 
   return (
     <>
@@ -212,6 +212,6 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
       </section>
     </>
   );
-}
+};
 
 export default Page;

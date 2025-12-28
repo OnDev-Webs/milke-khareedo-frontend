@@ -53,10 +53,11 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative pb-1 text-sm transition-colors xl:text-base ${isActive(link.href)
+                  className={`relative pb-1 text-sm transition-colors xl:text-base ${
+                    isActive(link.href)
                       ? "font-semibold text-[#1C4692]"
                       : "hover:text-[#1C4692]"
-                    }`}
+                  }`}
                 >
                   {link.label}
                   {isActive(link.href) && (
@@ -153,7 +154,6 @@ export default function Header() {
               <HiOutlineMenu className="h-6 w-6" />
             </button>
           </div>
-
         </div>
 
         {/* Mobile Menu */}
@@ -165,8 +165,9 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`py-2.5 text-sm ${isActive(link.href) ? "font-semibold text-[#1C4692]" : ""
-                    }`}
+                  className={`py-2.5 text-sm ${
+                    isActive(link.href) ? "font-semibold text-[#1C4692]" : ""
+                  }`}
                 >
                   {link.label}
                 </Link>

@@ -15,15 +15,18 @@ import PDPSimilarProjects from "@/components/home/PDP/similar-projects/similarPr
 import { homeService, Property } from "@/lib/api";
 import React, { useEffect, useState } from "react";
 
-export default function PropertyDetailsPage({ params }: { params: Promise<{ id: string }> }) {
-    
+export default function PropertyDetailsPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const unwrappedParams = React.use(params);
-    const propertyId = unwrappedParams.id;
+  const propertyId = unwrappedParams.id;
 
-    const [property, setProperty] = useState<Property | null>(null)
-console.log("property", property)
+  const [property, setProperty] = useState<Property | null>(null);
+  console.log("property", property);
 
-const fetchPropertyDetails = async (id: string) => {
+  const fetchPropertyDetails = async (id: string) => {
     try {
       const response = await homeService.getPropertyById(id);
       if (response.success && response.data) {
@@ -43,25 +46,25 @@ const fetchPropertyDetails = async (id: string) => {
   return (
     <>
       <PDPGallery />
-            <PDPHeader />
-            <PDPSections />
-      
-            <div className="flex w-300 mx-auto py-6 gap-5">
-              <div className="flex flex-col gap-4">
-                <PDPPropertyDetails />
-                <PDPHighLights />
-              </div>
-              <div className="flex flex-col justify-between gap-4 ">
-                <PDPGroupProgressStatus />
-                <PDPSupport />
-              </div>
-            </div>
-      
-            <PDPAmenities />
-            <PDPLayoutPlan />
-            <PDPNeighborhood />
-            <PDPAboutDeveloper />
-            <PDPSimilarProjects />
+      <PDPHeader />
+      <PDPSections />
+
+      <div className="flex w-300 mx-auto py-6 gap-5">
+        <div className="flex flex-col gap-4">
+          <PDPPropertyDetails />
+          <PDPHighLights />
+        </div>
+        <div className="flex flex-col justify-between gap-4 ">
+          <PDPGroupProgressStatus />
+          <PDPSupport />
+        </div>
+      </div>
+
+      <PDPAmenities />
+      <PDPLayoutPlan />
+      <PDPNeighborhood />
+      <PDPAboutDeveloper />
+      <PDPSimilarProjects />
     </>
   );
 }

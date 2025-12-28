@@ -11,7 +11,10 @@ interface SearchPropertyCardProps {
   images: string[];
 }
 
-export default function SearchPropertyCard({ property, images }: SearchPropertyCardProps) {
+export default function SearchPropertyCard({
+  property,
+  images,
+}: SearchPropertyCardProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(property.isFavorite ?? false);
   const currentImage = images[currentIndex] || null;

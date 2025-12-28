@@ -13,7 +13,7 @@ export default function Hero() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  console.log("searchQuery", searchQuery)
+  console.log("searchQuery", searchQuery);
 
   const handleCityChange = (cityValue: string) => {
     setSelectedCity(cityValue);
@@ -51,11 +51,11 @@ export default function Hero() {
             city: cityName,
             results: response.data,
             pagination: response.pagination,
-          })
+          }),
         );
         // Navigate to search results page
         router.push(
-          `/search-results?city=${encodeURIComponent(cityName)}&search=${encodeURIComponent(query)}`
+          `/search-results?city=${encodeURIComponent(cityName)}&search=${encodeURIComponent(query)}`,
         );
       } else {
         alert("No properties found");
@@ -171,11 +171,21 @@ export default function Hero() {
           {/* SEARCH INPUT SECTION */}
           <div className="relative flex-1 flex flex-col justify-start ps-4 pe-6 py-4">
             <div className="relative">
-              <p className="text-base font-semibold text-gray-900">Find your Dream Home</p>
+              <p className="text-base font-semibold text-gray-900">
+                Find your Dream Home
+              </p>
               <div className="flex items-center gap-1.5 mt-[5px]">
                 <FaMapMarkerAlt className="text-gray-500 text-xs shrink-0" />
-                <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={handleKeyDown} onFocus={() => setIsSearchFocused(!isSearchFocused)} onBlur={() => setIsSearchFocused(false)}
-                placeholder="Search for Developers, Location, Projects" className="w-full bg-transparent outline-none border-none focus:ring-0 transition-all duration-300 text-xs text-gray-500" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  onFocus={() => setIsSearchFocused(!isSearchFocused)}
+                  onBlur={() => setIsSearchFocused(false)}
+                  placeholder="Search for Developers, Location, Projects"
+                  className="w-full bg-transparent outline-none border-none focus:ring-0 transition-all duration-300 text-xs text-gray-500"
+                />
               </div>
               {/* <input
                 type="text"
@@ -210,7 +220,9 @@ export default function Hero() {
               className="h-12 w-full md:w-auto md:min-w-[140px] rounded-full bg-[#1C4692] text-white flex items-center justify-center gap-2 font-medium shadow-md hover:bg-[#1C4692] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <FaSearch className="text-white text-sm" />
-              <span className="text-sm">{isSearching ? "Searching..." : "Search"}</span>
+              <span className="text-sm">
+                {isSearching ? "Searching..." : "Search"}
+              </span>
             </button>
           </div>
         </div>

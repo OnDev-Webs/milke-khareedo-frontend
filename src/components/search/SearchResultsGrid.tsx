@@ -8,7 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import PropertyMap from "@/components/map/PropertyMap";
 import { FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 import { cn } from "@/lib/utils";
@@ -17,8 +17,12 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { homeService, PaginationInfo, type Property } from "@/lib/api/services/home.service";
+} from "@/components/ui/popover";
+import {
+  homeService,
+  PaginationInfo,
+  type Property,
+} from "@/lib/api/services/home.service";
 import { useSearchParams } from "next/navigation";
 import SearchPropertyCard from "./SearchPropertyCard";
 import { getPropertyImages } from "@/lib/utils/getPropertyImages";
@@ -27,7 +31,7 @@ export default function SearchResultsGrid() {
   const [selectedCity, setSelectedCity] = useState("India, Delhi");
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [sortBy, setSortBy] = useState("New Added")
+  const [sortBy, setSortBy] = useState("New Added");
   const [currentImageIndex, setCurrentImageIndex] = useState<{
     [key: string]: number;
   }>({});
@@ -35,11 +39,11 @@ export default function SearchResultsGrid() {
   const [priceValue, setPriceValue] = useState(70);
   const [selectedBhk, setSelectedBhk] = useState("2.5 BHK");
   const [areaValue, setAreaValue] = useState(40);
-  const [selectedPossession, setSelectedPossession] = useState(
-    "Ready to Move",
+  const [selectedPossession, setSelectedPossession] = useState("Ready to Move");
+  const [results, setResults] = useState<Property[] | null>(null);
+  const [paginationData, setPaginationData] = useState<PaginationInfo | null>(
+    null,
   );
-  const [results, setResults] = useState<Property[] | null>(null)
-  const [paginationData, setPaginationData] = useState<PaginationInfo | null>(null)
 
   const searchParams = useSearchParams();
 
@@ -69,7 +73,8 @@ export default function SearchResultsGrid() {
           page: Number(searchParams.get("page") || 1),
           limit: Number(searchParams.get("limit") || 10),
         });
-        if (resp.success && resp.data) setResults(resp.data.results || resp.data.data || []);
+        if (resp.success && resp.data)
+          setResults(resp.data.results || resp.data.data || []);
         else setResults([]);
       })();
     } else {
@@ -142,7 +147,9 @@ export default function SearchResultsGrid() {
         <div className="flex items-center gap-2">
           {/* Price Range Popover */}
           <Popover>
-            <PopoverTrigger className="bg-[#EEF4FF] rounded-[16px] px-5 py-[17px] text-sm font-medium">50L-100 CR</PopoverTrigger>
+            <PopoverTrigger className="bg-[#EEF4FF] rounded-[16px] px-5 py-[17px] text-sm font-medium">
+              50L-100 CR
+            </PopoverTrigger>
             <PopoverContent className="w-80">
               {/* inside PopoverContent for Price */}
               <div className="px-4 py-4">
@@ -158,7 +165,8 @@ export default function SearchResultsGrid() {
                     className="w-full"
                   />
                   <div className="min-w-[90px] text-sm text-[#1C4692] font-semibold text-center">
-                    {priceValue}%{/* or format to currency if you map percent -> amount */}
+                    {priceValue}%
+                    {/* or format to currency if you map percent -> amount */}
                   </div>
                 </div>
               </div>
@@ -167,7 +175,9 @@ export default function SearchResultsGrid() {
 
           {/* BHK Popover */}
           <Popover>
-            <PopoverTrigger className="bg-[#EEF4FF] rounded-[16px] px-5 py-[17px] text-sm font-medium">{selectedBhk}</PopoverTrigger>
+            <PopoverTrigger className="bg-[#EEF4FF] rounded-[16px] px-5 py-[17px] text-sm font-medium">
+              {selectedBhk}
+            </PopoverTrigger>
             <PopoverContent className="w-96">
               <div className="p-6">
                 <div className="grid grid-cols-3 gap-4 max-h-56 overflow-y-auto pr-2">
@@ -208,7 +218,9 @@ export default function SearchResultsGrid() {
 
           {/* Super Area Popover */}
           <Popover>
-            <PopoverTrigger className="bg-[#EEF4FF] rounded-[16px] px-5 py-[17px] text-sm font-medium">Super Area sq.ft</PopoverTrigger>
+            <PopoverTrigger className="bg-[#EEF4FF] rounded-[16px] px-5 py-[17px] text-sm font-medium">
+              Super Area sq.ft
+            </PopoverTrigger>
             <PopoverContent className="w-80">
               {/* inside PopoverContent for Super Area */}
               <div className="px-4 py-4">
@@ -233,11 +245,20 @@ export default function SearchResultsGrid() {
 
           {/* Possession Status Popover */}
           <Popover>
-            <PopoverTrigger className="bg-[#EEF4FF] rounded-[16px] px-5 py-[17px] text-sm font-medium">Possession Status</PopoverTrigger>
+            <PopoverTrigger className="bg-[#EEF4FF] rounded-[16px] px-5 py-[17px] text-sm font-medium">
+              Possession Status
+            </PopoverTrigger>
             <PopoverContent className="w-80">
               <div className="p-6">
                 <div className="flex flex-wrap gap-4">
-                  {["Available", "Under Construction", "Ready to Move", "Sold", "Occupied", "Pending"].map((status) => (
+                  {[
+                    "Available",
+                    "Under Construction",
+                    "Ready to Move",
+                    "Sold",
+                    "Occupied",
+                    "Pending",
+                  ].map((status) => (
                     <button
                       key={status}
                       onClick={() => setSelectedPossession(status)}
@@ -271,15 +292,33 @@ export default function SearchResultsGrid() {
             </h2>
             <div className="flex items-center gap-2">
               <DropdownMenu>
-                <DropdownMenuTrigger className="bg-[#EEF4FF] rounded-[10px] py-2.5 px-[15px]">Short by: {sortBy}</DropdownMenuTrigger>
+                <DropdownMenuTrigger className="bg-[#EEF4FF] rounded-[10px] py-2.5 px-[15px]">
+                  Short by: {sortBy}
+                </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem onClick={() => setSortBy("New Added")}>New Added</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setSortBy("Price: Low to High")}>Price: Low to High</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setSortBy("Price: High to Low")}>Price: High to Low</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setSortBy("New Added")}>
+                    New Added
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => setSortBy("Price: Low to High")}
+                  >
+                    Price: Low to High
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => setSortBy("Price: High to Low")}
+                  >
+                    Price: High to Low
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuLabel onClick={() => setSortBy("More Options")}>More Options</DropdownMenuLabel>
-                  <DropdownMenuItem onClick={() => setSortBy("Most Popular")}>Most Popular</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setSortBy("Highest Rated")}>Highest Rated</DropdownMenuItem>
+                  <DropdownMenuLabel onClick={() => setSortBy("More Options")}>
+                    More Options
+                  </DropdownMenuLabel>
+                  <DropdownMenuItem onClick={() => setSortBy("Most Popular")}>
+                    Most Popular
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setSortBy("Highest Rated")}>
+                    Highest Rated
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>

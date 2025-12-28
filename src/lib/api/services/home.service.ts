@@ -234,7 +234,9 @@ export const homeService = {
    * Get property by ID
    * Example: GET /api/home/getPropertyById?id=property_id
    */
-  getPropertyById: async (id: string): Promise<ApiResponse<PropertyDetailsResponse>> => {
+  getPropertyById: async (
+    id: string,
+  ): Promise<ApiResponse<PropertyDetailsResponse>> => {
     return apiClient.get<PropertyDetailsResponse>(
       `${API_ENDPOINTS.HOME.GET_PROPERTY_BY_ID}/${id}`,
     );
@@ -360,7 +362,8 @@ export const homeService = {
     if (params.priceMin) queryParams.append("priceMin", params.priceMin);
     if (params.priceMax) queryParams.append("priceMax", params.priceMax);
     if (params.bhk) queryParams.append("bhk", params.bhk);
-    if (params.projectStatus) queryParams.append("projectStatus", params.projectStatus);
+    if (params.projectStatus)
+      queryParams.append("projectStatus", params.projectStatus);
     if (params.sortBy) queryParams.append("sortBy", params.sortBy);
     if (params.page) queryParams.append("page", params.page.toString());
     if (params.limit) queryParams.append("limit", params.limit.toString());

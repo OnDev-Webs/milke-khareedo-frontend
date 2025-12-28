@@ -8,14 +8,14 @@ import ContactForm from "@/components/home/contact-us/ContactForm";
 const contactMethods = [
   {
     type: "normal",
-    icon: '/images/Frame1.png',
+    icon: "/images/Frame1.png",
     title: "What We Help With",
     desc: "Help with apartments, villas, and plots — from shortlisting to better group pricing.",
   },
 
   {
     type: "contact",
-    icon: '/images/Frame2.png',
+    icon: "/images/Frame2.png",
     title: "How to Reach Us",
     details: [
       {
@@ -31,7 +31,7 @@ const contactMethods = [
 
   {
     type: "normal",
-    icon: '/images/Frame3.png',
+    icon: "/images/Frame3.png",
     title: "Where We Are",
     desc: "Tk Residency , Friends Colony Rd, Friends Colony, Indira Nagar Colony, Miyapur, Hyderabad, Telangana 500049",
   },

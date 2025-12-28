@@ -58,7 +58,10 @@ export default function PropertyCard({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <Link href={`/property-details/${property.id}`} className="absolute inset-0 z-10" />
+      <Link
+        href={`/property-details/${property.id}`}
+        className="absolute inset-0 z-10"
+      />
       {/* Image Section with Slider */}
       <div className="relative h-52 w-full bg-gray-100 flex items-center justify-center overflow-hidden">
         {currentImage ? (

@@ -86,9 +86,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#1C4692" />
       </head>
-      <body
-        className={`${figtreeSans.variable} antialiased`}
-      >
+      <body className={`${figtreeSans.variable} antialiased`}>
         <Providers>
           <Header />
           <main>{children}</main>

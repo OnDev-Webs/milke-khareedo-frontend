@@ -1,17 +1,24 @@
+import logo from "@/assets/logo.svg"
+import Image from "next/image";
+
 export default function PDPAboutDeveloper() {
   return (
     <section className="w-full px-4 py-6">
       <div className="mx-auto container rounded-2xl bg-white shadow-sm">
-        <div className="rounded-t-2xl bg-gray-200/80 px-6 py-3">
-          <h3 className="font-semibold text-3xl">About Developer</h3>
+        <div className="rounded-t-2xl bg-[#EEF4FF] px-6 py-3">
+          <h3 className="font-semibold text-[25px]">About Developer</h3>
         </div>
 
         <div className="flex flex-col gap-6 px-6 py-6 md:flex-row md:items-start">
           <div className="md:flex-1">
             <div className="mb-3">
-              <div className="text-3xl font-bold text-heading-primary-text">
-                Logo
-              </div>
+              <Image
+              src={logo}
+              alt="MILKE KHEREEDO logo"
+              width={216}
+              height={52}
+              className="h-8 w-auto sm:h-10 lg:h-[52px]"
+            />
             </div>
 
             <p className="max-w-2xl text-sm leading-relaxed text-gray-600">

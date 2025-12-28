@@ -13,7 +13,7 @@ import {
 export default function FooterSection() {
   return (
     <footer className="w-full bg-[#F5F5F5]">
-      <div className="mx-auto container px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+      <div className="mx-auto container py-12 lg:py-16">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           {/* Left Column - Company Info */}
           <div className="lg:col-span-4">

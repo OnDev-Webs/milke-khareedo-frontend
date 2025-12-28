@@ -2,8 +2,8 @@ export default function PDPPropertyDetails() {
   return (
     <section className="">
       <div className="mx-auto container rounded-2xl bg-white shadow-sm">
-        <div className="rounded-t-2xl bg-gray-200/80 px-6 py-4">
-          <h3 className="text-lg font-semibold text-gray-800">
+        <div className="rounded-t-2xl bg-[#EEF4FF] px-6 py-4">
+          <h3 className="text-[25px] font-semibold text-gray-800">
             Property Details
           </h3>
         </div>
@@ -74,7 +74,8 @@ export default function PDPPropertyDetails() {
           </div>
 
           <div className="mt-6 pt-4">
-            <p className="text-sm leading-relaxed text-gray-700">
+            <p className="text-xs text-gray-500">Description</p>
+            <p className="text-sm leading-relaxed text-gray-700 mt-1">
               The standard chunk of Lorem Ipsum used since the 1500s is
               reproduced below for those interested. Sections of more detailed
               descriptive information about the property, amenities, legal

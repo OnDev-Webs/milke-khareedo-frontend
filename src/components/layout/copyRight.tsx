@@ -6,7 +6,7 @@ export default function CopyRight() {
   const currentYear = new Date().getFullYear();
   return (
     <div className="border-t border-white/10 bg-[#241F20] py-6">
-      <div className="mx-auto container px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto container">
         <div className="flex flex-col items-center justify-between gap-4 text-sm text-white sm:flex-row">
           <p>© Copyright {currentYear} MILKE KHEREEDO</p>
           <div className="flex items-center gap-2">

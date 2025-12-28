@@ -50,8 +50,8 @@ export default function PDPAmenities() {
     <section className="w-full p-4">
       <div className="mx-auto container">
         <div className="rounded-2xl bg-white shadow-sm">
-          <div className="rounded-t-2xl bg-gray-200/80 px-6 py-4">
-            <h3 className="font-semibold text-3xl">Amenities</h3>
+          <div className="rounded-t-2xl bg-[#EEF4FF] px-6 py-4">
+            <h3 className="font-semibold text-[25px]">Amenities</h3>
           </div>
 
           <div className="px-6 py-8">

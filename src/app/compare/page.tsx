@@ -236,7 +236,7 @@ export default function ComparePage() {
 
       {/* Properties Section */}
       <div className="bg-gray-50 py-2 sm:py-4 md:py-6 lg:py-8">
-        <div className="mx-auto max-w-7xl px-2 sm:px-3 md:px-4 lg:px-6">
+        <div className="mx-auto container">
           <div className="mb-2 flex flex-col gap-2 sm:mb-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4 md:mb-6">
             <h2 className="text-base font-bold text-gray-800 sm:text-lg md:text-xl lg:text-2xl">
               Compare Properties

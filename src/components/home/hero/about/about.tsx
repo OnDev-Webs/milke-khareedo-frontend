@@ -27,14 +27,14 @@ export default function AboutSection() {
 
   return (
     <section
-      className="w-full py-16 px-4 md:px-10"
+      className="w-full py-16"
       style={{
         backgroundColor: "#F2F5F9",
         backgroundImage: "radial-gradient(#d1d5db 1px, transparent 1px)",
         backgroundSize: "20px 20px",
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
+      <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch">
           {/* LEFT SIDE */}
           <div className="ps-0 md:ps-10">

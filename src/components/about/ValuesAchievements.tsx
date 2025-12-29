@@ -31,7 +31,7 @@ const items = [
 
 export default function ValuesAchievements() {
   return (
-    <section className="relative w-full bg-[#FFF9F6] py-16 mt-[100px] overflow-hidden">
+    <section className="relative w-full bg-[#F5F9FF] py-16 mt-[100px] overflow-hidden">
       <svg
         className="absolute inset-0 w-[1500px] h-[1500px] opacity-20 pointer-events-none"
         xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +50,7 @@ export default function ValuesAchievements() {
         <rect width="100%" height="100%" fill="url(#squarePattern)" />
       </svg>
 
-      <div className="mx-auto max-w-6xl px-4">
+      <div className="mx-auto max-w-6xl px-4 z-10 relative">
         <Title
           text={"Values"}
           drawLineText={"Achievements"}

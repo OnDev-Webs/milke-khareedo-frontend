@@ -2,7 +2,12 @@
 
 import Title from "../typography/title";
 import Image from "next/image";
-import { Twitter, Facebook, Linkedin, Instagram } from "lucide-react";
+import {
+  FaTwitter,
+  FaFacebookF,
+  FaLinkedinIn,
+  FaInstagram,
+} from "react-icons/fa";
 
 const founders = [
   {
@@ -25,13 +30,13 @@ export default function Founders() {
   const renderIcon = (name: string) => {
     switch (name) {
       case "twitter":
-        return <Twitter size={20} className="text-[#FF765E]" />;
+        return <FaTwitter size={20} className="text-[#1C4692]" />;
       case "facebook":
-        return <Facebook size={20} className="text-[#FF765E]" />;
+        return <FaFacebookF size={20} className="text-[#1C4692]" />;
       case "linkedin":
-        return <Linkedin size={20} className="text-[#FF765E]" />;
+        return <FaLinkedinIn size={20} className="text-[#1C4692]" />;
       case "instagram":
-        return <Instagram size={20} className="text-[#FF765E]" />;
+        return <FaInstagram size={20} className="text-[#1C4692]" />;
       default:
         return null;
     }

@@ -27,19 +27,19 @@ export default function AboutSection() {
 
   return (
     <section
-      className="w-full py-16 px-4 md:px-10"
+      className="w-full py-16"
       style={{
         backgroundColor: "#F2F5F9",
         backgroundImage: "radial-gradient(#d1d5db 1px, transparent 1px)",
         backgroundSize: "20px 20px",
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
+      <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch">
           {/* LEFT SIDE */}
           <div className="ps-0 md:ps-10">
             <h3 className="text-[24px] md:text-[30px] font-semibold text-[#000] mb-6 md:mb-8 pe-0 md:pe-0">
-              How <span className="text-[#FF765E]"> Milke Khareedo</span> Makes
+              How <span className="text-[#1C4692]"> Milke Khareedo</span> Makes
               <span className="relative inline-block pe-2">
                 Buying
                 <svg
@@ -52,7 +52,7 @@ export default function AboutSection() {
                 >
                   <path
                     d="M2 8.5C60 1.5 170 5.5 226 8.5"
-                    stroke="#FF765E"
+                    stroke="#1C4692"
                     strokeWidth="6"
                     strokeLinecap="round"
                     fill="none"
@@ -66,7 +66,7 @@ export default function AboutSection() {
               {points.map((item, i) => (
                 <div key={i} className="flex items-center gap-3 md:gap-4">
                   {/* Number */}
-                  <div className="flex h-8 w-8 md:h-8 md:w-8 shrink-0 items-center justify-center rounded-full bg-[#FF765E] text-black font-bold text-sm md:text-base leading-none">
+                  <div className="flex h-8 w-8 md:h-8 md:w-8 shrink-0 items-center justify-center rounded-full bg-[#1C4692] text-white font-bold text-sm md:text-base leading-none">
                     {i + 1}
                   </div>
 

@@ -194,14 +194,14 @@
 }
 
 .custom-swiper-scrollbar {
-  width: 100%x !important;
+  width: 100% x !important;
   height: 4px;
   background: rgba(0, 0, 0, 0.08);
   border-radius: 9999px;
 }
 
 .custom-swiper-scrollbar .swiper-scrollbar-drag {
-  background: #ff765e;
+  background: #1c4692;
   border-radius: 9999px;
 }
 
@@ -292,4 +292,8 @@ input:focus ~ .search-hint,
 input:not(:placeholder-shown) ~ .search-hint {
   opacity: 0;
   pointer-events: none;
+}
+
+button {
+  cursor: pointer;
 }

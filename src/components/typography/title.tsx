@@ -19,7 +19,7 @@ const Title: React.FC<TitleProps> = ({
       <Heading variant={"h2"} className={className}>
         <span className="text-black">{text} </span>
         {isDrawLine && (
-          <span className="text-red-400 relative">
+          <span className="text-[#1C4692] relative">
             <span>{drawLineText}</span>
             <div data-svg-wrapper className="left-0 absolute -bottom-3">
               <svg
@@ -31,7 +31,7 @@ const Title: React.FC<TitleProps> = ({
               >
                 <path
                   d="M1.5 12.5C58.459 4.89071 183.802 -6.34513 229.5 9.5858"
-                  stroke="#FF765E"
+                  stroke="#1C4692"
                   strokeWidth="3"
                   strokeLinecap="round"
                 />

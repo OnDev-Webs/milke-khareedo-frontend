@@ -132,7 +132,7 @@ export default function CountryCodeSelector({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex h-full min-w-[90px] items-center gap-2 rounded-lg border border-gray-600 bg-[#2a2a2a] px-3 py-3 text-white transition-colors hover:bg-[#333333] focus:border-[#f15a29] focus:outline-none"
+        className="flex h-full min-w-[90px] items-center gap-2 rounded-lg border border-gray-600 bg-[#2a2a2a] px-3 py-3 text-white transition-colors hover:bg-[#333333] focus:border-[#1C4692] focus:outline-none"
       >
         <span className="text-[18px]">{selectedCountry.flag}</span>
         <span className="text-sm font-medium">{selectedCountry.dialCode}</span>
@@ -156,7 +156,7 @@ export default function CountryCodeSelector({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search country or code..."
-                className="w-full rounded-lg border border-gray-600 bg-[#1a1a1a] px-10 py-2.5 text-sm text-white placeholder-gray-500 focus:border-[#f15a29] focus:outline-none"
+                className="w-full rounded-lg border border-gray-600 bg-[#1a1a1a] px-10 py-2.5 text-sm text-white placeholder-gray-500 focus:border-[#1C4692] focus:outline-none"
               />
               {searchQuery && (
                 <button
@@ -179,7 +179,7 @@ export default function CountryCodeSelector({
                   onClick={() => handleSelect(country)}
                   className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-[#333333] ${
                     country.dialCode === value
-                      ? "bg-[#f15a29]/20 text-[#f15a29]"
+                      ? "bg-[#1C4692]/20 text-[#1C4692]"
                       : "text-white"
                   }`}
                 >
@@ -192,7 +192,7 @@ export default function CountryCodeSelector({
                   </div>
                   {country.dialCode === value && (
                     <svg
-                      className="h-5 w-5 text-[#f15a29]"
+                      className="h-5 w-5 text-[#1C4692]"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"

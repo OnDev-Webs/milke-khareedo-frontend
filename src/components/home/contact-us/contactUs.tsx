@@ -8,14 +8,14 @@ import ContactForm from "@/components/home/contact-us/ContactForm";
 const contactMethods = [
   {
     type: "normal",
-    icon: '/images/Frame1.png',
+    icon: "/images/Frame1.png",
     title: "What We Help With",
     desc: "Help with apartments, villas, and plots — from shortlisting to better group pricing.",
   },
 
   {
     type: "contact",
-    icon: '/images/Frame2.png',
+    icon: "/images/Frame2.png",
     title: "How to Reach Us",
     details: [
       {
@@ -31,7 +31,7 @@ const contactMethods = [
 
   {
     type: "normal",
-    icon: '/images/Frame3.png',
+    icon: "/images/Frame3.png",
     title: "Where We Are",
     desc: "Tk Residency , Friends Colony Rd, Friends Colony, Indira Nagar Colony, Miyapur, Hyderabad, Telangana 500049",
   },
@@ -45,7 +45,7 @@ export default function ConnectWithUs() {
         badgeText="Contact Us"
         title="Talk to us. Buy smarter."
         highlightText="Save more."
-        description="We bring buyers together to help you save more, negotiate better, and buy with confidence."
+        description="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
         headingVariant="h3"
       />
       <section className="w-full bg-white py-16">
@@ -60,11 +60,11 @@ export default function ConnectWithUs() {
             {contactMethods.map((item, index) => (
               <div
                 key={index}
-                className="bg-[#F2F6FF] p-6 rounded-2xl md:w-[32%]"
+                className="bg-[#EEF4FF] p-6 rounded-2xl md:w-[32%]"
               >
                 <div className="relative flex h-12 w-12 items-center justify-center rounded-xl overflow-hidden">
                   <Image
-                    src="/images/LightGradient.png"
+                    src="/images/LightGradient.svg"
                     alt="LightGradient"
                     width={80}
                     height={48}

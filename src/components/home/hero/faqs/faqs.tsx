@@ -44,7 +44,7 @@ export default function FAQS() {
     <section id="FAQS" className="py-25 px-30 bg-[#F0F8FF]">
       <div className="gap-12.5 flex flex-col items-center justify-center">
         <h2 className="text-[24px] md:text-[30px] font-semibold text-[#000000] mb-2">
-          <span className="relative inline-block text-[#FF765E] pe-2">
+          <span className="relative inline-block text-[#1C4692] pe-2">
             Questions
             <svg
               className="absolute left-0 -bottom-2"
@@ -56,7 +56,7 @@ export default function FAQS() {
             >
               <path
                 d="M2 8.5C60 1.5 170 5.5 226 8.5"
-                stroke="#FF765E"
+                stroke="#1C4692"
                 strokeWidth="5"
                 strokeLinecap="round"
                 fill="none"

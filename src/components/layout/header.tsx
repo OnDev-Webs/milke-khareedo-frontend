@@ -33,7 +33,7 @@ export default function Header() {
 
   return (
     <header className="w-full border-b border-gray-100 bg-white">
-      <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto container">
         <div className="flex items-center justify-between py-4 lg:py-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
@@ -53,14 +53,15 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative pb-1 text-sm transition-colors xl:text-base ${isActive(link.href)
-                      ? "font-semibold text-[#f15a29]"
-                      : "hover:text-[#f15a29]"
-                    }`}
+                  className={`relative pb-1 text-sm transition-colors xl:text-base ${
+                    isActive(link.href)
+                      ? "font-semibold text-[#1C4692]"
+                      : "hover:text-[#1C4692]"
+                  }`}
                 >
                   {link.label}
                   {isActive(link.href) && (
-                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#f15a29]" />
+                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#1C4692]" />
                   )}
                 </Link>
               ))}
@@ -76,7 +77,7 @@ export default function Header() {
               <div className="relative">
                 <button
                   onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                  className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-[#f15a29] text-white transition-colors hover:bg-[#e14f20]"
+                  className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-[#1C4692] text-white transition-colors hover:bg-[#1c4692e6]"
                   aria-label="Profile menu"
                 >
                   {user?.profileImage ? (
@@ -136,7 +137,7 @@ export default function Header() {
               !isDashboard && (
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="rounded-full bg-[#f15a29] px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#e14f20] lg:px-7.5 lg:py-2.5 lg:text-base"
+                  className="rounded-full bg-[#1C4692] px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#1c4692e6] lg:px-7.5 lg:py-2.5 lg:text-base"
                 >
                   Sign In
                 </button>
@@ -153,7 +154,6 @@ export default function Header() {
               <HiOutlineMenu className="h-6 w-6" />
             </button>
           </div>
-
         </div>
 
         {/* Mobile Menu */}
@@ -165,8 +165,9 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`py-2.5 text-sm ${isActive(link.href) ? "font-semibold text-[#f15a29]" : ""
-                    }`}
+                  className={`py-2.5 text-sm ${
+                    isActive(link.href) ? "font-semibold text-[#1C4692]" : ""
+                  }`}
                 >
                   {link.label}
                 </Link>
@@ -178,7 +179,7 @@ export default function Header() {
                   <Link
                     href="/dashboard/profile"
                     onClick={() => setOpen(false)}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#f15a29] px-4 py-2.5 text-sm font-semibold text-white"
+                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-4 py-2.5 text-sm font-semibold text-white"
                   >
                     <IoPerson className="h-5 w-5" />
                     Profile
@@ -189,7 +190,7 @@ export default function Header() {
                       setOpen(false);
                       setShowAuthModal(true);
                     }}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#f15a29] px-4 py-2.5 text-sm font-semibold text-white"
+                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-4 py-2.5 text-sm font-semibold text-white"
                   >
                     <IoPerson className="h-5 w-5" />
                     Sign In

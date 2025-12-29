@@ -3,18 +3,76 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import { FaMapMarkerAlt, FaSearch } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 import CitySelector from "./CitySelector";
+import { homeService } from "@/lib/api/services/home.service";
 
 export default function Hero() {
+  const router = useRouter();
   const [selectedCity, setSelectedCity] = useState("India, Delhi");
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [isSearching, setIsSearching] = useState(false);
+  console.log("searchQuery", searchQuery);
 
   const handleCityChange = (cityValue: string) => {
     setSelectedCity(cityValue);
-    // You can add additional logic here, such as filtering properties based on city
-    console.log("Selected city:", cityValue);
+    setSearchQuery(cityValue);
+  };
+
+  const handleSearch = async () => {
+    // Prefer reading current input value from the ref to avoid stale/null state
+    // const rawInput = searchInputRef.current?.value ?? searchQuery ?? "";
+    const query = String(searchQuery).trim();
+    if (!query) {
+      alert("Please enter a search query");
+      return;
+    }
+
+    setIsSearching(true);
+    try {
+      // Extract city name from selectedCity (e.g., "India, Delhi" -> "Delhi")
+      const cityName = selectedCity.split(",").pop()?.trim() || selectedCity;
+
+      const response = await homeService.searchProperties({
+        city: cityName,
+        searchText: query,
+        sortBy: "newAdded",
+        page: 1,
+        limit: 10,
+      });
+
+      if (response.success && response.data) {
+        // Store search results in sessionStorage
+        sessionStorage.setItem(
+          "searchResults",
+          JSON.stringify({
+            query,
+            city: cityName,
+            results: response.data,
+            pagination: response.pagination,
+          }),
+        );
+        // Navigate to search results page
+        router.push(
+          `/search-results?city=${encodeURIComponent(cityName)}&search=${encodeURIComponent(query)}`,
+        );
+      } else {
+        alert("No properties found");
+      }
+    } catch (error) {
+      console.error("Search error:", error);
+      alert("Error performing search. Please try again.");
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSearch();
+    }
   };
 
   const group_deals = [
@@ -33,7 +91,7 @@ export default function Hero() {
           </p>
 
           <h1 className="text-3xl md:text-4xl font-bold text-[#151516] md:pe-68">
-            <span className="text-[#FF765E]"> Milke Khereedo </span>
+            <span className="text-[#1C4692]"> Milke Khereedo </span>
             Makes it easier.
           </h1>
 
@@ -42,7 +100,7 @@ export default function Hero() {
           </p>
 
           <div className="mt-6">
-            <button className="rounded-full bg-[#FF765E] px-8 py-3 text-sm font-medium text-white shadow">
+            <button className="rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-8 py-3 text-sm font-medium text-white shadow">
               Want to see how it works?
             </button>
           </div>
@@ -78,7 +136,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="block md:hidden mt-10 relative w-[400px] top-[-100px] left-[-40px] h-[260px]">
+        <div className="block md:hidden mt-10 relative w-[400px] top-[-100px] -left-10 h-[260px]">
           <Image
             src="/images/banner1.png"
             alt="Hero Image"
@@ -89,11 +147,13 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="absolute bottom-[-20px] left-1/2 w-[95%] md:w-[1150px] -translate-x-1/2 px-4 md:px-6 z-20">
+      <div className="absolute -bottom-5 left-1/2 w-[95%] md:w-[1150px] -translate-x-1/2 px-4 md:px-6 z-20">
         <div className="flex flex-col md:flex-row items-stretch rounded-2xl bg-white/70 backdrop-blur-md p-0 shadow-lg overflow-visible">
           {/* CITY SELECT SECTION */}
           <div className="relative flex flex-col justify-center ps-6 pe-4 py-4 min-w-[130px]">
-            <label className="text-sm font-bold text-gray-800 mb-2.5">City</label>
+            <label className="text-sm font-bold text-gray-800 mb-2.5">
+              City
+            </label>
             <div className="relative" style={{ zIndex: 1000 }}>
               <CitySelector
                 value={selectedCity}
@@ -102,18 +162,36 @@ export default function Hero() {
                 showLabel={false}
               />
             </div>
-            <span className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2
-                   h-10 w-[2px] bg-[#DCDCEB]" />
+            <span
+              className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2
+                   h-10 w-0.5 bg-[#DCDCEB]"
+            />
           </div>
 
           {/* SEARCH INPUT SECTION */}
           <div className="relative flex-1 flex flex-col justify-start ps-4 pe-6 py-4">
             <div className="relative">
-              <input
-                ref={searchInputRef}
+              <p className="text-base font-semibold text-gray-900">
+                Find your Dream Home
+              </p>
+              <div className="flex items-center gap-1.5 mt-[5px]">
+                <FaMapMarkerAlt className="text-gray-500 text-xs shrink-0" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  onFocus={() => setIsSearchFocused(!isSearchFocused)}
+                  onBlur={() => setIsSearchFocused(false)}
+                  placeholder="Search for Developers, Location, Projects"
+                  className="w-full bg-transparent outline-none border-none focus:ring-0 transition-all duration-300 text-xs text-gray-500"
+                />
+              </div>
+              {/* <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
                 placeholder="Find your Dream Home"
@@ -122,21 +200,29 @@ export default function Hero() {
                     ? "text-[30px] font-semibold text-gray-900 text-left"
                     : "text-base font-bold text-gray-800"
                   }
-                  placeholder:text-base placeholder:font-bold placeholder:text-gray-800 min-h-[28px]
+                  placeholder:text-base placeholder:font-bold placeholder:text-gray-800 min-h-7
                 `}
               />
-              <div className={`absolute left-0 top-full mt-1.5 flex items-center gap-1.5 text-xs text-gray-500 pointer-events-none transition-opacity duration-300 ${searchQuery || isSearchFocused ? 'opacity-0' : 'opacity-100'}`}>
-                <FaMapMarkerAlt className="text-gray-500 text-xs flex-shrink-0" />
+              <div
+                className={`absolute left-0 top-full mt-1.5 flex items-center gap-1.5 text-xs text-gray-500 pointer-events-none transition-opacity duration-300 ${searchQuery || isSearchFocused ? "opacity-0" : "opacity-100"}`}
+              >
+                <FaMapMarkerAlt className="text-gray-500 text-xs shrink-0" />
                 <span>Search for Developers, Location, Projects</span>
-              </div>
+              </div> */}
             </div>
           </div>
 
           {/* SEARCH BUTTON SECTION */}
           <div className="flex items-center px-6 py-4">
-            <button className="h-12 w-full md:w-auto md:min-w-[140px] rounded-full bg-[#FF765E] text-white flex items-center justify-center gap-2 font-medium shadow-md hover:bg-[#e66a4f] transition-colors">
+            <button
+              onClick={handleSearch}
+              disabled={isSearching}
+              className="h-12 w-full md:w-auto md:min-w-[140px] rounded-full bg-[#1C4692] text-white flex items-center justify-center gap-2 font-medium shadow-md hover:bg-[#1C4692] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <FaSearch className="text-white text-sm" />
-              <span className="text-sm">Search</span>
+              <span className="text-sm">
+                {isSearching ? "Searching..." : "Search"}
+              </span>
             </button>
           </div>
         </div>

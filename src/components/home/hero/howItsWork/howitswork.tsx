@@ -66,7 +66,7 @@ export default function HowItWorks() {
         {/* Heading */}
         <h2 className="text-[24px] md:text-[30px] font-semibold text-[#000000] mb-2">
           How People Like You Bought
-          <span className="relative inline-block text-[#FF765E] ps-2">
+          <span className="relative inline-block text-[#1C4692] ps-2">
             Smarter
             <svg
               className="absolute left-0 -bottom-2"
@@ -78,7 +78,7 @@ export default function HowItWorks() {
             >
               <path
                 d="M2 8.5C60 1.5 170 5.5 226 8.5"
-                stroke="#FF765E"
+                stroke="#1C4692"
                 strokeWidth="5"
                 strokeLinecap="round"
                 fill="none"
@@ -87,7 +87,7 @@ export default function HowItWorks() {
           </span>
         </h2>
         <p className="pt-2 pb-10 font-medium text-[#110229]">
-          Real buying <span className="text-[#FF765E]">journeys</span>,
+          Real buying <span className="text-[#1C4692]">journeys</span>,
           explained simply.
         </p>
 
@@ -111,7 +111,7 @@ export default function HowItWorks() {
                 <div className="flex flex-col bg-white rounded-xl mb-2 p-5 shadow-md min-h-[230px] max-h-[230px] max-w-[340px] overflow-hidden">
                   <div className="relative mb-4 h-12 w-12 flex items-center justify-center">
                     <img
-                      src="/images/LightGradient.png"
+                      src="/images/LightGradient.svg"
                       alt=""
                       className="absolute inset-0 w-full h-full object-contain opacity-90"
                     />

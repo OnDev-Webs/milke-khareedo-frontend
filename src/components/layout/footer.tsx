@@ -12,8 +12,8 @@ import {
 
 export default function FooterSection() {
   return (
-    <footer className="w-full bg-[#2b2b2b] text-white">
-      <div className="mx-auto container px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+    <footer className="w-full bg-[#F5F5F5]">
+      <div className="mx-auto container py-12 lg:py-16">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           {/* Left Column - Company Info */}
           <div className="lg:col-span-4">
@@ -26,7 +26,7 @@ export default function FooterSection() {
                 className="h-auto w-auto"
               />
             </Link>
-            <p className="mb-6 text-sm leading-relaxed text-white/90 lg:text-base">
+            <p className="mb-6 text-sm leading-relaxed text-[#241F20] lg:text-base">
               Buying property shouldn't feel confusing or lonely. We help buyers
               come together, understand pricing clearly, and make confident
               decisions — without pressure.
@@ -38,7 +38,7 @@ export default function FooterSection() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#FF765E] transition-colors hover:bg-gray-200"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1C4692] transition-colors hover:bg-gray-200"
                 aria-label="Twitter"
               >
                 <FaTwitter className="h-5 w-5" />
@@ -47,7 +47,7 @@ export default function FooterSection() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#FF765E] transition-colors hover:bg-gray-200"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1C4692] transition-colors hover:bg-gray-200"
                 aria-label="Facebook"
               >
                 <FaFacebookF className="h-5 w-5" />
@@ -56,7 +56,7 @@ export default function FooterSection() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#FF765E] transition-colors hover:bg-gray-200"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1C4692] transition-colors hover:bg-gray-200"
                 aria-label="LinkedIn"
               >
                 <FaLinkedinIn className="h-5 w-5" />
@@ -65,7 +65,7 @@ export default function FooterSection() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#FF765E] transition-colors hover:bg-gray-200"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1C4692] transition-colors hover:bg-gray-200"
                 aria-label="Instagram"
               >
                 <FaInstagram className="h-5 w-5" />
@@ -77,14 +77,14 @@ export default function FooterSection() {
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 lg:col-span-8">
             {/* Explore Column */}
             <div>
-              <h3 className="mb-4 text-base font-bold uppercase tracking-wide lg:text-lg">
+              <h3 className="mb-4 text-base font-bold text-[#241F20] tracking-wide lg:text-lg">
                 Explore
               </h3>
               <ul className="space-y-3">
                 <li>
                   <Link
                     href="/property-archive"
-                    className="text-sm text-white/80 transition-colors hover:text-white lg:text-base"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     Properties
                   </Link>
@@ -92,7 +92,7 @@ export default function FooterSection() {
                 <li>
                   <Link
                     href="/group-buying"
-                    className="text-sm text-white/80 transition-colors hover:text-white lg:text-base"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     Group Buying
                   </Link>
@@ -100,7 +100,7 @@ export default function FooterSection() {
                 <li>
                   <Link
                     href="/how-it-works"
-                    className="text-sm text-white/80 transition-colors hover:text-white lg:text-base"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     How it Works
                   </Link>
@@ -108,7 +108,7 @@ export default function FooterSection() {
                 <li>
                   <Link
                     href="/case-studies"
-                    className="text-sm text-white/80 transition-colors hover:text-white lg:text-base"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     Case Studies
                   </Link>
@@ -116,7 +116,7 @@ export default function FooterSection() {
                 <li>
                   <Link
                     href="/blogs"
-                    className="text-sm text-white/80 transition-colors hover:text-white lg:text-base"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     Articles
                   </Link>
@@ -126,14 +126,14 @@ export default function FooterSection() {
 
             {/* For Buyers Column */}
             <div>
-              <h3 className="mb-4 text-base font-bold uppercase tracking-wide lg:text-lg">
+              <h3 className="mb-4 text-base font-bold text-[#241F20] tracking-wide lg:text-lg">
                 For Buyers
               </h3>
               <ul className="space-y-3">
                 <li>
                   <Link
                     href="/first-time-buyers"
-                    className="text-sm text-white/80 transition-colors hover:text-white lg:text-base"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     First-Time Buyers
                   </Link>
@@ -141,7 +141,7 @@ export default function FooterSection() {
                 <li>
                   <Link
                     href="/pricing-value"
-                    className="text-sm text-white/80 transition-colors hover:text-white lg:text-base"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     Pricing & Value
                   </Link>
@@ -149,7 +149,7 @@ export default function FooterSection() {
                 <li>
                   <Link
                     href="/faqs"
-                    className="text-sm text-white/80 transition-colors hover:text-white lg:text-base"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     FAQ's
                   </Link>
@@ -157,7 +157,7 @@ export default function FooterSection() {
                 <li>
                   <Link
                     href="/contact"
-                    className="text-sm text-white/80 transition-colors hover:text-white lg:text-base"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     Contact Us
                   </Link>
@@ -167,14 +167,14 @@ export default function FooterSection() {
 
             {/* Company Column */}
             <div>
-              <h3 className="mb-4 text-base font-bold uppercase tracking-wide lg:text-lg">
+              <h3 className="mb-4 text-base font-bold text-[#241F20] tracking-wide lg:text-lg">
                 Company
               </h3>
               <ul className="space-y-3">
                 <li>
                   <Link
                     href="/about"
-                    className="text-sm text-white/80 transition-colors hover:text-white lg:text-base pe-20"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base pe-20"
                   >
                     About Milke Khareedo
                   </Link>
@@ -182,7 +182,7 @@ export default function FooterSection() {
                 <li>
                   <Link
                     href="/our-approach"
-                    className="text-sm text-white/80 transition-colors hover:text-white lg:text-base"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     Our Approach
                   </Link>
@@ -190,7 +190,7 @@ export default function FooterSection() {
                 <li>
                   <Link
                     href="/privacy-policy"
-                    className="text-sm text-white/80 transition-colors hover:text-white lg:text-base"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     Privacy Policy
                   </Link>
@@ -198,7 +198,7 @@ export default function FooterSection() {
                 <li>
                   <Link
                     href="/terms-of-use"
-                    className="text-sm text-white/80 transition-colors hover:text-white lg:text-base"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     Terms of Use
                   </Link>
@@ -206,7 +206,7 @@ export default function FooterSection() {
                 <li>
                   <Link
                     href="/careers"
-                    className="text-sm text-white/80 transition-colors hover:text-white lg:text-base"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     Careers
                   </Link>

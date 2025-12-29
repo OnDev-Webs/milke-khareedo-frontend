@@ -100,7 +100,7 @@ export default function Testimonials() {
         <div className="flex items-center justify-between mb-10">
           <h2 className="text-3xl font-bold text-gray-700">
             Trusted by
-            <span className="relative inline-block text-[#FF765E] font-bold px-2">
+            <span className="relative inline-block text-[#1C4692] font-bold px-2">
               Buyers
               <svg
                 className="absolute left-0 -bottom-2"
@@ -112,7 +112,7 @@ export default function Testimonials() {
               >
                 <path
                   d="M2 8.5C60 1.5 170 5.5 226 8.5"
-                  stroke="#FF765E"
+                  stroke="#1C4692"
                   strokeWidth="5"
                   strokeLinecap="round"
                   fill="none"
@@ -124,10 +124,10 @@ export default function Testimonials() {
 
           {/* Navigation Buttons */}
           <div className="hidden md:flex gap-3">
-            <button className="testimonial-prev h-10 w-10 rounded-full border border-[#FF765E] text-[#FF765E] flex items-center justify-center hover:bg-[#FF765E] hover:text-white transition">
+            <button className="testimonial-prev h-10 w-10 rounded-full border border-[#1C4692] text-[#1C4692] flex items-center justify-center hover:bg-[#1C4692] hover:text-white transition">
               <ChevronLeft size={18} />
             </button>
-            <button className="testimonial-next h-10 w-10 rounded-full border border-[#FF765E] text-[#FF765E] flex items-center justify-center hover:bg-[#FF765E] hover:text-white transition">
+            <button className="testimonial-next h-10 w-10 rounded-full border border-[#1C4692] text-[#1C4692] flex items-center justify-center hover:bg-[#1C4692] hover:text-white transition">
               <ChevronRight size={18} />
             </button>
           </div>

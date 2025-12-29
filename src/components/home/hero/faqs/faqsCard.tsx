@@ -24,7 +24,7 @@ export default function FAQSCard({ data }: Props) {
           {data?.title}
         </h2>
 
-        <div className="text-[#FF765E]">
+        <div className="text-[#1C4692]">
           {open ? (
             <ChevronUp className="w-5 h-5" />
           ) : (

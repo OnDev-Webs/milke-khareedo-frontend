@@ -56,9 +56,7 @@ interface MetaDescriptionProps {
  * Recommended length: 50-160 characters
  */
 export function MetaDescription({ content }: MetaDescriptionProps) {
-  return (
-    <meta name="description" content={content} />
-  );
+  return <meta name="description" content={content} />;
 }
 
 interface OpenGraphProps {

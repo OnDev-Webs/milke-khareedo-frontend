@@ -23,7 +23,7 @@ export default function PDPGroupProgressStatus({
 
   return (
     <section className="">
-      <div className="mx-auto max-w-95 rounded-2xl bg-white p-6 border border-primary">
+      <div className="mx-auto container rounded-2xl bg-white p-6 border border-primary">
         <div className="flex flex-col items-center gap-3">
           <div className="relative">
             <svg height={radius * 2} width={radius * 2} className="block">

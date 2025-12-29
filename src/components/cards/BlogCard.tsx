@@ -48,7 +48,7 @@ export default function BlogCard({
 
         <Link
           href={href}
-          className="px-7 py-2.5 bg-red-400 rounded-[110px] inline-flex justify-center items-center text-white text-lg font-semibold w-fit"
+          className="px-7 py-2.5 bg-[#1C4692] hover:bg-[#1c4692e6] rounded-[110px] inline-flex justify-center items-center text-white text-lg font-semibold w-fit"
         >
           {buttonText}
         </Link>

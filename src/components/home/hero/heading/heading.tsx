@@ -12,7 +12,7 @@ export default function Heading() {
         <div className="flex-1 flex flex-col justify-center">
           <h2 className="text-[24px] md:text-[26px] font-bold text-[#000000] mb-3">
             Stay informed. Buy
-            <span className="text-[#FF765E] ps-2">Smarter.</span>
+            <span className="text-[#1C4692] ps-2">Smarter.</span>
           </h2>
           <p className="text-[#373737] text-[14px] md:text-[16px] font-medium pe-20">
             Get updates on group-buying deals and pricing insights that help you
@@ -28,7 +28,7 @@ export default function Heading() {
               className="w-full h-12 md:h-12 text-[14px] md:text-[16px] px-4 py-8 rounded-[8px] focus:outline-none bg-[#F8FCFF]"
             />
 
-            <button className="md:hidden mt-4 w-full h-12 bg-[#FF765E] text-white rounded-full font-semibold">
+            <button className="md:hidden mt-4 w-full h-12 bg-[#1C4692] hover:bg-[#1c4692e6] text-white rounded-full font-semibold">
               Submit
             </button>
           </div>

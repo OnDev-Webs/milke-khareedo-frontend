@@ -6,7 +6,7 @@ export default function PropertyGrid({ properties }: { properties: any[] }) {
       <div className="sm:hidden -mx-4 px-4">
         <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4">
           {properties.map((property) => (
-             <div
+            <div
               key={property.id}
               className="
                 snap-start

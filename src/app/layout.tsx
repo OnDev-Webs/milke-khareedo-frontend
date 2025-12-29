@@ -1,29 +1,16 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Figtree } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/header";
 import FooterWrapper from "@/components/layout/FooterWrapper";
-import { CompareProvider } from "@/contexts/CompareContext";
-import { AuthProvider } from "@/contexts/AuthContext";
 import { SchemaMarkup, organizationSchema } from "@/lib/schema-markup";
+import { Providers } from "@/providers/providers";
 
-import { Montserrat } from "next/font/google";
-
-const montserrat = Montserrat({
+const figtreeSans = Figtree({
+  variable: "--font-figtree-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-montserrat",
-});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -97,18 +84,14 @@ export default function RootLayout({
         <link rel="canonical" href="https://milkekhareedo.com" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <meta name="theme-color" content="#FF765E" />
+        <meta name="theme-color" content="#1C4692" />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
-      >
-        <AuthProvider>
-          <CompareProvider>
-            <Header />
-            <main>{children}</main>
-            <FooterWrapper />
-          </CompareProvider>
-        </AuthProvider>
+      <body className={`${figtreeSans.variable} antialiased`}>
+        <Providers>
+          <Header />
+          <main>{children}</main>
+          <FooterWrapper />
+        </Providers>
       </body>
     </html>
   );

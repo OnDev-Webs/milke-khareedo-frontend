@@ -5,7 +5,8 @@
 
 export const API_CONFIG = {
   // Base URL for API - change this to your backend URL
-  BASE_URL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002/api",
+  BASE_URL:
+    `${process.env.NEXT_PUBLIC_API_URL}/api` || "http://localhost:3002/api",
 
   // Default timeout for requests (in milliseconds)
   TIMEOUT: 30000,
@@ -28,9 +29,11 @@ export const API_ENDPOINTS = {
   // Home endpoints
   HOME: {
     GET_TOP_PROPERTY: "/home/getTopProperty",
+    GET_PROPERTY_BY_ID: "/home/getPropertyById",
     GET_LOCATIONS: "/home/locations",
     POST_EMI_CALCULATOR: "/home/emi-calculator",
     GET_PROPERTIES: "/home/properties",
+    SEARCH_PROPERTIES: "/home/search-properties",
     POST_COMPARE: "/home/compare",
     POST_FAVORITE: "/home/property/favorite",
     POST_VISIT: "/home/property/visit",

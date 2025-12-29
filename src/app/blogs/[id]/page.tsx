@@ -11,8 +11,11 @@ import Image from "next/image";
 import BlogImg from "@/assets/blog.png";
 import ContactForm from "@/components/home/contact-us/ContactForm";
 import RecentBlog from "@/components/sections/RecentBlog";
+import React from "react";
 
-export default function Page() {
+const Page = ({ params }: { params: Promise<{ id: string }> }) => {
+  const unwrappedParams = React.use(params);
+
   return (
     <>
       <section className="py-[30px]">
@@ -26,7 +29,7 @@ export default function Page() {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage className="text-[#FF765E] font-semibold text-[18px]">
+                <BreadcrumbPage className="text-[#1C4692] font-semibold text-[18px]">
                   Blog Detail
                 </BreadcrumbPage>
               </BreadcrumbItem>
@@ -209,4 +212,6 @@ export default function Page() {
       </section>
     </>
   );
-}
+};
+
+export default Page;

@@ -20,7 +20,6 @@ const partnerLogos = [
   { name: "Partner 7", logo: "/images/ins_120033 (6).svg", score: "8.8%" },
 ];
 
-
 export default function CalculateSave() {
   const router = useRouter();
 
@@ -37,9 +36,7 @@ export default function CalculateSave() {
   };
 
   const handlePrev = () => {
-    setActiveIndex((prev) =>
-      prev === 0 ? partnerLogos.length - 1 : prev - 1
-    );
+    setActiveIndex((prev) => (prev === 0 ? partnerLogos.length - 1 : prev - 1));
   };
 
   const [emiData, setEmiData] = useState<EMICalculatorResponse | null>(null);
@@ -151,12 +148,11 @@ export default function CalculateSave() {
     >
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="rounded-[32px] bg-white p-2 sm:p-6 shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
-
           <div className="grid gap-8 md:grid-cols-2 p-2">
             {/* ================= LEFT SIDE ================= */}
             <div className="flex flex-col gap-4">
               {/* Circular Chart and EMI Result */}
-              <div className="flex flex-col md:flex-row p-4 sm:px-3 sm:py-6 rounded-[20px] md:rounded-md bg-[#F2F6FF] md:items-center gap-4 w-full max-w-[58%] md:max-w-full overflow-hidden box-border">
+              <div className="flex flex-col md:flex-row p-4 sm:px-3 sm:py-6 rounded-[20px] md:rounded-md bg-[#EEF4FF] md:items-center gap-4 w-full max-w-[58%] md:max-w-full overflow-hidden box-border">
                 {/* Circular Pie Chart */}
                 <div className="relative flex-shrink-0 h-36 w-36 sm:h-44 sm:w-44 md:h-48 md:w-48">
                   <div
@@ -177,7 +173,7 @@ export default function CalculateSave() {
 
                 {/* EMI Result Breakdown */}
                 <div className="flex-1 w-full md:w-auto rounded-md">
-                  <h3 className="mb-3 sm:mb-4 bg-[#F2F6FF] text-base sm:text-lg font-semibold text-black">
+                  <h3 className="mb-3 sm:mb-4 bg-[#EEF4FF] text-base sm:text-lg font-semibold text-black">
                     Calculated EMI Result
                   </h3>
 
@@ -185,19 +181,24 @@ export default function CalculateSave() {
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center">
                         <p className="flex items-center text-[12px] gap-2 font-medium text-[#000000] pe-2">
-                          <span className="text-[#38BA50]">●</span> Principal Amount
+                          <span className="text-[#38BA50]">●</span> Principal
+                          Amount
                         </p>
                         <span className="font-semibold text-black text-[12px]">
-                          {emiData?.principalAmount?.formatted || "₹ 3,61,11,931.00"}
+                          {emiData?.principalAmount?.formatted ||
+                            "₹ 3,61,11,931.00"}
                         </span>
                       </div>
 
                       <div className="flex items-center">
                         <p className="flex items-center text-[12px] gap-2 font-medium text-[#000000] pe-8">
-                          <span className="text-[#FFA322]">●</span> Total Interest
+                          <span className="text-[#FFA322]">●</span> Total
+                          Interest
                         </p>
                         <span className="font-semibold text-black text-[12px]">
-                          + {emiData?.totalInterest?.formatted || "₹ 87,60,442.00"}
+                          +{" "}
+                          {emiData?.totalInterest?.formatted ||
+                            "₹ 87,60,442.00"}
                         </span>
                       </div>
                     </div>
@@ -205,17 +206,19 @@ export default function CalculateSave() {
                     <div className="my-2 sm:my-2 h-px w-[200px] mx-6 bg-gray-200" />
 
                     <div className="flex items-center justify-between">
-                      <p className="text-[14px] text-[#000000] font-semibold">Total Amount</p>
+                      <p className="text-[14px] text-[#000000] font-semibold">
+                        Total Amount
+                      </p>
                       <p className="text-[14px] font-semibold text-black">
-                        {emiData?.totalAmountPayable?.formatted || "₹ 4,48,72,373.00"}
+                        {emiData?.totalAmountPayable?.formatted ||
+                          "₹ 4,48,72,373.00"}
                       </p>
                     </div>
                   </div>
                 </div>
-
               </div>
 
-              <div className="bg-[#F2F6FF] px-6 py-10 rounded-md max-w-[58%] md:max-w-full flex flex-col gap-6">
+              <div className="bg-[#EEF4FF] px-6 py-10 rounded-md max-w-[58%] md:max-w-full flex flex-col gap-6">
                 <div className="relative flex items-center justify-center mb-4">
                   <button
                     onClick={handlePrev}
@@ -250,10 +253,11 @@ export default function CalculateSave() {
                       return (
                         <div
                           key={idx}
-                          className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 transition-all ${isActive
-                            ? "scale-110 border-blue-400"
-                            : "bg-gray-100 border-gray-200"
-                            }`}
+                          className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 transition-all ${
+                            isActive
+                              ? "scale-110 border-blue-400"
+                              : "bg-gray-100 border-gray-200"
+                          }`}
                         >
                           <img
                             src={partner.logo}
@@ -282,8 +286,11 @@ export default function CalculateSave() {
                     Loan Amount
                   </h4>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm sm:text-base font-semibold text-black bg-[#F2F6FF] px-3 py-1 rounded">
-                      <span className="text-[#FE755E]">{formatLoanAmount(loanAmount)}</span> {currency}
+                    <span className="text-sm sm:text-base font-semibold text-black bg-[#EEF4FF] px-3 py-1 rounded">
+                      <span className="text-[#1C4692]">
+                        {formatLoanAmount(loanAmount)}
+                      </span>{" "}
+                      {currency}
                     </span>
                   </div>
                 </div>
@@ -296,7 +303,9 @@ export default function CalculateSave() {
                     value={loanAmount}
                     onChange={(e) => setLoanAmount(Number(e.target.value))}
                     className="w-full h-4 rounded-full appearance-none cursor-pointer slider"
-                    style={{ background: `linear-gradient(to right,#FF765E 0%,#FF765E ${loanAmountPercent}%,#E5E7EB ${loanAmountPercent}%,#E5E7EB 100%)`, }}
+                    style={{
+                      background: `linear-gradient(to right,#1C4692 0%,#1C4692 ${loanAmountPercent}%,#E5E7EB ${loanAmountPercent}%,#E5E7EB 100%)`,
+                    }}
                   />
                 </div>
 
@@ -316,7 +325,7 @@ export default function CalculateSave() {
                   <h4 className="font-semibold text-black text-sm sm:text-base">
                     Rate of Interest <span className="text-[10px]">(%P.A)</span>
                   </h4>
-                  <button className="bg-[#F2F6FF] text-[#FF765E] font-semibold px-3 py-1 rounded text-sm sm:text-base">
+                  <button className="bg-[#EEF4FF] text-[#1C4692] font-semibold px-3 py-1 rounded text-sm sm:text-base">
                     {rateOfInterest.toFixed(1)} %
                   </button>
                 </div>
@@ -331,7 +340,7 @@ export default function CalculateSave() {
                     onChange={(e) => setRateOfInterest(Number(e.target.value))}
                     className="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
                     style={{
-                      background: `linear-gradient(to right, #FF765E 0%, #FF765E ${ratePercent}%, #E5E7EB ${ratePercent}%, #E5E7EB 100%)`,
+                      background: `linear-gradient(to right, #1C4692 0%, #1C4692 ${ratePercent}%, #E5E7EB ${ratePercent}%, #E5E7EB 100%)`,
                     }}
                   />
                 </div>
@@ -351,8 +360,8 @@ export default function CalculateSave() {
                   <h4 className="font-semibold text-black text-sm sm:text-base">
                     Loan Tenure
                   </h4>
-                  <button className="bg-[#F2F6FF] text-black font-medium px-3 py-1 rounded text-sm sm:text-base">
-                    <span className="text-[#FF765E]">{loanTenure} </span>Months
+                  <button className="bg-[#EEF4FF] text-black font-medium px-3 py-1 rounded text-sm sm:text-base">
+                    <span className="text-[#1C4692]">{loanTenure} </span>Months
                   </button>
                 </div>
 
@@ -366,7 +375,7 @@ export default function CalculateSave() {
                     onChange={(e) => setLoanTenure(Number(e.target.value))}
                     className="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
                     style={{
-                      background: `linear-gradient(to right, #FF765E 0%, #FF765E ${tenurePercent}%, #E5E7EB ${tenurePercent}%, #E5E7EB 100%)`,
+                      background: `linear-gradient(to right, #1C4692 0%, #1C4692 ${tenurePercent}%, #E5E7EB ${tenurePercent}%, #E5E7EB 100%)`,
                     }}
                   />
                 </div>
@@ -393,20 +402,21 @@ export default function CalculateSave() {
               <div className="flex flex-row gap-3 sm:gap-4">
                 <button
                   onClick={handleReset}
-                  className="w-[150px] sm:w-1/2 rounded-full border-2 border-[#F3F3F3] bg-[#F3F3F3] px-6 py-3 text-[16px] font-bold text-black">
+                  className="w-[150px] sm:w-1/2 rounded-full border-2 border-[#F3F3F3] bg-[#F3F3F3] px-6 py-3 text-[16px] font-bold text-black"
+                >
                   Reset
                 </button>
 
                 <button
                   onClick={handleGetLoan}
                   disabled={isCalculating || calculating}
-                  className="w-[150px] sm:w-1/2 rounded-full bg-[#FF765E] px-6 py-3 text-[16px] font-bold text-white hover:bg-[#e86b50] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                  className="w-[150px] sm:w-1/2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-6 py-3 text-[16px] font-bold text-white  transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                   Get a Loan
                 </button>
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -416,7 +426,7 @@ export default function CalculateSave() {
             width: 34px;
             height: 18px;
             border-radius: 999px;
-            background: #FE755E;          
+            background: #1C4692;          
             border: 3px solid #313131;    
             cursor: pointer;
             box-shadow:0 0 0 1px #ffffff,0 2px 6px rgba(0,0,0,0.25);
@@ -425,7 +435,7 @@ export default function CalculateSave() {
             width: 34px;
             height: 18px;
             border-radius: 999px;
-            background: #FE755E;
+            background: #1C4692;
             border: 3px solid #313131;
             cursor: pointer;
             box-shadow:0 0 0 1px #ffffff,0 2px 6px rgba(0,0,0,0.25);
@@ -434,4 +444,3 @@ export default function CalculateSave() {
     </section>
   );
 }
-

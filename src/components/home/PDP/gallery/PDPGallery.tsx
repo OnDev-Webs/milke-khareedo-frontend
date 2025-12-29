@@ -1,10 +1,30 @@
-import Image from "next/image";
 import logo from "@/assets/Image icon.svg";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 
 export default function PDPGallery() {
   return (
     <section className="w-full bg-white py-10">
-      <div className="mx-auto max-w-300 max-md:px-4">
+      <div className="mx-auto container max-md:px-4">
+
+        <Breadcrumb className="mb-[30px]">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/" className="text-[18px]">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage className="text-[#1C4692] text-[18px]">Properties</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+
         <div className="relative">
           <div className="grid gap-4 grid-cols-2 rounded-3xl">
             <div className="bg-secondary flex items-center justify-center h-80 rounded-[18px] p-6 shadow-[0_0_10px_rgba(0,0,0,0.08)] ">

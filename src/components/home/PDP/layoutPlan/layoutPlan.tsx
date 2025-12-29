@@ -11,9 +11,9 @@ export default function PDPLayoutPlan() {
 
   return (
     <section className="w-full px-4 py-8">
-      <div className="mx-auto max-w-300 rounded-2xl bg-white shadow-sm">
-        <div className="flex items-center justify-between rounded-t-2xl bg-gray-200/80 px-6 py-4">
-          <h3 className="text-lg font-semibold text-gray-800">Layout Plan</h3>
+      <div className="mx-auto container rounded-2xl bg-white shadow-sm">
+        <div className="flex items-center justify-between rounded-t-2xl bg-[#EEF4FF] px-6 py-4">
+          <h3 className="text-[25px] font-semibold">Layout Plan</h3>
 
           <div className="flex items-center gap-3">
             {data.map((opt) => (
@@ -23,8 +23,8 @@ export default function PDPLayoutPlan() {
                 className={
                   "rounded-full px-3 py-1 text-sm font-medium transition " +
                   (selectedBhk === opt
-                    ? "bg-gray-900 text-white shadow"
-                    : "bg-gray-100 text-gray-700")
+                    ? "bg-[#1C4692] text-white shadow"
+                    : "bg-white text-black")
                 }
               >
                 {opt}
@@ -40,10 +40,10 @@ export default function PDPLayoutPlan() {
                 key={s}
                 onClick={() => setSelectedSize(s)}
                 className={
-                  "rounded-full px-3 py-1 text-sm font-medium transition " +
+                  "rounded-full px-3 py-1 text-sm font-medium transition border " +
                   (selectedSize === s
-                    ? "bg-gray-900 text-white shadow"
-                    : "bg-gray-100 text-gray-700")
+                    ? "bg-[#1C4692] text-white shadow border-[#1C4692]"
+                    : "bg-white text-black border-[#F3F3F3]")
                 }
               >
                 {s}

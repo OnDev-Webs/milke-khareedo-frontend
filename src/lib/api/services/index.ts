@@ -4,6 +4,7 @@
  */
 
 export * from "./home.service";
+export * from "./userDashboard.service";
 
 // Export more services as you create them
 // export * from "./property.service";

@@ -37,6 +37,9 @@ export const API_ENDPOINTS = {
     POST_COMPARE: "/home/compare",
     POST_FAVORITE: "/home/property/favorite",
     POST_VISIT: "/home/property/visit",
+    POST_JOIN_GROUP: "/home/join-group",
+    GET_BLOGS: "/home/blogs",
+    GET_BLOG_BY_ID: "/home/blog",
   },
   // Auth endpoints
   AUTH: {
@@ -44,7 +47,7 @@ export const API_ENDPOINTS = {
     VERIFY_OTP: "/users/verify-otp",
     RESEND_OTP: "/users/resend-otp",
   },
-  
+
   // User Dashboard endpoints
   USER_DASHBOARD: {
     DASHBOARD: "/user_dashboard/dashboard",

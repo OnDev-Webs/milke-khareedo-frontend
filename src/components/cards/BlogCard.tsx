@@ -5,7 +5,8 @@ interface BlogCardProps {
   image: StaticImageData | string;
   date: string;
   title: string;
-  description: string;
+  description?: string;
+  content?: string; // HTML content
   buttonText?: string;
   href: string;
   className?: string;
@@ -16,10 +17,14 @@ export default function BlogCard({
   date,
   title,
   description,
+  content,
   buttonText = "Read More",
   href,
   className = "",
 }: BlogCardProps) {
+  // Use content (HTML) if available, otherwise fall back to description (plain text)
+  const displayContent = content || description || "";
+
   return (
     <div
       className={`inline-flex flex-col items-start self-stretch ${className}`}
@@ -41,14 +46,22 @@ export default function BlogCard({
 
           <h3 className="text-black text-2xl font-semibold">{title}</h3>
 
-          <p className="text-neutral-700 text-sm font-medium leading-6">
-            {description}
-          </p>
+          {/* Render HTML content with 3-line truncation */}
+          {content ? (
+            <div
+              className="text-neutral-700 text-sm font-medium leading-6 blog-card-content line-clamp-3"
+              dangerouslySetInnerHTML={{ __html: displayContent }}
+            />
+          ) : (
+            <p className="text-neutral-700 text-sm font-medium leading-6 line-clamp-3">
+              {displayContent}
+            </p>
+          )}
         </div>
 
         <Link
           href={href}
-          className="px-7 py-2.5 bg-[#1C4692] hover:bg-[#1c4692e6] rounded-[110px] inline-flex justify-center items-center text-white text-lg font-semibold w-fit"
+          className="px-7 py-2.5 bg-[#1C4692] hover:bg-[#1c4692e6] rounded-[110px] inline-flex justify-center items-center text-white text-lg font-semibold w-fit transition-colors"
         >
           {buttonText}
         </Link>

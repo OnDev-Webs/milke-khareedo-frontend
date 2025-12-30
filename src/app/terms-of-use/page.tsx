@@ -1,6 +1,17 @@
+"use client";
+
 import Heading from "@/components/typography/heading";
 
 export default function Page() {
+  // Get current date in DD/MM/YYYY format
+  const getCurrentDate = () => {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, "0");
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const year = today.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <>
       <section className="pt-10 pb-[100px]">
@@ -11,131 +22,123 @@ export default function Page() {
                 variant={"h3"}
                 className="justify-start text-black font-semibold"
               >
-                Terms & Conditions
+                TERMS & CONDITIONS
               </Heading>
               <div className="self-stretch h-0 outline outline-offset-[-0.50px] outline-neutral-200"></div>
-              <p className="self-stretch justify-start text-zinc-500 text-lg font-medium leading-8">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of
-                Lorem Ipsum.
-                <br />
-                <br />
-                It is a long established fact that a reader will be distracted
-                by the readable content of a page when looking at its layout.
-                The point of using Lorem Ipsum is that it has a more-or-less
-                normal distribution of letters, as opposed to using 'Content
-                here, content here', making it look like readable English. Many
-                desktop publishing packages and web page editors now use Lorem
-                Ipsum as their default model text, and a search for 'lorem
-                ipsum' will uncover many web sites still in their infancy.
-                Various versions have evolved over the years, sometimes by
-                accident, sometimes on purpose (injected humour and the like).
-                <br />
-                <br />
-                Contrary to popular belief, Lorem Ipsum is not simply random
-                text. It has roots in a piece of classical Latin literature from
-                45 BC, making it over 2000 years old. Richard McClintock, a
-                Latin professor at Hampden-Sydney College in Virginia, looked up
-                one of the more obscure Latin words, consectetur, from a Lorem
-                Ipsum passage, and going through the cites of the word in
-                classical literature, discovered the undoubtable source. Lorem
-                Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus
-                Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero,
-                written in 45 BC. This book is a treatise on the theory of
-                ethics, very popular during the Renaissance. The first line of
-                Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line
-                in section 1.10.32.
-                <br />
-                <br />
-                The standard chunk of Lorem Ipsum used since the 1500s is
-                reproduced below for those interested. Sections 1.10.32 and
-                1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also
-                reproduced in their exact original form, accompanied by English
-                versions from the 1914 translation by H. Rackham.
-                <br />
-                <br />
-                There are many variations of passages of Lorem Ipsum available,
-                but the majority have suffered alteration in some form, by
-                injected humour, or randomised words which don't look even
-                slightly believable. If you are going to use a passage of Lorem
-                Ipsum, you need to be sure there isn't anything embarrassing
-                hidden in the middle of text. All the Lorem Ipsum generators on
-                the Internet tend to repeat predefined chunks as necessary,
-                making this the first true generator on the Internet. It uses a
-                dictionary of over 200 Latin words, combined with a handful of
-                model sentence structures, to generate Lorem Ipsum which looks
-                reasonable. The generated Lorem Ipsum is therefore always free
-                from repetition, injected humour, or non-characteristic words
-                etc.
-                <br />
-                <br />
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of
-                Lorem Ipsum.
-                <br />
-                <br />
-                It is a long established fact that a reader will be distracted
-                by the readable content of a page when looking at its layout.
-                The point of using Lorem Ipsum is that it has a more-or-less
-                normal distribution of letters, as opposed to using 'Content
-                here, content here', making it look like readable English. Many
-                desktop publishing packages and web page editors now use Lorem
-                Ipsum as their default model text, and a search for 'lorem
-                ipsum' will uncover many web sites still in their infancy.
-                Various versions have evolved over the years, sometimes by
-                accident, sometimes on purpose (injected humour and the like).
-                <br />
-                <br />
-                Contrary to popular belief, Lorem Ipsum is not simply random
-                text. It has roots in a piece of classical Latin literature from
-                45 BC, making it over 2000 years old. Richard McClintock, a
-                Latin professor at Hampden-Sydney College in Virginia, looked up
-                one of the more obscure Latin words, consectetur, from a Lorem
-                Ipsum passage, and going through the cites of the word in
-                classical literature, discovered the undoubtable source. Lorem
-                Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus
-                Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero,
-                written in 45 BC. This book is a treatise on the theory of
-                ethics, very popular during the Renaissance. The first line of
-                Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line
-                in section 1.10.32.
-                <br />
-                <br />
-                The standard chunk of Lorem Ipsum used since the 1500s is
-                reproduced below for those interested. Sections 1.10.32 and
-                1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also
-                reproduced in their exact original form, accompanied by English
-                versions from the 1914 translation by H. Rackham.
-                <br />
-                <br />
-                There are many variations of passages of Lorem Ipsum available,
-                but the majority have suffered alteration in some form, by
-                injected humour, or randomised words which don't look even
-                slightly believable. If you are going to use a passage of Lorem
-                Ipsum, you need to be sure there isn't anything embarrassing
-                hidden in the middle of text. All the Lorem Ipsum generators on
-                the Internet tend to repeat predefined chunks as necessary,
-                making this the first true generator on the Internet. It uses a
-                dictionary of over 200 Latin words, combined with a handful of
-                model sentence structures, to generate Lorem Ipsum which looks
-                reasonable. The generated Lorem Ipsum is therefore always free
-                from repetition, injected humour, or non-characteristic words
-                etc.
-              </p>
+              <div className="self-stretch justify-start text-zinc-500 text-lg font-medium leading-8">
+                <p className="mb-6">
+                  <strong>Last updated: {getCurrentDate()}</strong>
+                </p>
+                <p className="mb-6">
+                  Welcome to Milke Khareedo.
+                </p>
+                <p className="mb-6">
+                  By accessing or using our website, platform, or services, you agree to the following terms. Please read them carefully. If you do not agree, kindly refrain from using our services.
+                </p>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>1. About Milke Khareedo</strong>
+                  </p>
+                  <p>
+                    Milke Khareedo is a group-buying platform designed to help property buyers come together and access better pricing and benefits than individual buying. We do not sell property directly and do not act as a builder or developer.
+                  </p>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>2. Nature of Our Service</strong>
+                  </p>
+                  <ul className="list-disc list-inside space-y-2 ml-4">
+                    <li>We help buyers discover properties, form buyer groups, and understand potential pricing advantages.</li>
+                    <li>All property purchases are made directly between the buyer and the developer/builder.</li>
+                    <li>Final pricing, availability, approvals, and agreements are solely determined by the developer.</li>
+                  </ul>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>3. No Guarantee of Pricing or Savings</strong>
+                  </p>
+                  <p>
+                    While group buying can lead to better pricing, Milke Khareedo does not guarantee specific discounts, savings, or outcomes. Benefits may vary based on demand, project, and builder policies.
+                  </p>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>4. No Brokerage or Forced Commitment</strong>
+                  </p>
+                  <ul className="list-disc list-inside space-y-2 ml-4">
+                    <li>Joining a buyer group does not obligate you to purchase.</li>
+                    <li>You are free to proceed or not proceed at any stage.</li>
+                    <li>We do not force decisions, urgency, or commitments.</li>
+                  </ul>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>5. Information Accuracy</strong>
+                  </p>
+                  <p>
+                    We strive to provide accurate and updated information. However, property details such as pricing, availability, timelines, and specifications are subject to change by developers without notice.
+                  </p>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>6. User Responsibilities</strong>
+                  </p>
+                  <p className="mb-2">You agree to:</p>
+                  <ul className="list-disc list-inside space-y-2 ml-4">
+                    <li>Provide accurate contact and personal information</li>
+                    <li>Use the platform only for lawful purposes</li>
+                    <li>Not misuse or attempt to manipulate group-buying processes</li>
+                  </ul>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>7. Third-Party Relationships</strong>
+                  </p>
+                  <p>
+                    Milke Khareedo may connect you with developers, agents, or service providers. We are not responsible for third-party actions, representations, or agreements.
+                  </p>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>8. Limitation of Liability</strong>
+                  </p>
+                  <p className="mb-2">Milke Khareedo is not liable for:</p>
+                  <ul className="list-disc list-inside space-y-2 ml-4">
+                    <li>Financial decisions made by users</li>
+                    <li>Disputes between buyers and developers</li>
+                    <li>Delays, cancellations, or changes by builders</li>
+                  </ul>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>9. Intellectual Property</strong>
+                  </p>
+                  <p>
+                    All content, branding, and materials on this website belong to Milke Khareedo and may not be copied or reused without permission.
+                  </p>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>10. Changes to Terms</strong>
+                  </p>
+                  <p>
+                    We may update these terms from time to time. Continued use of the platform implies acceptance of updated terms.
+                  </p>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>11. Governing Law</strong>
+                  </p>
+                  <p>
+                    These terms are governed by the laws of India. Any disputes shall be subject to the jurisdiction of courts in Hyderabad, Telangana.
+                  </p>
+                </div>
+                <p className="mt-6">
+                  For questions, contact us at:
+                  <br />
+                  Email: <a href="mailto:support@milkekhereedo.com" className="text-blue-600 hover:underline">support@milkekhereedo.com</a>
+                </p>
+              </div>
             </div>
           </div>
         </div>

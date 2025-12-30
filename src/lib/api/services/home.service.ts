@@ -48,6 +48,7 @@ export interface Property {
   description: string;
   relationshipManager: string;
   isFavorite?: boolean; // Favorite status from API
+  isJoinGroup?: boolean; // Join group status from API
 }
 
 export interface PaginationInfo {
@@ -373,5 +374,18 @@ export const homeService = {
       : API_ENDPOINTS.HOME.SEARCH_PROPERTIES;
 
     return apiClient.get<TopPropertiesResponse>(endpoint);
+  },
+
+  /**
+   * Join group for a property
+   * POST /api/home/join-group
+   */
+  joinGroup: async (
+    propertyId: string,
+  ): Promise<ApiResponse<{ message: string; isJoinGroup: boolean }>> => {
+    return apiClient.post<{ message: string; isJoinGroup: boolean }>(
+      API_ENDPOINTS.HOME.POST_JOIN_GROUP,
+      { propertyId },
+    );
   },
 };

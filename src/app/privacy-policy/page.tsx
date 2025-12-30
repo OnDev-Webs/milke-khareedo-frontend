@@ -1,6 +1,17 @@
+"use client";
+
 import Heading from "@/components/typography/heading";
 
 export default function Page() {
+  // Get current date in DD/MM/YYYY format
+  const getCurrentDate = () => {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, "0");
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const year = today.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <>
       <section className="pt-10 pb-[100px]">
@@ -14,128 +25,118 @@ export default function Page() {
                 Privacy Policy
               </Heading>
               <div className="self-stretch h-0 outline outline-offset-[-0.50px] outline-neutral-200"></div>
-              <p className="self-stretch justify-start text-zinc-500 text-lg font-medium leading-8">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of
-                Lorem Ipsum.
-                <br />
-                <br />
-                It is a long established fact that a reader will be distracted
-                by the readable content of a page when looking at its layout.
-                The point of using Lorem Ipsum is that it has a more-or-less
-                normal distribution of letters, as opposed to using 'Content
-                here, content here', making it look like readable English. Many
-                desktop publishing packages and web page editors now use Lorem
-                Ipsum as their default model text, and a search for 'lorem
-                ipsum' will uncover many web sites still in their infancy.
-                Various versions have evolved over the years, sometimes by
-                accident, sometimes on purpose (injected humour and the like).
-                <br />
-                <br />
-                Contrary to popular belief, Lorem Ipsum is not simply random
-                text. It has roots in a piece of classical Latin literature from
-                45 BC, making it over 2000 years old. Richard McClintock, a
-                Latin professor at Hampden-Sydney College in Virginia, looked up
-                one of the more obscure Latin words, consectetur, from a Lorem
-                Ipsum passage, and going through the cites of the word in
-                classical literature, discovered the undoubtable source. Lorem
-                Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus
-                Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero,
-                written in 45 BC. This book is a treatise on the theory of
-                ethics, very popular during the Renaissance. The first line of
-                Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line
-                in section 1.10.32.
-                <br />
-                <br />
-                The standard chunk of Lorem Ipsum used since the 1500s is
-                reproduced below for those interested. Sections 1.10.32 and
-                1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also
-                reproduced in their exact original form, accompanied by English
-                versions from the 1914 translation by H. Rackham.
-                <br />
-                <br />
-                There are many variations of passages of Lorem Ipsum available,
-                but the majority have suffered alteration in some form, by
-                injected humour, or randomised words which don't look even
-                slightly believable. If you are going to use a passage of Lorem
-                Ipsum, you need to be sure there isn't anything embarrassing
-                hidden in the middle of text. All the Lorem Ipsum generators on
-                the Internet tend to repeat predefined chunks as necessary,
-                making this the first true generator on the Internet. It uses a
-                dictionary of over 200 Latin words, combined with a handful of
-                model sentence structures, to generate Lorem Ipsum which looks
-                reasonable. The generated Lorem Ipsum is therefore always free
-                from repetition, injected humour, or non-characteristic words
-                etc.
-                <br />
-                <br />
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of
-                Lorem Ipsum.
-                <br />
-                <br />
-                It is a long established fact that a reader will be distracted
-                by the readable content of a page when looking at its layout.
-                The point of using Lorem Ipsum is that it has a more-or-less
-                normal distribution of letters, as opposed to using 'Content
-                here, content here', making it look like readable English. Many
-                desktop publishing packages and web page editors now use Lorem
-                Ipsum as their default model text, and a search for 'lorem
-                ipsum' will uncover many web sites still in their infancy.
-                Various versions have evolved over the years, sometimes by
-                accident, sometimes on purpose (injected humour and the like).
-                <br />
-                <br />
-                Contrary to popular belief, Lorem Ipsum is not simply random
-                text. It has roots in a piece of classical Latin literature from
-                45 BC, making it over 2000 years old. Richard McClintock, a
-                Latin professor at Hampden-Sydney College in Virginia, looked up
-                one of the more obscure Latin words, consectetur, from a Lorem
-                Ipsum passage, and going through the cites of the word in
-                classical literature, discovered the undoubtable source. Lorem
-                Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus
-                Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero,
-                written in 45 BC. This book is a treatise on the theory of
-                ethics, very popular during the Renaissance. The first line of
-                Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line
-                in section 1.10.32.
-                <br />
-                <br />
-                The standard chunk of Lorem Ipsum used since the 1500s is
-                reproduced below for those interested. Sections 1.10.32 and
-                1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also
-                reproduced in their exact original form, accompanied by English
-                versions from the 1914 translation by H. Rackham.
-                <br />
-                <br />
-                There are many variations of passages of Lorem Ipsum available,
-                but the majority have suffered alteration in some form, by
-                injected humour, or randomised words which don't look even
-                slightly believable. If you are going to use a passage of Lorem
-                Ipsum, you need to be sure there isn't anything embarrassing
-                hidden in the middle of text. All the Lorem Ipsum generators on
-                the Internet tend to repeat predefined chunks as necessary,
-                making this the first true generator on the Internet. It uses a
-                dictionary of over 200 Latin words, combined with a handful of
-                model sentence structures, to generate Lorem Ipsum which looks
-                reasonable. The generated Lorem Ipsum is therefore always free
-                from repetition, injected humour, or non-characteristic words
-                etc.
-              </p>
+              <div className="self-stretch justify-start text-zinc-500 text-lg font-medium leading-8">
+                <p className="mb-6">
+                  <strong>Last updated: {getCurrentDate()}</strong>
+                </p>
+                <p className="mb-6">
+                  At Milke Khareedo, your privacy matters. This policy explains how we collect, use, and protect your information.
+                </p>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>1. Information We Collect</strong>
+                  </p>
+                  <p className="mb-2">We may collect:</p>
+                  <ul className="list-disc list-inside space-y-2 ml-4">
+                    <li>Name, phone number, email address</li>
+                    <li>Property preferences and interests</li>
+                    <li>Location details (city/region)</li>
+                    <li>Any information you submit through forms</li>
+                  </ul>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>2. How We Use Your Information</strong>
+                  </p>
+                  <p className="mb-2">Your information is used to:</p>
+                  <ul className="list-disc list-inside space-y-2 ml-4">
+                    <li>Contact you regarding properties or group-buying opportunities</li>
+                    <li>Add you to relevant buyer groups (only with your interest)</li>
+                    <li>Improve our services and user experience</li>
+                    <li>Respond to queries or support requests</li>
+                  </ul>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>3. No Spam. No Selling Data.</strong>
+                  </p>
+                  <ul className="list-disc list-inside space-y-2 ml-4">
+                    <li>We do NOT sell your data to third parties.</li>
+                    <li>We do NOT add you to random marketing lists.</li>
+                    <li>Communication is limited and relevant.</li>
+                  </ul>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>4. Sharing Information</strong>
+                  </p>
+                  <p className="mb-2">Your information may be shared only with:</p>
+                  <ul className="list-disc list-inside space-y-2 ml-4">
+                    <li>Developers or partners relevant to your expressed interest</li>
+                    <li>Internal teams for service coordination</li>
+                  </ul>
+                  <p className="mt-2">
+                    We never share your data without purpose.
+                  </p>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>5. Data Security</strong>
+                  </p>
+                  <p>
+                    We take reasonable measures to protect your data from unauthorized access, misuse, or disclosure.
+                  </p>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>6. Cookies & Analytics</strong>
+                  </p>
+                  <p>
+                    We may use cookies or analytics tools to understand website usage and improve performance. These do not personally identify you.
+                  </p>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>7. Your Choices</strong>
+                  </p>
+                  <p className="mb-2">You may:</p>
+                  <ul className="list-disc list-inside space-y-2 ml-4">
+                    <li>Request access to your data</li>
+                    <li>Ask for corrections</li>
+                    <li>Request deletion of your data</li>
+                    <li>Opt out of communication at any time</li>
+                  </ul>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>8. External Links</strong>
+                  </p>
+                  <p>
+                    Our website may contain links to third-party sites. We are not responsible for their privacy practices.
+                  </p>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>9. Policy Updates</strong>
+                  </p>
+                  <p>
+                    This policy may be updated periodically. Changes will be reflected on this page.
+                  </p>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-3">
+                    <strong>10. Contact Us</strong>
+                  </p>
+                  <p>
+                    If you have any questions about privacy or data usage, contact us at:
+                  </p>
+                  <p className="mt-2">
+                    Email: <a href="mailto:support@milkekhereedo.com" className="text-blue-600 hover:underline">support@milkekhereedo.com</a>
+                    <br />
+                    Location: Hyderabad, India
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

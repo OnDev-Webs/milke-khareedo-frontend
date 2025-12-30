@@ -12,6 +12,7 @@ import PDPSections from "@/components/home/PDP/PDPSections/PDPSections";
 import PDPSupport from "@/components/home/PDP/PDPSupport/PDPSupport";
 import PDPPropertyDetails from "@/components/home/PDP/property-details/property-details";
 import PDPSimilarProjects from "@/components/home/PDP/similar-projects/similarProjects";
+import RERAStickyWidget from "@/components/home/PDP/rera-widget/RERAStickyWidget";
 import { homeService, type PropertyDetail, type SimilarProject } from "@/lib/api/services/home.service";
 import React, { useEffect, useState } from "react";
 
@@ -134,6 +135,13 @@ export default function PropertyDetailsPage({
         <PDPAboutDeveloper developer={property.developer} />
       </div>
       <PDPSimilarProjects similarProjects={similarProjects} />
+      
+      {/* RERA Sticky Widget */}
+      <RERAStickyWidget
+        reraId={property.reraId}
+        reraQrImage={property.reraQrImage}
+        reraDetailsLink={property.reraDetailsLink}
+      />
     </>
   );
 }

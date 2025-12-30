@@ -57,10 +57,25 @@ export default function PDPGroupProgressStatus({
     }
   };
 
+  // Format message to highlight the number
+  const formatMessage = (message: string, required: number) => {
+    const parts = message.split(required.toString());
+    if (parts.length > 1) {
+      return (
+        <>
+          {parts[0]}
+          <span className="text-[#1C4692] font-semibold">{required}</span>
+          {parts[1]}
+        </>
+      );
+    }
+    return message;
+  };
+
   return (
     <>
       <section className="">
-        <div className="mx-auto container rounded-2xl bg-white p-6 border border-primary">
+        <div className="mx-auto container rounded-2xl bg-white p-6 border border-[#1C4692] shadow-sm">
           <div className="flex flex-col items-center gap-3">
             <div className="relative">
               <svg height={radius * 2} width={radius * 2} className="block">
@@ -73,7 +88,7 @@ export default function PDPGroupProgressStatus({
                   cy={radius}
                 />
                 <circle
-                  stroke="#111827"
+                  stroke="#1C4692"
                   fill="transparent"
                   strokeWidth={stroke}
                   strokeLinecap="round"
@@ -93,57 +108,69 @@ export default function PDPGroupProgressStatus({
               </div>
             </div>
 
-            <p className="mt-1 text-center text-sm text-gray-500">
-              {groupBuy.message}
+            <p className="mt-1 text-center text-sm text-gray-600 leading-relaxed">
+              {formatMessage(groupBuy.message, required)}
             </p>
           </div>
 
           {groupBuy.members && groupBuy.members.length > 0 && (
             <div className="mt-5">
-              <h4 className="text-sm font-semibold text-gray-700">
+              <h4 className="text-sm font-semibold text-gray-900 mb-3">
                 Joined the Group
               </h4>
 
-              <div className="mt-3 overflow-hidden pb-2">
-                <div className="flex -space-x-12">
-                  {groupBuy.members.slice(0, 5).map((member) => (
-                    <div
-                      key={member.userId}
-                      className="shrink-0 rounded-xl border border-gray-100 bg-white p-4 shadow-sm"
-                    >
-                      <div className="flex items-center gap-3">
-                        {member.profilePhoto ? (
-                          <Image
-                            src={member.profilePhoto}
-                            alt={member.name}
-                            width={40}
-                            height={40}
-                            className="h-10 w-10 shrink-0 rounded-full object-cover"
-                          />
-                        ) : (
-                          <div className="h-10 w-10 shrink-0 rounded-full bg-gray-100 flex items-center justify-center">
+              <div className="mt-3 overflow-x-auto pb-2 scrollbar-hide">
+                <div className="flex gap-2 -space-x-8">
+                  {groupBuy.members.slice(0, 5).map((member, index) => {
+                    // Generate different colors for avatars
+                    const avatarColors = [
+                      "from-yellow-400 to-yellow-500",
+                      "from-blue-400 to-blue-500",
+                      "from-pink-400 to-pink-500",
+                      "from-purple-400 to-purple-500",
+                      "from-indigo-400 to-indigo-500",
+                    ];
+                    const avatarColor = avatarColors[index % avatarColors.length];
+                    
+                    return (
+                      <div
+                        key={member.userId}
+                        className="shrink-0 rounded-xl border border-gray-200 bg-white p-3 shadow-sm min-w-[140px]"
+                      >
+                        <div className="flex items-center gap-2.5">
+                          {member.profilePhoto ? (
+                            <Image
+                              src={member.profilePhoto}
+                              alt={member.name}
+                              width={40}
+                              height={40}
+                              className="h-10 w-10 shrink-0 rounded-full object-cover"
+                            />
+                          ) : (
+                            <div className={`h-10 w-10 shrink-0 rounded-full bg-gradient-to-br ${avatarColor} flex items-center justify-center shadow-sm`}>
+                              <span className="text-xs font-semibold text-white">
+                                {member.name.charAt(0).toUpperCase()}
+                              </span>
+                            </div>
+                          )}
+                          <div className="flex flex-col min-w-0">
+                            <span className="text-sm font-medium text-gray-900 truncate">
+                              {member.name}
+                            </span>
                             <span className="text-xs text-gray-500">
-                              {member.name.charAt(0).toUpperCase()}
+                              {member.propertyTypeInterest}
                             </span>
                           </div>
-                        )}
-                        <div className="flex flex-col">
-                          <span className="text-sm font-medium text-gray-700">
-                            {member.name}
-                          </span>
-                          <span className="text-xs text-gray-400">
-                            {member.propertyTypeInterest}
-                          </span>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
-              <div className="mt-3 h-2 rounded-full bg-gray-200">
+              <div className="mt-3 h-1.5 rounded-full bg-gray-200">
                 <div
-                  className="h-2 rounded-full bg-gray-800"
+                  className="h-1.5 rounded-full bg-[#1C4692] transition-all duration-500 ease-out"
                   style={{ width: `${pct}%` }}
                   aria-hidden
                 />
@@ -155,10 +182,10 @@ export default function PDPGroupProgressStatus({
             <button
               onClick={handleJoinGroup}
               disabled={isJoinGroup || isLoading}
-              className={`w-full rounded-full border px-6 py-3 text-sm font-semibold shadow-sm transition-all ${
+              className={`w-full rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 ${
                 isJoinGroup
-                  ? "border-[#1C4692] bg-white text-[#1C4692] cursor-default"
-                  : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  ? "border-2 border-[#1C4692] bg-white text-[#1C4692] cursor-default pointer-events-none"
+                  : "bg-[#1C4692] text-white hover:bg-[#1a3d7a] disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
               }`}
               aria-label={isJoinGroup ? "Already Joined" : "Join Group Buy"}
             >

@@ -1,33 +1,14 @@
 import { BadgeCheck } from "lucide-react";
 
-const arr = [
-  {
-    id: 1,
-    isVerified: true,
-    title:
-      "Indo-Japanese collaboration between Sumitomo Corporation (Japan) and Krishna Group (India)",
-  },
-  {
-    id: 2,
-    isVerified: true,
-    title:
-      "35-acre township with over 5000 apartments planned across 7–8 phases",
-  },
-  {
-    id: 3,
-    isVerified: true,
-    title:
-      "35-acre township with over 5000 apartments planned across 7–8 phases",
-  },
-  {
-    id: 4,
-    isVerified: true,
-    title:
-      "35-acre township with over 5000 apartments planned across 7–8 phases",
-  },
-];
+interface PDPHighLightsProps {
+  highlights: string[];
+}
 
-export default function PDPHighLights() {
+export default function PDPHighLights({ highlights }: PDPHighLightsProps) {
+  if (!highlights || highlights.length === 0) {
+    return null;
+  }
+
   return (
     <section className="">
       <div className="mx-auto container">
@@ -38,11 +19,11 @@ export default function PDPHighLights() {
 
           <div className="px-6 py-8">
             <div className="space-y-4">
-              {arr.map((row, idx) => (
+              {highlights.map((highlight, idx) => (
                 <div key={idx} className="flex gap-4 text-sm text-gray-700">
-                  <div className="rounded-lg flex items-center  gap-2.5 space-y-2.5 bg-[#EEF4FF] px-4">
-                    <BadgeCheck className="fill-[#2E6B2B] text-white size-5 mt-2 " />
-                    <p className="leading-relaxed">{row?.title}</p>
+                  <div className="rounded-lg flex items-center gap-2.5 space-y-2.5 bg-[#EEF4FF] px-4">
+                    <BadgeCheck className="fill-[#2E6B2B] text-white size-5 mt-2" />
+                    <p className="leading-relaxed">{highlight}</p>
                   </div>
                 </div>
               ))}

@@ -74,11 +74,180 @@ export interface TopPropertiesResponse {
   filters: FiltersInfo;
 }
 
-export interface PropertyDetailsResponse {
-  data: {
-    property: Property;
-    similarProperties: Property[];
+// Property Detail API Response Types
+export interface LocationDetails {
+  full: string;
+  area: string;
+  city: string;
+  state: string;
+}
+
+export interface PropertyOverview {
+  units: number;
+  configurations: string[];
+  configurationsFormatted: string;
+  possessionStatus: string;
+  areaRange: {
+    min: number;
+    max: number;
+    formatted: string;
   };
+  reraNumber: string;
+  possessionDate: string;
+  possessionDateFormatted: string;
+  plotSize: string;
+  propertyType: string;
+}
+
+export interface ConnectivityPoint {
+  name: string;
+  latitude: number;
+  longitude: number;
+  _id: string;
+}
+
+export interface NeighborhoodData {
+  connectivity: {
+    schools?: ConnectivityPoint[];
+    hospitals?: ConnectivityPoint[];
+    transportation?: ConnectivityPoint[];
+    restaurants?: ConnectivityPoint[];
+    malls?: ConnectivityPoint[];
+    cafes?: ConnectivityPoint[];
+  };
+  mapCoordinates: ConnectivityPoint;
+}
+
+export interface LayoutPlan {
+  image: string;
+  unitType: string;
+  area: string;
+  price: string;
+}
+
+export interface DeveloperInfo {
+  id: string;
+  name: string;
+  description: string;
+  logo: string;
+  city: string;
+  establishedYear: number;
+  yearsOfExperience: number;
+  totalProjects: number;
+  website: string;
+  sourcingManager?: {
+    name: string;
+    mobile: string;
+    email: string;
+  };
+}
+
+export interface RelationshipManager {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+}
+
+export interface ConfigurationDetail {
+  unitType: string;
+  subConfigurations: Array<{
+    carpetArea: string;
+    price: number;
+    availabilityStatus: string;
+    layoutPlanImages: string[];
+  }>;
+}
+
+export interface GroupBuyMember {
+  userId: string;
+  name: string;
+  profilePhoto: string | null;
+  contactNumber: string;
+  email: string;
+  propertyTypeInterest: string;
+  joinedAt: string;
+}
+
+export interface GroupBuy {
+  minGroupMembers: number;
+  currentGroupMembersCount: number;
+  progressPercentage: number;
+  isMinimumMet: boolean;
+  progressText: string;
+  message: string;
+  members: GroupBuyMember[];
+}
+
+export interface PropertyDetail {
+  id: string;
+  projectId: string;
+  projectName: string;
+  location: string;
+  latitude: number;
+  longitude: number;
+  isFavorite: boolean;
+  isJoinGroup: boolean;
+  isAuthenticated: boolean;
+  locationDetails: LocationDetails;
+  startingPrice: PropertyPrice;
+  bookingDeadlinePrice?: {
+    value: number;
+    formatted: string;
+    note?: string;
+  };
+  developerPrice: string;
+  offerPrice: string;
+  discountPercentage: string;
+  reraId: string;
+  reraQrImage?: string;
+  reraDetailsLink?: string;
+  overview: PropertyOverview;
+  description: string;
+  rating: number;
+  highlights: string[];
+  amenities: string[];
+  images: string[];
+  image: string;
+  imageDetails: {
+    main: string;
+    thumbnails: string[];
+  };
+  layoutPlans: LayoutPlan[];
+  neighborhood: NeighborhoodData;
+  developer: DeveloperInfo;
+  relationshipManager: RelationshipManager;
+  configurations: ConfigurationDetail[];
+  projectSize: string;
+  landParcel: string;
+  minGroupMembers: number;
+  createdAt: string;
+  updatedAt: string;
+  groupBuy: GroupBuy;
+}
+
+export interface SimilarProject {
+  id: string;
+  projectId: string;
+  projectName: string;
+  images: string[];
+  imageUrl: string | null;
+  status: string;
+  groupSize: number;
+  configuration: string;
+  targetPrice: PropertyPrice;
+  disclaimerPrice: PropertyPrice;
+  location: string;
+  latitude: number;
+  longitude: number;
+  offerPrice: number;
+  discountPercentage: string;
+  similarityScore: number;
+}
+
+export interface PropertyDetailsResponse {
+  property: PropertyDetail;
+  similarProjects: SimilarProject[];
 }
 
 /**
@@ -273,7 +442,7 @@ export const homeService = {
 
   /**
    * Get property by ID
-   * Example: GET /api/home/getPropertyById?id=property_id
+   * Example: GET /api/home/getPropertyById/{propertyId}
    */
   getPropertyById: async (
     id: string,

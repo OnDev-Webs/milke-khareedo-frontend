@@ -1,7 +1,40 @@
-import logo from "@/assets/logo.svg"
 import Image from "next/image";
+import { type DeveloperInfo } from "@/lib/api/services/home.service";
 
-export default function PDPAboutDeveloper() {
+interface PDPAboutDeveloperProps {
+  developer: DeveloperInfo;
+}
+
+// Check if URL is a valid image URL (not a placeholder)
+const isValidImageUrl = (url: string | undefined | null): boolean => {
+  if (!url) return false;
+  // Check for placeholder URLs
+  if (
+    url.includes("your-bucket") ||
+    url.includes("example.com") ||
+    url.includes("placeholder") ||
+    url === "https://your-bucket.s3.amazonaws.com/developers/abc.jpg"
+  ) {
+    return false;
+  }
+  // Check if it's a valid URL format
+  try {
+    const urlObj = new URL(url);
+    return (urlObj.protocol === "https:" || urlObj.protocol === "http:") && urlObj.hostname.length > 0;
+  } catch {
+    return false;
+  }
+};
+
+// Check if URL is from configured Next.js image domain
+const isConfiguredDomain = (url: string): boolean => {
+  return url.includes("milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com");
+};
+
+export default function PDPAboutDeveloper({ developer }: PDPAboutDeveloperProps) {
+  const hasValidLogo = developer.logo && isValidImageUrl(developer.logo);
+  const isConfigured = developer.logo && isConfiguredDomain(developer.logo);
+
   return (
     <section className="w-full px-4 py-6">
       <div className="mx-auto container rounded-2xl bg-white shadow-sm">
@@ -11,30 +44,38 @@ export default function PDPAboutDeveloper() {
 
         <div className="flex flex-col gap-6 px-6 py-6 md:flex-row md:items-start">
           <div className="md:flex-1">
-            <div className="mb-3">
-              <Image
-              src={logo}
-              alt="MILKE KHEREEDO logo"
-              width={216}
-              height={52}
-              className="h-8 w-auto sm:h-10 lg:h-[52px]"
-            />
-            </div>
+            {developer.logo && hasValidLogo && (
+              <div className="mb-3">
+                {isConfigured ? (
+                  <Image
+                    src={developer.logo}
+                    alt={`${developer.name} logo`}
+                    width={216}
+                    height={52}
+                    className="h-8 w-auto sm:h-10 lg:h-[52px] object-contain"
+                  />
+                ) : (
+                  // Use regular img tag for valid URLs not in Next.js config
+                  <img
+                    src={developer.logo}
+                    alt={`${developer.name} logo`}
+                    className="h-8 w-auto sm:h-10 lg:h-[52px] object-contain"
+                  />
+                )}
+              </div>
+            )}
 
             <p className="max-w-2xl text-sm leading-relaxed text-gray-600">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type ...
+              {developer.description}
             </p>
           </div>
 
-          <div className=" flex w-full flex-col items-start gap-4 md:w-1/3 md:items-end">
+          <div className="flex w-full flex-col items-start gap-4 md:w-1/3 md:items-end">
             <div className="flex gap-12">
               <div className="flex flex-col gap-2.5 items-center justify-center w-30">
-                <div className=" w-22 p-6.5 flex justify-center items-center gap-2 rounded-full bg-[#f3f2f7]  shadow-sm ">
+                <div className="w-22 p-6.5 flex justify-center items-center gap-2 rounded-full bg-[#f3f2f7] shadow-sm">
                   <span className="text-3xl text-center font-bold text-gray-800">
-                    6+
+                    {developer.yearsOfExperience}+
                   </span>
                 </div>
                 <span className="text-xl font-bold text-center">
@@ -42,10 +83,10 @@ export default function PDPAboutDeveloper() {
                 </span>
               </div>
 
-              <div className="flex flex-col gap-2.5 items-center justify-center  w-30">
-                <div className=" w-22 p-6.5 flex justify-center items-center gap-2 rounded-full bg-[#f3f2f7]  shadow-sm ">
+              <div className="flex flex-col gap-2.5 items-center justify-center w-30">
+                <div className="w-22 p-6.5 flex justify-center items-center gap-2 rounded-full bg-[#f3f2f7] shadow-sm">
                   <span className="text-3xl text-center font-bold text-gray-800">
-                    2+
+                    {developer.totalProjects}+
                   </span>
                 </div>
                 <span className="text-xl font-bold text-center">

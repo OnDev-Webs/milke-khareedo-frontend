@@ -205,49 +205,6 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
                   <ContactForm />
                 </div>
 
-                {/* Recent Posts Section */}
-                <div className="border border-[#F3F3F3] rounded-[30px] p-5 bg-white">
-                  <h6 className="text-[26px] font-bold text-black mb-5">
-                    Recent Posts
-                  </h6>
-                  {isLoadingRecent ? (
-                    <div className="text-gray-500 text-sm">Loading...</div>
-                  ) : recentBlogs.length > 0 ? (
-                    <div className="flex flex-col gap-4">
-                      {recentBlogs.map((recentBlog) => (
-                        <Link
-                          key={recentBlog._id}
-                          href={`/blogs/${recentBlog.slug}`}
-                          className="group"
-                        >
-                          <div className="flex flex-col gap-2">
-                            <div className="relative w-full h-32 rounded-xl overflow-hidden">
-                              <Image
-                                src={recentBlog.bannerImage}
-                                alt={recentBlog.title}
-                                fill
-                                className="object-cover group-hover:scale-105 transition-transform duration-300"
-                              />
-                            </div>
-                            <div className="flex flex-col gap-1">
-                              <span className="text-neutral-400 text-xs font-medium">
-                                {recentBlog.date}
-                              </span>
-                              <h4 className="text-black text-base font-semibold line-clamp-2 group-hover:text-[#1C4692] transition-colors">
-                                {recentBlog.title}
-                              </h4>
-                              <p className="text-neutral-700 text-sm font-medium leading-5 line-clamp-2">
-                                {recentBlog.subtitle}
-                              </p>
-                            </div>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="text-gray-500 text-sm">No recent posts</div>
-                  )}
-                </div>
               </div>
             </div>
           </div>

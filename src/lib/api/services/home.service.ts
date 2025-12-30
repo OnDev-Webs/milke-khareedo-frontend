@@ -96,6 +96,46 @@ export interface LocationsResponse {
 }
 
 /**
+ * Blog API Response types
+ */
+export interface Blog {
+  _id: string;
+  title: string;
+  subtitle: string;
+  category: string;
+  author: string;
+  authorImage: string;
+  tags: string[];
+  bannerImage: string;
+  slug: string;
+  date: string;
+  views: number;
+  createdAt: string;
+  content?: string; // HTML content for blog listing
+}
+
+export interface BlogDetail extends Omit<Blog, "author" | "authorImage"> {
+  author: {
+    id: string;
+    name: string;
+    email: string;
+    profileImage: string;
+  };
+  galleryImages?: string[];
+  content: string;
+  updatedAt?: string;
+}
+
+export interface BlogsResponse {
+  data: Blog[];
+  pagination?: PaginationInfo;
+}
+
+export interface BlogDetailResponse {
+  data: BlogDetail;
+}
+
+/**
  * EMI Calculator API types
  */
 export interface EMIAmount {
@@ -386,6 +426,44 @@ export const homeService = {
     return apiClient.post<{ message: string; isJoinGroup: boolean }>(
       API_ENDPOINTS.HOME.POST_JOIN_GROUP,
       { propertyId },
+    );
+  },
+
+  /**
+   * Get all blogs
+   * GET /api/home/blogs?page=1&limit=20
+   * Response structure: { success: true, data: Blog[], pagination: PaginationInfo }
+   */
+  getBlogs: async (params?: {
+    page?: number;
+    limit?: number;
+  }): Promise<ApiResponse<Blog[]>> => {
+    const queryParams = new URLSearchParams();
+
+    if (params?.page) {
+      queryParams.append("page", params.page.toString());
+    }
+    if (params?.limit) {
+      queryParams.append("limit", params.limit.toString());
+    }
+
+    const endpoint = queryParams.toString()
+      ? `${API_ENDPOINTS.HOME.GET_BLOGS}?${queryParams.toString()}`
+      : API_ENDPOINTS.HOME.GET_BLOGS;
+
+    return apiClient.get<Blog[]>(endpoint);
+  },
+
+  /**
+   * Get blog by ID
+   * GET /api/home/blog/:blogId
+   * Response structure: { success: true, data: BlogDetail }
+   */
+  getBlogById: async (
+    blogId: string,
+  ): Promise<ApiResponse<BlogDetail>> => {
+    return apiClient.get<BlogDetail>(
+      `${API_ENDPOINTS.HOME.GET_BLOG_BY_ID}/${blogId}`,
     );
   },
 };

@@ -307,3 +307,128 @@ button {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* Blog Content Styling */
+.blog-content {
+  line-height: 1.8;
+}
+
+.blog-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #000;
+}
+
+.blog-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #000;
+}
+
+.blog-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #000;
+}
+
+.blog-content p {
+  margin-bottom: 1rem;
+  color: #6b7280;
+}
+
+.blog-content ul,
+.blog-content ol {
+  margin-bottom: 1rem;
+  padding-left: 2rem;
+  color: #6b7280;
+}
+
+.blog-content li {
+  margin-bottom: 0.5rem;
+}
+
+.blog-content strong,
+.blog-content b {
+  font-weight: 600;
+  color: #000;
+}
+
+.blog-content a {
+  color: #1C4692;
+  text-decoration: underline;
+}
+
+.blog-content a:hover {
+  color: #1c4692e6;
+}
+
+.blog-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+}
+
+.blog-content blockquote {
+  border-left: 4px solid #1C4692;
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #6b7280;
+}
+
+/* Line clamp utility */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Blog card content styling */
+.blog-card-content {
+  /* Remove default margins from HTML elements */
+}
+
+.blog-card-content p {
+  margin: 0;
+  padding: 0;
+}
+
+.blog-card-content h1,
+.blog-card-content h2,
+.blog-card-content h3,
+.blog-card-content h4,
+.blog-card-content h5,
+.blog-card-content h6 {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.blog-card-content ul,
+.blog-card-content ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.blog-card-content br {
+  display: block;
+  content: "";
+  margin: 0;
+}

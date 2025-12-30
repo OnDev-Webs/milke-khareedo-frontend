@@ -14,7 +14,7 @@ export default function EmptyState({
   description,
 }: EmptyStateProps) {
   return (
-    <div className="rounded-[24px] bg-white px-6 py-14 sm:px-10 sm:py-20 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
+    <div className="rounded-[24px] bg-white px-6 py-14 sm:px-10 sm:py-20 ">
       <div className="mx-auto flex max-w-[420px] flex-col items-center text-center">
         <Image
           src={imageSrc}

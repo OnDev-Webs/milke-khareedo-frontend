@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Heart, Share2, Phone, Repeat } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { IoHeart } from "react-icons/io5";
 
 type PropertyCardProps = {
     id: string;
@@ -17,6 +18,22 @@ type PropertyCardProps = {
     discountPercentage?: string;
     lastViewedAt?: string;
     lastDayToJoin?: string;
+
+    onFavoriteClick?: (property: {
+        id: string;
+        projectName: string;
+        location: string;
+    }) => void;
+
+    onShareClick?: (property: {
+        id: string;
+        projectName: string;
+        location: string;
+    }) => void;
+
+    isFavorite?: boolean;
+    isFavoriteLoading?: boolean;
+
 };
 
 
@@ -33,6 +50,10 @@ export default function PropertyCard({
     discountPercentage,
     lastViewedAt,
     lastDayToJoin,
+    onFavoriteClick,
+    onShareClick,
+    isFavorite = false,
+    isFavoriteLoading = false,
 }: PropertyCardProps) {
 
     const router = useRouter();
@@ -50,15 +71,51 @@ export default function PropertyCard({
 
                 {lastDayToJoin && (
                     <span className="absolute hidden sm:block left-3 top-3 rounded-sm bg-white px-3 py-1 text-xs font-medium">
-                        Last Day to join: {lastDayToJoin}
+                        {lastDayToJoin}
                     </span>
                 )}
 
 
                 <div className="absolute right-3 top-3 flex flex-col gap-2">
-                    <IconButton icon={<Heart size={16} />} />
+
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onFavoriteClick?.({
+                                id,
+                                projectName: title,
+                                location,
+                            });
+
+                        }}
+                        disabled={isFavoriteLoading}
+                        className={`rounded-full p-2 shadow  ${isFavorite ? "bg-white  text-white" : "bg-white"
+                            }`}
+                    >
+                        <IoHeart
+                            size={16}
+                            fill={isFavorite ? "#1C4692" : "none"}
+                            stroke={isFavorite ? "#1C4692" : "black"}
+                            strokeWidth={34}
+                        />                    </button>
+
                     <IconButton icon={<Repeat size={16} />} />
-                    <IconButton icon={<Share2 size={16} />} />
+
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onShareClick?.({
+                                id,
+                                projectName: title,
+                                location,
+                            });
+
+                        }}
+                        className="rounded-full bg-white p-2 shadow"
+                    >
+                        <Share2 size={16} />
+                    </button>
+
                 </div>
             </div>
 
@@ -151,3 +208,7 @@ function StatBox({ label, value, className = "bg-[#F7FAFF]" }: StatBoxProps) {
         </div>
     );
 }
+
+
+
+

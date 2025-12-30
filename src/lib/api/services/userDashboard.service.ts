@@ -2,40 +2,50 @@ import { apiClient } from "../client";
 import { API_ENDPOINTS } from "../config";
 import type { ApiResponse } from "../types";
 
-export type ViewedPropertyApi = {
-    _id: string;
-    lastViewedAt: string;
-    propertyId: {
-        _id: string;
-        projectName: string;
-        location: string;
-        possessionDate?: string;
+export type PropertyApi = {
+    id: string;
+    projectName: string;
+    location: string;
 
-        minGroupMembers?: number;
-        openingLeft?: number;
+    images?: string[];
 
-        developerPrice?: number;
-        discountPercentage?: string;
+    openingLeft?: number;
+    minGroupMembers?: number;
 
-        images?: { url: string; isCover: boolean }[];
+    developerPrice?: {
+        formatted: string;
     };
+
+    offerPrice?: {
+        formatted: string;
+    } | null;
+
+    discount?: {
+        percentageFormatted: string;
+    } | null;
+
+    lastDayToJoin?: string;
+    lastViewedAt?: string;
+
+    relationshipManagerPhone?: string;
 };
 
 
+
 export const userDashboardService = {
-    getVisitedProperties: (): Promise<ApiResponse<ViewedPropertyApi[]>> =>
-        apiClient.get<ViewedPropertyApi[]>(
+    getVisitedProperties: (): Promise<ApiResponse<PropertyApi[]>> =>
+        apiClient.get<PropertyApi[]>(
             API_ENDPOINTS.USER_DASHBOARD.VISITED_PROPERTIES
         ),
 
-    getViewedProperties: (): Promise<ApiResponse<ViewedPropertyApi[]>> =>
-        apiClient.get<ViewedPropertyApi[]>(
+    getViewedProperties: (): Promise<ApiResponse<PropertyApi[]>> =>
+        apiClient.get<PropertyApi[]>(
             API_ENDPOINTS.USER_DASHBOARD.VIEWED_PROPERTIES
         ),
 
 
-    getFavoriteProperties: (): Promise<ApiResponse<ViewedPropertyApi[]>> =>
-        apiClient.get<ViewedPropertyApi[]>(
+    getFavoriteProperties: (): Promise<ApiResponse<PropertyApi[]>> =>
+        apiClient.get<PropertyApi[]>(
             API_ENDPOINTS.USER_DASHBOARD.FAVORITE_PROPERTIES
         ),
 

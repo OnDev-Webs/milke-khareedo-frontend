@@ -210,11 +210,10 @@ export default function ComparePropertyCard({
           <button
             onClick={handleFavoriteClick}
             disabled={favoriteLoading}
-            className={`flex h-6 w-6 items-center justify-center rounded-full border transition-colors sm:h-7 sm:w-7 md:h-8 md:w-8 ${
-              isFavorite
+            className={`flex h-6 w-6 items-center justify-center rounded-full border transition-colors sm:h-7 sm:w-7 md:h-8 md:w-8 ${isFavorite
                 ? "border-[#1C4692] bg-[#1C4692] text-white hover:bg-[#1c4692e6]"
                 : "border-gray-300 bg-[#EEF4FF] text-gray-600 hover:bg-gray-50"
-            } disabled:opacity-50 disabled:cursor-not-allowed`}
+              } disabled:opacity-50 disabled:cursor-not-allowed`}
             aria-label={
               isFavorite ? "Remove from favorites" : "Add to favorites"
             }
@@ -348,32 +347,30 @@ export default function ComparePropertyCard({
                 </div>
               )}
             </div>
-
-            {/* Navigation Arrows - Only show if multiple plans */}
-            {hasMultiplePlans && (
-              <>
-                {currentFloorPlanIndex > 0 && (
-                  <button
-                    onClick={goToPrevious}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-md hover:bg-white transition-colors z-10 sm:h-10 sm:w-10"
-                    aria-label="Previous floor plan"
-                  >
-                    <IoChevronBack className="h-5 w-5 sm:h-6 sm:w-6" />
-                  </button>
-                )}
-                {currentFloorPlanIndex < floorPlans.length - 1 && (
-                  <button
-                    onClick={goToNext}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-md hover:bg-white transition-colors z-10 sm:h-10 sm:w-10"
-                    aria-label="Next floor plan"
-                  >
-                    <IoChevronForward className="h-5 w-5 sm:h-6 sm:w-6" />
-                  </button>
-                )}
-              </>
-            )}
           </div>
-
+          {/* Navigation Arrows - Only show if multiple plans */}
+          {hasMultiplePlans && (
+            <>
+              {currentFloorPlanIndex > 0 && (
+                <button
+                  onClick={goToPrevious}
+                  className="absolute left-1 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-md hover:bg-white transition-colors z-10 sm:h-10 sm:w-10"
+                  aria-label="Previous floor plan"
+                >
+                  <IoChevronBack className="h-5 w-5 sm:h-6 sm:w-6" />
+                </button>
+              )}
+              {currentFloorPlanIndex < floorPlans.length - 1 && (
+                <button
+                  onClick={goToNext}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-md hover:bg-white transition-colors z-10 sm:h-10 sm:w-10"
+                  aria-label="Next floor plan"
+                >
+                  <IoChevronForward className="h-5 w-5 sm:h-6 sm:w-6" />
+                </button>
+              )}
+            </>
+          )}
           {/* Carousel Dots - Dynamic based on number of plans */}
           {floorPlans.length > 1 && (
             <div className="mt-1.5 flex items-center justify-center gap-1.5 sm:mt-2 sm:gap-2 md:mt-3">
@@ -381,11 +378,10 @@ export default function ComparePropertyCard({
                 <button
                   key={index}
                   onClick={() => scrollToPlan(index)}
-                  className={`transition-all ${
-                    index === currentFloorPlanIndex
+                  className={`transition-all ${index === currentFloorPlanIndex
                       ? "h-1.5 w-6 rounded-full bg-gray-600 sm:h-2 sm:w-8"
                       : "h-1 w-1 rounded-full bg-gray-300 hover:bg-gray-400 sm:h-1.5 sm:w-1.5"
-                  }`}
+                    }`}
                   aria-label={`Go to floor plan ${index + 1}`}
                 />
               ))}

@@ -1,20 +1,14 @@
-type Member = { id: string; name: string; meta?: string };
-
-const members: Member[] = [
-  { id: "1", name: "Ayush Jos", meta: "2 Bhk" },
-  { id: "2", name: "Ayush Jos", meta: "2 Bhk" },
-  { id: "3", name: "Ayush Jos", meta: "2 Bhk" },
-  { id: "4", name: "Ayush Jos", meta: "2 Bhk" },
-];
+import { PropertyDetailResponseType } from "@/lib/api";
+import Image from "next/image";
 
 export default function PDPGroupProgressStatus({
-  joined = 5,
-  required = 10,
+  property,
 }: {
-  joined?: number;
-  required?: number;
+  property?: PropertyDetailResponseType | null;
 }) {
-  const pct = Math.min(100, Math.round((joined / required) * 100));
+  const joined = property?.groupBuy?.currentGroupMembersCount ?? 0;
+  const required = property?.groupBuy?.minGroupMembers ?? 0;
+  const pct = required > 0 ? Math.min(100, Math.round((joined / required) * 100)) : 0;
   const radius = 48;
   const stroke = 12;
   const normalizedRadius = radius - stroke / 2;
@@ -22,8 +16,8 @@ export default function PDPGroupProgressStatus({
   const strokeDashoffset = circumference - (pct / 100) * circumference;
 
   return (
-    <section className="">
-      <div className="mx-auto container rounded-2xl bg-white p-6 border border-primary">
+    <section>
+      <div className="mx-auto container rounded-2xl bg-white p-6 border border-[#F3F3F3]">
         <div className="flex flex-col items-center gap-3">
           <div className="relative">
             <svg height={radius * 2} width={radius * 2} className="block">
@@ -36,7 +30,7 @@ export default function PDPGroupProgressStatus({
                 cy={radius}
               />
               <circle
-                stroke="#111827"
+                stroke="#1C4692"
                 fill="transparent"
                 strokeWidth={stroke}
                 strokeLinecap="round"
@@ -68,18 +62,19 @@ export default function PDPGroupProgressStatus({
 
           <div className="mt-3 overflow-hidden pb-2">
             <div className="flex -space-x-12">
-              {members.map((m) => (
+              {property?.groupBuy?.members?.map((m: any, index) => (
                 <div
-                  key={m.id}
+                  key={index}
                   className="shrink-0 rounded-xl border border-gray-100 bg-white p-4 shadow-sm"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 shrink-0 rounded-full bg-gray-100" />
+                    {/* <div className="h-10 w-10 shrink-0 rounded-full bg-gray-100" /> */}
+                    <Image src={m.profilePhoto} alt={m.name} width={40} height={40} />
                     <div className="flex flex-col">
                       <span className="text-sm font-medium text-gray-700">
                         {m.name}
                       </span>
-                      <span className="text-xs text-gray-400">{m.meta}</span>
+                      <span className="text-xs text-gray-400">{m.propertyTypeInterest}</span>
                     </div>
                   </div>
                 </div>
@@ -89,7 +84,7 @@ export default function PDPGroupProgressStatus({
 
           <div className="mt-3 h-2 rounded-full bg-gray-200">
             <div
-              className="h-2 rounded-full bg-gray-800"
+              className="h-2 rounded-full bg-[#1C4692]"
               style={{ width: `${pct}%` }}
               aria-hidden
             />
@@ -98,7 +93,7 @@ export default function PDPGroupProgressStatus({
 
         <div className="mt-5">
           <button
-            className="w-full rounded-full border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
+            className="w-full rounded-full border border-gray-300 bg-[#1C4692] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#1c4692e6]"
             aria-label="Join Group Buy"
           >
             Join Group Buy

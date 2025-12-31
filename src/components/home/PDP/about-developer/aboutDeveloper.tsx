@@ -1,7 +1,8 @@
 import logo from "@/assets/logo.svg"
 import Image from "next/image";
+import type { PropertyDetailResponseType } from "@/lib/api/services/home.service";
 
-export default function PDPAboutDeveloper() {
+export default function PDPAboutDeveloper({ property }: { property?: PropertyDetailResponseType | null }) {
   return (
     <section className="w-full px-4 py-6">
       <div className="mx-auto container rounded-2xl bg-white shadow-sm">
@@ -13,19 +14,18 @@ export default function PDPAboutDeveloper() {
           <div className="md:flex-1">
             <div className="mb-3">
               <Image
-              src={logo}
-              alt="MILKE KHEREEDO logo"
-              width={216}
-              height={52}
-              className="h-8 w-auto sm:h-10 lg:h-[52px]"
-            />
+                src={property?.developer?.logo ? property.developer.logo : logo}
+                alt={typeof property?.developer === "string" ? property?.developer : property?.developer?.name ?? "Developer"}
+                width={216}
+                height={52}
+                className="h-8 w-auto sm:h-10 lg:h-[52px]"
+              />
             </div>
 
             <p className="max-w-2xl text-sm leading-relaxed text-gray-600">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type ...
+              {typeof property?.developer === "string"
+                ? ""
+                : property?.developer?.description ?? "No developer information available."}
             </p>
           </div>
 

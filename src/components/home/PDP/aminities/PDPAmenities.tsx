@@ -1,50 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import type { PropertyDetailResponseType } from "@/lib/api/services/home.service";
 
-const amenities = [
-  // page 1
-  [
-    "Round-The-Clock Security with CCTV",
-    "Open And Covered Parking Spaces",
-    "Rainwater Harvesting System And ...",
-    "100% Power Backup",
-    "Children's Play Area",
-    "Club House",
-    "Club House",
-    "Indoor Games",
-    "Gymnasium",
-    "Swimming Pool",
-  ],
-  // page 2
-  [
-    "Solar Panels For Common Areas",
-    "Piped Gas System",
-    "Concierge Services",
-    "Waste Management And Recycling",
-    "Community Garden",
-    "Library",
-    "Multi-purpose Room",
-    "Senior Citizen Zone",
-    "Visitor Parking",
-  ],
-  // page 3
-  [
-    "Jogging And Cycling Tracks Amidst",
-    "Zen Gardens And Water Features",
-    "Multipurpose Hall For Social",
-    "Air-Conditioned Lobbies",
-    "Banquet Hall",
-    "Basketball Court",
-    "CCTV in common areas",
-    "Fire Fighting System",
-    "Power backup for lifts",
-  ],
-];
-
-export default function PDPAmenities() {
-  const [page, setPage] = useState(0);
+export default function PDPAmenities({ property }: { property?: PropertyDetailResponseType | null }) {
   const cols = 3;
+  const [page, setPage] = useState(0);
+
+  const items: string[] = property?.amenities!;
+  const pages: string[][] = [];
+  const pageSize = 9;
+  for (let i = 0; i < items.length; i += pageSize) {
+    pages.push(items.slice(i, i + pageSize));
+  }
+  const current = pages.length ? pages[page] : [];
 
   return (
     <section className="w-full p-4">
@@ -56,7 +25,7 @@ export default function PDPAmenities() {
 
           <div className="px-6 py-8">
             <div className="grid gap-6 md:grid-cols-3">
-              {amenities[page].map((amenity, idx) => (
+              {current.map((amenity, idx) => (
                 <div key={idx} className="text-sm text-gray-700">
                   <p className="leading-relaxed">{amenity}</p>
                 </div>
@@ -66,7 +35,7 @@ export default function PDPAmenities() {
 
           <div className="flex items-center justify-center px-6 pb-6">
             <div className="flex items-center gap-2">
-              {amenities.map((_, i) => (
+              {pages.map((_, i) => (
                 <button
                   key={i}
                   aria-label={`Go to amenities page ${i + 1}`}

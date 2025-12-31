@@ -1,4 +1,6 @@
-export default function PDPPropertyDetails() {
+import type { PropertyDetailResponseType } from "@/lib/api/services/home.service";
+
+export default function PDPPropertyDetails({ property }: { property?: PropertyDetailResponseType | null }) {
   return (
     <section className="">
       <div className="mx-auto container rounded-2xl bg-white shadow-sm">
@@ -14,21 +16,21 @@ export default function PDPPropertyDetails() {
               <div>
                 <p className="text-xs text-gray-500">Units</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  720 Units
+                  {property?.overview?.units ?? "—"}
                 </p>
               </div>
 
               <div>
                 <p className="text-xs text-gray-500">Carpet Area</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  1740–2645 Sq.Ft.
+                  {property?.overview?.areaRange?.formatted ?? "—"}
                 </p>
               </div>
 
               <div>
                 <p className="text-xs text-gray-500">Possession Date</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  October–2028
+                  {property?.overview?.possessionDateFormatted ?? "—"}
                 </p>
               </div>
             </div>
@@ -37,21 +39,23 @@ export default function PDPPropertyDetails() {
               <div>
                 <p className="text-xs text-gray-500">Configuration</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  2 BHK, 3 BHK, 4 BHK
+                  {property?.overview?.configurationsFormatted ?? property?.configurationsFormatted ?? "—"}
                 </p>
               </div>
 
               <div>
                 <p className="text-xs text-gray-500">RERA ID</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  GYUG2365/165/2024/26
+                  {property?.overview?.reraNumber ?? property?.reraId ?? "—"}
                 </p>
               </div>
 
               <div>
                 <p className="text-xs text-gray-500">Developer</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  Khusi Corporation
+                  {typeof property?.developer === "string"
+                    ? property?.developer
+                    : property?.developer?.name ?? "—"}
                 </p>
               </div>
             </div>
@@ -60,14 +64,14 @@ export default function PDPPropertyDetails() {
               <div>
                 <p className="text-xs text-gray-500">Possession Status</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  Under Construction
+                  {property?.overview?.possessionStatus ?? "—"}
                 </p>
               </div>
 
               <div>
                 <p className="text-xs text-gray-500">Project Area (in acre)</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  10 Acre
+                  {property?.projectSize ?? property?.overview?.plotSize ?? "—"}
                 </p>
               </div>
             </div>
@@ -76,11 +80,7 @@ export default function PDPPropertyDetails() {
           <div className="mt-6 pt-4">
             <p className="text-xs text-gray-500">Description</p>
             <p className="text-sm leading-relaxed text-gray-700 mt-1">
-              The standard chunk of Lorem Ipsum used since the 1500s is
-              reproduced below for those interested. Sections of more detailed
-              descriptive information about the property, amenities, legal
-              status and other buyer-facing notes would go here. Replace this
-              with the real property description.
+              {property?.description ?? "No description available."}
             </p>
           </div>
         </div>

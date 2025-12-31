@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import type { Property } from "@/lib/api/services/home.service";
 
 type Project = {
   id: string;
@@ -46,7 +46,7 @@ const sample: Project[] = [
   },
 ];
 
-export default function PDPSimilarProjects() {
+export default function PDPSimilarProjects({ property, similarProjectsData }: { property?: Property | null, similarProjectsData?: any[] }) {
   return (
     <section className="w-full bg-white py-10">
       <div className="mx-auto container">
@@ -54,7 +54,7 @@ export default function PDPSimilarProjects() {
 
         <div className="overflow-x-auto pb-4 md:overflow-visible">
           <div className="flex gap-6 px-2 md:grid md:grid-cols-3 md:gap-6 md:px-0">
-            {sample.map((p) => (
+            {(similarProjectsData && similarProjectsData.length ? similarProjectsData : sample).map((p: any) => (
               <article
                 key={p.id}
                 className="min-w-[320px] rounded-2xl bg-white p-4 shadow-[0_12px_12px_rgba(0,0,0,0.08)] md:min-w-0"

@@ -31,7 +31,7 @@ export default function PDPSections() {
       title: "About developer",
     },
   ];
-  return (
+    return (
     <section id="highlighted-sections">
       <div className="container mx-auto border-b border-[#F8F8F8] flex gap-4">
         {sections.map((row, index) => (

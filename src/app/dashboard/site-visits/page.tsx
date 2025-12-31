@@ -2,55 +2,88 @@
 
 import EmptyState from "@/components/dashboard/EmptyState";
 import PropertyGrid from "@/components/dashboard/PropertyGrid";
+import { usePropertyActions } from "@/hooks/usePropertyActions";
+import { useApi } from "@/lib/api/hooks/useApi";
+import { userDashboardService, PropertyApi } from "@/lib/api/services/userDashboard.service";
+
+type SiteVisitApi = PropertyApi;
+
 
 export default function SiteVisitsPage() {
-  const siteVisitedProperties = [
-    {
-      id: 1,
-      image: "/images/tp1.jpg",
-      title: "Godrej South Estate",
-      location: "Okla Phase I, New Delhi",
-      groupSize: 5,
-      openingLeft: 2,
-      targetPrice: "₹ 4.68 Crore",
-      developerPrice: "₹ 5.31 Crore",
-      lastVisited: "12 Jan, 2025 · 12:33 AM",
-    },
-  ];
-
-  if (siteVisitedProperties.length === 0) {
-    return (
-      <div className="rounded-[24px] bg-white px-6 py-10 shadow-[0_8px_24px_rgba(0,0,0,0.06)] sm:px-10">
-        <EmptyState
-          imageSrc="/images/empty_site_visit.png"
-          title="No site visits yet"
-          description="Once you visit a property site, it will appear here for quick reference."
-        />
-      </div>
+    const { data, loading } = useApi<SiteVisitApi[]>(() =>
+        userDashboardService.getVisitedProperties()
     );
-  }
 
-  return (
-    <>
-      <div className="block sm:hidden">
-        <PropertyGrid
-          properties={siteVisitedProperties.map((p) => ({
-            ...p,
-            lastViewedAt: p.lastVisited,
-            showDiscount: false,
-          }))}
-        />
-      </div>
+    const {
+        handleShareClick,
+        handleFavoriteClick,
+        favoriteStates,
+        favoriteLoading,
+    } = usePropertyActions();
+    
+    const visits = data ?? [];
 
-      <div className="hidden sm:block rounded-[24px] bg-[#f8fbff] px-10 py-10 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
-        <PropertyGrid
-          properties={siteVisitedProperties.map((p) => ({
-            ...p,
-            lastViewedAt: p.lastVisited,
+    if (loading) {
+        return <div className="p-6">Loading...</div>;
+    }
+
+    if (!visits.length) {
+        return (
+            <div className="rounded-[24px] bg-white px-6 py-10 shadow sm:px-10">
+                <EmptyState
+                    imageSrc="/images/Empty_property.png"
+                    title="No site visits yet"
+                    description="Once you visit a property site, it will appear here for quick reference."
+                />
+            </div>
+        );
+    }
+
+    const mappedProperties = visits.map((p) => {
+        const coverImage =
+            p.images?.[0] ?? "/images/empty_property.png";
+
+        return {
+            id: p.id,
+
+            image: coverImage,
+            title: p.projectName,
+            location: p.location,
+
+            openingLeft: p.openingLeft ?? 0,
+
+            groupSize: p.minGroupMembers ?? 0,
+
+            targetPrice: p.offerPrice?.formatted ?? "—",
+            developerPrice: p.developerPrice?.formatted ?? "—",
+
             showDiscount: false,
-          }))}
-        />
-      </div>
-    </>
-  );
+            discountPercentage: undefined,
+
+            lastViewedAt: p.lastViewedAt,
+        };
+    });
+
+
+    return (
+        <>
+            <div className="block sm:hidden">
+                <PropertyGrid
+                    properties={mappedProperties}
+                    onFavoriteClick={handleFavoriteClick}
+                    onShareClick={handleShareClick}
+                    favoriteStates={favoriteStates}
+                    favoriteLoading={favoriteLoading}
+                />      </div>
+
+            <div className="hidden sm:block rounded-[24px] bg-[#f8fbff] px-10 py-10 shadow">
+                <PropertyGrid
+                    properties={mappedProperties}
+                    onFavoriteClick={handleFavoriteClick}
+                    onShareClick={handleShareClick}
+                    favoriteStates={favoriteStates}
+                    favoriteLoading={favoriteLoading}
+                />      </div>
+        </>
+    );
 }

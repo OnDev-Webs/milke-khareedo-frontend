@@ -45,7 +45,7 @@ export default function PDPGroupProgressStatus({
 
     setIsLoading(true);
     try {
-      const response = await homeService.joinGroup(propertyId);
+      const response: any = await homeService.joinGroup(propertyId);
       if (response.success) {
         onJoinGroupChange(response.data.isJoinGroup);
         onRefresh();
@@ -131,7 +131,7 @@ export default function PDPGroupProgressStatus({
                       "from-indigo-400 to-indigo-500",
                     ];
                     const avatarColor = avatarColors[index % avatarColors.length];
-                    
+
                     return (
                       <div
                         key={member.userId}
@@ -182,11 +182,10 @@ export default function PDPGroupProgressStatus({
             <button
               onClick={handleJoinGroup}
               disabled={isJoinGroup || isLoading}
-              className={`w-full rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 ${
-                isJoinGroup
+              className={`w-full rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 ${isJoinGroup
                   ? "border-2 border-[#1C4692] bg-white text-[#1C4692] cursor-default pointer-events-none"
                   : "bg-[#1C4692] text-white hover:bg-[#1a3d7a] disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
-              }`}
+                }`}
               aria-label={isJoinGroup ? "Already Joined" : "Join Group Buy"}
             >
               {isLoading ? "Joining..." : isJoinGroup ? "Joined" : "Join Group Buy"}

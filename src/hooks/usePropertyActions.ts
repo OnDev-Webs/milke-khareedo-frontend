@@ -42,10 +42,11 @@ export function usePropertyActions() {
         try {
             const response = await homeService.toggleFavorite(property.id);
 
-            if (response?.success && response.data?.isFavorite !== undefined) {
+            if (response?.success && response.data) {
+                const favoriteData = response.data;
                 setFavoriteStates((prev) => ({
                     ...prev,
-                    [property.id]: response.data.isFavorite,
+                    [property.id]: favoriteData.isFavorite,
                 }));
             }
         } finally {

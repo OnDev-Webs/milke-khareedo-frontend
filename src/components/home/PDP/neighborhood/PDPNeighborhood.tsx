@@ -168,7 +168,8 @@ export default function PDPNeighborhood({
           
           // Ensure minimum zoom level for better visibility
           const listener = googleMaps.event.addListener(map, 'bounds_changed', () => {
-            if (map.getZoom() && map.getZoom() > 18) {
+            const zoom = map.getZoom();
+            if (zoom !== undefined && zoom > 18) {
               map.setZoom(18);
             }
             googleMaps.event.removeListener(listener);
@@ -337,7 +338,6 @@ export default function PDPNeighborhood({
               draggable: true,
               gestureHandling: "greedy", // Allows all gestures
               keyboardShortcuts: true,
-              clickableIcons: true,
               styles: [
                 {
                   featureType: "poi",
@@ -381,7 +381,6 @@ export default function PDPNeighborhood({
                   title={marker.title}
                   icon={markerIcon}
                   animation={animationType}
-                  optimized={false}
                   zIndex={isProperty ? 1000 : 100}
                   clickable={true}
                   cursor="pointer"

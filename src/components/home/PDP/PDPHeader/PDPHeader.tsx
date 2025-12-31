@@ -53,7 +53,7 @@ export default function PDPHeader({
     setFavoriteLoading(true);
     try {
       const response = await homeService.toggleFavorite(propertyId);
-      if (response.success) {
+      if (response.success && response.data) {
         onFavoriteChange(response.data.isFavorite);
       }
     } catch (error) {
@@ -66,23 +66,11 @@ export default function PDPHeader({
   const handleCompareClick = () => {
     clearAndAddToCompare({
       id: propertyId,
-      projectId: "",
-      projectName,
-      location,
-      latitude: null,
-      longitude: null,
-      image: null,
+      title: projectName,
+      price: startingPrice.formatted,
+      location: location,
+      image: undefined,
       developer: "",
-      developerPrice: developerPrice,
-      offerPrice: null,
-      discountPercentage,
-      budget: { min: 0, max: 0, formatted: "" },
-      area: { min: 0, max: 0, formatted: "" },
-      configurations: [],
-      configurationsFormatted: "",
-      propertyType: "",
-      possessionStatus: "",
-      isFavorite,
     });
   };
 

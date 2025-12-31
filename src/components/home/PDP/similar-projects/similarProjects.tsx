@@ -78,8 +78,9 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
     setFavoriteLoading((prev) => ({ ...prev, [property.id]: true }));
     try {
       const response = await homeService.toggleFavorite(property.id);
-      if (response.success) {
-        setFavoriteStates((prev) => ({ ...prev, [property.id]: response.data.isFavorite }));
+      if (response.success && response.data) {
+        const favoriteData = response.data;
+        setFavoriteStates((prev) => ({ ...prev, [property.id]: favoriteData.isFavorite }));
       }
     } catch (error) {
       console.error("Error toggling favorite:", error);
@@ -91,23 +92,11 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
   const handleCompareClick = useCallback((property: Property) => {
     clearAndAddToCompare({
       id: property.id,
-      projectId: property.projectId,
-      projectName: property.projectName,
+      title: property.projectName,
+      price: property.targetPrice?.formatted || "",
       location: property.location,
-      latitude: property.latitude,
-      longitude: property.longitude,
-      image: property.image,
-      developer: property.developer,
-      developerPrice: typeof property.developerPrice === "string" ? property.developerPrice : property.developerPrice.formatted,
-      offerPrice: property.offerPrice?.value || null,
-      discountPercentage: property.discountPercentage,
-      budget: { min: 0, max: 0, formatted: "" },
-      area: { min: 0, max: 0, formatted: "" },
-      configurations: property.configurations,
-      configurationsFormatted: property.configurationsFormatted,
-      propertyType: "",
-      possessionStatus: property.possessionStatus,
-      isFavorite: property.isFavorite,
+      image: property.image ?? undefined,
+      developer: property.developer || "",
     });
   }, [clearAndAddToCompare]);
 
@@ -132,8 +121,9 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
     setJoinGroupLoading((prev) => ({ ...prev, [property.id]: true }));
     try {
       const response = await homeService.joinGroup(property.id);
-      if (response.success) {
-        setJoinGroupStates((prev) => ({ ...prev, [property.id]: response.data.isJoinGroup }));
+      if (response.success && response.data) {
+        const joinGroupData = response.data;
+        setJoinGroupStates((prev) => ({ ...prev, [property.id]: joinGroupData.isJoinGroup }));
       }
     } catch (error) {
       console.error("Error joining group:", error);

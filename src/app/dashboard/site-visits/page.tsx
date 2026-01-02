@@ -23,11 +23,9 @@ export default function SiteVisitsPage() {
     
     const visits = data ?? [];
 
-    if (loading) {
-        return <div className="p-6">Loading...</div>;
-    }
+  
 
-    if (!visits.length) {
+    if (loading || !visits.length) {
         return (
             <div className="rounded-[24px] bg-white px-6 py-10 shadow sm:px-10">
                 <EmptyState

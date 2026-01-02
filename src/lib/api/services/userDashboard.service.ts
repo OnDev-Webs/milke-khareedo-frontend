@@ -30,6 +30,33 @@ export type PropertyApi = {
     relationshipManagerPhone?: string;
 };
 
+export type SearchHistoryItem = {
+    _id: string;
+    searchQuery: string;
+    location?: string;
+    createdAt: string;
+};
+
+export type SearchHistoryGroup = {
+    dateLabel: string;
+    searches: SearchHistoryItem[];
+};
+
+export type PreferencesApi = {
+    preferredLocations: string[];
+    budgetMin: number | null;
+    budgetMax: number | null;
+    floorMin: number | null;
+    floorMax: number | null;
+};
+
+export type SavePreferencesPayload = {
+  preferredLocations: string[];
+  budgetMin: number | null;
+  budgetMax: number | null;
+  floorMin: number | null;
+  floorMax: number | null;
+};
 
 
 export const userDashboardService = {
@@ -55,14 +82,17 @@ export const userDashboardService = {
         return apiClient.get(API_ENDPOINTS.USER_DASHBOARD.DASHBOARD);
     },
 
-    getSearchHistory: () =>
+    getSearchHistory: (): Promise<ApiResponse<SearchHistoryGroup[]>> =>
         apiClient.get(API_ENDPOINTS.USER_DASHBOARD.SEARCH_HISTORY),
 
-    getPreferences: () =>
+
+    getPreferences: (): Promise<ApiResponse<PreferencesApi>> =>
         apiClient.get(API_ENDPOINTS.USER_DASHBOARD.GET_PREFERENCES),
 
-    savePreferences: (data: any) =>
+    savePreferences: (data: SavePreferencesPayload) =>
         apiClient.post(API_ENDPOINTS.USER_DASHBOARD.SAVE_PREFERENCES, data),
+
+
 
     updateProfile: (data: FormData) =>
         apiClient.put(API_ENDPOINTS.USER_DASHBOARD.UPDATE_PROFILE, data, {

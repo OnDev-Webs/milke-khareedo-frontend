@@ -83,7 +83,7 @@ export default function FooterSection() {
               <ul className="space-y-3">
                 <li>
                   <Link
-                    href="/property-archive"
+                    href="/properties"
                     className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     Properties

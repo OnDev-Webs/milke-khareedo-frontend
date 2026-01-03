@@ -6,7 +6,7 @@
 export const API_CONFIG = {
   // Base URL for API - change this to your backend URL
   BASE_URL:
-    `${process.env.NEXT_PUBLIC_API_URL}/api` || "http://localhost:3002/api",
+    `${process.env.NEXT_PUBLIC_API_URL}/api` || "http://localhost:3008/api",
 
   // Default timeout for requests (in milliseconds)
   TIMEOUT: 30000,
@@ -37,12 +37,27 @@ export const API_ENDPOINTS = {
     POST_COMPARE: "/home/compare",
     POST_FAVORITE: "/home/property/favorite",
     POST_VISIT: "/home/property/visit",
+    POST_JOIN_GROUP: "/home/join-group",
+    GET_BLOGS: "/home/blogs",
+    GET_BLOG_BY_ID: "/home/blog",
   },
   // Auth endpoints
   AUTH: {
     LOGIN_OR_REGISTER: "/users/login-or-register",
     VERIFY_OTP: "/users/verify-otp",
     RESEND_OTP: "/users/resend-otp",
+  },
+
+  // User Dashboard endpoints
+  USER_DASHBOARD: {
+    DASHBOARD: "/user_dashboard/dashboard",
+    VIEWED_PROPERTIES: "/user_dashboard/my-properties/viewed",
+    FAVORITE_PROPERTIES: "/user_dashboard/my-properties/favorited",
+    VISITED_PROPERTIES: "/user_dashboard/my-properties/visited",
+    SEARCH_HISTORY: "/user_dashboard/get_search",
+    GET_PREFERENCES: "/user_dashboard/get_contact_preferences",
+    SAVE_PREFERENCES: "/user_dashboard/contact_preferences",
+    UPDATE_PROFILE: "/user_dashboard/update_profile",
   },
 
   // Add more endpoint groups as needed

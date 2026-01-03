@@ -1,21 +1,72 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BlogCard from "../cards/BlogCard";
-import BlogImg from "@/assets/blog.png";
 import Heading from "../typography/heading";
 import { Button } from "../ui/button";
+import { homeService } from "@/lib/api/services/home.service";
+import type { Blog } from "@/lib/api/services/home.service";
+import Link from "next/link";
 
-const RecentBlog = () => {
-  const blogData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+interface RecentBlogProps {
+  excludeBlogId?: string;
+  excludeSlug?: string;
+}
+
+const RecentBlog = ({ excludeBlogId, excludeSlug }: RecentBlogProps) => {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
   const [visibleCount, setVisibleCount] = useState(3);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      setIsLoading(true);
+      try {
+        const response = await homeService.getBlogs({
+          page: 1,
+          limit: 9,
+        });
+        if (response.success && response.data) {
+          const blogsArray = Array.isArray(response.data) ? response.data : [];
+          // Exclude current blog if provided
+          const filtered = blogsArray.filter(
+            (b) =>
+              b._id !== excludeBlogId && b.slug !== excludeSlug,
+          );
+          setBlogs(filtered);
+        }
+      } catch (error) {
+        console.error("Error fetching recent blogs:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, [excludeBlogId, excludeSlug]);
 
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + 3);
   };
 
-  const visibleBlogs = blogData.slice(0, visibleCount);
-  const hasMore = visibleCount < blogData.length;
+  const visibleBlogs = blogs.slice(0, visibleCount);
+  const hasMore = visibleCount < blogs.length;
+
+  if (isLoading) {
+    return (
+      <section className="py-[30px] md:py-[50px]">
+        <div className="container mx-auto px-4 md:px-0">
+          <div className="flex justify-center items-center py-10">
+            <div className="text-gray-500">Loading recent blogs...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (blogs.length === 0) {
+    return null;
+  }
 
   return (
     <>
@@ -23,23 +74,25 @@ const RecentBlog = () => {
         <div className="container mx-auto px-4 md:px-0">
           <div className="mb-[34px] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <Heading className="text-black">Recent Blogs</Heading>
-            <Button
-              variant={"ghost"}
-              className="rounded-[110px] text-base border border-[#F5F5F5] md:text-base"
-            >
-              View All
-            </Button>
+            <Link href="/blogs">
+              <Button
+                variant={"ghost"}
+                className="rounded-[110px] text-base border border-[#F5F5F5] md:text-base"
+              >
+                View All
+              </Button>
+            </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 mt-4">
-            {visibleBlogs.map((_, i) => (
+            {visibleBlogs.map((blog) => (
               <BlogCard
-                key={i}
-                image={BlogImg}
-                date="Wed 12 Jan, 2025"
-                title="Lorem Ipsum is simply dummy text"
-                description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
+                key={blog._id}
+                image={blog.bannerImage}
+                date={blog.date}
+                title={blog.title}
+                description={blog.subtitle}
                 buttonText="Read More"
-                href="/blogs/1"
+                href={`/blogs/${blog.slug}`}
               />
             ))}
           </div>

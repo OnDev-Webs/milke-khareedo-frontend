@@ -1,6 +1,10 @@
-import type { PropertyDetailResponseType } from "@/lib/api/services/home.service";
+import { type PropertyDetail } from "@/lib/api/services/home.service";
 
-export default function PDPPropertyDetails({ property }: { property?: PropertyDetailResponseType | null }) {
+interface PDPPropertyDetailsProps {
+  property: PropertyDetail;
+}
+
+export default function PDPPropertyDetails({ property }: PDPPropertyDetailsProps) {
   return (
     <section className="">
       <div className="mx-auto container rounded-2xl bg-white shadow-sm">
@@ -16,21 +20,21 @@ export default function PDPPropertyDetails({ property }: { property?: PropertyDe
               <div>
                 <p className="text-xs text-gray-500">Units</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  {property?.overview?.units ?? "—"}
+                  {property.overview.units} Units
                 </p>
               </div>
 
               <div>
                 <p className="text-xs text-gray-500">Carpet Area</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  {property?.overview?.areaRange?.formatted ?? "—"}
+                  {property.overview.areaRange.formatted}
                 </p>
               </div>
 
               <div>
                 <p className="text-xs text-gray-500">Possession Date</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  {property?.overview?.possessionDateFormatted ?? "—"}
+                  {property.overview.possessionDateFormatted}
                 </p>
               </div>
             </div>
@@ -39,23 +43,21 @@ export default function PDPPropertyDetails({ property }: { property?: PropertyDe
               <div>
                 <p className="text-xs text-gray-500">Configuration</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  {property?.overview?.configurationsFormatted ?? property?.configurationsFormatted ?? "—"}
+                  {property.overview.configurationsFormatted}
                 </p>
               </div>
 
               <div>
                 <p className="text-xs text-gray-500">RERA ID</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  {property?.overview?.reraNumber ?? property?.reraId ?? "—"}
+                  {property.reraId || property.overview.reraNumber}
                 </p>
               </div>
 
               <div>
                 <p className="text-xs text-gray-500">Developer</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  {typeof property?.developer === "string"
-                    ? property?.developer
-                    : property?.developer?.name ?? "—"}
+                  {property.developer.name}
                 </p>
               </div>
             </div>
@@ -64,14 +66,14 @@ export default function PDPPropertyDetails({ property }: { property?: PropertyDe
               <div>
                 <p className="text-xs text-gray-500">Possession Status</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  {property?.overview?.possessionStatus ?? "—"}
+                  {property.overview.possessionStatus}
                 </p>
               </div>
 
               <div>
                 <p className="text-xs text-gray-500">Project Area (in acre)</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  {property?.projectSize ?? property?.overview?.plotSize ?? "—"}
+                  {property.projectSize}
                 </p>
               </div>
             </div>
@@ -80,7 +82,7 @@ export default function PDPPropertyDetails({ property }: { property?: PropertyDe
           <div className="mt-6 pt-4">
             <p className="text-xs text-gray-500">Description</p>
             <p className="text-sm leading-relaxed text-gray-700 mt-1">
-              {property?.description ?? "No description available."}
+              {property.description}
             </p>
           </div>
         </div>

@@ -1,71 +1,95 @@
+"use client";
+
 import EmptyState from "@/components/dashboard/EmptyState";
 import PropertyGrid from "@/components/dashboard/PropertyGrid";
+import { usePropertyActions } from "@/hooks/usePropertyActions";
+import { useApi } from "@/lib/api/hooks/useApi";
+import { PropertyApi, userDashboardService } from "@/lib/api/services/userDashboard.service";
+import { useEffect } from "react";
+
+type ViewedPropertyApi = PropertyApi;
+
+
 
 export default function ViewedPropertiesPage() {
-  const viewedProperties = [
-    {
-      id: 1,
-      image: "/images/tp1.jpg",
-      title: "Godrej South Estate",
-      location: "Okla Phase I, New Delhi",
-      groupSize: 5,
-      openingLeft: 2,
-      targetPrice: "₹ 4.68 Crore",
-      developerPrice: "₹ 5.31 Crore",
-    },
-    {
-      id: 2,
-      image: "/images/tp2.jpg",
-      title: "Villa Estate",
-      location: "Okla Phase I, New Delhi",
-      groupSize: 5,
-      openingLeft: 2,
-      targetPrice: "₹ 4.68 Crore",
-      developerPrice: "₹ 5.31 Crore",
-    },
-    {
-      id: 3,
-      image: "/images/tp3.jpg",
-      title: " South Estate",
-      location: "Okla Phase I, New Delhi",
-      groupSize: 5,
-      openingLeft: 2,
-      targetPrice: "₹ 4.68 Crore",
-      developerPrice: "₹ 5.31 Crore",
-    },
-  ];
-
-  if (viewedProperties.length === 0) {
-    return (
-      <div className="rounded-[24px] bg-white px-6 py-10 shadow sm:px-10">
-        <EmptyState
-          imageSrc="/images/empty_property.png"
-          title="Find a place you like and save it!"
-          description="Start by searching and viewing properties you like. You can always come back here to see what you explored."
-        />
-      </div>
+    const { data, loading } = useApi<ViewedPropertyApi[]>(() =>
+        userDashboardService.getViewedProperties()
     );
-  }
 
-  return (
-    <>
-      <div className="block sm:hidden">
-        <PropertyGrid
-          properties={viewedProperties.map((p) => ({
-            ...p,
-            showDiscount: true,
-          }))}
-        />
-      </div>
+    const properties = data ?? [];
 
-      <div className="hidden sm:block rounded-[24px] bg-[#f8fbff] px-10 py-10 shadow">
-        <PropertyGrid
-          properties={viewedProperties.map((p) => ({
-            ...p,
-            showDiscount: true,
-          }))}
-        />
-      </div>
-    </>
-  );
+
+    const {
+        handleFavoriteClick,
+        handleShareClick,
+        favoriteStates,
+        favoriteLoading,
+    } = usePropertyActions();
+
+
+
+
+    if (loading || !properties.length) {
+        return (
+            <div className="rounded-[24px] bg-white px-6 py-10 shadow sm:px-10">
+                <EmptyState
+                    imageSrc="/images/Empty_property.png"
+                    title="No viewed properties"
+                    description="Properties you view will appear here."
+                />
+            </div>
+        );
+    }
+
+    const mappedProperties = properties.map((p) => {
+        const coverImage =
+            p.images?.[0] ?? "/images/empty_property.png";
+
+        return {
+            id: p.id,
+
+            image: coverImage,
+            title: p.projectName,
+            location: p.location,
+
+            openingLeft: p.openingLeft ?? 0,
+            groupSize: p.minGroupMembers ?? 0,
+
+            targetPrice: p.offerPrice?.formatted ?? "—",
+            developerPrice: p.developerPrice?.formatted ?? "—",
+
+            discountPercentage: p.discount?.percentageFormatted,
+            showDiscount: !!p.discount,
+
+            lastDayToJoin: p.lastDayToJoin,
+            lastViewedAt: undefined,
+
+
+        };
+    });
+
+
+    return (
+        <>
+            <div className="block sm:hidden">
+                <PropertyGrid
+                    properties={mappedProperties}
+                    onFavoriteClick={handleFavoriteClick}
+                    onShareClick={handleShareClick}
+                    favoriteStates={favoriteStates}
+                    favoriteLoading={favoriteLoading}
+                />
+            </div>
+
+            <div className="hidden sm:block rounded-[24px] bg-[#f8fbff] px-10 py-10 shadow">
+                <PropertyGrid
+                    properties={mappedProperties}
+                    onFavoriteClick={handleFavoriteClick}
+                    onShareClick={handleShareClick}
+                    favoriteStates={favoriteStates}
+                    favoriteLoading={favoriteLoading}
+                />
+            </div>
+        </>
+    );
 }

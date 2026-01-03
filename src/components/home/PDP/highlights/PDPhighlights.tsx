@@ -1,7 +1,15 @@
 import { BadgeCheck } from "lucide-react";
 import type { PropertyDetailResponseType } from "@/lib/api/services/home.service";
 
-export default function PDPHighLights({ property }: { property?: PropertyDetailResponseType | null }) {
+interface PDPHighLightsProps {
+  highlights: string[];
+}
+
+export default function PDPHighLights({ highlights }: PDPHighLightsProps) {
+  if (!highlights || highlights.length === 0) {
+    return null;
+  }
+
   return (
     <section>
       <div className="mx-auto container">
@@ -12,14 +20,13 @@ export default function PDPHighLights({ property }: { property?: PropertyDetailR
 
           <div className="px-6 py-8">
             <div className="space-y-4">
-              {property?.highlights?.map(
-                (title, idx) => (
-                  <div key={idx} className="flex gap-4 text-sm text-gray-700">
-                    <div className="rounded-lg flex items-center  gap-2.5 space-y-2.5 bg-[#EEF4FF] w-full px-4">
-                      <BadgeCheck className="fill-[#2E6B2B] text-white size-5 mt-2 " />
-                      <p className="leading-relaxed">{title}</p>
-                    </div>
+              {highlights.map((highlight, idx) => (
+                <div key={idx} className="flex gap-4 text-sm text-gray-700">
+                  <div className="rounded-lg flex items-center gap-2.5 space-y-2.5 bg-[#EEF4FF] px-4">
+                    <BadgeCheck className="fill-[#2E6B2B] text-white size-5 mt-2" />
+                    <p className="leading-relaxed">{highlight}</p>
                   </div>
+                </div>
                 ),
               )}
             </div>

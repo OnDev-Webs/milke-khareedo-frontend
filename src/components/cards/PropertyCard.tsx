@@ -17,6 +17,8 @@ interface PropertyCardProps {
   property: Property;
   isFavorite: boolean;
   isLoading: boolean;
+  isJoinGroup: boolean;
+  isJoinGroupLoading?: boolean;
   images: string[];
   currentIndex: number;
   hasMultipleImages: boolean;
@@ -27,6 +29,7 @@ interface PropertyCardProps {
   onFavoriteClick: (property: Property) => void;
   onCompareClick: (property: Property) => void;
   onShareClick: (property: Property) => void;
+  onJoinGroupClick: (property: Property) => void;
   onGoToImage: (index: number, totalImages: number) => void;
   onGoToNextImage: (totalImages: number) => void;
   onGoToPreviousImage: (totalImages: number) => void;
@@ -37,6 +40,8 @@ export default function PropertyCard({
   property,
   isFavorite,
   isLoading,
+  isJoinGroup,
+  isJoinGroupLoading = false,
   images,
   currentIndex,
   hasMultipleImages,
@@ -47,6 +52,7 @@ export default function PropertyCard({
   onFavoriteClick,
   onCompareClick,
   onShareClick,
+  onJoinGroupClick,
   onGoToImage,
   onGoToNextImage,
   onGoToPreviousImage,
@@ -264,8 +270,27 @@ export default function PropertyCard({
         </div>
 
         {/* Join Group Button */}
-        <button className="relative z-20 mt-4 w-full bg-[#1C4692] hover:bg-[#1c4692e6] text-white py-3 rounded-3xl font-semibold transition-colors">
-          Join Group
+        <button
+          onClick={(e) => {
+            if (isJoinGroup) {
+              e.stopPropagation();
+              return; // Prevent any action if already joined
+            }
+            e.stopPropagation();
+            onJoinGroupClick(property);
+          }}
+          disabled={isJoinGroup || isJoinGroupLoading}
+          className={`relative z-20 mt-4 w-full py-3 rounded-3xl font-semibold transition-all duration-300 ${
+            isJoinGroup
+              ? "bg-white border-2 border-[#1C4692] text-[#1C4692] cursor-default pointer-events-none"
+              : "bg-[#1C4692] hover:bg-[#1c4692e6] text-white disabled:opacity-50 disabled:cursor-not-allowed border-2 border-transparent"
+          }`}
+        >
+          {isJoinGroupLoading
+            ? "Joining..."
+            : isJoinGroup
+              ? "Joined"
+              : "Join Group"}
         </button>
       </div>
     </div>

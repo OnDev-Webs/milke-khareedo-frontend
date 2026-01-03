@@ -25,6 +25,13 @@ export default function TopProperties() {
   const [favoriteLoading, setFavoriteLoading] = useState<
     Record<string, boolean>
   >({});
+  // Track join group states
+  const [joinGroupStates, setJoinGroupStates] = useState<
+    Record<string, boolean>
+  >({});
+  const [joinGroupLoading, setJoinGroupLoading] = useState<
+    Record<string, boolean>
+  >({});
   // Track current image index for each property
   const [currentImageIndex, setCurrentImageIndex] = useState<
     Record<string, number>
@@ -57,13 +64,18 @@ export default function TopProperties() {
 
   // Initialize favorite states from API response
   useEffect(() => {
-    const states: Record<string, boolean> = {};
+    const favoriteStates: Record<string, boolean> = {};
+    const joinGroupStates: Record<string, boolean> = {};
     properties.forEach((prop) => {
       if (prop.isFavorite !== undefined) {
-        states[prop.id] = prop.isFavorite;
+        favoriteStates[prop.id] = prop.isFavorite;
+      }
+      if (prop.isJoinGroup !== undefined) {
+        joinGroupStates[prop.id] = prop.isJoinGroup;
       }
     });
-    setFavoriteStates((prev) => ({ ...prev, ...states }));
+    setFavoriteStates((prev) => ({ ...prev, ...favoriteStates }));
+    setJoinGroupStates((prev) => ({ ...prev, ...joinGroupStates }));
   }, [properties]);
 
   // Fetch initial properties when component mounts or tab changes
@@ -101,29 +113,9 @@ export default function TopProperties() {
     setActiveTab(tab);
   };
 
-  // Handle load more
-  const handleLoadMore = async () => {
-    if (isLoadingMore || !hasMore) return;
-
-    setIsLoadingMore(true);
-    try {
-      const nextPage = currentPage + 1;
-      const response: any = await homeService.getTopProperty({
-        page: nextPage,
-        limit: LIMIT,
-        location: locationFilter,
-      });
-      if (response.success && response.data) {
-        const responseData = response.data;
-        setProperties((prev) => [...prev, ...responseData]);
-        setHasMore(response.pagination.hasMore);
-        setCurrentPage(nextPage);
-      }
-    } catch (error) {
-      console.error("Error loading more properties:", error);
-    } finally {
-      setIsLoadingMore(false);
-    }
+  // Handle load more - redirect to properties page
+  const handleLoadMore = () => {
+    router.push("/properties");
   };
 
   // Handle favorite click
@@ -205,6 +197,59 @@ export default function TopProperties() {
     }
   };
 
+  // Handle join group click
+  const handleJoinGroupClick = async (property: Property) => {
+    // Check authentication first
+    if (!checkAuth()) {
+      setPendingAction({ type: "favorite", propertyId: property.id }); // Reuse pending action for join group
+      setShowAuthModal(true);
+      return;
+    }
+
+    // Check if already joined
+    const isJoined = joinGroupStates[property.id] ?? property.isJoinGroup ?? false;
+    if (isJoined) {
+      return; // Already joined, do nothing
+    }
+
+    // Set loading state
+    setJoinGroupLoading((prev) => ({ ...prev, [property.id]: true }));
+
+    try {
+      const response = await homeService.joinGroup(property.id);
+      if (response.success && response.data?.isJoinGroup) {
+        // Update local state immediately
+        setJoinGroupStates((prev) => ({
+          ...prev,
+          [property.id]: true,
+        }));
+
+        // Refresh property data to get updated state from API
+        const refreshResponse: any = await homeService.getTopProperty({
+          page: currentPage,
+          limit: LIMIT,
+          location: locationFilter,
+        });
+
+        if (refreshResponse.success && refreshResponse.data) {
+          // Update properties with fresh data
+          setProperties((prev) => {
+            return prev.map((p) => {
+              const updated = refreshResponse.data.find(
+                (refreshed: Property) => refreshed.id === p.id,
+              );
+              return updated || p;
+            });
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Failed to join group:", error);
+    } finally {
+      setJoinGroupLoading((prev) => ({ ...prev, [property.id]: false }));
+    }
+  };
+
   // Handle auth success
   const handleAuthSuccess = () => {
     if (pendingAction) {
@@ -213,7 +258,8 @@ export default function TopProperties() {
       );
       if (property) {
         if (pendingAction.type === "favorite") {
-          handleFavoriteClick(property);
+          // This could be favorite or join group, try join group first
+          handleJoinGroupClick(property);
         } else if (pendingAction.type === "compare") {
           handleCompareClick(property);
         }
@@ -336,6 +382,9 @@ export default function TopProperties() {
               const isFavorite =
                 favoriteStates[prop.id] ?? prop.isFavorite ?? false;
               const isLoading = favoriteLoading[prop.id] ?? false;
+              const isJoinGroup =
+                joinGroupStates[prop.id] ?? prop.isJoinGroup ?? false;
+              const isJoinGroupLoading = joinGroupLoading[prop.id] ?? false;
               const images = getPropertyImages(prop);
               const currentIndex = currentImageIndex[prop.id] ?? 0;
               const hasMultipleImages = images.length > 1;
@@ -347,6 +396,8 @@ export default function TopProperties() {
                   property={prop}
                   isFavorite={isFavorite}
                   isLoading={isLoading}
+                  isJoinGroup={isJoinGroup}
+                  isJoinGroupLoading={isJoinGroupLoading}
                   images={images}
                   currentIndex={currentIndex}
                   hasMultipleImages={hasMultipleImages}
@@ -357,6 +408,7 @@ export default function TopProperties() {
                   onFavoriteClick={handleFavoriteClick}
                   onCompareClick={handleCompareClick}
                   onShareClick={handleShareClick}
+                  onJoinGroupClick={handleJoinGroupClick}
                   onGoToImage={(index, totalImages) =>
                     goToImage(prop.id, index, totalImages)
                   }

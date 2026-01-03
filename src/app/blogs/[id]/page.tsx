@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,13 +11,98 @@ import {
 } from "@/components/ui/breadcrumb";
 import Heading from "@/components/typography/heading";
 import Image from "next/image";
-import BlogImg from "@/assets/blog.png";
 import ContactForm from "@/components/home/contact-us/ContactForm";
 import RecentBlog from "@/components/sections/RecentBlog";
 import React from "react";
+import { homeService } from "@/lib/api/services/home.service";
+import type { BlogDetail, Blog } from "@/lib/api/services/home.service";
+import Link from "next/link";
 
 const Page = ({ params }: { params: Promise<{ id: string }> }) => {
   const unwrappedParams = React.use(params);
+  const [blog, setBlog] = useState<BlogDetail | null>(null);
+  const [recentBlogs, setRecentBlogs] = useState<Blog[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingRecent, setIsLoadingRecent] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch blog detail
+  useEffect(() => {
+    const fetchBlog = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await homeService.getBlogById(unwrappedParams.id);
+        console.log("Blog detail response:", response);
+        if (response.success && response.data) {
+          // The API returns data directly as BlogDetail
+          setBlog(response.data);
+        } else {
+          setError("Blog not found");
+        }
+      } catch (err) {
+        console.error("Error fetching blog:", err);
+        setError("Failed to load blog");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (unwrappedParams.id) {
+      fetchBlog();
+    }
+  }, [unwrappedParams.id]);
+
+  // Fetch recent blogs for sidebar
+  useEffect(() => {
+    const fetchRecentBlogs = async () => {
+      setIsLoadingRecent(true);
+      try {
+        const response = await homeService.getBlogs({
+          page: 1,
+          limit: 5, // Get 5 recent blogs for sidebar
+        });
+        if (response.success && response.data) {
+          const blogsArray = Array.isArray(response.data) ? response.data : [];
+          // Exclude current blog from recent blogs
+          const filtered = blogsArray.filter(
+            (b) => b._id !== blog?._id && b.slug !== unwrappedParams.id,
+          );
+          setRecentBlogs(filtered.slice(0, 3)); // Show only 3 in sidebar
+        }
+      } catch (err) {
+        console.error("Error fetching recent blogs:", err);
+      } finally {
+        setIsLoadingRecent(false);
+      }
+    };
+
+    fetchRecentBlogs();
+  }, [blog?._id, unwrappedParams.id]);
+
+  if (isLoading) {
+    return (
+      <section className="py-[30px]">
+        <div className="container mx-auto">
+          <div className="flex justify-center items-center py-20">
+            <div className="text-gray-500">Loading blog...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error || !blog) {
+    return (
+      <section className="py-[30px]">
+        <div className="container mx-auto">
+          <div className="flex justify-center items-center py-20">
+            <div className="text-red-500">{error || "Blog not found"}</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <>
@@ -29,6 +117,15 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
+                <BreadcrumbLink
+                  href="/blogs"
+                  className="font-normal text-[18px]"
+                >
+                  Blogs
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
                 <BreadcrumbPage className="text-[#1C4692] font-semibold text-[18px]">
                   Blog Detail
                 </BreadcrumbPage>
@@ -36,178 +133,84 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
             </BreadcrumbList>
           </Breadcrumb>
 
-          <Heading variant={"h4"} className="font-medium">
-            Explore 5 Prime Locations in Navi Mumbai Tailored for Your
-            Residential Investment
+          <Heading variant={"h4"} className="font-medium mb-4">
+            {blog.title}
           </Heading>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 mt-4">
-            <div className="col-span-2">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-4">
+            {/* Main Content - Left Side (2 columns) */}
+            <div className="lg:col-span-2">
               <div className="w-full inline-flex flex-col justify-start items-start gap-10">
-                <Image
-                  alt="Blog Detail"
-                  width={793}
-                  height={345}
-                  className="self-stretch w-full h-80 rounded-[30px]"
-                  src={BlogImg}
-                />
+                {/* Banner Image */}
+                <div className="relative w-full h-80 rounded-[30px] overflow-hidden">
+                  <Image
+                    alt={blog.title}
+                    src={blog.bannerImage}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* Gallery Images */}
+                {blog.galleryImages && blog.galleryImages.length > 0 && (
+                  <div className="grid grid-cols-2 gap-4 w-full">
+                    {blog.galleryImages.map((image, index) => (
+                      <div
+                        key={index}
+                        className="relative w-full h-48 rounded-[20px] overflow-hidden"
+                      >
+                        <Image
+                          alt={`${blog.title} - Gallery ${index + 1}`}
+                          src={image}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 <div className="self-stretch flex flex-col justify-start items-start gap-7">
                   <div className="self-stretch flex flex-col justify-start items-start gap-3.5">
-                    <p className="self-stretch justify-start text-black text-xl font-medium">
-                      Wed 12 Jan, 2025
+                    {/* Date */}
+                    <p className="text-black text-xl font-medium">
+                      {blog.date}
                     </p>
+
                     <div className="self-stretch h-0 outline-1 outline-offset-[-0.50px] outline-neutral-200"></div>
-                    <p className="self-stretch justify-start text-zinc-500 text-lg font-medium leading-8">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book. It has survived not only five
-                      centuries, but also the leap into electronic typesetting,
-                      remaining essentially unchanged. It was popularised in the
-                      1960s with the release of Letraset sheets containing Lorem
-                      Ipsum passages, and more recently with desktop publishing
-                      software like Aldus PageMaker including versions of Lorem
-                      Ipsum.
-                      <br />
-                      <br />
-                      It is a long established fact that a reader will be
-                      distracted by the readable content of a page when looking
-                      at its layout. The point of using Lorem Ipsum is that it
-                      has a more-or-less normal distribution of letters, as
-                      opposed to using 'Content here, content here', making it
-                      look like readable English. Many desktop publishing
-                      packages and web page editors now use Lorem Ipsum as their
-                      default model text, and a search for 'lorem ipsum' will
-                      uncover many web sites still in their infancy. Various
-                      versions have evolved over the years, sometimes by
-                      accident, sometimes on purpose (injected humour and the
-                      like).
-                      <br />
-                      <br />
-                      Contrary to popular belief, Lorem Ipsum is not simply
-                      random text. It has roots in a piece of classical Latin
-                      literature from 45 BC, making it over 2000 years old.
-                      Richard McClintock, a Latin professor at Hampden-Sydney
-                      College in Virginia, looked up one of the more obscure
-                      Latin words, consectetur, from a Lorem Ipsum passage, and
-                      going through the cites of the word in classical
-                      literature, discovered the undoubtable source. Lorem Ipsum
-                      comes from sections 1.10.32 and 1.10.33 of "de Finibus
-                      Bonorum et Malorum" (The Extremes of Good and Evil) by
-                      Cicero, written in 45 BC. This book is a treatise on the
-                      theory of ethics, very popular during the Renaissance. The
-                      first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..",
-                      comes from a line in section 1.10.32.
-                      <br />
-                      <br />
-                      The standard chunk of Lorem Ipsum used since the 1500s is
-                      reproduced below for those interested. Sections 1.10.32
-                      and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero
-                      are also reproduced in their exact original form,
-                      accompanied by English versions from the 1914 translation
-                      by H. Rackham.
-                      <br />
-                      <br />
-                      There are many variations of passages of Lorem Ipsum
-                      available, but the majority have suffered alteration in
-                      some form, by injected humour, or randomised words which
-                      don't look even slightly believable. If you are going to
-                      use a passage of Lorem Ipsum, you need to be sure there
-                      isn't anything embarrassing hidden in the middle of text.
-                      All the Lorem Ipsum generators on the Internet tend to
-                      repeat predefined chunks as necessary, making this the
-                      first true generator on the Internet. It uses a dictionary
-                      of over 200 Latin words, combined with a handful of model
-                      sentence structures, to generate Lorem Ipsum which looks
-                      reasonable. The generated Lorem Ipsum is therefore always
-                      free from repetition, injected humour, or
-                      non-characteristic words etc.
-                      <br />
-                      <br />
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book. It has survived not only five
-                      centuries, but also the leap into electronic typesetting,
-                      remaining essentially unchanged. It was popularised in the
-                      1960s with the release of Letraset sheets containing Lorem
-                      Ipsum passages, and more recently with desktop publishing
-                      software like Aldus PageMaker including versions of Lorem
-                      Ipsum.
-                      <br />
-                      <br />
-                      It is a long established fact that a reader will be
-                      distracted by the readable content of a page when looking
-                      at its layout. The point of using Lorem Ipsum is that it
-                      has a more-or-less normal distribution of letters, as
-                      opposed to using 'Content here, content here', making it
-                      look like readable English. Many desktop publishing
-                      packages and web page editors now use Lorem Ipsum as their
-                      default model text, and a search for 'lorem ipsum' will
-                      uncover many web sites still in their infancy. Various
-                      versions have evolved over the years, sometimes by
-                      accident, sometimes on purpose (injected humour and the
-                      like).
-                      <br />
-                      <br />
-                      Contrary to popular belief, Lorem Ipsum is not simply
-                      random text. It has roots in a piece of classical Latin
-                      literature from 45 BC, making it over 2000 years old.
-                      Richard McClintock, a Latin professor at Hampden-Sydney
-                      College in Virginia, looked up one of the more obscure
-                      Latin words, consectetur, from a Lorem Ipsum passage, and
-                      going through the cites of the word in classical
-                      literature, discovered the undoubtable source. Lorem Ipsum
-                      comes from sections 1.10.32 and 1.10.33 of "de Finibus
-                      Bonorum et Malorum" (The Extremes of Good and Evil) by
-                      Cicero, written in 45 BC. This book is a treatise on the
-                      theory of ethics, very popular during the Renaissance. The
-                      first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..",
-                      comes from a line in section 1.10.32.
-                      <br />
-                      <br />
-                      The standard chunk of Lorem Ipsum used since the 1500s is
-                      reproduced below for those interested. Sections 1.10.32
-                      and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero
-                      are also reproduced in their exact original form,
-                      accompanied by English versions from the 1914 translation
-                      by H. Rackham.
-                      <br />
-                      <br />
-                      There are many variations of passages of Lorem Ipsum
-                      available, but the majority have suffered alteration in
-                      some form, by injected humour, or randomised words which
-                      don't look even slightly believable. If you are going to
-                      use a passage of Lorem Ipsum, you need to be sure there
-                      isn't anything embarrassing hidden in the middle of text.
-                      All the Lorem Ipsum generators on the Internet tend to
-                      repeat predefined chunks as necessary, making this the
-                      first true generator on the Internet. It uses a dictionary
-                      of over 200 Latin words, combined with a handful of model
-                      sentence structures, to generate Lorem Ipsum which looks
-                      reasonable. The generated Lorem Ipsum is therefore always
-                      free from repetition, injected humour, or
-                      non-characteristic words etc.
-                    </p>
+
+                    {/* Blog Content - HTML Rendering */}
+                    {blog.content && (
+                      <div
+                        className="self-stretch justify-start text-zinc-500 text-lg font-medium leading-8 blog-content"
+                        dangerouslySetInnerHTML={{ __html: blog.content }}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-span-1 border border-[#F3F3F3] rounded-[30px] p-5 h-fit">
-              <h6 className="text-[26px] font-bold text-black mb-[5px]">
-                Get in Touch
-              </h6>
-              <p className="text-black text-base font-medium mb-[25px]">
-                Let our experts help you answer your questions
-              </p>
-              {/* Contact Form */}
-              <ContactForm />
+
+            {/* Sidebar - Right Side (1 column) */}
+            <div className="lg:col-span-1">
+              <div className="flex flex-col gap-5">
+                {/* Get in Touch Form */}
+                <div className="border border-[#F3F3F3] rounded-[30px] p-5 bg-white">
+                  <h6 className="text-[26px] font-bold text-black mb-[5px]">
+                    Get in Touch
+                  </h6>
+                  <p className="text-black text-base font-medium mb-[25px]">
+                    Let our experts help you answer your questions
+                  </p>
+                  <ContactForm />
+                </div>
+
+              </div>
             </div>
           </div>
 
-          <RecentBlog />
+          {/* Recent Blogs Section at Bottom */}
+          <RecentBlog excludeBlogId={blog._id} excludeSlug={blog.slug} />
         </div>
       </section>
     </>

@@ -1,35 +1,117 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useApi } from "@/lib/api/hooks/useApi";
+import { userDashboardService } from "@/lib/api/services/userDashboard.service";
+import type { UserProfileApi, UpdateProfilePayload } from "@/lib/api/services/userDashboard.service";
+
 export default function ProfilePage() {
+  const [form, setForm] = useState<UpdateProfilePayload>({
+    firstName: "",
+    lastName: "",
+    address: "",
+    pincode: "",
+    city: "",
+    state: "",
+    country: "",
+  });
+
+  const { data, loading } = useApi<UserProfileApi>(() =>
+    userDashboardService.getUserProfile()
+  );
+
+  /* ================= HYDRATE FROM BACKEND ================= */
+  useEffect(() => {
+    if (!data) return;
+
+    setForm({
+      firstName: data.firstName ?? "",
+      lastName: data.lastName ?? "",
+      address: data.address ?? "",
+      pincode: data.pincode ?? "",
+      city: data.city ?? "",
+      state: data.state ?? "",
+      country: data.country ?? "",
+    });
+  }, [data]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSave = async () => {
+    await userDashboardService.updateUserProfile(form);
+  };
+
+  if (loading) return null;
+
   return (
-    <div className="rounded-[24px] bg-white px-5 py-8 sm:px-10 sm:py-10 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
-      <h2 className="mb-8 text-[20px] sm:text-[22px] font-semibold text-[#2b2b2b]">
-        My Profile
-      </h2>
+    <div className="rounded-[24px] bg-white px-5 py-8 sm:px-10 sm:py-10 shadow">
+      <h2 className="mb-8 text-[22px] font-semibold">My Profile</h2>
 
-      <form className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
-        <FieldInput label="First Name *" placeholder="Enter first name" />
-        <FieldInput label="Last Name *" placeholder="Enter last name" />
+      <div className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
+        <FieldInput
+          label="First Name *"
+          name="firstName"
+          value={form.firstName}
+          onChange={handleChange}
+        />
 
-        <FieldInput label="Email Address *" value="johndeo123@gmail.com" />
-        <FieldInput label="Mobile Number *" value="+91 956 264 5987" />
+        <FieldInput
+          label="Last Name *"
+          name="lastName"
+          value={form.lastName}
+          onChange={handleChange}
+        />
+
+        {/* READ ONLY */}
+        <FieldInput label="Email Address *" value={data?.email} disabled />
+        <FieldInput label="Mobile Number *" value={data?.phone} disabled />
 
         <FieldInput
           label="Full Address *"
-          placeholder="Enter your Full address"
+          name="address"
+          value={form.address}
+          onChange={handleChange}
           className="md:col-span-2"
         />
 
-        <FieldInput label="Pin code *" placeholder="Enter your Pincode" />
-        <FieldSelect label="City" placeholder="Select your city" />
-        <FieldSelect label="State" placeholder="Select your state" />
-        <FieldSelect label="Country" placeholder="Select your country" />
-      </form>
+        <FieldInput
+          label="Pin code *"
+          name="pincode"
+          value={form.pincode}
+          onChange={handleChange}
+        />
+
+        <FieldSelect
+          label="City"
+          name="city"
+          value={form.city}
+          onChange={handleChange}
+        />
+
+        <FieldSelect
+          label="State"
+          name="state"
+          value={form.state}
+          onChange={handleChange}
+        />
+
+        <FieldSelect
+          label="Country"
+          name="country"
+          value={form.country}
+          onChange={handleChange}
+        />
+      </div>
 
       <div className="mt-12">
         <button
-          type="submit"
-          className="w-full sm:w-auto rounded-full bg-[#1C4692] px-12 py-4 text-sm font-semibold text-white transition hover:bg-[#1C4692]"
+          onClick={handleSave}
+          className="rounded-full bg-[#1C4692] px-12 py-4 text-sm font-semibold text-white"
         >
           Save Profile
         </button>
@@ -38,40 +120,34 @@ export default function ProfilePage() {
   );
 }
 
+/* ================= COMPONENTS ================= */
+
 function FieldInput({
   label,
-  placeholder,
+  name,
   value,
+  onChange,
+  disabled = false,
   className = "",
 }: {
   label: string;
-  placeholder?: string;
+  name?: string;
   value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
   className?: string;
 }) {
   return (
     <div className={`relative ${className}`}>
-      <span className="absolute left-4 top-[-9px] z-10 bg-white px-2 text-xs text-[#9b9b9b]">
+      <span className="absolute left-4 top-[-9px] bg-white px-2 text-xs text-gray-400">
         {label}
       </span>
-
       <input
-        defaultValue={value}
-        placeholder={placeholder}
-        className="
-          h-14
-          w-full
-          rounded-[10px]
-          border
-          border-[#d0d0d0]
-          px-4
-          
-          text-sm
-          text-[#2b2b2b]
-          placeholder:text-[#b5b5b5]
-          focus:border-[#1C4692]
-          focus:outline-none
-        "
+        name={name}
+        value={value}
+        onChange={onChange}
+        disabled={disabled}
+        className="h-14 w-full rounded-[10px] border px-4 text-sm focus:border-[#1C4692] focus:outline-none disabled:bg-gray-100"
       />
     </div>
   );
@@ -79,38 +155,32 @@ function FieldInput({
 
 function FieldSelect({
   label,
-  placeholder,
+  name,
+  value,
+  onChange,
 }: {
   label: string;
-  placeholder: string;
+  name: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }) {
   return (
     <div className="relative">
-      <span className="absolute left-4 top-[-9px] z-10 bg-white px-2 text-xs text-[#9b9b9b]">
+      <span className="absolute left-4 top-[-9px] bg-white px-2 text-xs text-gray-400">
         {label}
       </span>
 
       <select
-        className="
-          h-14
-          w-full
-          appearance-none
-          rounded-[10px]
-          border
-          border-[#d0d0d0]
-          px-4
-          text-sm
-          text-[#9b9b9b]
-          focus:border-[#1C4692]
-          focus:outline-none
-        "
+        name={name}
+        value={value}
+        onChange={onChange}
+        className="h-14 w-full rounded-[10px] border px-4 text-sm focus:border-[#1C4692] focus:outline-none"
       >
-        <option>{placeholder}</option>
+        <option value="">Select {label}</option>
+        <option value="Hyderabad">Hyderabad</option>
+        <option value="Telangana">Telangana</option>
+        <option value="India">India</option>
       </select>
-
-      <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#9b9b9b]">
-        ▾
-      </span>
     </div>
   );
 }

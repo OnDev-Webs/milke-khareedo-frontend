@@ -42,21 +42,49 @@ export type SearchHistoryGroup = {
     searches: SearchHistoryItem[];
 };
 
+export type PreferredLocation = {
+    name: string;
+    latitude: number;
+    longitude: number;
+};
+
 export type PreferencesApi = {
-    preferredLocations: string[];
+    preferredLocations: PreferredLocation[];
     budgetMin: number | null;
     budgetMax: number | null;
     floorMin: number | null;
     floorMax: number | null;
 };
 
-export type SavePreferencesPayload = {
-  preferredLocations: string[];
-  budgetMin: number | null;
-  budgetMax: number | null;
-  floorMin: number | null;
-  floorMax: number | null;
+export type SavePreferencesPayload = PreferencesApi;
+
+
+
+export type UserProfileApi = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    address: string;
+    pincode: string;
+    city: string;
+    state: string;
+    country: string;
 };
+
+export type UpdateProfilePayload = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  countryCode: string;
+  address: string;
+  pincode: string;
+  city: string;
+  state: string;
+  country: string;
+};
+
 
 
 export const userDashboardService = {
@@ -92,10 +120,11 @@ export const userDashboardService = {
     savePreferences: (data: SavePreferencesPayload) =>
         apiClient.post(API_ENDPOINTS.USER_DASHBOARD.SAVE_PREFERENCES, data),
 
+    getUserProfile: (): Promise<ApiResponse<UserProfileApi>> =>
+        apiClient.get(API_ENDPOINTS.USER_DASHBOARD.GET_PREFERENCES),
 
+    updateUserProfile: (data: UpdateProfilePayload) =>
+        apiClient.put(API_ENDPOINTS.USER_DASHBOARD.UPDATE_PROFILE, data),
 
-    updateProfile: (data: FormData) =>
-        apiClient.put(API_ENDPOINTS.USER_DASHBOARD.UPDATE_PROFILE, data, {
-            headers: { "Content-Type": "multipart/form-data" },
-        }),
+   
 };

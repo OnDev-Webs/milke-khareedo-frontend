@@ -64,7 +64,7 @@ export type UserProfileApi = {
     firstName: string;
     lastName: string;
     email: string;
-    phone: string;
+    phoneNumber: string;
     address: string;
     pincode: string;
     city: string;
@@ -73,15 +73,17 @@ export type UserProfileApi = {
 };
 
 export type UpdateProfilePayload = {
-    firstName: string;
-    lastName: string;
-    address: string;
-    pincode: string;
-    city: string;
-    state: string;
-    country: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  countryCode: string;
+  address: string;
+  pincode: string;
+  city: string;
+  state: string;
+  country: string;
 };
-
 
 
 
@@ -119,7 +121,7 @@ export const userDashboardService = {
         apiClient.post(API_ENDPOINTS.USER_DASHBOARD.SAVE_PREFERENCES, data),
 
     getUserProfile: (): Promise<ApiResponse<UserProfileApi>> =>
-        apiClient.get(API_ENDPOINTS.USER_DASHBOARD.DASHBOARD),
+        apiClient.get(API_ENDPOINTS.USER_DASHBOARD.GET_PREFERENCES),
 
     updateUserProfile: (data: UpdateProfilePayload) =>
         apiClient.put(API_ENDPOINTS.USER_DASHBOARD.UPDATE_PROFILE, data),

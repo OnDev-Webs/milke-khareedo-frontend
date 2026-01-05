@@ -22,7 +22,7 @@ export default function PDPHighLights({ highlights }: PDPHighLightsProps) {
             <div className="space-y-4">
               {highlights.map((highlight, idx) => (
                 <div key={idx} className="flex gap-4 text-sm text-gray-700">
-                  <div className="rounded-lg flex items-center gap-2.5 space-y-2.5 bg-[#EEF4FF] px-4">
+                  <div className="rounded-lg flex w-full items-center gap-2.5 space-y-2.5 bg-[#EEF4FF] px-4">
                     <BadgeCheck className="fill-[#2E6B2B] text-white size-5 mt-2" />
                     <p className="leading-relaxed">{highlight}</p>
                   </div>

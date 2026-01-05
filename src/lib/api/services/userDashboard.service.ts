@@ -60,17 +60,22 @@ export type SavePreferencesPayload = PreferencesApi;
 
 
 
-export type UserProfileApi = {
+export type GetProfileResponse = {
+  user: {
     firstName: string;
     lastName: string;
     email: string;
     phoneNumber: string;
-    address: string;
-    pincode: string;
-    city: string;
-    state: string;
-    country: string;
+    countryCode: string;
+    address?: string | null;
+    pincode?: string | null;
+    country?: string | null;
+    state?: string | null;
+    city?: string | null;
+    isPhoneVerified: boolean;
+  };
 };
+
 
 export type UpdateProfilePayload = {
   firstName: string;
@@ -120,8 +125,8 @@ export const userDashboardService = {
     savePreferences: (data: SavePreferencesPayload) =>
         apiClient.post(API_ENDPOINTS.USER_DASHBOARD.SAVE_PREFERENCES, data),
 
-    getUserProfile: (): Promise<ApiResponse<UserProfileApi>> =>
-        apiClient.get(API_ENDPOINTS.USER_DASHBOARD.GET_PREFERENCES),
+    getUserProfile: (): Promise<ApiResponse<GetProfileResponse>> =>
+        apiClient.get(API_ENDPOINTS.USER_DASHBOARD.GET_PROFILE),
 
     updateUserProfile: (data: UpdateProfilePayload) =>
         apiClient.put(API_ENDPOINTS.USER_DASHBOARD.UPDATE_PROFILE, data),

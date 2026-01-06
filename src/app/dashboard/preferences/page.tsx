@@ -281,11 +281,10 @@ function Section({
           <button
             key={i}
             onClick={() => onToggle(i)}
-            className={`rounded-full px-4 py-2 text-xs ${
-              selected.includes(i)
+            className={`rounded-full px-4 py-2 text-xs ${selected.includes(i)
                 ? "bg-[#1C4692] text-white"
                 : "bg-white"
-            }`}
+              }`}
           >
             {i}
           </button>

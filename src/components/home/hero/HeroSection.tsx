@@ -6,6 +6,7 @@ import { FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import CitySelector from "./CitySelector";
 import { homeService } from "@/lib/api/services/home.service";
+import { MapPin, Search } from "lucide-react";
 
 export default function Hero() {
   const router = useRouter();
@@ -84,14 +85,14 @@ export default function Hero() {
 
   return (
     <section className="relative w-full py-10">
-      <div className="relative mx-auto w-full max-w-[1200px] h-auto md:h-[450px] overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-6 shadow-md">
+      <div className="relative mx-auto w-full max-w-[1330px] h-auto md:h-[450px] overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-6 shadow-md">
         <div className="relative z-10 w-full md:w-[60%] pt-10 md:pt-10 ps-4 md:ps-6">
           <p className="font-medium text-[#585981] mb-2">
             Buying a home is a big decision.
           </p>
 
-          <h1 className="text-3xl md:text-4xl font-bold text-[#151516] md:pe-68">
-            <span className="text-[#1C4692]"> Milke Khereedo </span>
+          <h1 className="text-3xl md:text-4xl font-bold text-[#151516] md:pe-68 ">
+            <span className="text-[#1C4692] mb-8"> Milke Khereedo <br /> </span>
             Makes it easier.
           </h1>
 
@@ -158,7 +159,7 @@ export default function Hero() {
               <CitySelector
                 value={selectedCity}
                 onChange={handleCityChange}
-                className="h-auto"
+                className="h-auto "
                 showLabel={false}
               />
             </div>
@@ -171,7 +172,23 @@ export default function Hero() {
           {/* SEARCH INPUT SECTION */}
           <div className="relative flex-1 flex flex-col justify-start ps-4 pe-6 py-4">
             <div className="relative">
-              <input
+              <p className="text-base font-semibold text-gray-900">
+                Find your Dream Home
+              </p>
+              <div className="flex items-center gap-1.5 mt-[5px]">
+                <FaMapMarkerAlt className="text-gray-500 text-xs shrink-0" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  onFocus={() => setIsSearchFocused(!isSearchFocused)}
+                  onBlur={() => setIsSearchFocused(false)}
+                  placeholder="Search for Developers, Location, Projects"
+                  className="w-full bg-transparent outline-none border-none focus:ring-0 transition-all duration-300 text-xs text-gray-500"
+                />
+                </div>
+              {/* <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -190,9 +207,9 @@ export default function Hero() {
               <div
                 className={`absolute left-0 top-full mt-1.5 flex items-center gap-1.5 text-xs text-gray-500 pointer-events-none transition-opacity duration-300 ${searchQuery || isSearchFocused ? "opacity-0" : "opacity-100"}`}
               >
-                <FaMapMarkerAlt className="text-gray-500 text-xs shrink-0" />
+                <MapPin className="text-gray-500 text-xs w-4 h-14px shrink-0" />
                 <span>Search for Developers, Location, Projects</span>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -203,8 +220,8 @@ export default function Hero() {
               disabled={isSearching}
               className="h-12 w-full md:w-auto md:min-w-[140px] rounded-full bg-[#1C4692] text-white flex items-center justify-center gap-2 font-medium shadow-md hover:bg-[#1C4692] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <FaSearch className="text-white text-sm" />
-              <span className="text-sm">
+              <Search className="text-white text-sm h-5 w-5" />
+              <span className="text-lg">
                 {isSearching ? "Searching..." : "Search"}
               </span>
             </button>

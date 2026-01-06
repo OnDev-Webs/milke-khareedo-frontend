@@ -340,7 +340,7 @@ export default function CitySelector({
                     {selectedCity.city}
                 </span>
                 <FaChevronDown
-                    className={`pointer-events-none text-gray-800 text-xs transition-transform duration-200 flex-shrink-0 ${isOpen ? "rotate-180" : ""
+                    className={`pointer-events-none text-gray-800 text-sm ml-4 transition-transform duration-200  ${isOpen ? "rotate-180" : ""
                         }`}
                 />
             </button>
@@ -421,8 +421,8 @@ export default function CitySelector({
                                                 }}
                                                 onKeyDown={(e) => handleKeyDown(e, city)}
                                                 className={`w-full px-4 py-3 text-left text-sm transition-all duration-150 ${isSelected
-                                                        ? "bg-[#1C4692] hover:bg-[#1c4692e6] text-white font-semibold"
-                                                        : "text-gray-700 hover:bg-[#1C4692]/5 hover:text-[#1C4692]"
+                                                    ? "bg-[#1C4692] hover:bg-[#1c4692e6] text-white font-semibold"
+                                                    : "text-gray-700 hover:bg-[#1C4692]/5 hover:text-[#1C4692]"
                                                     }`}
                                             >
                                                 <div className="flex items-center justify-between">

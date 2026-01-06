@@ -1,6 +1,7 @@
 "use client";
 
 import upPrice from "@/assets/upPrice.svg"
+import { PropertyDetailResponseType } from "@/lib/api";
 import Image from "next/image"
 import { type PropertyPrice } from "@/lib/api/services/home.service";
 import { IoHeartOutline, IoHeart } from "react-icons/io5";

@@ -3,8 +3,14 @@
 import { Play } from "lucide-react";
 import Image from "next/image";
 import { IoCloseCircle } from "react-icons/io5";
+import { useRef, useState } from "react";
 
 export default function Heading() {
+
+  const [showVideo, setShowVideo] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
   return (
     <section className="py-24 px-6 md:px-10 relative">
       <div className="shadow-[0_0_10px_rgba(0,0,0,0.08)] py-10 px-6 md:px-12 rounded-4xl flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0 relative z-10">
@@ -32,35 +38,47 @@ export default function Heading() {
               Submit
             </button>
           </div>
+          {showVideo && (
+            <div className="absolute -bottom-10 md:-bottom-[290px] right-0 w-[150px] md:w-[230px] h-[200px] md:h-[330px] rounded-3xl overflow-hidden shadow-lg z-20 hidden md:block bg-black">
 
-          <div className="absolute -bottom-10 md:-bottom-[290px] right-0 w-[150px] md:w-[230px] h-[200px] md:h-[330px] rounded-3xl overflow-hidden shadow-lg z-20 hidden md:block">
-            <Image
-              src="/images/about.jpg"
-              alt="About"
-              fill
-              priority
-              className="object-cover scale-[1.25] md:scale-[1.5] translate-x-[20px] md:translate-x-[38px]"
-            />
-            {/* <video
-              src="/videos/sample.mp4" 
-              autoPlay
-              loop
-              muted
-              className="w-full h-full object-cover scale-[1.5] translate-x-[38px]"
-            /> */}
+              <video
+                ref={videoRef}
+                src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/185341-875417497.mp4"
+                className="w-full h-full object-cover"
+                controls={isPlaying}
+                preload="metadata"
+              />
 
-            <div className="absolute bottom-2 left-2 z-30">
-              <div className="h-8 w-8 md:h-10 md:w-10 bg-white rounded-full flex items-center justify-center shadow">
-                <Play size="20" className="text-[#000]" />
-              </div>
+              {!isPlaying && (
+                <button
+                  onClick={() => {
+                    videoRef.current?.play();
+                    setIsPlaying(true);
+                  }}
+                  className="absolute bottom-2 left-2 z-30 h-8 w-8 md:h-10 md:w-10 bg-white rounded-full flex items-center justify-center shadow"
+                  aria-label="Play video"
+                >
+                  <Play size={20} className="text-black" />
+                </button>
+              )}
+
+              <button
+                onClick={() => {
+                  if (videoRef.current) {
+                    videoRef.current.pause();
+                    videoRef.current.currentTime = 0;
+                  }
+                  setIsPlaying(false);
+                  setShowVideo(false); 
+                }}
+                className="absolute top-2 right-2 z-30 h-8 w-8 md:h-10 md:w-10 bg-white rounded-full flex items-center justify-center shadow"
+                aria-label="Close video"
+              >
+                <IoCloseCircle size={20} className="text-black" />
+              </button>
             </div>
+          )}
 
-            <div className="absolute top-2 right-2 z-30">
-              <div className="h-8 w-8 md:h-10 md:w-10 bg-white rounded-full flex items-center justify-center shadow">
-                <IoCloseCircle size="20" className="text-[#000]" />
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>

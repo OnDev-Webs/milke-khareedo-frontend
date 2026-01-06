@@ -144,7 +144,7 @@ type PreferenceCardProps = {
   setLocalities: React.Dispatch<React.SetStateAction<PreferredLocation[]>>;
   localityInput: string;
   setLocalityInput: (v: string) => void;
-  inputRef: React.RefObject<HTMLInputElement>;
+  inputRef: React.RefObject<HTMLInputElement | null>;
   budgets: string[];
   floors: string[];
   selectedBudgets: string[];
@@ -281,11 +281,10 @@ function Section({
           <button
             key={i}
             onClick={() => onToggle(i)}
-            className={`rounded-full px-4 py-2 text-xs ${
-              selected.includes(i)
+            className={`rounded-full px-4 py-2 text-xs ${selected.includes(i)
                 ? "bg-[#1C4692] text-white"
                 : "bg-white"
-            }`}
+              }`}
           >
             {i}
           </button>

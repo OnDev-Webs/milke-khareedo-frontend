@@ -6,8 +6,6 @@ import {
   IoHeartOutline,
   IoHeart,
   IoShareSocialOutline,
-  IoChevronBack,
-  IoChevronForward,
 } from "react-icons/io5";
 import { MdCompareArrows } from "react-icons/md";
 import { type Property } from "@/lib/api/services/home.service";
@@ -93,11 +91,10 @@ export default function PropertyCard({
 
         {/* Action Icons - Right Side (Stacked) - Only visible on hover */}
         <div
-          className={`absolute top-3 right-3 flex flex-col gap-2 z-20 transition-all duration-300 ${
-            isHovered
-              ? "opacity-100 visible translate-y-0"
-              : "opacity-0 invisible -translate-y-2 pointer-events-none"
-          }`}
+          className={`absolute top-3 right-3 flex flex-col gap-2 z-20 transition-all duration-300 ${isHovered
+            ? "opacity-100 visible translate-y-0"
+            : "opacity-0 invisible -translate-y-2 pointer-events-none"
+            }`}
         >
           {/* Heart Icon (Favorite) */}
           <button
@@ -106,11 +103,10 @@ export default function PropertyCard({
               onFavoriteClick(property);
             }}
             disabled={isLoading}
-            className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all ${
-              isFavorite
-                ? "border-[#1C4692] bg-[#1C4692] text-white"
-                : "border-white bg-white/90 text-gray-700 hover:bg-white"
-            } disabled:opacity-50 disabled:cursor-not-allowed shadow-md`}
+            className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all ${isFavorite
+              ? "border-[#1C4692] bg-[#1C4692] text-white"
+              : "border-white bg-white/90 text-gray-700 hover:bg-white"
+              } disabled:opacity-50 disabled:cursor-not-allowed shadow-md`}
             aria-label={
               isFavorite ? "Remove from favorites" : "Add to favorites"
             }
@@ -147,42 +143,6 @@ export default function PropertyCard({
           </button>
         </div>
 
-        {/* Navigation Arrows - Only show if multiple images, hidden on hover */}
-        {hasMultipleImages && (
-          <>
-            {/* Previous Arrow - Left side, middle height */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onGoToPreviousImage(images.length);
-              }}
-              className={`absolute left-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 hover:bg-white shadow-lg transition-all duration-300 z-10 border border-gray-200 backdrop-blur-sm ${
-                isHovered
-                  ? "opacity-0 invisible scale-90 pointer-events-none"
-                  : "opacity-100 visible scale-100"
-              }`}
-              aria-label="Previous image"
-            >
-              <IoChevronBack className="h-5 w-5" />
-            </button>
-
-            {/* Next Arrow - Right side, middle height (centered when not hovering) */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onGoToNextImage(images.length);
-              }}
-              className={`absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 hover:bg-white shadow-lg transition-all duration-300 z-10 border border-gray-200 backdrop-blur-sm ${
-                isHovered
-                  ? "opacity-0 invisible scale-90 pointer-events-none"
-                  : "opacity-100 visible scale-100"
-              }`}
-              aria-label="Next image"
-            >
-              <IoChevronForward className="h-5 w-5" />
-            </button>
-          </>
-        )}
 
         {/* Image Navigation Dots - Only show if multiple images */}
         {hasMultipleImages && (
@@ -191,11 +151,10 @@ export default function PropertyCard({
               <button
                 key={index}
                 onClick={() => onGoToImage(index, images.length)}
-                className={`transition-all ${
-                  index === currentIndex
-                    ? "h-1.5 w-6 rounded-full bg-[#1C4692]"
-                    : "h-1.5 w-1.5 rounded-full bg-white hover:bg-white/80"
-                }`}
+                className={`transition-all ${index === currentIndex
+                  ? "h-1.5 w-6 rounded-full bg-[#1C4692]"
+                  : "h-1.5 w-1.5 rounded-full bg-white hover:bg-white/80"
+                  }`}
                 aria-label={`Go to image ${index + 1}`}
               />
             ))}
@@ -227,7 +186,7 @@ export default function PropertyCard({
               Group Size
             </span>
             <span className="text-base font-bold text-[#1C4692] mt-1">
-              {property.groupSizeFormatted}
+              {property.groupSize}
             </span>
             <span className="text-xs text-black mt-0.5">Members</span>
           </div>
@@ -236,7 +195,7 @@ export default function PropertyCard({
               Opening
             </span>
             <span className="text-base font-bold text-[#1C4692] mt-1">
-              {property.openingFormatted}
+              {property.openingLeft}
             </span>
             <span className="text-xs text-black mt-0.5">Left</span>
           </div>
@@ -280,11 +239,10 @@ export default function PropertyCard({
             onJoinGroupClick(property);
           }}
           disabled={isJoinGroup || isJoinGroupLoading}
-          className={`relative z-20 mt-4 w-full py-3 rounded-3xl font-semibold transition-all duration-300 ${
-            isJoinGroup
-              ? "bg-white border-2 border-[#1C4692] text-[#1C4692] cursor-default pointer-events-none"
-              : "bg-[#1C4692] hover:bg-[#1c4692e6] text-white disabled:opacity-50 disabled:cursor-not-allowed border-2 border-transparent"
-          }`}
+          className={`relative z-20 mt-4 w-full py-3 rounded-3xl font-semibold transition-all duration-300 ${isJoinGroup
+            ? "bg-white border-2 border-[#1C4692] text-[#1C4692] cursor-default pointer-events-none"
+            : "bg-[#1C4692] hover:bg-[#1c4692e6] text-white disabled:opacity-50 disabled:cursor-not-allowed border-2 border-transparent"
+            }`}
         >
           {isJoinGroupLoading
             ? "Joining..."

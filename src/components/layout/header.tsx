@@ -33,7 +33,7 @@ export default function Header() {
 
   return (
     <header className="w-full border-b border-gray-100 bg-white">
-      <div className="mx-auto container">
+      <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 xl:px-10">
         <div className="flex items-center justify-between py-4 lg:py-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
@@ -53,11 +53,10 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative pb-1 text-sm transition-colors xl:text-base ${
-                    isActive(link.href)
-                      ? "font-semibold text-[#1C4692]"
-                      : "hover:text-[#1C4692]"
-                  }`}
+                  className={`relative pb-1 text-sm transition-colors xl:text-base ${isActive(link.href)
+                    ? "font-semibold text-[#1C4692]"
+                    : "hover:text-[#1C4692]"
+                    }`}
                 >
                   {link.label}
                   {isActive(link.href) && (
@@ -77,7 +76,7 @@ export default function Header() {
               <div className="relative">
                 <button
                   onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                  className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-[#1C4692] text-white transition-colors hover:bg-[#1c4692e6]"
+                  className="relative flex h-11 w-11 items-center justify-center rounded-full bg-[#1C4692] text-white"
                   aria-label="Profile menu"
                 >
                   {user?.profileImage ? (
@@ -90,7 +89,9 @@ export default function Header() {
                   ) : (
                     <IoPerson className="h-5 w-5" />
                   )}
-                  <IoChevronDown className="absolute bottom-0.5 right-0.5 h-2.5 w-2.5" />
+                  <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-white shadow">
+                    <IoChevronDown className="h-3 w-3 text-gray-700" />
+                  </span>
                 </button>
 
                 {profileDropdownOpen && (
@@ -165,9 +166,8 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`py-2.5 text-sm ${
-                    isActive(link.href) ? "font-semibold text-[#1C4692]" : ""
-                  }`}
+                  className={`py-2.5 text-sm ${isActive(link.href) ? "font-semibold text-[#1C4692]" : ""
+                    }`}
                 >
                   {link.label}
                 </Link>

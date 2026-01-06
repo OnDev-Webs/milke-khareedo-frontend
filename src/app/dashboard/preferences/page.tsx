@@ -144,7 +144,7 @@ type PreferenceCardProps = {
   setLocalities: React.Dispatch<React.SetStateAction<PreferredLocation[]>>;
   localityInput: string;
   setLocalityInput: (v: string) => void;
-  inputRef: React.RefObject<HTMLInputElement>;
+  inputRef: React.RefObject<HTMLInputElement | null>;
   budgets: string[];
   floors: string[];
   selectedBudgets: string[];

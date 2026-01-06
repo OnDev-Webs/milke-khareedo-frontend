@@ -3,8 +3,11 @@
 import { useEffect, useState } from "react";
 import { useApi } from "@/lib/api/hooks/useApi";
 import { userDashboardService } from "@/lib/api/services/userDashboard.service";
-import type { UserProfileApi, UpdateProfilePayload } from "@/lib/api/services/userDashboard.service";
+import type { UpdateProfilePayload, GetProfileResponse } from "@/lib/api/services/userDashboard.service";
 import { getCities, getCountries, getStates } from "@/lib/location";
+import { Verified } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { authService } from "@/lib/api/services/auth.service";
 
 export default function ProfilePage() {
 
@@ -24,28 +27,57 @@ export default function ProfilePage() {
     const [countries] = useState(getCountries());
     const [states, setStates] = useState<any[]>([]);
     const [cities, setCities] = useState<any[]>([]);
-
-    const { data, loading } = useApi<UserProfileApi>(() =>
+    const router = useRouter();
+    const { data, loading } = useApi<GetProfileResponse>(() =>
         userDashboardService.getUserProfile()
     );
+    const [showOtp, setShowOtp] = useState(false);
+    const [otp, setOtp] = useState("");
+    const [otpLoading, setOtpLoading] = useState(false);
+    const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+    const [originalPhoneNumber, setOriginalPhoneNumber] = useState("");
 
     useEffect(() => {
-        if (!data) return;
+        if (!data?.user) return;
+        setIsPhoneVerified(data.user.isPhoneVerified ?? false);
+        setOriginalPhoneNumber(data.user.phoneNumber ?? "");
+
+        const user = data.user;
+
+        const countryCode =
+            getCountries().some(c => c.isoCode === user.country)
+                ? user.country
+                : getCountries().find(c => c.name === user.country)?.isoCode ?? "";
+
+        const statesList = countryCode ? getStates(countryCode) : [];
+
+        const stateCode =
+            statesList.some(s => s.isoCode === user.state)
+                ? user.state
+                : statesList.find(s => s.name === user.state)?.isoCode ?? "";
+
+        const citiesList =
+            countryCode && stateCode ? getCities(countryCode, stateCode) : [];
+
+        setStates(statesList);
+        setCities(citiesList);
 
         setForm({
-            firstName: data.firstName ?? "",
-            lastName: data.lastName ?? "",
-            email: data.email ?? "",
-            phoneNumber: data.phoneNumber ?? "",
-            countryCode: "+91",
-
-            address: data.address ?? "",
-            pincode: data.pincode ?? "",
-            city: data.city ?? "",
-            state: data.state ?? "",
-            country: data.country ?? "",
+            firstName: user.firstName ?? "",
+            lastName: user.lastName ?? "",
+            email: user.email ?? "",
+            phoneNumber: user.phoneNumber ?? "",
+            countryCode: user.countryCode ?? "+91",
+            address: user.address ?? "",
+            pincode: user.pincode ?? "",
+            country: countryCode ?? "",
+            state: stateCode ?? "",
+            city: user.city ?? "",
         });
     }, [data]);
+
+
+
 
 
     const handleChange = (
@@ -56,10 +88,16 @@ export default function ProfilePage() {
     };
 
     const handleSave = async () => {
-
-        if(PhoneInput.length < 10){
-            alert("Please enter a valid phone number");
+        if (form.phoneNumber.length !== 10) {
+            alert("Please enter a valid 10-digit phone number");
+            return;
         }
+
+        if (form.phoneNumber !== originalPhoneNumber && !isPhoneVerified) {
+            alert("Please verify your mobile number before saving.");
+            return;
+        }
+
         await userDashboardService.updateUserProfile(form);
     };
 
@@ -88,6 +126,50 @@ export default function ProfilePage() {
         }));
 
         setCities(getCities(form.country, stateCode));
+    };
+
+
+    const handleSendOtp = async () => {
+        if (form.phoneNumber.length !== 10) {
+            alert("Enter valid phone number");
+            return;
+        }
+
+        await authService.loginOrRegister({
+            phoneNumber: form.phoneNumber,
+            countryCode: form.countryCode,
+        });
+
+        setShowOtp(true);
+    };
+
+
+
+    const handleVerifyOtp = async () => {
+        if (otp.length !== 6) {
+            alert("Invalid OTP");
+            return;
+        }
+
+        await authService.verifyOTP({
+            phoneNumber: form.phoneNumber,
+            countryCode: form.countryCode,
+            otp,
+        });
+
+        setIsPhoneVerified(true);
+
+        setOtp("");
+        setShowOtp(false);
+    };
+
+
+    const handleResendOtp = async () => {
+        await authService.resendOTP({
+            phoneNumber: form.phoneNumber,
+            countryCode: form.countryCode,
+            type: "login",
+        });
     };
 
 
@@ -122,10 +204,48 @@ export default function ProfilePage() {
                     label="Mobile Number *"
                     countryCode={form.countryCode}
                     phoneNumber={form.phoneNumber}
-                    onChange={(value) =>
-                        setForm((prev) => ({ ...prev, phoneNumber: value }))
-                    }
+                    isVerified={isPhoneVerified}
+                    onVerify={handleSendOtp}
+                    onChange={(value) => {
+                        setForm((prev) => ({ ...prev, phoneNumber: value }));
+
+                        if (value !== originalPhoneNumber && isPhoneVerified) {
+                            setIsPhoneVerified(false);
+                            setShowOtp(false);
+                            setOtp("");
+                        }
+                    }}
+
                 />
+
+
+                {showOtp && (
+                    <div className="md:col-span-2 flex items-center gap-3">
+                        <input
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
+                            maxLength={6}
+                            placeholder="Enter OTP"
+                            className="h-12 border rounded px-4 w-40"
+                        />
+
+                        <button
+                            onClick={handleVerifyOtp}
+                            className="bg-[#1C4692] text-white px-4 py-2 rounded"
+                        >
+                            Verify OTP
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={handleResendOtp}
+                            className="text-sm text-blue-600"
+                        >
+                            Resend OTP
+                        </button>
+                    </div>
+                )}
+
 
 
 
@@ -172,12 +292,17 @@ export default function ProfilePage() {
                     value={form.state}
                     onChange={handleStateChange}
                 >
-                    {states.map((s) => (
-                        <option key={s.isoCode} value={s.isoCode}>
-                            {s.name}
-                        </option>
-                    ))}
+                    {states.length === 0 ? (
+                        <option disabled>Select Country First</option>
+                    ) : (
+                        states.map((s) => (
+                            <option key={s.isoCode} value={s.isoCode}>
+                                {s.name}
+                            </option>
+                        ))
+                    )}
                 </FieldSelect>
+
 
 
                 <FieldSelect
@@ -186,12 +311,17 @@ export default function ProfilePage() {
                     value={form.city}
                     onChange={handleChange}
                 >
-                    {cities.map((c) => (
-                        <option key={c.name} value={c.name}>
-                            {c.name}
-                        </option>
-                    ))}
+                    {cities.length === 0 ? (
+                        <option disabled>Select State First</option>
+                    ) : (
+                        cities.map((c) => (
+                            <option key={c.name} value={c.name}>
+                                {c.name}
+                            </option>
+                        ))
+                    )}
                 </FieldSelect>
+
 
             </div>
 
@@ -243,12 +373,16 @@ function PhoneInput({
     label,
     countryCode,
     phoneNumber,
+    isVerified,
     onChange,
+    onVerify,
 }: {
     label: string;
     countryCode: string;
     phoneNumber: string;
+    isVerified: boolean;
     onChange: (value: string) => void;
+    onVerify: () => void;
 }) {
     return (
         <div className="relative">
@@ -256,57 +390,67 @@ function PhoneInput({
                 {label}
             </span>
 
-            <div className="">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
-                    {countryCode}
-                </span>
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
+                {countryCode}
+            </span>
 
-                <input
-                    value={phoneNumber}
-                    onChange={(e) => {
-                        const digitsOnly = e.target.value.replace(/\D/g, "");
-                        if (digitsOnly.length <= 10) {
-                            onChange(digitsOnly);
-                        }
-                    }}
-                    placeholder="Enter mobile number"
-                    className="h-14 w-full rounded-[10px] border pl-16 pr-4 text-sm focus:border-[#1C4692] focus:outline-none"
-                />
-            </div>
+            <input
+                value={phoneNumber}
+                onChange={(e) => {
+                    const digits = e.target.value.replace(/\D/g, "");
+                    if (digits.length <= 10) onChange(digits);
+                }}
+                className="h-14 w-full rounded-[10px] border pl-16 pr-24 text-sm"
+            />
+
+            {isVerified ? (
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-green-600">
+                    <Verified />
+                </span>
+            ) : (
+                <button
+                    type="button"
+                    onClick={onVerify}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-600 text-sm font-medium"
+                >
+                    Verify
+                </button>
+            )}
         </div>
     );
 }
 
 
-function FieldSelect({
-  label,
-  name,
-  value,
-  onChange,
-  children,
-}: {
-  label: string;
-  name: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="relative">
-      <span className="absolute left-4 top-[-9px] bg-white px-2 text-xs text-gray-400">
-        {label}
-      </span>
 
-      <select
-        name={name}
-        value={value}
-        onChange={onChange}
-        className="h-14 w-full rounded-[10px] border px-4 text-sm focus:border-[#1C4692] focus:outline-none"
-      >
-        <option value="">Select {label}</option>
-        {children}
-      </select>
-    </div>
-  );
+function FieldSelect({
+    label,
+    name,
+    value,
+    onChange,
+    children,
+}: {
+    label: string;
+    name: string;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    children: React.ReactNode;
+}) {
+    return (
+        <div className="relative">
+            <span className="absolute left-4 top-[-9px] bg-white px-2 text-xs text-gray-400">
+                {label}
+            </span>
+
+            <select
+                name={name}
+                value={value}
+                onChange={onChange}
+                className="h-14 w-full rounded-[10px] border px-4 text-sm focus:border-[#1C4692] focus:outline-none"
+            >
+                <option value="">Select {label}</option>
+                {children}
+            </select>
+        </div>
+    );
 }
 

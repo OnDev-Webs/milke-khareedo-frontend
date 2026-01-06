@@ -103,6 +103,35 @@ export default function SearchResultsGrid() {
     }));
   };
 
+  const handleSearch = async () => {
+    const query = String(searchQuery).trim();
+
+    try {
+      const response = await homeService.searchProperties({
+        city: selectedCity.split(",").pop()?.trim() || selectedCity,
+        searchText: query,
+        sortBy: sortBy.toLowerCase().replace(/ /g, ""),
+        page: 1,
+        limit: 10,
+        // priceMin,
+        // priceMax,
+        bhk: selectedBhk,
+        // propertyType: ,
+        projectStatus: selectedPossession,
+        // sortBy,
+      })
+
+      if (response.success && response.data) {
+        setResults(response.data.results || response.data.data || []);
+        setPaginationData(response.pagination || null);
+      } else {
+        setResults([]);
+      }
+    } catch (error) {
+      console.error("Search error:", error);
+    }
+  }
+
   return (
     <>
       <div className="flex items-center justify-between border-b border-[#F3F3F3] mb-5 px-4">
@@ -126,7 +155,22 @@ export default function SearchResultsGrid() {
           </div>
           <div className="relative flex-1 flex flex-col justify-start ps-4 pe-6 py-4">
             <div className="relative">
-              <input
+              <p className="text-base font-semibold text-gray-900">
+                Find your Dream Home
+              </p>
+              <div className="flex items-center gap-1.5 mt-[5px]">
+                <FaMapMarkerAlt className="text-gray-500 text-xs shrink-0" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={() => setIsSearchFocused(!isSearchFocused)}
+                  onBlur={() => setIsSearchFocused(false)}
+                  placeholder="Search for Developers, Location, Projects"
+                  className="w-full bg-transparent outline-none border-none focus:ring-0 transition-all duration-300 text-xs text-gray-500"
+                />
+              </div>
+              {/* <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -140,7 +184,7 @@ export default function SearchResultsGrid() {
               >
                 <FaMapMarkerAlt className="text-gray-500 text-xs flex-shrink-0" />
                 <span>Search for Developers, Location, Projects</span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -278,7 +322,7 @@ export default function SearchResultsGrid() {
           </Popover>
 
           {/* Search Button */}
-          <button className="ml-2 inline-flex items-center gap-2 bg-[#1C4692] text-white px-6 py-3 rounded-[16px] font-semibold  transition-colors">
+          <button onClick={handleSearch} className="ml-2 inline-flex items-center gap-2 bg-[#1C4692] text-white px-6 py-3 rounded-[16px] font-semibold  transition-colors">
             <FaSearch /> Search
           </button>
         </div>

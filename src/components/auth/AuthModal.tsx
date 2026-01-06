@@ -6,6 +6,8 @@ import { authService } from "@/lib/api/services/auth.service";
 import { useAuthContext } from "@/contexts/AuthContext";
 import Image from "next/image";
 import CountryCodeSelector from "./CountryCodeSelector";
+import Link from "next/link";
+import Logo from "@/assets/logo.svg";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -230,57 +232,68 @@ export default function AuthModal({
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
         <div
-          className="relative w-full max-w-md md:max-w-3xl rounded-2xl bg-[#1a1a1a] shadow-2xl flex flex-col"
+          className="
+    relative w-full
+    max-w-[95vw]
+    sm:max-w-[540px]
+    md:max-w-[760px]
+    lg:max-w-[920px]
+    xl:max-w-[1020px]
+    max-h-[90vh]
+    rounded-[24px]
+    shadow-2xl
+    overflow-hidden
+    flex flex-col
+  "
           onClick={(e) => e.stopPropagation()}
         >
+          {/* Background Image */}
+          <div className="absolute inset-0 ">
+            <Image
+              src="/images/auth.jpg"
+              alt="Background"
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-black/65" />
+          </div>
+
+
           {/* Close Button */}
           <button
             onClick={handleClose}
-            className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-[#1C4692] text-white hover:bg-[#1c4692e6] transition-colors"
+            className="absolute right-4 top-4 md:right-6 md:top-6 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-[#E53935] hover:bg-[#d32f2f]"
             aria-label="Close"
           >
-            <IoClose className="h-6 w-6" />
+            <IoClose className="h-4 w-4 text-white" />
           </button>
 
-          <div className="flex flex-col md:grid md:grid-cols-2">
+
+          <div className="relative z-10 flex flex-col md:grid md:grid-cols-2 h-full">
             {/* Left Side - Auth Form */}
-            <div className="flex flex-col justify-center p-8 md:p-6 bg-[#303A44] my-4 ms-4 rounded-lg">
+            <div className="flex flex-col justify-center p-6 md:p-8 bg-white  m-4 md:my-6 md:ms-6 rounded-4xl">
               {/* Logo */}
               <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#1C4692]">
-                  <svg
-                    className="h-8 w-8 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 12h18M3 6h18M3 18h18"
-                    />
-                  </svg>
-                </div>
-                <div className="text-white">
-                  <div className="text-lg font-bold">MILKE</div>
-                  <div className="text-lg font-bold">KHEREEDO</div>
-                </div>
+
+                <Link href="/" className="flex items-center gap-2">
+                  <Image
+                    src={Logo}
+                    alt="MILKE KHEREEDO logo"
+                    width={252}
+                    height={60}
+                    className="h-9 w-auto sm:h-10 lg:h-[60px]"
+                  />
+                </Link>
               </div>
 
               {step === "phone" ? (
                 <>
                   {/* Phone Number Screen */}
-                  <h2 className="mb-2 text-[25px] font-bold text-white">
+                  <h2 className="mb-2 text-[25px] font-bold text-gray-900">
                     Welcome
                   </h2>
-                  <p className="mb-6 text-white text-[14px]">
+                  <p className="mb-6 text-gray-500 text-[14px]">
                     Enter your mobile number to get started
                   </p>
 
@@ -288,19 +301,19 @@ export default function AuthModal({
                     <label className="mb-2 block text-sm font-medium text-gray-300">
                       Phone Number <span className="text-red-500">*</span>
                     </label>
-                    <div className="flex gap-1">
-                      <CountryCodeSelector
-                        value={countryCode}
-                        onChange={setCountryCode}
-                      />
+                    <div className="flex items-center rounded-xl border border-gray-300 bg-white h-12">
+                      <div className="px-4 text-sm font-medium text-gray-700">
+                        +91
+                      </div>
                       <input
                         type="text"
                         value={formatPhoneNumber(phoneNumber)}
                         onChange={handlePhoneChange}
                         placeholder="000 000 0000"
-                        className="flex-1 rounded-lg border border-gray-600 bg-[#2a2a2a] px-3 py-3 text-white placeholder-gray-500 focus:border-[#1C4692] focus:outline-none"
+                        className="flex-1 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none"
                       />
                     </div>
+
                   </div>
 
                   {error && (
@@ -310,16 +323,16 @@ export default function AuthModal({
                   <button
                     onClick={handleSendOTP}
                     disabled={loading || phoneNumber.length !== 10}
-                    className="w-full rounded-full bg-[#1C4692] px-6 py-3 text-[12px] font-semibold text-white hover:bg-[#1c4692e6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full rounded-full bg-[#1C4692]  px-6 py-3 text-[12px] font-semibold text-white hover:bg-[#1c4692e6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loading ? "Sending..." : "CONTINUE"}
                   </button>
 
-                  <p className="mt-6 text-[12px] text-[white] text-center mx-4">
+                  <p className="mt-6 text-[12px] text-[black] text-center mx-4">
                     By continuing, you agree to our{" "}
                     <a
                       href="/terms"
-                      className="text-[white] font-bold hover:underline"
+                      className="text-[#1C4692] font-bold underline"
                     >
                       Terms & Conditions
                     </a>
@@ -327,39 +340,40 @@ export default function AuthModal({
                 </>
               ) : (
                 <>
-                  {/* OTP Screen */}
-                  <h2 className="mb-2 text-[25px] font-bold text-white">
+                  <h2 className="mb-2 text-[24px] font-bold text-gray-900">
                     Enter OTP
                   </h2>
-                  <p className="mb-4 text-white text-[14px]">
-                    We&apos;ve sent a verification code to {countryCode}{" "}
-                    {formatPhoneNumber(phoneNumber)}
+
+                  <p className="mb-6 text-gray-600 text-sm">
+                    We’ve sent a verification code to +91 {formatPhoneNumber(phoneNumber)}
                   </p>
 
-                  <div className="mb-4">
-                    <label className="mb-2 block text-sm font-medium text-gray-300">
+                  <div className="mb-6">
+                    <label className="mb-2 block text-sm font-medium text-gray-700">
                       Verification Code <span className="text-red-500">*</span>
                     </label>
-                    <div className="flex gap-1">
-                      {[0, 1, 2, 3, 4, 5].map((index) => (
-                        <input
-                          key={index}
-                          ref={(el) => {
-                            otpInputRefs.current[index] = el;
-                          }}
-                          type="text"
-                          inputMode="numeric"
-                          maxLength={1}
-                          value={otp[index] || ""}
-                          onChange={(e) =>
-                            handleOtpChange(index, e.target.value)
-                          }
-                          onPaste={handleOtpPaste}
-                          onKeyDown={(e) => handleOtpKeyDown(index, e)}
-                          className="h-12 w-12 rounded-lg border border-gray-600 bg-[#2a2a2a] text-center text-xl font-bold text-white focus:border-[#1C4692] focus:outline-none"
-                        />
-                      ))}
-                    </div>
+
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={6}
+                      value={otp}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, "");
+                        if (value.length <= 6) setOtp(value);
+                      }}
+                      placeholder="Enter OTP"
+                      className="
+        w-full h-12
+        rounded-xl
+        border border-gray-300
+        px-4
+        text-gray-900
+        placeholder-gray-400
+        focus:outline-none
+        focus:border-[#1C4692]
+      "
+                    />
                   </div>
 
                   {error && (
@@ -369,12 +383,19 @@ export default function AuthModal({
                   <button
                     onClick={handleVerifyOTP}
                     disabled={loading || otp.length !== 6}
-                    className="w-full rounded-lg bg-[#1C4692] px-6 py-3 text-[12px] font-semibold text-white hover:bg-[#1c4692e6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="
+      w-full rounded-full
+      bg-[#1C4692]
+      px-6 py-3
+      text-sm font-semibold text-white
+      hover:bg-[#1c4692e6]
+      disabled:opacity-50
+    "
                   >
                     {loading ? "Verifying..." : "VERIFY OTP"}
                   </button>
 
-                  <div className="mt-6 text-center text-sm text-[#FFFFFF]">
+                  <div className="mt-4 text-center text-sm text-gray-500">
                     Didn&apos;t receive the code?{" "}
                     {resendTimer > 0 ? (
                       <span className="text-[#747474]">
@@ -384,32 +405,29 @@ export default function AuthModal({
                       <button
                         onClick={handleResendOTP}
                         disabled={loading}
-                        className="text-[#1C4692] hover:underline disabled:opacity-50"
+                        className="text-[#1C4692] font-medium hover:underline"
                       >
                         Resend OTP
                       </button>
                     )}
                   </div>
+
                 </>
+
               )}
             </div>
 
             {/* Right Side - Features */}
-            <div className="flex flex-col justify-center p-6 md:p-8 relative overflow-hidden">
-              <div className="absolute inset-0 z-0">
-                <Image
-                  src="/images/auth.jpg"
-                  alt="Background"
-                  fill
-                  className="h-full w-full object-cover opacity-20"
-                />
-              </div>
+            <div className="flex flex-col justify-start px-6 pb-6 pt-6 md:pt-48 md:px-10 relative">
+
+
 
               <div className="relative z-10">
-                <h3 className="mb-8 text-[24px] font-semibold text-white">
-                  How are we different{" "}
-                  <span className="inline-block h-3 w-3 bg-[#1C4692]"></span>
+                <h3 className="mb-6 text-[22px] font-semibold text-white flex items-center gap-2">
+                  How are we different
+                  <span className="h-2 w-2  mb-5 bg-[#F97316]" />
                 </h3>
+
                 <div className="space-y-2">
                   {features.map((feature, index) => (
                     <div key={index} className="flex items-center gap-2">

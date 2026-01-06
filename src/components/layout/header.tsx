@@ -10,6 +10,7 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import AuthModal from "@/components/auth/AuthModal";
 import { IoPerson, IoChevronDown } from "react-icons/io5";
 import { HiOutlineMenu } from "react-icons/hi";
+import { CircleUserRound } from "lucide-react";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -69,7 +70,21 @@ export default function Header() {
 
           {/* Right Side Icons */}
           <div className="flex items-center gap-3">
-            {!isDashboard && <CompareIcon />}
+            {!isDashboard && (
+              <button
+                type="button"
+                aria-label="Compare"
+                className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-gray-100 bg-[#F3F6FF] transition"
+              >
+                <Image
+                  src="/images/convertshape.svg"
+                  alt="Compare"
+                  width={20}
+                  height={20}
+                  className="h-5 w-5"
+                />
+              </button>
+            )}
 
             {/* Profile / Auth */}
             {isAuthenticated ? (
@@ -87,7 +102,7 @@ export default function Header() {
                       className="object-cover"
                     />
                   ) : (
-                    <IoPerson className="h-5 w-5" />
+                    <CircleUserRound className="h-5 w-5" />
                   )}
                   <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-white shadow">
                     <IoChevronDown className="h-3 w-3 text-gray-700" />
@@ -174,7 +189,16 @@ export default function Header() {
               ))}
 
               <div className="mt-4 flex items-center gap-3 border-t border-gray-100 pt-4">
-                {!isDashboard && <CompareIcon />}
+                {!isDashboard && (
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
+                    <Image
+                      src="/images/convertshape.svg"
+                      alt="Compare"
+                      width={18}
+                      height={18}
+                    />
+                  </div>
+                )}
                 {isAuthenticated ? (
                   <Link
                     href="/dashboard/profile"

@@ -26,18 +26,19 @@ export default function AboutSection() {
   ];
 
   return (
-    <section
-      className="w-full py-16"
-      style={{
-        backgroundColor: "#F2F5F9",
-        backgroundImage: "radial-gradient(#d1d5db 1px, transparent 1px)",
-        backgroundSize: "20px 20px",
-      }}
-    >
-      <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch">
+  
+<section className="w-full bg-[#F2F5F9]">
+  <div
+    className="
+      mx-auto
+      max-w-[1400px]
+      px-6 sm:px-10 lg:px-16
+      py-20
+    "
+  >
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* LEFT SIDE */}
-          <div className="ps-0 md:ps-10">
+          <div className="max-w-[640px]">
             <h3 className="text-[24px] md:text-[30px] font-semibold text-[#000] mb-6 md:mb-8 pe-0 md:pe-0">
               How <span className="text-[#1C4692]"> Milke Khareedo</span> Makes
               <span className="relative inline-block pe-2">
@@ -62,7 +63,7 @@ export default function AboutSection() {
               Easier
             </h3>
 
-            <div className="space-y-3 md:space-y-2">
+            <div className="space-y-6">
               {points.map((item, i) => (
                 <div key={i} className="flex items-center gap-3 md:gap-4">
                   {/* Number */}
@@ -72,10 +73,10 @@ export default function AboutSection() {
 
                   {/* Text */}
                   <div>
-                    <h5 className="text-[14px] md:text-[18px] font-semibold text-black">
+                    <h5 className="text-[16px] md:text-[18px] font-semibold text-black">
                       {item.title}
                     </h5>
-                    <p className="text-[11px] md:text-[12.5px] text-[#373737] mt-1">
+                    <p className="text-[13px] md:text-[12.5px] text-[#373737] mt-1">
                       {item.desc}
                     </p>
                   </div>
@@ -86,15 +87,18 @@ export default function AboutSection() {
 
           {/* RIGHT SIDE */}
           <div className="flex justify-center h-[350px] md:h-[500px]">
-            <div className="relative w-full max-w-[220px] md:max-w-[300px] h-full rounded-3xl overflow-hidden shadow-lg">
-              {/* Image */}
-              <Image
-                src="/images/about.jpg"
-                alt="About"
-                fill
-                priority
-                className="object-cover scale-[1.25] md:scale-[1.25] translate-x-[20px] md:translate-x-[38px]"
-              />
+           <div className="relative w-full max-w-[360px] h-[520px] rounded-3xl overflow-hidden shadow-xl">
+  <video
+    src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/185341-875417497.mp4"
+    className="absolute inset-0 w-full h-full object-cover scale-[1.15]"
+    muted
+    playsInline
+    autoPlay
+    loop
+    preload="metadata"
+  />
+
+
 
               {/* Top Left */}
               <div className="absolute top-2 md:top-2 left-2 md:left-2 z-20 flex items-center gap-2 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-semibold text-white">

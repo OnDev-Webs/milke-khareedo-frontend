@@ -60,7 +60,7 @@ export default function PropertyCard({
 }: PropertyCardProps) {
   return (
     <div
-      className="flex flex-col rounded-3xl bg-white shadow-lg overflow-hidden group relative cursor-pointer"
+      className="flex flex-col rounded-3xl p-4 bg-white shadow-lg overflow-hidden group relative cursor-pointer"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
@@ -69,13 +69,13 @@ export default function PropertyCard({
         className="absolute inset-0 z-10"
       />
       {/* Image Section with Slider */}
-      <div className="relative h-52 w-full bg-gray-100 flex items-center justify-center overflow-hidden">
+      <div className="relative h-52 w-full bg-gray-100 rounded-3xl flex items-center justify-center overflow-hidden">
         {currentImage ? (
           <Image
             key={`${property.id}-${currentIndex}`}
             src={currentImage}
             alt={`${property.projectName} - Image ${currentIndex + 1}`}
-            className="object-cover transition-opacity duration-300"
+            className="object-cover transition-opacity rounded-3xl duration-300"
             fill
           />
         ) : (
@@ -93,11 +93,10 @@ export default function PropertyCard({
 
         {/* Action Icons - Right Side (Stacked) - Only visible on hover */}
         <div
-          className={`absolute top-3 right-3 flex flex-col gap-2 z-20 transition-all duration-300 ${
-            isHovered
-              ? "opacity-100 visible translate-y-0"
-              : "opacity-0 invisible -translate-y-2 pointer-events-none"
-          }`}
+          className={`absolute top-3 right-3 flex flex-col gap-2 z-20 transition-all duration-300 ${isHovered
+            ? "opacity-100 visible translate-y-0"
+            : "opacity-0 invisible -translate-y-2 pointer-events-none"
+            }`}
         >
           {/* Heart Icon (Favorite) */}
           <button
@@ -106,17 +105,16 @@ export default function PropertyCard({
               onFavoriteClick(property);
             }}
             disabled={isLoading}
-            className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all ${
-              isFavorite
-                ? "border-[#1C4692] bg-[#1C4692] text-white"
-                : "border-white bg-white/90 text-gray-700 hover:bg-white"
-            } disabled:opacity-50 disabled:cursor-not-allowed shadow-md`}
+            className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all ${isFavorite
+              ? "border-[#1C4692] bg-[#1C4692] text-white"
+              : "border-white bg-white/90 text-gray-700 hover:bg-white"
+              } disabled:opacity-50 disabled:cursor-not-allowed shadow-md`}
             aria-label={
               isFavorite ? "Remove from favorites" : "Add to favorites"
             }
           >
             {isFavorite ? (
-              <IoHeart className="h-5 w-5" />
+              <IoHeart className="h-5 w-5 " />
             ) : (
               <IoHeartOutline className="h-5 w-5" />
             )}
@@ -131,8 +129,13 @@ export default function PropertyCard({
             className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-white/90 text-gray-700 hover:bg-white shadow-md transition-colors"
             aria-label="Add to compare"
           >
-            <MdCompareArrows className="h-5 w-5" />
-          </button>
+            <Image
+              src="/images/convert.svg"
+              alt="Compare"
+              width={20}
+              height={20}
+              className="h-5 w-5"
+            />          </button>
 
           {/* Share Icon */}
           <button
@@ -156,11 +159,10 @@ export default function PropertyCard({
                 e.stopPropagation();
                 onGoToPreviousImage(images.length);
               }}
-              className={`absolute left-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 hover:bg-white shadow-lg transition-all duration-300 z-10 border border-gray-200 backdrop-blur-sm ${
-                isHovered
-                  ? "opacity-0 invisible scale-90 pointer-events-none"
-                  : "opacity-100 visible scale-100"
-              }`}
+              className={`absolute left-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 hover:bg-white shadow-lg transition-all duration-300 z-10 border border-gray-200 backdrop-blur-sm ${isHovered
+                ? "opacity-0 invisible scale-90 pointer-events-none"
+                : "opacity-100 visible scale-100"
+                }`}
               aria-label="Previous image"
             >
               <IoChevronBack className="h-5 w-5" />
@@ -172,11 +174,10 @@ export default function PropertyCard({
                 e.stopPropagation();
                 onGoToNextImage(images.length);
               }}
-              className={`absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 hover:bg-white shadow-lg transition-all duration-300 z-10 border border-gray-200 backdrop-blur-sm ${
-                isHovered
-                  ? "opacity-0 invisible scale-90 pointer-events-none"
-                  : "opacity-100 visible scale-100"
-              }`}
+              className={`absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 hover:bg-white shadow-lg transition-all duration-300 z-10 border border-gray-200 backdrop-blur-sm ${isHovered
+                ? "opacity-0 invisible scale-90 pointer-events-none"
+                : "opacity-100 visible scale-100"
+                }`}
               aria-label="Next image"
             >
               <IoChevronForward className="h-5 w-5" />
@@ -191,11 +192,10 @@ export default function PropertyCard({
               <button
                 key={index}
                 onClick={() => onGoToImage(index, images.length)}
-                className={`transition-all ${
-                  index === currentIndex
-                    ? "h-1.5 w-6 rounded-full bg-[#1C4692]"
-                    : "h-1.5 w-1.5 rounded-full bg-white hover:bg-white/80"
-                }`}
+                className={`transition-all ${index === currentIndex
+                  ? "h-1.5 w-6 rounded-full bg-[#1C4692]"
+                  : "h-1.5 w-1.5 rounded-full bg-white hover:bg-white/80"
+                  }`}
                 aria-label={`Go to image ${index + 1}`}
               />
             ))}
@@ -204,7 +204,7 @@ export default function PropertyCard({
       </div>
 
       {/* Content Section */}
-      <div className="p-4">
+      <div className="pt-4">
         {/* Title + Location + Call button */}
         <div className="flex justify-between items-start mb-3">
           <div className="flex-1 min-w-0">
@@ -280,11 +280,10 @@ export default function PropertyCard({
             onJoinGroupClick(property);
           }}
           disabled={isJoinGroup || isJoinGroupLoading}
-          className={`relative z-20 mt-4 w-full py-3 rounded-3xl font-semibold transition-all duration-300 ${
-            isJoinGroup
-              ? "bg-white border-2 border-[#1C4692] text-[#1C4692] cursor-default pointer-events-none"
-              : "bg-[#1C4692] hover:bg-[#1c4692e6] text-white disabled:opacity-50 disabled:cursor-not-allowed border-2 border-transparent"
-          }`}
+          className={`relative z-20 mt-4 w-full py-3 rounded-3xl font-semibold transition-all duration-300 ${isJoinGroup
+            ? "bg-white border-2 border-[#1C4692] text-[#1C4692] cursor-default pointer-events-none"
+            : "bg-[#1C4692] hover:bg-[#1c4692e6] text-white disabled:opacity-50 disabled:cursor-not-allowed border-2 border-transparent"
+            }`}
         >
           {isJoinGroupLoading
             ? "Joining..."

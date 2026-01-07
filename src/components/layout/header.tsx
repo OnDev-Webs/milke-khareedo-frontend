@@ -10,7 +10,7 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import AuthModal from "@/components/auth/AuthModal";
 import { IoPerson, IoChevronDown } from "react-icons/io5";
 import { HiOutlineMenu } from "react-icons/hi";
-import { CircleUserRound } from "lucide-react";
+import { Building2, CircleUserRound, GitCompare, Globe, HeartIcon, LucideCircleUserRound, Search, SlidersHorizontal } from "lucide-react";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -33,7 +33,7 @@ export default function Header() {
     href === "/" ? pathname === "/" : pathname?.startsWith(href);
 
   return (
-    <header className="w-full border-b border-gray-100 bg-white">
+    <header className="w-full bg-white relative z-20">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 xl:px-10">
         <div className="flex items-center justify-between py-4 lg:py-6">
           {/* Logo */}
@@ -60,9 +60,9 @@ export default function Header() {
                     }`}
                 >
                   {link.label}
-                  {isActive(link.href) && (
+                  {/* {isActive(link.href) && (
                     <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#1C4692]" />
-                  )}
+                  )} */}
                 </Link>
               ))}
             </nav>
@@ -102,7 +102,7 @@ export default function Header() {
                       className="object-cover"
                     />
                   ) : (
-                    <CircleUserRound className="h-5 w-5" />
+                    <LucideCircleUserRound className="h-5 w-5" />
                   )}
                   <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-white shadow">
                     <IoChevronDown className="h-3 w-3 text-gray-700" />
@@ -115,37 +115,118 @@ export default function Header() {
                       className="fixed inset-0 z-40"
                       onClick={() => setProfileDropdownOpen(false)}
                     />
-                    <div className="absolute right-0 top-12 z-50 min-w-[200px] rounded-lg bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5">
-                      <div className="border-b border-gray-100 px-4 py-2">
-                        <p className="text-sm font-medium text-gray-800">
-                          {user?.name || "User"}
-                        </p>
-                        {user?.phoneNumber && (
-                          <p className="text-xs text-gray-500">
-                            {user.countryCode} {user.phoneNumber}
+                    <div className="absolute right-0 top-14 z-50 w-[280px] rounded-2xl bg-white shadow-xl ring-1 ring-black/5">
+                      {/* Profile Header */}
+                      <div className="flex items-center gap-3 px-4 py-4 border-b border-gray-100">
+                        <div className="h-10 w-10 rounded-full bg-gray-200 overflow-hidden">
+                          {user?.profileImage ? (
+                            <Image
+                              src={user.profileImage}
+                              alt={user.name || "User"}
+                              fill
+                              className="object-cover"
+                            />
+                          ) : (
+                            <LucideCircleUserRound className="h-full w-full p-2 text-gray-500" />
+                          )}
+                        </div>
+
+                        <div>
+                          <p className="text-sm font-semibold text-gray-900">
+                            {user?.name || "User"}
                           </p>
-                        )}
+                          <p className="text-xs text-gray-500">
+                            {user?.countryCode} {user?.phoneNumber}
+                          </p>
+                        </div>
                       </div>
 
-                      <Link
-                        href="/dashboard"
-                        onClick={() => setProfileDropdownOpen(false)}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Dashboard
-                      </Link>
+                      {/* Menu Items */}
+                      <div className="px-3 py-3 space-y-2">
+                        {[
+                          {
+                            label: "My Properties",
+                            href: "/dashboard/viewed-properties",
+                            icon: Building2,
+                          },
+                          {
+                            label: "My Favorite",
+                            href: "/dashboard/favorites",
+                            icon: HeartIcon,
+                          },
+                          {
+                            label: "Site visits",
+                            href: "/dashboard/site-visits",
+                            icon: Globe,
+                          },
+                          {
+                            label: "Compare",
+                            href: "/compare",
+                            icon: "compare",
+                          },
+                          {
+                            label: "My Searches",
+                            href: "/dashboard/searches",
+                            icon: Search,
+                          },
+                          {
+                            label: "My Preference",
+                            href: "/dashboard/preferences",
+                            icon: SlidersHorizontal,
+                          },
+                        ].map((item) => {
+                          const Icon = item.icon;
+                          return (
+                            <Link
+                              key={item.label}
+                              href={item.href}
+                              onClick={() => setProfileDropdownOpen(false)}
+                              className="
+          flex items-center gap-3
+          rounded-xl
+          px-3 py-3
+          text-sm font-medium text-gray-800
+          bg-[#f6faffb4]
+          transition
+        "
+                            >
+                              {/* Icon container */}
+                              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white ">
+                                {item.icon === "compare" ? (
+                                  <Image
+                                    src="/images/convert.svg"
+                                    alt="Compare"
+                                    width={16}
+                                    height={16}
+                                  />
+                                ) : (
+                                  <Icon className="h-4 w-4 text-gray-700" />
+                                )}
+                              </div>
 
-                      <button
-                        onClick={() => {
-                          logout();
-                          setProfileDropdownOpen(false);
-                          router.push("/");
-                        }}
-                        className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Sign Out
-                      </button>
+
+                              {item.label}
+                            </Link>
+                          );
+                        })}
+                      </div>
+
+
+                      {/* Logout */}
+                      <div className="px-4 pb-4">
+                        <button
+                          onClick={() => {
+                            logout();
+                            setProfileDropdownOpen(false);
+                            router.push("/");
+                          }}
+                          className="w-full rounded-xl bg-red-500 py-2.5 text-sm font-semibold text-white hover:bg-red-600"
+                        >
+                          Log out
+                        </button>
+                      </div>
                     </div>
+
                   </>
                 )}
               </div>

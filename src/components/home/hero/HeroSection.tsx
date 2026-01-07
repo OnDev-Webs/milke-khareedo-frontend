@@ -85,7 +85,7 @@ export default function Hero() {
 
   return (
     <section className="relative w-full py-10">
-      <div className="relative mx-auto w-full max-w-[1330px] h-auto md:h-[450px] overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-6 shadow-md">
+      <div className="relative mx-auto w-full max-w-[1380px] h-auto md:h-[450px] overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-6 shadow-md">
         <div className="relative z-10 w-full md:w-[60%] pt-10 md:pt-10 ps-4 md:ps-6">
           <p className="font-medium text-[#585981] mb-2">
             Buying a home is a big decision.
@@ -148,8 +148,19 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="absolute -bottom-5 left-1/2 w-[95%] md:w-[1150px] -translate-x-1/2 px-4 md:px-6 z-20">
-        <div className="flex flex-col md:flex-row items-stretch rounded-2xl bg-white/70 backdrop-blur-md p-0 shadow-lg overflow-visible">
+      <div className="absolute -bottom-5 left-1/2 w-[95%] md:w-[1200px] -translate-x-1/2 px-4 md:px-6 z-0">
+        <div
+          className="
+    flex flex-col md:flex-row items-stretch
+    rounded-2xl
+    bg-white/70
+    backdrop-blur-md
+    p-0
+    overflow-visible
+    shadow-[0_12px_40px_rgba(0,0,0,0.10)]
+  "
+        >
+
           {/* CITY SELECT SECTION */}
           <div className="relative flex flex-col justify-center ps-6 pe-4 py-4 min-w-[130px]">
             <label className="text-sm font-bold text-gray-800 mb-2.5">

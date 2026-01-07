@@ -33,7 +33,7 @@ class ApiClient {
   private defaultTimeout: number;
 
   constructor() {
-    this.baseUrl = API_CONFIG.BASE_URL;
+    this.baseUrl = API_CONFIG.BASE_URL || "";
     this.defaultHeaders = API_CONFIG.DEFAULT_HEADERS;
     this.defaultTimeout = API_CONFIG.TIMEOUT;
   }

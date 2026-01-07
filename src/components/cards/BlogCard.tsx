@@ -27,7 +27,7 @@ export default function BlogCard({
 
   return (
     <div
-      className={`inline-flex flex-col items-start self-stretch ${className}`}
+      className={`inline-flex flex-col h-full items-start self-stretch ${className}`}
     >
       {/* Image */}
       <div className="relative w-full h-48">
@@ -44,16 +44,16 @@ export default function BlogCard({
         <div className="flex flex-col gap-2.5">
           <span className="text-neutral-400 text-sm font-medium">{date}</span>
 
-          <h3 className="text-black text-2xl font-semibold">{title}</h3>
+          <h3 className="text-black text-2xl font-semibold line-clamp-2">{title}</h3>
 
           {/* Render HTML content with 3-line truncation */}
           {content ? (
             <div
-              className="text-neutral-700 text-sm font-medium leading-6 blog-card-content line-clamp-3"
+              className="text-neutral-700 text-sm font-medium leading-6 blog-card-content line-clamp-2"
               dangerouslySetInnerHTML={{ __html: displayContent }}
             />
           ) : (
-            <p className="text-neutral-700 text-sm font-medium leading-6 line-clamp-3">
+            <p className="text-neutral-700 text-sm font-medium leading-6 line-clamp-2">
               {displayContent}
             </p>
           )}

@@ -53,7 +53,7 @@ export default function ContactForm({ className }: ContactFormProps) {
                   First name <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter here" {...field} />
+                  <Input placeholder="Enter here" {...field} className="h-12" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -68,7 +68,7 @@ export default function ContactForm({ className }: ContactFormProps) {
                   Last name <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter here" {...field} />
+                  <Input placeholder="Enter here" {...field} className="h-12" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -86,7 +86,7 @@ export default function ContactForm({ className }: ContactFormProps) {
                   Phone <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="000 000 0000" {...field} />
+                  <Input placeholder="000 000 0000" {...field} className="h-12" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -102,7 +102,7 @@ export default function ContactForm({ className }: ContactFormProps) {
                   Email <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="Enter Email" {...field} />
+                  <Input type="email" placeholder="Enter Email" {...field} className="h-12" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -119,7 +119,7 @@ export default function ContactForm({ className }: ContactFormProps) {
                 Note <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Textarea rows={4} placeholder="Enter here" {...field} />
+                <Textarea rows={4} placeholder="Enter here" {...field} className="h-24" />
               </FormControl>
               <FormMessage />
             </FormItem>

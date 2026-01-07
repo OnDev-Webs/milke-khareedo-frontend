@@ -53,7 +53,7 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative pb-1 text-sm transition-colors xl:text-base ${isActive(link.href)
+                  className={`relative pb-1 text-sm font-normal transition-colors xl:text-base ${isActive(link.href)
                     ? "font-semibold text-[#1C4692]"
                     : "hover:text-[#1C4692]"
                     }`}

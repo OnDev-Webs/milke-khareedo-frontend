@@ -49,9 +49,9 @@ export default function ConnectWithUs() {
         headingVariant="h3"
       />
       <section className="w-full bg-white py-16">
-        <div className="mx-auto max-w-6xl px-4">
+        <div className="mx-auto container sm:px-0 px-4">
           {/* Title */}
-          <div className="flex justify-center mb-12 md:mb-20">
+          <div className="flex justify-center mb-6 md:mb-20">
             <Title text="Company" isDrawLine drawLineText="Overview" />
           </div>
 

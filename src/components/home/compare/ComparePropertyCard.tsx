@@ -192,7 +192,7 @@ export default function ComparePropertyCard({
           </div>
         )}
         {/* Label (A, B, C) */}
-        <div className="absolute left-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-white/95 text-[11px] font-bold text-gray-800 shadow-md sm:left-3 sm:top-3 sm:h-7 sm:w-7 sm:text-xs md:h-8 md:w-8 md:text-sm">
+        <div className="absolute left-2 top-2 flex h-6 w-6 items-center justify-center rounded-[6px] bg-white/95 text-[11px] font-bold text-gray-800 shadow-md sm:left-3 sm:top-3 sm:h-7 sm:w-7 sm:text-xs md:h-8 md:w-8 md:text-sm">
           {label}
         </div>
       </div>
@@ -230,7 +230,7 @@ export default function ComparePropertyCard({
       {/* Book A Visit Button */}
       <button
         onClick={handleBookVisitClick}
-        className="mb-2.5 w-full rounded-full bg-[#1C4692] px-3 py-1.5 text-xs font-semibold text-white  transition-colors sm:mb-3 sm:px-4 sm:py-2 md:mb-4 md:py-2.5 lg:mb-6 lg:py-3"
+        className="mb-2.5 w-full rounded-full bg-[#1C4692] px-3 py-1.5 text-base font-semibold text-white  transition-colors sm:mb-3 sm:px-4 sm:py-2 md:mb-4 md:py-2.5 lg:mb-6 lg:py-3"
       >
         Book A Visit
       </button>

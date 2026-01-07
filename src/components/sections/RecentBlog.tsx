@@ -71,8 +71,8 @@ const RecentBlog = ({ excludeBlogId, excludeSlug }: RecentBlogProps) => {
   return (
     <>
       <section className="py-[30px] md:py-[50px]">
-        <div className="container mx-auto px-4 md:px-0">
-          <div className="mb-[34px] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="container mx-auto">
+          <div className="mb-[34px] flex justify-between items-start gap-4">
             <Heading className="text-black">Recent Blogs</Heading>
             <Link href="/blogs">
               <Button

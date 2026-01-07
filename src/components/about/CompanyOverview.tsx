@@ -27,7 +27,7 @@ export default function CompanyOverview() {
   ];
 
   return (
-    <section className="w-full bg-white py-16 px-10 md:px-12">
+    <section className="w-full bg-white py-16 px-4 md:px-12">
       <div className="mx-auto container">
         {/* Title */}
         <div className="flex items-center justify-center mb-12 md:mb-20 w-fit mx-auto">

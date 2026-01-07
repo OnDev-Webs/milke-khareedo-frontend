@@ -51,32 +51,7 @@ export interface Property {
   isJoinGroup?: boolean; // Join group status from API
 }
 
-// Extended fields used by PDP mock response
-export interface PropertyOverview {
-  units?: number;
-  configurations?: string[];
-  configurationsFormatted?: string;
-  possessionStatus?: string;
-  areaRange?: { min?: number; max?: number; formatted?: string };
-  reraNumber?: string;
-  possessionDate?: string;
-  possessionDateFormatted?: string;
-  plotSize?: string;
-  propertyType?: string;
-}
-
-export interface DeveloperInfo {
-  id?: string;
-  name?: string;
-  description?: string;
-  logo?: string;
-  city?: string;
-  establishedYear?: number;
-  yearsOfExperience?: number;
-  totalProjects?: number;
-  website?: string;
-  sourcingManager?: { name?: string; mobile?: string; email?: string };
-}
+// Extended fields used by PDP mock response (merged with main PropertyOverview below)
 
 export interface GroupBuyInfo {
   minGroupMembers?: number;
@@ -94,13 +69,6 @@ export interface GroupBuyInfo {
     propertyTypeInterest?: string;
     joinedAt?: string;
   }>;
-}
-
-export interface LayoutPlan {
-  image?: string;
-  unitType?: string;
-  area?: string;
-  price?: string;
 }
 
 // augment Property to include PDP fields (optional)
@@ -184,20 +152,20 @@ export interface LocationDetails {
 }
 
 export interface PropertyOverview {
-  units: number;
-  configurations: string[];
-  configurationsFormatted: string;
-  possessionStatus: string;
-  areaRange: {
-    min: number;
-    max: number;
-    formatted: string;
+  units?: number;
+  configurations?: string[];
+  configurationsFormatted?: string;
+  possessionStatus?: string;
+  areaRange?: {
+    min?: number;
+    max?: number;
+    formatted?: string;
   };
-  reraNumber: string;
-  possessionDate: string;
-  possessionDateFormatted: string;
-  plotSize: string;
-  propertyType: string;
+  reraNumber?: string;
+  possessionDate?: string;
+  possessionDateFormatted?: string;
+  plotSize?: string;
+  propertyType?: string;
 }
 
 export interface ConnectivityPoint {
@@ -220,26 +188,26 @@ export interface NeighborhoodData {
 }
 
 export interface LayoutPlan {
-  image: string;
-  unitType: string;
-  area: string;
-  price: string;
+  image?: string;
+  unitType?: string;
+  area?: string;
+  price?: string;
 }
 
 export interface DeveloperInfo {
-  id: string;
-  name: string;
-  description: string;
-  logo: string;
-  city: string;
-  establishedYear: number;
-  yearsOfExperience: number;
-  totalProjects: number;
-  website: string;
+  id?: string;
+  name?: string;
+  description?: string;
+  logo?: string;
+  city?: string;
+  establishedYear?: number;
+  yearsOfExperience?: number;
+  totalProjects?: number;
+  website?: string;
   sourcingManager?: {
-    name: string;
-    mobile: string;
-    email: string;
+    name?: string;
+    mobile?: string;
+    email?: string;
   };
 }
 

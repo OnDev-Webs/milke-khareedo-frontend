@@ -43,7 +43,7 @@ export default function Founders() {
   };
 
   return (
-    <section className="w-full bg-white py-16 relative overflow-hidden">
+    <section className="w-full bg-white py-16 relative overflow-hidden mb-[100px]">
       <svg
         className="absolute top-0 left-0 w-[1500px] h-[1500px] opacity-20 pointer-events-none"
         xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +63,7 @@ export default function Founders() {
         <rect width="100%" height="100%" fill="url(#rhombusPattern)" />
       </svg>
 
-      <div className="mx-auto max-w-6xl px-4 relative z-10">
+      <div className="mx-auto container sm:px-0 px-4 relative z-10">
         <Title
           text={"Team"}
           isDrawLine

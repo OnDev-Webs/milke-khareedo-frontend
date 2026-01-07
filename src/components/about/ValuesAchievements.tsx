@@ -50,7 +50,7 @@ export default function ValuesAchievements() {
         <rect width="100%" height="100%" fill="url(#squarePattern)" />
       </svg>
 
-      <div className="mx-auto max-w-6xl px-4 z-10 relative">
+      <div className="mx-auto container sm:px-0 px-4 z-10 relative">
         <Title
           text={"Values"}
           drawLineText={"Achievements"}

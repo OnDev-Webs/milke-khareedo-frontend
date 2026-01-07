@@ -5,8 +5,7 @@
 
 export const API_CONFIG = {
   // Base URL for API - change this to your backend URL
-  BASE_URL:
-    `${process.env.NEXT_PUBLIC_API_URL}/api` || "http://localhost:3008/api",
+  BASE_URL: "http://localhost:3008/api",
 
   // Default timeout for requests (in milliseconds)
   TIMEOUT: 30000,

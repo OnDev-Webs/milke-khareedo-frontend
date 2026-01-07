@@ -52,7 +52,7 @@ export default function HeroSection({
           </Heading>
 
           {description && (
-            <p className="max-w-3xl text-white text-xl font-medium leading-9">
+            <p className="text-white text-xl font-medium leading-9">
               {description}
             </p>
           )}

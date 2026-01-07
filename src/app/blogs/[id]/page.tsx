@@ -107,7 +107,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <>
       <section className="py-[30px]">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-4 sm:px-0">
           <Breadcrumb className="mb-[25px]">
             <BreadcrumbList>
               <BreadcrumbItem>

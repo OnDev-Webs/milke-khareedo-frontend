@@ -2,14 +2,10 @@
 
 import Image from "next/image";
 import { FaPhoneAlt } from "react-icons/fa";
-import {
-  IoHeartOutline,
-  IoHeart,
-  IoShareSocialOutline,
-} from "react-icons/io5";
-import { MdCompareArrows } from "react-icons/md";
+import { IoHeartOutline, IoHeart, IoShareSocialOutline } from "react-icons/io5";
 import { type Property } from "@/lib/api/services/home.service";
 import Link from "next/link";
+import upPrice from "@/assets/upPrice.svg";
 
 interface PropertyCardProps {
   property: Property;
@@ -52,10 +48,17 @@ export default function PropertyCard({
   onShareClick,
   onJoinGroupClick,
   onGoToImage,
-  onGoToNextImage,
-  onGoToPreviousImage,
   formatDate,
 }: PropertyCardProps) {
+
+  const formatTwoDigits = (value: number) => {
+    return value.toString().padStart(2, "0");
+  };
+
+  const formatPercentage = (value: string) => {
+    return value.replace(/\.00%$/, "%");
+  };
+
   return (
     <div
       className="flex flex-col rounded-3xl p-4 bg-white shadow-lg overflow-hidden group relative cursor-pointer"
@@ -82,10 +85,8 @@ export default function PropertyCard({
 
         {/* Last Day to join Banner */}
         {property.lastDayToJoin && (
-          <div className="absolute top-3 left-3 bg-white rounded-lg px-3 py-1.5 shadow-md z-10">
-            <span className="text-xs font-medium text-black">
-              Last Day to join: {formatDate(property.lastDayToJoin)}
-            </span>
+          <div className="absolute top-3 left-3 bg-white/82 backdrop-blur-md rounded-[6px] px-3 py-1.5 shadow-md z-10 text-[12px] text-[#000000] font-normal">
+            Last Day to join: {formatDate(property.lastDayToJoin)}
           </div>
         )}
 
@@ -148,41 +149,6 @@ export default function PropertyCard({
           </button>
         </div>
 
-        {/* Navigation Arrows - Only show if multiple images, hidden on hover */}
-        {hasMultipleImages && (
-          <>
-            {/* Previous Arrow - Left side, middle height */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onGoToPreviousImage(images.length);
-              }}
-              className={`absolute left-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 hover:bg-white shadow-lg transition-all duration-300 z-10 border border-gray-200 backdrop-blur-sm ${isHovered
-                ? "opacity-0 invisible scale-90 pointer-events-none"
-                : "opacity-100 visible scale-100"
-                }`}
-              aria-label="Previous image"
-            >
-              <IoChevronBack className="h-5 w-5" />
-            </button>
-
-            {/* Next Arrow - Right side, middle height (centered when not hovering) */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onGoToNextImage(images.length);
-              }}
-              className={`absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 hover:bg-white shadow-lg transition-all duration-300 z-10 border border-gray-200 backdrop-blur-sm ${isHovered
-                ? "opacity-0 invisible scale-90 pointer-events-none"
-                : "opacity-100 visible scale-100"
-                }`}
-              aria-label="Next image"
-            >
-              <IoChevronForward className="h-5 w-5" />
-            </button>
-          </>
-        )}
-
         {/* Image Navigation Dots - Only show if multiple images */}
         {hasMultipleImages && (
           <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
@@ -204,12 +170,12 @@ export default function PropertyCard({
       {/* Content Section */}
       <div className="pt-4">
         {/* Title + Location + Call button */}
-        <div className="flex justify-between items-start mb-3">
+        <div className="flex justify-between items-start mb-4">
           <div className="flex-1 min-w-0">
             <h3 className="text-[20px] font-semibold text-black truncate">
               {property.projectName}
             </h3>
-            <p className="text-[15px] text-[#828282] mt-1 truncate">
+            <p className="text-[15px] text-[#828282] truncate">
               {property.location}
             </p>
           </div>
@@ -220,36 +186,49 @@ export default function PropertyCard({
 
         {/* Group Size + Opening */}
         <div className="flex justify-between mt-2 mb-2 gap-2">
-          <div className="flex flex-col items-center bg-[#EEF4FF] px-4 py-2 rounded-lg text-center flex-1">
-            <span className="text-[14px] text-black font-semibold">
+          {/* GROUP SIZE */}
+          <div className="flex flex-col items-center bg-[#EEF4FF] px-4 py-2 rounded-[15px] text-center flex-1">
+            <span className="text-[16px] text-[#000000] font-semibold">
               Group Size
             </span>
-            <span className="text-base font-bold text-[#1C4692] mt-1">
-              {property.groupSize}
+            <span className="text-[20px] font-bold text-[#1C4692]">
+              {formatTwoDigits(property.groupSize)}{" "}
+              <span className="text-[14px] text-[#525252] font-normal">
+                Members
+              </span>
             </span>
-            <span className="text-xs text-black mt-0.5">Members</span>
           </div>
-          <div className="flex flex-col items-center bg-[#EEF4FF] px-4 py-2 rounded-lg text-center flex-1">
-            <span className="text-[14px] text-black font-semibold">
+          {/* OPENING */}
+          <div className="flex flex-col items-center bg-[#EEF4FF] px-4 py-2 rounded-[15px] text-center flex-1">
+            <span className="text-[16px] text-[#000000] font-semibold">
               Opening
             </span>
-            <span className="text-base font-bold text-[#1C4692] mt-1">
-              {property.openingLeft}
+            <span className="text-[20px] font-bold text-[#1C4692]">
+              {formatTwoDigits(property.openingLeft)}{" "}
+              <span className="text-[14px] text-[#525252] font-normal">
+                Left
+              </span>
             </span>
-            <span className="text-xs text-black mt-0.5">Left</span>
           </div>
         </div>
 
         {/* Target Price + Developer Price */}
-        <div className="flex justify-between items-start mt-3">
+        <div className="flex justify-between items-start mt-3 bg-[#EEF4FF] px-3 py-2 rounded-[15px]">
           {/* Target Price */}
           <div>
-            <span className="text-xs text-gray-500">Target Price</span>
-            <div className="text-base font-bold text-gray-800">
+            <span className="text-[14px] text-[#000000] font-normal">Target Price</span>
+            <div className="text-[19px] font-bold text-[#000000]">
               {property.targetPrice.formatted}
             </div>
             {property.discount && (
-              <span className="mt-1 inline-block bg-[#FFFFFF] border border-[#F6F6F6] rounded-xl pe-10 ps-1 py-0.5 text-xs font-semibold text-[#66AE39]">
+              <span className="mt-2 inline-flex items-center w-[256px] h-[26px] gap-1.5 bg-white border border-[#F6F6F6] rounded-xl px-2 py-0.5 text-xs font-semibold text-[#66AE39]">
+                <Image
+                  src={upPrice}
+                  alt="Offer"
+                  width={14}
+                  height={14}
+                  className="object-contain"
+                />
                 {property.discount.displayText}
               </span>
             )}
@@ -257,12 +236,12 @@ export default function PropertyCard({
 
           {/* Developer Price */}
           <div className="text-right">
-            <span className="text-xs text-gray-500">Developer price</span>
-            <div className="text-sm font-semibold text-gray-400 line-through">
+            <span className="text-[14px] text-[#000000] font-normal">Developer price</span>
+            <div className="text-[16px] font-semibold text-[#4B4B4B] line-through">
               {property.developerPrice.formatted}
             </div>
-            <span className="mt-1 inline-block rounded-full bg-white border border-[#F6F6F6] px-2 py-0.5 text-xs font-semibold text-[#FF3232]">
-              {property.discountPercentage}
+            <span className="mt-3 inline-block rounded-full w-[84px] h-[26px] bg-white border border-[#F6F6F6] px-2 py-1 text-xs font-semibold text-[#FF3232]">
+              {formatPercentage(property.discountPercentage)} Off*
             </span>
           </div>
         </div>
@@ -272,7 +251,7 @@ export default function PropertyCard({
           onClick={(e) => {
             if (isJoinGroup) {
               e.stopPropagation();
-              return; // Prevent any action if already joined
+              return; 
             }
             e.stopPropagation();
             onJoinGroupClick(property);

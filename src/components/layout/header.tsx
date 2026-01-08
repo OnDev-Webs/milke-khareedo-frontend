@@ -11,6 +11,7 @@ import AuthModal from "@/components/auth/AuthModal";
 import { IoPerson, IoChevronDown } from "react-icons/io5";
 import { HiOutlineMenu } from "react-icons/hi";
 import { Building2, CircleUserRound, GitCompare, Globe, HeartIcon, LucideCircleUserRound, Search, SlidersHorizontal } from "lucide-react";
+import CompareOverlay from "../home/compare/CompareOverlay";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -28,6 +29,8 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showCompare, setShowCompare] = useState(false);
+
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname?.startsWith(href);
@@ -71,19 +74,31 @@ export default function Header() {
           {/* Right Side Icons */}
           <div className="flex items-center gap-3">
             {!isDashboard && (
-              <button
-                type="button"
-                aria-label="Compare"
-                className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-gray-100 bg-[#F3F6FF] transition"
+              <div
+                className="relative"
+                onMouseEnter={() => setShowCompare(true)}
+                onMouseLeave={() => setShowCompare(false)}
               >
-                <Image
-                  src="/images/convertshape.svg"
-                  alt="Compare"
-                  width={20}
-                  height={20}
-                  className="h-5 w-5"
-                />
-              </button>
+                <button
+                  type="button"
+                  aria-label="Compare"
+                  onClick={() => setShowCompare((v) => !v)}
+                  className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-gray-100 bg-[#F3F6FF] transition"
+                >
+                  <Image
+                    src="/images/convertshape.svg"
+                    alt="Compare"
+                    width={20}
+                    height={20}
+                    className="h-5 w-5"
+                  />
+                </button>
+                {showCompare && (
+                  <div className="absolute right-0 top-14 z-50">
+                    <CompareOverlay />
+                  </div>
+                )}
+              </div>
             )}
 
             {/* Profile / Auth */}

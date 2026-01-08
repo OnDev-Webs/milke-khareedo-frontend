@@ -183,23 +183,7 @@ export default function Hero() {
           {/* SEARCH INPUT SECTION */}
           <div className="relative flex-1 flex flex-col justify-start ps-4 pe-6 py-4">
             <div className="relative">
-              <p className="text-base font-semibold text-gray-900">
-                Find your Dream Home
-              </p>
-              <div className="flex items-center gap-1.5 mt-[5px]">
-                <FaMapMarkerAlt className="text-gray-500 text-xs shrink-0" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  onFocus={() => setIsSearchFocused(!isSearchFocused)}
-                  onBlur={() => setIsSearchFocused(false)}
-                  placeholder="Search for Developers, Location, Projects"
-                  className="w-full bg-transparent outline-none border-none focus:ring-0 transition-all duration-300 text-xs text-gray-500"
-                />
-                </div>
-              {/* <input
+              <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -220,7 +204,7 @@ export default function Hero() {
               >
                 <MapPin className="text-gray-500 text-xs w-4 h-14px shrink-0" />
                 <span>Search for Developers, Location, Projects</span>
-              </div> */}
+              </div>
             </div>
           </div>
 

@@ -19,7 +19,7 @@ const items = [
     id: 3,
     img: "/images/value3.jpg",
     title: "Stronger Buyer Leverage",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it ....",
+    desc: "When multiple buyers show interest together, builders become more flexible on pricing and benefits — creating leverage that single buyers rarely get.",
   },
   {
     id: 4,
@@ -33,9 +33,10 @@ export default function ValuesAchievements() {
   return (
     <section className="relative w-full bg-[#F5F9FF] py-16 mt-[100px] overflow-hidden">
       <svg
-        className="absolute inset-0 w-[1500px] h-[1500px] opacity-20 pointer-events-none"
+        className="absolute inset-0 w-full h-full opacity-20 pointer-events-none"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 100 100"
+        preserveAspectRatio="xMidYMid slice"
       >
         <defs>
           <pattern
@@ -44,7 +45,7 @@ export default function ValuesAchievements() {
             height="1.8"
             patternUnits="userSpaceOnUse"
           >
-            <rect x="0" y="0" width="1.5" height="1.5" fill="#f0e7e3ff" />
+            <rect x="0" y="0" width="1.5" height="1.5" fill="#e3e8efff" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#squarePattern)" />
@@ -79,11 +80,11 @@ export default function ValuesAchievements() {
               <div className="flex flex-col justify-center w-full">
                 <Heading
                   variant={"h6"}
-                  className="text-black font-bold text-[16px] md:text-[18px]"
+                  className="text-black font-bold text-[16px] md:text-[20px]"
                 >
                   {item.title}
                 </Heading>
-                <p className="mt-2 text-[14px] md:text-[14px] font-normal text-[#373737] leading-relaxed text-left">
+                <p className="mt-2 text-[16px] md:text-[16px] font-normal text-[#373737] leading-relaxed text-left">
                   {item.desc}
                 </p>
               </div>

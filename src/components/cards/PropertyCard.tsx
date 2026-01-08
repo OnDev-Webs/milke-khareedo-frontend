@@ -6,6 +6,8 @@ import {
   IoHeartOutline,
   IoHeart,
   IoShareSocialOutline,
+  IoChevronBack,
+  IoChevronForward,
 } from "react-icons/io5";
 import { MdCompareArrows } from "react-icons/md";
 import { type Property } from "@/lib/api/services/home.service";

@@ -25,7 +25,7 @@ export default function MySearchesPage() {
     }
 
     return (
-        <div className="rounded-[24px] bg-[#f8fbff] px-4 py-6 shadow sm:px-8 sm:py-8 min-h-[400px]">
+        <div className="rounded-[24px] bg-[#f8fbff] px-4 py-6 shadow sm:px-8 sm:py-8 min-h-[480px]">
             {groups.map((group) => (
                 <div key={group.dateLabel} className="mb-6 last:mb-0">
                     <h3 className="mb-3 text-sm font-semibold text-[#2b2b2b]">

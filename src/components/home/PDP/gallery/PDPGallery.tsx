@@ -32,7 +32,7 @@ export default function PDPGallery({
 }: PDPGalleryProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const allImages = images && images.length > 0 ? images : (mainImage ? [mainImage] : []);
-  const thumbnails = imageDetails?.thumbnails || allImages.slice(1, 5);
+  const thumbnails = (imageDetails?.thumbnails || allImages.slice(1)).slice(0, 4);
   const displayImages = allImages.length > 0 ? allImages : ["/placeholder-property.jpg"];
 
   const goToNext = () => {
@@ -95,11 +95,10 @@ export default function PDPGallery({
                       <button
                         key={index}
                         onClick={() => goToImage(index)}
-                        className={`transition-all ${
-                          index === currentImageIndex
-                            ? "h-1.5 w-6 rounded-full bg-white"
-                            : "h-1.5 w-1.5 rounded-full bg-white/60 hover:bg-white/80"
-                        }`}
+                        className={`transition-all ${index === currentImageIndex
+                          ? "h-1.5 w-6 rounded-full bg-white"
+                          : "h-1.5 w-1.5 rounded-full bg-white/60 hover:bg-white/80"
+                          }`}
                         aria-label={`Go to image ${index + 1}`}
                       />
                     ))}
@@ -120,35 +119,40 @@ export default function PDPGallery({
 
             {/* Thumbnails */}
             <div className="h-80 grid grid-cols-2 gap-4">
-              {thumbnails.slice(0, 4).map((img, index) => (
-                <div
-                  key={index}
-                  className="relative rounded-xl overflow-hidden shadow-[0_0_10px_rgba(0,0,0,0.08)] bg-secondary cursor-pointer hover:opacity-90 transition-opacity"
-                  onClick={() => {
-                    const mainIndex = displayImages.findIndex((i) => i === img);
-                    if (mainIndex !== -1) {
-                      setCurrentImageIndex(mainIndex);
-                    }
-                  }}
-                >
-                  <Image
-                    src={img}
-                    alt={`Property thumbnail ${index + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-              {displayImages.length > 5 && (
-                <div className="relative rounded-xl overflow-hidden shadow-[0_0_10px_rgba(0,0,0,0.08)] bg-secondary flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity">
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">+{displayImages.length - 5}</span>
+              {thumbnails.map((img, index) => {
+                const showViewAll =
+                  index === 3 && displayImages.length > 5;
+
+                return (
+                  <div
+                    key={index}
+                    className="relative rounded-xl overflow-hidden shadow-[0_0_10px_rgba(0,0,0,0.08)] bg-secondary cursor-pointer"
+                    onClick={() => {
+                      const mainIndex = displayImages.findIndex((i) => i === img);
+                      if (mainIndex !== -1) setCurrentImageIndex(mainIndex);
+                    }}
+                  >
+                    <Image
+                      src={img}
+                      alt={`Property thumbnail ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+
+                    {showViewAll && (
+                      <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center gap-2">
+                        <span className="text-white text-sm font-semibold">
+                          +{displayImages.length - 5}
+                        </span>
+                        <button className="rounded-full bg-white px-6 py-1 text-sm font-medium">
+                          View All
+                        </button>
+                      </div>
+                    )}
                   </div>
-                  <button className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full border border-gray-300 bg-white px-6 py-1 text-sm font-medium shadow-sm hover:bg-gray-50 transition-colors">
-                    View All
-                  </button>
-                </div>
-              )}
+                );
+              })}
+
             </div>
           </div>
         </div>

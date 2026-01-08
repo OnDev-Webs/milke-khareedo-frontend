@@ -31,16 +31,10 @@ export default function ProfilePage() {
     const { data, loading } = useApi<GetProfileResponse>(() =>
         userDashboardService.getUserProfile()
     );
-    const [showOtp, setShowOtp] = useState(false);
-    const [otp, setOtp] = useState("");
-    const [otpLoading, setOtpLoading] = useState(false);
-    const [isPhoneVerified, setIsPhoneVerified] = useState(false);
-    const [originalPhoneNumber, setOriginalPhoneNumber] = useState("");
 
     useEffect(() => {
         if (!data?.user) return;
-        setIsPhoneVerified(data.user.isPhoneVerified ?? false);
-        setOriginalPhoneNumber(data.user.phoneNumber ?? "");
+
 
         const user = data.user;
 
@@ -88,15 +82,7 @@ export default function ProfilePage() {
     };
 
     const handleSave = async () => {
-        if (form.phoneNumber.length !== 10) {
-            alert("Please enter a valid 10-digit phone number");
-            return;
-        }
-
-        if (form.phoneNumber !== originalPhoneNumber && !isPhoneVerified) {
-            alert("Please verify your mobile number before saving.");
-            return;
-        }
+        
 
         await userDashboardService.updateUserProfile(form);
     };
@@ -129,48 +115,48 @@ export default function ProfilePage() {
     };
 
 
-    const handleSendOtp = async () => {
-        if (form.phoneNumber.length !== 10) {
-            alert("Enter valid phone number");
-            return;
-        }
+    // const handleSendOtp = async () => {
+    //     if (form.phoneNumber.length !== 10) {
+    //         alert("Enter valid phone number");
+    //         return;
+    //     }
 
-        await authService.loginOrRegister({
-            phoneNumber: form.phoneNumber,
-            countryCode: form.countryCode,
-        });
+    //     await authService.loginOrRegister({
+    //         phoneNumber: form.phoneNumber,
+    //         countryCode: form.countryCode,
+    //     });
 
-        setShowOtp(true);
-    };
-
-
-
-    const handleVerifyOtp = async () => {
-        if (otp.length !== 6) {
-            alert("Invalid OTP");
-            return;
-        }
-
-        await authService.verifyOTP({
-            phoneNumber: form.phoneNumber,
-            countryCode: form.countryCode,
-            otp,
-        });
-
-        setIsPhoneVerified(true);
-
-        setOtp("");
-        setShowOtp(false);
-    };
+    //     setShowOtp(true);
+    // };
 
 
-    const handleResendOtp = async () => {
-        await authService.resendOTP({
-            phoneNumber: form.phoneNumber,
-            countryCode: form.countryCode,
-            type: "login",
-        });
-    };
+
+    // const handleVerifyOtp = async () => {
+    //     if (otp.length !== 6) {
+    //         alert("Invalid OTP");
+    //         return;
+    //     }
+
+    //     await authService.verifyOTP({
+    //         phoneNumber: form.phoneNumber,
+    //         countryCode: form.countryCode,
+    //         otp,
+    //     });
+
+    //     setIsPhoneVerified(true);
+
+    //     setOtp("");
+    //     setShowOtp(false);
+    // };
+
+
+    // const handleResendOtp = async () => {
+    //     await authService.resendOTP({
+    //         phoneNumber: form.phoneNumber,
+    //         countryCode: form.countryCode,
+    //         type: "login",
+    //     });
+    // };
 
 
     return (
@@ -193,58 +179,19 @@ export default function ProfilePage() {
                 />
 
                 <FieldInput
-                    label="Email Address *"
-                    name="email"
+                    label="Email Address"
                     value={form.email}
-                    onChange={handleChange}
-
-                />
-
-                <PhoneInput
-                    label="Mobile Number *"
-                    countryCode={form.countryCode}
-                    phoneNumber={form.phoneNumber}
-                    isVerified={isPhoneVerified}
-                    onVerify={handleSendOtp}
-                    onChange={(value) => {
-                        setForm((prev) => ({ ...prev, phoneNumber: value }));
-
-                        if (value !== originalPhoneNumber && isPhoneVerified) {
-                            setIsPhoneVerified(false);
-                            setShowOtp(false);
-                            setOtp("");
-                        }
-                    }}
-
+                    disabled
                 />
 
 
-                {showOtp && (
-                    <div className="md:col-span-2 flex items-center gap-3">
-                        <input
-                            value={otp}
-                            onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
-                            maxLength={6}
-                            placeholder="Enter OTP"
-                            className="h-12 border rounded px-4 w-40"
-                        />
+                <FieldInput
+                    label="Mobile Number"
+                    value={`${form.countryCode} ${form.phoneNumber}`}
+                    disabled
+                />
 
-                        <button
-                            onClick={handleVerifyOtp}
-                            className="bg-[#1C4692] text-white px-4 py-2 rounded"
-                        >
-                            Verify OTP
-                        </button>
 
-                        <button
-                            type="button"
-                            onClick={handleResendOtp}
-                            className="text-sm text-blue-600"
-                        >
-                            Resend OTP
-                        </button>
-                    </div>
-                )}
 
 
 
@@ -437,20 +384,51 @@ function FieldSelect({
 }) {
     return (
         <div className="relative">
-            <span className="absolute left-4 top-[-9px] bg-white px-2 text-xs text-gray-400">
+            {/* Floating Label */}
+            <span className="absolute left-4 top-[-9px] bg-white px-2 text-xs text-gray-400 z-10">
                 {label}
             </span>
 
+            {/* Select */}
             <select
                 name={name}
                 value={value}
                 onChange={onChange}
-                className="h-14 w-full rounded-[10px] border px-4 text-sm focus:border-[#1C4692] focus:outline-none"
+                className="
+          h-14
+          w-full
+          rounded-[10px]
+          border
+          px-4
+          pr-12
+          text-sm
+          appearance-none
+          focus:border-[#1C4692]
+          focus:outline-none
+          bg-white
+        "
             >
                 <option value="">Select {label}</option>
                 {children}
             </select>
+
+            {/* Custom Arrow */}
+            <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">
+                <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
+                    <polyline points="6 9 12 15 18 9" />
+                </svg>
+            </span>
         </div>
     );
 }
+
 

@@ -6,8 +6,6 @@ import {
   IoHeartOutline,
   IoHeart,
   IoShareSocialOutline,
-  IoChevronBack,
-  IoChevronForward,
 } from "react-icons/io5";
 import { MdCompareArrows } from "react-icons/md";
 import { type Property } from "@/lib/api/services/home.service";
@@ -227,7 +225,7 @@ export default function PropertyCard({
               Group Size
             </span>
             <span className="text-base font-bold text-[#1C4692] mt-1">
-              {property.groupSizeFormatted}
+              {property.groupSize}
             </span>
             <span className="text-xs text-black mt-0.5">Members</span>
           </div>
@@ -236,7 +234,7 @@ export default function PropertyCard({
               Opening
             </span>
             <span className="text-base font-bold text-[#1C4692] mt-1">
-              {property.openingFormatted}
+              {property.openingLeft}
             </span>
             <span className="text-xs text-black mt-0.5">Left</span>
           </div>

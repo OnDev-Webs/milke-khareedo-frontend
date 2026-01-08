@@ -21,7 +21,7 @@ export default function PDPLayoutPlan({ layoutPlans, configurations }: PDPLayout
   }, [layoutPlans, selectedBhk]);
 
   const availableSizes = useMemo(() => {
-    return selectedLayoutPlans.map((plan) => plan.area);
+    return selectedLayoutPlans.map((plan) => plan.area).filter((area): area is string => area !== undefined);
   }, [selectedLayoutPlans]);
 
   const [selectedSize, setSelectedSize] = useState(availableSizes[0] || "");
@@ -48,7 +48,7 @@ export default function PDPLayoutPlan({ layoutPlans, configurations }: PDPLayout
                   onClick={() => {
                     setSelectedBhk(opt);
                     const plansForBhk = layoutPlans.filter((p) => p.unitType === opt);
-                    if (plansForBhk.length > 0) {
+                    if (plansForBhk.length > 0 && plansForBhk[0].area) {
                       setSelectedSize(plansForBhk[0].area);
                     }
                   }}
@@ -72,7 +72,11 @@ export default function PDPLayoutPlan({ layoutPlans, configurations }: PDPLayout
               {availableSizes.map((s) => (
                 <button
                   key={s}
-                  onClick={() => setSelectedSize(s)}
+                  onClick={() => {
+                    if (s) {
+                      setSelectedSize(s);
+                    }
+                  }}
                   className={
                     "rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 border " +
                     (selectedSize === s

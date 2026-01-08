@@ -28,6 +28,7 @@ const Title: React.FC<TitleProps> = ({
                 viewBox="0 0 231 14"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="w-full sm:w-[231px]"
               >
                 <path
                   d="M1.5 12.5C58.459 4.89071 183.802 -6.34513 229.5 9.5858"

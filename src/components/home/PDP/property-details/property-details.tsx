@@ -27,7 +27,7 @@ export default function PDPPropertyDetails({ property }: PDPPropertyDetailsProps
               <div>
                 <p className="text-xs text-gray-500">Carpet Area</p>
                 <p className="mt-1 text-lg font-semibold text-gray-900">
-                  {property.overview.areaRange.formatted}
+                  {property.overview.areaRange?.formatted || "N/A"}
                 </p>
               </div>
 

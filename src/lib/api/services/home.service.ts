@@ -51,6 +51,75 @@ export interface Property {
   isJoinGroup?: boolean; // Join group status from API
 }
 
+// Extended fields used by PDP mock response (merged with main PropertyOverview below)
+
+export interface GroupBuyInfo {
+  minGroupMembers?: number;
+  currentGroupMembersCount?: number;
+  progressPercentage?: number;
+  isMinimumMet?: boolean;
+  progressText?: string;
+  message?: string;
+  members?: Array<{
+    userId?: string;
+    name?: string;
+    profilePhoto?: string;
+    contactNumber?: string;
+    email?: string;
+    propertyTypeInterest?: string;
+    joinedAt?: string;
+  }>;
+}
+
+// augment Property to include PDP fields (optional)
+export interface PropertyDetailResponseType {
+  id: string;
+  projectId: string;
+  projectName: string;
+  location: string;
+  latitude: number | null;
+  longitude: number | null;
+  image: string | null;
+  images?: string[]; // Array of images for slider
+  lastDayToJoin: string;
+  groupSize: number;
+  groupSizeFormatted: string;
+  openingLeft: number;
+  openingFormatted: string;
+  targetPrice: PropertyPrice;
+  discount: PropertyDiscount | null;
+  discountPercentage: string;
+  configurations: string[];
+  configurationsFormatted: string;
+  possessionStatus: string;
+  leadCount: number;
+  reraId: string;
+  description: string;
+  // relationshipManager: string;
+  isFavorite?: boolean; // Favorite status from API
+  overview?: PropertyOverview;
+  highlights?: string[];
+  amenities?: string[];
+  imageDetails?: { main?: string; thumbnails?: string[] };
+  layoutPlans?: LayoutPlan[];
+  neighborhood?: any;
+  developer?: DeveloperInfo | string;
+  relationshipManager?: { id?: string; name?: string; email?: string; phone?: string };
+  // configurations?: Array<any>;
+  projectSize?: string;
+  landParcel?: string;
+  minGroupMembers?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  groupBuy?: GroupBuyInfo;
+  isAuthenticated?: boolean;
+  startingPrice?: PropertyPrice;
+  bookingDeadlinePrice?: PropertyPrice & { note?: string };
+  developerPrice?: string;
+  offerPrice?: string | PropertyPrice;
+  similarProjects?: any[];
+}
+
 export interface PaginationInfo {
   total: number;
   page: number;
@@ -83,20 +152,20 @@ export interface LocationDetails {
 }
 
 export interface PropertyOverview {
-  units: number;
-  configurations: string[];
-  configurationsFormatted: string;
-  possessionStatus: string;
-  areaRange: {
-    min: number;
-    max: number;
-    formatted: string;
+  units?: number;
+  configurations?: string[];
+  configurationsFormatted?: string;
+  possessionStatus?: string;
+  areaRange?: {
+    min?: number;
+    max?: number;
+    formatted?: string;
   };
-  reraNumber: string;
-  possessionDate: string;
-  possessionDateFormatted: string;
-  plotSize: string;
-  propertyType: string;
+  reraNumber?: string;
+  possessionDate?: string;
+  possessionDateFormatted?: string;
+  plotSize?: string;
+  propertyType?: string;
 }
 
 export interface ConnectivityPoint {
@@ -119,26 +188,26 @@ export interface NeighborhoodData {
 }
 
 export interface LayoutPlan {
-  image: string;
-  unitType: string;
-  area: string;
-  price: string;
+  image?: string;
+  unitType?: string;
+  area?: string;
+  price?: string;
 }
 
 export interface DeveloperInfo {
-  id: string;
-  name: string;
-  description: string;
-  logo: string;
-  city: string;
-  establishedYear: number;
-  yearsOfExperience: number;
-  totalProjects: number;
-  website: string;
+  id?: string;
+  name?: string;
+  description?: string;
+  logo?: string;
+  city?: string;
+  establishedYear?: number;
+  yearsOfExperience?: number;
+  totalProjects?: number;
+  website?: string;
   sourcingManager?: {
-    name: string;
-    mobile: string;
-    email: string;
+    name?: string;
+    mobile?: string;
+    email?: string;
   };
 }
 

@@ -77,8 +77,8 @@ export default function Page() {
       />
 
       {/* Blogs */}
-      <section className="py-[100px]">
-        <div className="container mx-auto">
+      <section className="py-[50px] md:py-[100px]">
+        <div className="container mx-auto px-4 sm:px-0">
           {isLoading && (!blogs || blogs.length === 0) ? (
             <div className="flex justify-center items-center py-20">
               <div className="text-gray-500">Loading blogs...</div>

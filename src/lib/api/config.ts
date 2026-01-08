@@ -5,8 +5,7 @@
 
 export const API_CONFIG = {
   // Base URL for API - change this to your backend URL
-  BASE_URL:
-    `${process.env.NEXT_PUBLIC_API_URL}/api` || "http://localhost:3008/api",
+  BASE_URL: process.env.NEXT_PUBLIC_API_URL,
 
   // Default timeout for requests (in milliseconds)
   TIMEOUT: 30000,
@@ -58,7 +57,7 @@ export const API_ENDPOINTS = {
     GET_PREFERENCES: "/user_dashboard/get_contact_preferences",
     SAVE_PREFERENCES: "/user_dashboard/contact_preferences",
     UPDATE_PROFILE: "/user_dashboard/update_profile",
-    GET_PROFILE:"/user_dashboard/get_profile"
+    GET_PROFILE: "/user_dashboard/get_profile"
   },
 
   // Add more endpoint groups as needed

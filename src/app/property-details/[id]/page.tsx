@@ -16,11 +16,7 @@ import RERAStickyWidget from "@/components/home/PDP/rera-widget/RERAStickyWidget
 import { homeService, type PropertyDetail, type SimilarProject } from "@/lib/api/services/home.service";
 import React, { useEffect, useState } from "react";
 
-export default function PropertyDetailsPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default function PropertyDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const unwrappedParams = React.use(params);
   const propertyId = unwrappedParams.id;
 

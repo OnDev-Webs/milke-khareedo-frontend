@@ -1,8 +1,9 @@
 "use client";
 
 import { useCompare } from "@/contexts/CompareContext";
-import { IoClose } from "react-icons/io5";
 import Link from "next/link";
+import Image from "next/image";
+import closeCompare from '@/assets/closeCompare.svg';
 
 export default function CompareOverlay() {
   const { compareItems, removeFromCompare, clearCompare, compareCount } =
@@ -14,7 +15,7 @@ export default function CompareOverlay() {
       <div className="flex items-center justify-between border-b border-gray-200 px-5 py-4">
         <div className="flex items-center gap-2">
           <h3 className="text-lg font-semibold text-gray-800">Compare</h3>
-          <span className="flex h-5 w-5 items-center justify-center rounded-full hover:bg-[#1c4692e6] bg-[#1C4692] text-xs font-semibold text-white">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#1C4692] text-xs font-semibold text-white">
             {compareCount}
           </span>
         </div>
@@ -37,27 +38,42 @@ export default function CompareOverlay() {
             {compareItems.map((property) => (
               <div
                 key={property.id}
-                className="flex items-start justify-between rounded-lg border border-gray-200 bg-gray-50 p-3 hover:bg-gray-100 transition-colors"
-              >
-                <div className="flex-1 min-w-0">
+                className="flex items-start gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3 hover:bg-gray-100 transition-colors">
+                {/* ✅ PROPERTY IMAGE */}
+                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full bg-gray-200">
+                  {property.image ? (
+                    <Image
+                      src={property.image || ""}
+                      alt={property.title}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="h-full w-full bg-gray-300" />
+                  )}
+                </div>
+
+                {/* ✅ PROPERTY INFO */}
+                <div className="flex-1 min-w-0 mt-2">
                   <h4 className="text-sm font-semibold text-gray-800 truncate">
                     {property.title}
                   </h4>
                   <p className="mt-1 text-xs font-medium text-gray-600">
                     {property.price}
                   </p>
-                  {property.location && (
-                    <p className="mt-1 text-xs text-gray-500 truncate">
-                      {property.location}
-                    </p>
-                  )}
                 </div>
+
                 <button
                   onClick={() => removeFromCompare(property.id)}
-                  className="ml-2 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white text-red-500 hover:bg-red-50 transition-colors"
-                  aria-label="Remove from compare"
-                >
-                  <IoClose className="h-4 w-4" />
+                  className="ml-1 mt-3 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#FB4848] text-red-500 transition-colors"
+                  aria-label="Remove from compare">
+                  <Image
+                      src={closeCompare}
+                      alt="Remove"
+                      width={14}
+                      height={14}
+                      className="object-cover"
+                    />
                 </button>
               </div>
             ))}

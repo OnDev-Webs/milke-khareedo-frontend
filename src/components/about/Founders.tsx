@@ -43,11 +43,12 @@ export default function Founders() {
   };
 
   return (
-    <section className="w-full bg-white py-16 relative overflow-hidden mb-[100px]">
+    <section className="w-full bg-white py-16 relative overflow-hidden">
       <svg
-        className="absolute top-0 left-0 w-[1500px] h-[1500px] opacity-20 pointer-events-none"
+        className="absolute inset-0 w-full h-full opacity-20 pointer-events-none"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 100 100"
+        preserveAspectRatio="xMidYMid slice"
       >
         <defs>
           <pattern

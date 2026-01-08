@@ -33,7 +33,7 @@ export default function HeroSection({
       <div className="container mx-auto">
         <div className="flex flex-col items-center justify-center gap-4 text-center">
           {badgeText && (
-            <div className="px-5 py-2.5 rounded-[70px] outline outline-1 outline-red-400">
+            <div className="px-5 py-2.5 rounded-[70px] outline outline-1 outline-[#EA6C35]">
               <span className="text-white text-base font-medium">
                 {badgeText}
               </span>
@@ -44,7 +44,7 @@ export default function HeroSection({
             {highlightText ? (
               <>
                 <span className="text-white">{title} </span>
-                <span className="text-red-400">{highlightText}</span>
+                <span className="text-[#EA6C35]">{highlightText}</span>
               </>
             ) : (
               title

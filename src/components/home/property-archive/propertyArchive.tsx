@@ -9,9 +9,10 @@ import AuthModal from "@/components/auth/AuthModal";
 import { useRouter } from "next/navigation";
 import PropertyCard from "@/components/cards/PropertyCard";
 import getPropertyImages from "@/utils/getPropertyImages";
+import Title from "@/components/typography/title";
 
 export default function PropertyArchive() {
-  const LIMIT = 9; // 3x3 grid initially
+  const LIMIT = 9;
   const router = useRouter();
   const { clearAndAddToCompare } = useCompare();
   const { isAuthenticated, checkAuth } = useAuthContext();
@@ -348,56 +349,36 @@ export default function PropertyArchive() {
     <section className="w-full py-8 bg-white px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
         {/* Heading */}
-        <h1 className="text-3xl md:text-4xl font-bold text-black mb-6">
-          <span className="relative inline-block text-[#1C4692] font-bold">
-            All Properties
-            <svg
-              className="absolute left-0 -bottom-2"
-              width="228"
-              height="11"
-              viewBox="0 0 228 11"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M2 8.5C60 1.5 170 5.5 226 8.5"
-                stroke="#1C4692"
-                strokeWidth="3"
-                strokeLinecap="round"
-                fill="none"
-              />
-            </svg>
-          </span>
-        </h1>
+        <div className="mb-10">
+          <Title text="All" isDrawLine drawLineText="Properties" />
+        </div>
 
         {/* Tabs - Horizontal Scrollable */}
-        <div
-          ref={tabsContainerRef}
-          className="flex gap-4 md:gap-6 mb-8 py-2 overflow-x-auto scrollbar-hide"
-          style={{
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-          }}
-        >
-          {tabs.map((tab, idx) => {
-            const isActive = activeTab === tab;
-
-            return (
-              <button
-                key={idx}
-                onClick={() => handleTabChange(tab)}
-                className={`relative px-1 pb-1 text-sm md:text-base font-medium transition-colors whitespace-nowrap shrink-0
-          ${isActive ? "text-[#1C4692]" : "text-[#818181]"}
-        `}
-              >
-                {tab}
-
-                {isActive && (
-                  <span className="absolute left-0 right-0 -bottom-[9px] h-[2px] bg-[#1C4692]" />
-                )}
-              </button>
-            );
-          })}
+        <div className="relative mb-8">
+          <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-[#F0F0F0]" />
+          <div
+            ref={tabsContainerRef}
+            className="relative flex gap-4 md:gap-6 py-2 overflow-x-auto scrollbar-hide"
+            style={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+            }}>
+            {tabs.map((tab, idx) => {
+              const isActive = activeTab === tab;
+              return (
+                <button
+                  key={idx}
+                  onClick={() => handleTabChange(tab)}
+                  className={`relative px-1 pb-2 text-sm md:text-base font-medium whitespace-nowrap shrink-0 transition-colors
+                  ${isActive ? "text-[#1C4692]" : "text-[#818181]"}`}>
+                  {tab}
+                  {isActive && (
+                    <span className="absolute left-0 right-0 -bottom-[8px] h-[2px] bg-[#1C4692] z-20" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Loading State */}

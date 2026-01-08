@@ -1,7 +1,11 @@
 import DashboardCard from "@/components/dashboard/DashboardCard";
+import { redirect } from "next/navigation";
 
 export default function DashboardHomePage() {
+  
+      
   return (
+
     <DashboardCard className="min-h-40 sm:min-h-54 flex flex-col ">
       <h2 className="text-xl font-semibold text-gray-800">
         Welcome to your Dashboard
@@ -11,6 +15,8 @@ export default function DashboardHomePage() {
         Use the options above to manage your profile, favorites, searches, and
         preferences.
       </p>
+      
     </DashboardCard>
   );
+
 }

@@ -13,8 +13,8 @@ import {
 export default function FooterSection() {
   return (
     <footer className="w-full bg-[#F5F5F5]">
-      <div className="mx-auto container sm:px-0 px-4 py-12 lg:py-16">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
+      <div className="mx-auto max-w-[1300px] py-12 lg:py-16">
+<div className="grid grid-cols-1 lg:grid-cols-12 gap-y-10 lg:gap-12">
           {/* Left Column - Company Info */}
           <div className="lg:col-span-4">
             <Link href="/" className="mb-4 flex items-center gap-2">
@@ -74,7 +74,7 @@ export default function FooterSection() {
           </div>
 
           {/* Right Columns - Navigation Links */}
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 lg:col-span-8">
+<div className="grid grid-cols-1 gap-8 sm:grid-cols-3 lg:col-span-6 lg:col-start-7">
             {/* Explore Column */}
             <div>
               <h3 className="mb-4 text-base font-bold text-[#241F20] tracking-wide lg:text-lg">
@@ -94,7 +94,7 @@ export default function FooterSection() {
                     href="/group-buying"
                     className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
-                    Group Buying
+                    Our Approach
                   </Link>
                 </li>
                 <li>
@@ -140,18 +140,10 @@ export default function FooterSection() {
                 </li>
                 <li>
                   <Link
-                    href="/pricing-value"
-                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
+                    href="/about"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base pe-20"
                   >
-                    Pricing & Value
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/faqs"
-                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
-                  >
-                    FAQ's
+                    About Milke Khareedo
                   </Link>
                 </li>
                 <li>
@@ -162,11 +154,20 @@ export default function FooterSection() {
                     Contact Us
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    href="/faqs"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
+                  >
+                    FAQ's
+                  </Link>
+                </li>
+                
               </ul>
             </div>
 
             {/* Company Column */}
-            <div>
+            {/* <div>
               <h3 className="mb-4 text-base font-bold text-[#241F20] tracking-wide lg:text-lg">
                 Company
               </h3>
@@ -212,7 +213,7 @@ export default function FooterSection() {
                   </Link>
                 </li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

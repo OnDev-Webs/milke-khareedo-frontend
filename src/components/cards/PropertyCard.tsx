@@ -58,7 +58,7 @@ export default function PropertyCard({
 }: PropertyCardProps) {
   return (
     <div
-      className="flex flex-col rounded-3xl bg-white shadow-lg overflow-hidden group relative cursor-pointer"
+      className="flex flex-col rounded-3xl p-4 bg-white shadow-lg overflow-hidden group relative cursor-pointer"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
@@ -67,13 +67,13 @@ export default function PropertyCard({
         className="absolute inset-0 z-10"
       />
       {/* Image Section with Slider */}
-      <div className="relative h-52 w-full bg-gray-100 flex items-center justify-center overflow-hidden">
+      <div className="relative h-52 w-full bg-gray-100 rounded-3xl flex items-center justify-center overflow-hidden">
         {currentImage ? (
           <Image
             key={`${property.id}-${currentIndex}`}
             src={currentImage}
             alt={`${property.projectName} - Image ${currentIndex + 1}`}
-            className="object-cover transition-opacity duration-300"
+            className="object-cover transition-opacity rounded-3xl duration-300"
             fill
           />
         ) : (
@@ -112,7 +112,7 @@ export default function PropertyCard({
             }
           >
             {isFavorite ? (
-              <IoHeart className="h-5 w-5" />
+              <IoHeart className="h-5 w-5 " />
             ) : (
               <IoHeartOutline className="h-5 w-5" />
             )}
@@ -127,8 +127,13 @@ export default function PropertyCard({
             className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-white/90 text-gray-700 hover:bg-white shadow-md transition-colors"
             aria-label="Add to compare"
           >
-            <MdCompareArrows className="h-5 w-5" />
-          </button>
+            <Image
+              src="/images/convert.svg"
+              alt="Compare"
+              width={20}
+              height={20}
+              className="h-5 w-5"
+            />          </button>
 
           {/* Share Icon */}
           <button
@@ -143,6 +148,40 @@ export default function PropertyCard({
           </button>
         </div>
 
+        {/* Navigation Arrows - Only show if multiple images, hidden on hover */}
+        {hasMultipleImages && (
+          <>
+            {/* Previous Arrow - Left side, middle height */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onGoToPreviousImage(images.length);
+              }}
+              className={`absolute left-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 hover:bg-white shadow-lg transition-all duration-300 z-10 border border-gray-200 backdrop-blur-sm ${isHovered
+                ? "opacity-0 invisible scale-90 pointer-events-none"
+                : "opacity-100 visible scale-100"
+                }`}
+              aria-label="Previous image"
+            >
+              <IoChevronBack className="h-5 w-5" />
+            </button>
+
+            {/* Next Arrow - Right side, middle height (centered when not hovering) */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onGoToNextImage(images.length);
+              }}
+              className={`absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 hover:bg-white shadow-lg transition-all duration-300 z-10 border border-gray-200 backdrop-blur-sm ${isHovered
+                ? "opacity-0 invisible scale-90 pointer-events-none"
+                : "opacity-100 visible scale-100"
+                }`}
+              aria-label="Next image"
+            >
+              <IoChevronForward className="h-5 w-5" />
+            </button>
+          </>
+        )}
 
         {/* Image Navigation Dots - Only show if multiple images */}
         {hasMultipleImages && (
@@ -163,7 +202,7 @@ export default function PropertyCard({
       </div>
 
       {/* Content Section */}
-      <div className="p-4">
+      <div className="pt-4">
         {/* Title + Location + Call button */}
         <div className="flex justify-between items-start mb-3">
           <div className="flex-1 min-w-0">

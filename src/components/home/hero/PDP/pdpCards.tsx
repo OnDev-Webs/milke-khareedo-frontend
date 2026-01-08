@@ -320,30 +320,39 @@ export default function TopProperties() {
 
   return (
     <section className="w-full py-16 bg-gray-50 px-6">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-[1350px] mx-auto px-6">
         {/* Heading */}
-        <h2 className="text-3xl font-bold text-black mb-6">
-          Top{" "}
-          <span className="relative inline-block text-[#1C4692] font-bold">
-            Properties
-            <svg
-              className="absolute left-0 -bottom-2"
-              width="228"
-              height="11"
-              viewBox="0 0 228 11"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M2 8.5C60 1.5 170 5.5 226 8.5"
-                stroke="#1C4692"
-                strokeWidth="3"
-                strokeLinecap="round"
-                fill="none"
-              />
-            </svg>
-          </span>
-        </h2>
+       <h2 className="text-3xl font-bold text-black mb-6">
+  Top{" "}
+  <span className="relative inline-block text-[#1C4692] font-bold">
+    Properties
+
+    <svg
+      className="
+        absolute
+        left-3/5
+        -translate-x-1/2
+        -bottom-4
+        w-[120%]
+        h-3.5
+      "
+      viewBox="0 0 120 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="none"
+    >
+      <path
+        d="M2 11
+           C 30 3, 90 3, 118 11"
+        stroke="#1C4692"
+        strokeWidth="3"
+        strokeLinecap="round"
+        fill="none"
+      />
+    </svg>
+  </span>
+</h2>
+
 
         {/* Tabs */}
         <div className="flex flex-wrap gap-6 mb-8 py-2 border-b border-[#E0E0E0]">

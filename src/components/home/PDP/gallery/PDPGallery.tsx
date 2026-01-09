@@ -32,6 +32,7 @@ export default function PDPGallery({
 }: PDPGalleryProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const allImages = images && images.length > 0 ? images : (mainImage ? [mainImage] : []);
+  const thumbnails = (imageDetails?.thumbnails || allImages.slice(1)).slice(0, 4);
   const displayImages = allImages.length > 0 ? allImages : ["/placeholder-property.jpg"];
   const [showAllThumbs, setShowAllThumbs] = useState(false);
   const thumbnails = imageDetails?.thumbnails || allImages.slice(1);
@@ -123,25 +124,18 @@ export default function PDPGallery({
             </div>
 
             {/* Thumbnails */}
-            <div
-              className={`grid gap-4 ${showAllThumbs ? "grid-cols-4 h-auto" : "grid-cols-2 h-80"
-                }`}
-            >
-              {visibleThumbs.map((img, index) => {
-                const isLastVisible =
-                  !showAllThumbs &&
-                  index === 3 &&
-                  totalImages > 4;
+            <div className="h-80 grid grid-cols-2 gap-4">
+              {thumbnails.map((img, index) => {
+                const showViewAll =
+                  index === 3 && displayImages.length > 5;
 
                 return (
                   <div
                     key={index}
-                    className="relative rounded-xl overflow-hidden shadow-[0_0_10px_rgba(0,0,0,0.08)] bg-secondary cursor-pointer hover:opacity-90 transition-opacity"
+                    className="relative rounded-xl overflow-hidden shadow-[0_0_10px_rgba(0,0,0,0.08)] bg-secondary cursor-pointer"
                     onClick={() => {
                       const mainIndex = displayImages.findIndex((i) => i === img);
-                      if (mainIndex !== -1) {
-                        setCurrentImageIndex(mainIndex);
-                      }
+                      if (mainIndex !== -1) setCurrentImageIndex(mainIndex);
                     }}
                   >
                     <Image
@@ -151,19 +145,12 @@ export default function PDPGallery({
                       className="object-cover"
                     />
 
-                    {/* View All overlay ONLY on 4th image */}
-                    {isLastVisible && (
-                      <div
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setShowAllThumbs(true);
-                        }}
-                        className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center"
-                      >
-                        <span className="text-white text-sm font-semibold mb-2">
-                          +{totalImages - 4}
+                    {showViewAll && (
+                      <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center gap-2">
+                        <span className="text-white text-sm font-semibold">
+                          +{displayImages.length - 5}
                         </span>
-                        <button className="rounded-full bg-[#FFFFFF] text-[#1C4692] px-5 py-1 text-[16px] font-semibold shadow hover:bg-gray-100">
+                        <button className="rounded-full bg-white px-6 py-1 text-sm font-medium">
                           View All
                         </button>
                       </div>
@@ -171,6 +158,7 @@ export default function PDPGallery({
                   </div>
                 );
               })}
+
             </div>
 
           </div>

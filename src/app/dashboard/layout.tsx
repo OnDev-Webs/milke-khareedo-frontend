@@ -9,16 +9,18 @@ import {
   Globe,
   Search,
   SlidersHorizontal,
+  UserRoundIcon,
 } from "lucide-react";
+import { IoHeartOutline } from "react-icons/io5";
 
 const tabs = [
-  { label: "User Profile", href: "/dashboard/profile", icon: User },
+  { label: "User Profile", href: "/dashboard/profile", icon: UserRoundIcon },
   {
     label: "Viewed Properties",
     href: "/dashboard/viewed-properties",
     icon: Building2,
   },
-  { label: "My Favorite", href: "/dashboard/favorites", icon: Heart },
+  { label: "My Favorite", href: "/dashboard/favorites", icon: IoHeartOutline },
   { label: "Site visits", href: "/dashboard/site-visits", icon: Globe },
   { label: "My Searches", href: "/dashboard/searches", icon: Search },
   {

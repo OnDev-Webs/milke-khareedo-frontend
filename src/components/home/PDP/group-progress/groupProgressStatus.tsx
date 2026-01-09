@@ -31,8 +31,8 @@ export default function PDPGroupProgressStatus({
   const joined = groupBuy.currentGroupMembersCount;
   const required = groupBuy.minGroupMembers;
   const pct = Math.min(100, Math.round((joined / required) * 100));
-  const radius = 48;
-  const stroke = 12;
+  const radius = 70;
+  const stroke = 22;
   const normalizedRadius = radius - stroke / 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (pct / 100) * circumference;
@@ -75,7 +75,7 @@ export default function PDPGroupProgressStatus({
   return (
     <>
       <section className="">
-        <div className="mx-auto container rounded-2xl bg-white p-6 border border-[#F3F3F3] shadow-sm">
+        <div className="mx-auto container rounded-2xl bg-white p-6 border border-[#F3F3F3]">
           <div className="flex flex-col items-center gap-3">
             <div className="relative">
               <svg height={radius * 2} width={radius * 2} className="block">
@@ -102,27 +102,25 @@ export default function PDPGroupProgressStatus({
               </svg>
 
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <div className="text-2xl font-semibold text-gray-900">
+                <div className="text-[36px] font-semibold text-gray-900">
                   {groupBuy.progressText}
                 </div>
               </div>
             </div>
 
-            <p className="mt-1 text-center text-sm text-gray-600 leading-relaxed">
+            <p className="mt-1 text-center text-[14px] font-normal text-[#969696] leading-relaxed">
               {formatMessage(groupBuy.message, required)}
             </p>
           </div>
 
           {groupBuy.members && groupBuy.members.length > 0 && (
-            <div className="mt-5">
-              <h4 className="text-sm font-semibold text-gray-900 mb-3">
+            <div className="mt-3">
+              <h4 className="text-[16px] font-semibold text-[#000000] mb-3">
                 Joined the Group
               </h4>
-
-              <div className="mt-3 overflow-x-auto pb-2 scrollbar-hide">
-                <div className="flex gap-2 -space-x-8">
+              <div className="mt-2 overflow-x-auto pb-2 scrollbar-hide">
+                <div className="flex gap-3 overflow-x-auto scrollbar-hide">
                   {groupBuy.members.slice(0, 5).map((member, index) => {
-                    // Generate different colors for avatars
                     const avatarColors = [
                       "from-yellow-400 to-yellow-500",
                       "from-blue-400 to-blue-500",
@@ -135,42 +133,46 @@ export default function PDPGroupProgressStatus({
                     return (
                       <div
                         key={member.userId}
-                        className="shrink-0 rounded-xl border border-gray-200 bg-white p-3 shadow-sm min-w-[140px]"
+                        style={{ zIndex: 50 - index }}
+                        className="relative shrink-0 w-[80px] rounded-2xl border border-[#F3F3F3] bg-white px-3 py-3 flex flex-col items-center text-center shadow-[2px_0px_10px_0px_#0000000D]"
                       >
-                        <div className="flex items-center gap-2.5">
-                          {member.profilePhoto ? (
-                            <Image
-                              src={member.profilePhoto}
-                              alt={member.name}
-                              width={40}
-                              height={40}
-                              className="h-10 w-10 shrink-0 rounded-full object-cover"
-                            />
-                          ) : (
-                            <div className={`h-10 w-10 shrink-0 rounded-full bg-gradient-to-br ${avatarColor} flex items-center justify-center shadow-sm`}>
-                              <span className="text-xs font-semibold text-white">
-                                {member.name.charAt(0).toUpperCase()}
-                              </span>
-                            </div>
-                          )}
-                          <div className="flex flex-col min-w-0">
-                            <span className="text-sm font-medium text-gray-900 truncate">
-                              {member.name}
-                            </span>
-                            <span className="text-xs text-gray-500">
-                              {member.propertyTypeInterest}
+                        {/* Avatar */}
+                        {member.profilePhoto ? (
+                          <Image
+                            src={member.profilePhoto}
+                            alt={member.name}
+                            width={56}
+                            height={56}
+                            className="h-[25px] w-[25px] rounded-full object-cover mb-3"
+                          />
+                        ) : (
+                          <div
+                            className={`h-[25px] w-[25px] rounded-full bg-gradient-to-br ${avatarColor} flex items-center justify-center mb-3 shadow`}
+                          >
+                            <span className="text-sm font-semibold text-white">
+                              {member.name.charAt(0).toUpperCase()}
                             </span>
                           </div>
-                        </div>
+                        )}
+
+                        {/* Name */}
+                        <span className="text-[14px] font-medium text-[#000000] truncate w-full">
+                          {member.name}
+                        </span>
+
+                        {/* Interest / Type */}
+                        <span className="text-[13px] text-[#969696] font-normal mt-1 truncate w-full">
+                          {member.propertyTypeInterest}
+                        </span>
                       </div>
                     );
                   })}
                 </div>
-              </div>
 
-              <div className="mt-3 h-1.5 rounded-full bg-gray-200">
+              </div>
+              <div className="mt-2 h-2 rounded-full bg-[#F2F2F2]">
                 <div
-                  className="h-1.5 rounded-full bg-[#1C4692] transition-all duration-500 ease-out"
+                  className="h-2 rounded-full bg-[#1C4692] transition-all duration-500 ease-out"
                   style={{ width: `${pct}%` }}
                   aria-hidden
                 />

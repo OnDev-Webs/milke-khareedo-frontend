@@ -1,10 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
+import { IoHeart, IoHeartOutline, IoShareSocialOutline } from "react-icons/io5";
+import { MdCompareArrows } from "react-icons/md";
 interface PDPSectionsProps {
   activeTab?: string;
   onTabChange?: (tab: string) => void;
+  onFavoriteClick?: () => void;
+  onCompareClick?: () => void;
+  onShareClick?: () => void;
+  isFavorite?: boolean;
 }
 
 const sections = [
@@ -16,17 +21,24 @@ const sections = [
   { id: "about-developer", title: "About developer" },
 ];
 
-export default function PDPSections({ activeTab, onTabChange }: PDPSectionsProps) {
+export default function PDPSections({
+  activeTab,
+  onTabChange,
+  onFavoriteClick,
+  onCompareClick,
+  onShareClick,
+  isFavorite,
+}: PDPSectionsProps) {
+
   const [activeSection, setActiveSection] = useState(activeTab || "Property Details");
   const [isScrolling, setIsScrolling] = useState(false);
-  const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   // Handle smooth scroll to section
   const scrollToSection = (sectionId: string, title: string) => {
     setIsScrolling(true);
     const element = document.getElementById(sectionId);
-    
+
     if (element) {
       // Calculate offset for sticky header/nav
       // Header height (~80px) + Navigation bar height (~60px) + some padding
@@ -123,29 +135,55 @@ export default function PDPSections({ activeTab, onTabChange }: PDPSectionsProps
       setActiveSection(activeTab);
     }
   }, [activeTab]);
+  
 
   return (
-    <section className="sticky top-0 z-40 bg-white border-b border-[#F8F8F8] shadow-sm">
+    <section className="sticky top-0 z-40 bg-white">
       <div className="container mx-auto">
-        <div className="flex gap-4 overflow-x-auto scrollbar-hide">
-          {sections.map((section) => {
-            const isActive = activeSection === section.title;
-            return (
-              <button
-                key={section.id}
-                onClick={() => scrollToSection(section.id, section.title)}
-                className={`px-3.5 py-4 text-lg font-semibold whitespace-nowrap transition-all duration-300 ease-in-out inline-flex justify-center items-center gap-2.5 ${
-                  isActive
-                    ? "text-blue-900 bg-gradient-to-b from-white via-indigo-50/50 to-indigo-50/80 border-b-2 border-blue-900"
-                    : "text-gray-700 hover:text-blue-900 hover:bg-indigo-50/30 border-b-2 border-transparent"
-                }`}
-                aria-current={isActive ? "page" : undefined}
-              >
-                {section.title}
-              </button>
-            );
-          })}
+        <div className="flex items-center justify-between border-b-2 border-[#F8F8F8]">
+          {/* LEFT – MENU */}
+          <div className="flex gap-4 overflow-x-auto scrollbar-hide">
+            {sections.map((section) => {
+              const isActive = activeSection === section.title;
+              return (
+                <button
+                  key={section.id}
+                  onClick={() => scrollToSection(section.id, section.title)}
+                  className={`px-3.5 py-4 text-[18px] font-semibold whitespace-nowrap ${isActive
+                    ? "text-[#1C4692] border-b-2 border-[#1C4692] font-semibold bg-[linear-gradient(180deg,#FFFFFF_0%,#EEF4FF80_50%,#EEF4FFCC_80%)]"
+                    : "text-[#6D6D6D] font-normal"
+                    }`}>
+                  {section.title}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* RIGHT – WORKING ICONS */}
+          <div className="hidden md:flex items-center gap-3 pr-4">
+            <button
+              onClick={onFavoriteClick}
+              className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#EEF4FF]"
+            >
+              {isFavorite ? <IoHeart size={18}/> : <IoHeartOutline />}
+            </button>
+
+            <button
+              onClick={onCompareClick}
+              className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#EEF4FF]"
+            >
+              <MdCompareArrows size={18} />
+            </button>
+
+            <button
+              onClick={onShareClick}
+              className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#EEF4FF]"
+            >
+              <IoShareSocialOutline size={18} />
+            </button>
+          </div>
         </div>
+
       </div>
     </section>
   );

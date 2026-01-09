@@ -14,9 +14,11 @@ import PDPPropertyDetails from "@/components/home/PDP/property-details/property-
 import PDPSimilarProjects from "@/components/home/PDP/similar-projects/similarProjects";
 import RERAStickyWidget from "@/components/home/PDP/rera-widget/RERAStickyWidget";
 import { homeService, type PropertyDetail, type SimilarProject } from "@/lib/api/services/home.service";
+import { useCompare } from "@/contexts/CompareContext";
 import React, { useEffect, useState } from "react";
 
 export default function PropertyDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { clearAndAddToCompare } = useCompare();
   const unwrappedParams = React.use(params);
   const propertyId = unwrappedParams.id;
 
@@ -64,16 +66,57 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
     );
   }
 
+  const handleFavoriteClick = async () => {
+    if (!property) return;
+
+    try {
+      const response = await homeService.toggleFavorite(property.id);
+      if (response.success && response.data) {
+        setProperty({ ...property, isFavorite: response.data.isFavorite });
+      }
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+    }
+  };
+
+  const handleCompareClick = () => {
+    if (!property) return;
+
+    clearAndAddToCompare({
+      id: property.id,
+      title: property.projectName,
+      price: property.startingPrice.formatted,
+      location: property.location,
+      image: property.image,
+      developer: property.developer?.name || "",
+    });
+  };
+
+  const handleShareClick = () => {
+    if (!property) return;
+
+    if (navigator.share) {
+      navigator.share({
+        title: property.projectName,
+        text: `Check out ${property.projectName}`,
+        url: window.location.href,
+      }).catch(() => { });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+    }
+  };
+
+
   return (
     <>
-      <PDPGallery 
+      <PDPGallery
         images={property.images || []}
         mainImage={property.image}
         imageDetails={property.imageDetails}
         reraQrImage={property.reraQrImage}
         reraDetailsLink={property.reraDetailsLink}
       />
-      <PDPHeader 
+      <PDPHeader
         projectName={property.projectName}
         location={property.location}
         startingPrice={property.startingPrice}
@@ -86,22 +129,32 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
           setProperty({ ...property, isFavorite });
         }}
       />
-      <PDPSections 
+
+      <PDPSections
         activeTab={activeTab}
         onTabChange={setActiveTab}
+        onFavoriteClick={handleFavoriteClick}
+        onCompareClick={handleCompareClick}
+        onShareClick={handleShareClick}
+        isFavorite={property.isFavorite}
       />
 
-      <div className="flex container mx-auto py-6 gap-5">
+      <div className="container mx-auto py-6 flex flex-col gap-6 lg:flex-row lg:gap-5">
+
+        {/* LEFT CONTENT */}
         <div className="flex flex-col gap-4 flex-1">
           <div id="property-details">
             <PDPPropertyDetails property={property} />
           </div>
+
           <div id="highlights">
             <PDPHighLights highlights={property.highlights} />
           </div>
         </div>
-        <div className="flex flex-col justify-between gap-4 w-80">
-          <PDPGroupProgressStatus 
+
+        {/* RIGHT SIDEBAR */}
+        <div className="flex flex-col gap-4 w-full lg:w-80 shrink-0">
+          <PDPGroupProgressStatus
             groupBuy={property.groupBuy}
             propertyId={property.id}
             isJoinGroup={property.isJoinGroup}
@@ -119,10 +172,10 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
         <PDPAmenities amenities={property.amenities} />
       </div>
       <div id="layout-plan">
-        <PDPLayoutPlan layoutPlans={property.layoutPlans} configurations={property.configurations} />
+        <PDPLayoutPlan configurations={property.configurations} />
       </div>
       <div id="connectivity">
-        <PDPNeighborhood 
+        <PDPNeighborhood
           neighborhood={property.neighborhood}
           propertyLocation={{ lat: property.latitude, lng: property.longitude }}
         />
@@ -130,8 +183,9 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
       <div id="about-developer">
         <PDPAboutDeveloper developer={property.developer} />
       </div>
+
       <PDPSimilarProjects similarProjects={similarProjects} />
-      
+
       {/* RERA Sticky Widget */}
       <RERAStickyWidget
         reraId={property.reraId}

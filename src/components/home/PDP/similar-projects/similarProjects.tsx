@@ -140,10 +140,10 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
     <>
       <section className="w-full bg-white py-10">
         <div className="mx-auto container">
-          <h3 className="mb-6 font-semibold text-3xl">Similar Projects</h3>
+          <h3 className="mb-6 mx-10 font-semibold text-3xl">Similar Projects</h3>
 
           <div className="overflow-x-auto pb-4 md:overflow-visible">
-            <div className="flex gap-6 px-2 md:grid md:grid-cols-3 md:gap-6 md:px-0">
+            <div className="grid gap-6 px-2 grid-cols-1 md:grid-cols-3 md:px-0">
               {convertedProperties.map((property) => {
                 const images = getPropertyImages(property);
                 const currentIdx = currentImageIndex[property.id] || 0;

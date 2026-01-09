@@ -39,7 +39,7 @@ export default function PDPAboutDeveloper({ developer }: PDPAboutDeveloperProps)
     <section className="w-full px-4 py-6">
       <div className="mx-auto container rounded-2xl bg-white shadow-sm">
         <div className="rounded-t-2xl bg-[#EEF4FF] px-6 py-3">
-          <h3 className="font-semibold text-[25px]">About Developer</h3>
+          <h3 className="font-semibold text-[#000000] text-[25px]">About Developer</h3>
         </div>
 
         <div className="flex flex-col gap-6 px-6 py-6 md:flex-row md:items-start">
@@ -73,8 +73,8 @@ export default function PDPAboutDeveloper({ developer }: PDPAboutDeveloperProps)
           <div className="flex w-full flex-col items-start gap-4 md:w-1/3 md:items-end">
             <div className="flex gap-12">
               <div className="flex flex-col gap-2.5 items-center justify-center w-30">
-                <div className="w-22 p-6.5 flex justify-center items-center gap-2 rounded-full bg-[#f3f2f7] shadow-sm">
-                  <span className="text-3xl text-center font-bold text-gray-800">
+                <div className="w-22 p-6.5 flex justify-center items-center gap-2 rounded-full bg-[#1C4692] shadow-sm">
+                  <span className="text-3xl text-center font-bold text-[#FFFFFF]">
                     {developer.yearsOfExperience}+
                   </span>
                 </div>
@@ -84,8 +84,8 @@ export default function PDPAboutDeveloper({ developer }: PDPAboutDeveloperProps)
               </div>
 
               <div className="flex flex-col gap-2.5 items-center justify-center w-30">
-                <div className="w-22 p-6.5 flex justify-center items-center gap-2 rounded-full bg-[#f3f2f7] shadow-sm">
-                  <span className="text-3xl text-center font-bold text-gray-800">
+                <div className="w-22 p-6.5 flex justify-center items-center gap-2 rounded-full bg-[#1C4692] shadow-sm">
+                  <span className="text-3xl text-center font-bold text-[#FFFFFF]">
                     {developer.totalProjects}+
                   </span>
                 </div>

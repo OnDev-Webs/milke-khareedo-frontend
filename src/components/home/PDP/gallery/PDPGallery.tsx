@@ -34,6 +34,11 @@ export default function PDPGallery({
   const allImages = images && images.length > 0 ? images : (mainImage ? [mainImage] : []);
   const thumbnails = (imageDetails?.thumbnails || allImages.slice(1)).slice(0, 4);
   const displayImages = allImages.length > 0 ? allImages : ["/placeholder-property.jpg"];
+  const [showAllThumbs, setShowAllThumbs] = useState(false);
+  const thumbnails = imageDetails?.thumbnails || allImages.slice(1);
+  const totalImages = displayImages.length;
+  const visibleThumbs = showAllThumbs ? thumbnails : thumbnails.slice(0, 4);
+
 
   const goToNext = () => {
     setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
@@ -63,9 +68,10 @@ export default function PDPGallery({
         </Breadcrumb>
 
         <div className="relative">
-          <div className="grid gap-4 grid-cols-2 rounded-3xl">
+          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 rounded-3xl">
+
             {/* Main Image */}
-            <div className="relative bg-secondary flex items-center justify-center h-80 rounded-[18px] p-6 shadow-[0_0_10px_rgba(0,0,0,0.08)] overflow-hidden">
+            <div className="relative bg-secondary flex items-center justify-center h-[260px] md:h-80 rounded-[18px] p-4 md:p-6 shadow-[0_0_10px_rgba(0,0,0,0.08)] overflow-hidden">
               {displayImages[currentImageIndex] && (
                 <Image
                   src={displayImages[currentImageIndex]}
@@ -154,6 +160,7 @@ export default function PDPGallery({
               })}
 
             </div>
+
           </div>
         </div>
       </div>

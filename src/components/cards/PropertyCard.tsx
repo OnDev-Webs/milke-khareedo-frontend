@@ -2,7 +2,14 @@
 
 import Image from "next/image";
 import { FaPhoneAlt } from "react-icons/fa";
-import { IoHeartOutline, IoHeart, IoShareSocialOutline } from "react-icons/io5";
+import {
+  IoHeartOutline,
+  IoHeart,
+  IoShareSocialOutline,
+  IoChevronBack,
+  IoChevronForward,
+} from "react-icons/io5";
+import { MdCompareArrows } from "react-icons/md";
 import { type Property } from "@/lib/api/services/home.service";
 import Link from "next/link";
 import upPrice from "@/assets/upPrice.svg";

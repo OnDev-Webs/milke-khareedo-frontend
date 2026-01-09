@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useApi } from "@/lib/api/hooks/useApi";
 import { userDashboardService } from "@/lib/api/services/userDashboard.service";
 import type { PreferencesApi, SavePreferencesPayload } from "@/lib/api/services/userDashboard.service";
+import { X } from "lucide-react";
 
 
 type PreferredLocation = {
@@ -42,8 +43,8 @@ const floors = Object.keys(FLOOR_MAP);
 
 export default function MyPreferencePage() {
   const [localities, setLocalities] = useState<PreferredLocation[]>([]);
-  const [selectedBudgets, setSelectedBudgets] = useState<string[]>([]);
-  const [selectedFloors, setSelectedFloors] = useState<string[]>([]);
+  const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
+  const [selectedFloor, setSelectedFloor] = useState<string | null>(null);
   const [localityInput, setLocalityInput] = useState("");
 
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -73,11 +74,14 @@ export default function MyPreferencePage() {
       const place = autocomplete.getPlace();
       if (!place?.geometry?.location) return;
 
+      const cityName = extractCity(place);
+
       const location: PreferredLocation = {
-        name: place.formatted_address || place.name,
+        name: cityName,
         latitude: place.geometry.location.lat(),
         longitude: place.geometry.location.lng(),
       };
+
 
       setLocalities((prev) =>
         prev.some((l) => l.name === location.name) ? prev : [...prev, location]
@@ -92,18 +96,24 @@ export default function MyPreferencePage() {
 
     setLocalities(data.preferredLocations ?? []);
 
-    setSelectedBudgets(
-      deriveSelectionsFromRange(BUDGET_MAP, data.budgetMin, data.budgetMax)
+    setSelectedBudget(
+      deriveSingleSelection(BUDGET_MAP, data.budgetMin, data.budgetMax)
     );
 
-    setSelectedFloors(
-      deriveSelectionsFromRange(FLOOR_MAP, data.floorMin, data.floorMax)
+    setSelectedFloor(
+      deriveSingleSelection(FLOOR_MAP, data.floorMin, data.floorMax)
     );
   }, [data]);
 
+
   const handleSave = async () => {
-    const budget = getMinMax(selectedBudgets, BUDGET_MAP);
-    const floor = getMinMax(selectedFloors, FLOOR_MAP);
+    const budget = selectedBudget
+      ? BUDGET_MAP[selectedBudget]
+      : { min: null, max: null };
+
+    const floor = selectedFloor
+      ? FLOOR_MAP[selectedFloor]
+      : { min: null, max: null };
 
     const payload: SavePreferencesPayload = {
       preferredLocations: localities,
@@ -115,6 +125,7 @@ export default function MyPreferencePage() {
 
     await userDashboardService.savePreferences(payload);
   };
+
 
   return (
     <div className="rounded-[24px] bg-white px-4 py-4 shadow">
@@ -128,12 +139,13 @@ export default function MyPreferencePage() {
         inputRef={inputRef}
         budgets={budgets}
         floors={floors}
-        selectedBudgets={selectedBudgets}
-        selectedFloors={selectedFloors}
-        setSelectedBudgets={setSelectedBudgets}
-        setSelectedFloors={setSelectedFloors}
+        selectedBudget={selectedBudget}
+        selectedFloor={selectedFloor}
+        setSelectedBudget={setSelectedBudget}
+        setSelectedFloor={setSelectedFloor}
         onSave={handleSave}
       />
+
     </div>
   );
 }
@@ -147,12 +159,25 @@ type PreferenceCardProps = {
   inputRef: React.RefObject<HTMLInputElement | null>;
   budgets: string[];
   floors: string[];
-  selectedBudgets: string[];
-  selectedFloors: string[];
-  setSelectedBudgets: (v: string[]) => void;
-  setSelectedFloors: (v: string[]) => void;
+  selectedBudget: string | null;
+  selectedFloor: string | null;
+  setSelectedBudget: (v: string) => void;
+  setSelectedFloor: (v: string) => void;
   onSave: () => void;
 };
+
+function extractCity(place: google.maps.places.PlaceResult): string {
+  const city =
+    place.address_components?.find((c) =>
+      c.types.includes("locality")
+    ) ||
+    place.address_components?.find((c) =>
+      c.types.includes("administrative_area_level_2")
+    );
+
+  return city?.long_name || place.name || "";
+}
+
 
 function PreferenceCard(props: PreferenceCardProps) {
   const {
@@ -163,12 +188,13 @@ function PreferenceCard(props: PreferenceCardProps) {
     inputRef,
     budgets,
     floors,
-    selectedBudgets,
-    selectedFloors,
-    setSelectedBudgets,
-    setSelectedFloors,
+    selectedBudget,
+    selectedFloor,
+    setSelectedBudget,
+    setSelectedFloor,
     onSave,
   } = props;
+
 
   return (
     <div className="rounded-[24px] bg-[#F7FAFF] p-6 space-y-6">
@@ -184,46 +210,47 @@ function PreferenceCard(props: PreferenceCardProps) {
 
         <div className="mt-3 flex flex-wrap gap-2">
           {localities.map((l, i) => (
-            <span key={i} className="bg-white px-3 py-1 rounded shadow text-xs">
-              {l.name}
+            <span key={i} className="bg-white px-3 py-1 rounded shadow text-xs flex items-center max-w-[220px]">
+              <span className="truncate">{l.name}</span>
               <button
                 onClick={() =>
                   setLocalities(localities.filter((_, idx) => idx !== i))
                 }
-                className="ml-2 font-bold"
+                className="
+    ml-2 flex h-4 w-4 items-center justify-center
+    rounded-full text-gray-400
+    hover:bg-gray-200 hover:text-gray-700
+    transition
+  "
+                aria-label="Remove locality"
               >
-                ×
+                <X className="h-3 w-3" />
               </button>
+
             </span>
           ))}
         </div>
       </div>
 
-      <Section
+      <div className="h-px w-full bg-[#E6ECF5]" />
+
+      <SingleSelectSection
         title="Budget"
         items={budgets}
-        selected={selectedBudgets}
-        onToggle={(v) =>
-          setSelectedBudgets(
-            selectedBudgets.includes(v)
-              ? selectedBudgets.filter((x) => x !== v)
-              : [...selectedBudgets, v]
-          )
-        }
+        selected={selectedBudget}
+        onSelect={setSelectedBudget}
       />
 
-      <Section
+
+
+      <div className="h-px w-full bg-[#E6ECF5]" />
+      <SingleSelectSection
         title="Floor Preference"
         items={floors}
-        selected={selectedFloors}
-        onToggle={(v) =>
-          setSelectedFloors(
-            selectedFloors.includes(v)
-              ? selectedFloors.filter((x) => x !== v)
-              : [...selectedFloors, v]
-          )
-        }
+        selected={selectedFloor}
+        onSelect={(v) => setSelectedFloor(v)}
       />
+
 
       <button
         onClick={onSave}
@@ -236,60 +263,81 @@ function PreferenceCard(props: PreferenceCardProps) {
 }
 
 
-function deriveSelectionsFromRange(
-  map: Record<string, { min: number | null; max: number | null }>,
+function deriveSingleSelection<
+  T extends Record<string, { min: number | null; max: number | null }>
+>(
+  map: T,
   min: number | null,
   max: number | null
-) {
-  if (min == null && max == null) return [];
-  return Object.entries(map)
-    .filter(([_, r]) => {
-      if (min != null && r.min != null && r.min < min) return false;
-      if (max != null && r.max != null && r.max > max) return false;
-      return true;
-    })
-    .map(([k]) => k);
+): string | null {
+  if (min == null && max == null) return null;
+
+  return (
+    Object.entries(map).find(([_, r]) => {
+      return r.min === min && r.max === max;
+    })?.[0] ?? null
+  );
 }
 
-function getMinMax(
-  selected: string[],
-  map: Record<string, { min: number | null; max: number | null }>
-) {
-  if (!selected.length) return { min: null, max: null };
-  return {
-    min: Math.min(...selected.map((s) => map[s].min!).filter(Boolean)),
-    max: Math.max(...selected.map((s) => map[s].max!).filter(Boolean)),
-  };
+
+
+
+function ordinal(n: number) {
+  if (n % 100 >= 11 && n % 100 <= 13) return `${n}th`;
+  if (n % 10 === 1) return `${n}st`;
+  if (n % 10 === 2) return `${n}nd`;
+  if (n % 10 === 3) return `${n}rd`;
+  return `${n}th`;
 }
 
-function Section({
+function SingleSelectSection({
   title,
   items,
   selected,
-  onToggle,
+  onSelect,
 }: {
   title: string;
   items: string[];
-  selected: string[];
-  onToggle: (v: string) => void;
+  selected: string | null;
+  onSelect: (v: string) => void;
 }) {
   return (
     <div>
       <p className="mb-3 text-sm font-semibold">{title}</p>
+
       <div className="flex flex-wrap gap-2">
-        {items.map((i) => (
-          <button
-            key={i}
-            onClick={() => onToggle(i)}
-            className={`rounded-full px-4 py-2 text-xs ${selected.includes(i)
-                ? "bg-[#1C4692] text-white"
-                : "bg-white"
-              }`}
-          >
-            {i}
-          </button>
-        ))}
+        {items.map((i) => {
+          let label = i;
+
+          if (title === "Floor Preference") {
+            const match = i.match(/(\d+)\s*-\s*(\d+|\d+\+)/);
+            if (match) {
+              const from = Number(match[1]);
+              const to = match[2].includes("+")
+                ? `${ordinal(Number(match[2].replace("+", "")))}+`
+                : ordinal(Number(match[2]));
+
+              label = `${ordinal(from)} – ${to} Floor`;
+            }
+          }
+
+          return (
+            <button
+              key={i}
+              onClick={() => onSelect(i)}
+              className={`rounded-full px-4 py-2 text-xs transition
+                ${selected === i
+                  ? "bg-[#1C4692] text-white"
+                  : "bg-white text-[#2b2b2b]"
+                }`}
+            >
+              {label}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
 }
+
+

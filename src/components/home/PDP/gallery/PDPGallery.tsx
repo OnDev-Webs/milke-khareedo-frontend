@@ -136,35 +136,6 @@ export default function PDPGallery({
 
                     {showViewAll && (
                       <>
-                        {reraQrImage && reraDetailsLink && (
-                          <a
-                            href={reraDetailsLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="
-                                fixed
-                                top-1/2
-                                right-0
-                                -translate-y-1/2
-                                z-[9999]
-                                bg-white
-                                rounded-l-2xl
-                                px-4
-                                py-4
-                                shadow-2xl
-                                hover:bg-[#F5F7FA]
-                                transition
-                                text-center
-                            ">
-                            <span className="block text-[16px] font-semibold text-black">
-                              Click here for
-                            </span>
-                            <span className="block text-[16px] font-semibold text-black">
-                              RERA Details
-                            </span>
-                          </a>
-                        )}
-
                         <div className="absolute inset-0 flex items-end justify-center pb-4">
                           <button
                             onClick={(e) => {

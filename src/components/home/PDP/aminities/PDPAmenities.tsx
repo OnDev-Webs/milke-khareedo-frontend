@@ -33,7 +33,7 @@ export default function PDPAmenities({ amenities }: PDPAmenitiesProps) {
 
           <div className="px-6 py-8">
             <div className="grid md:grid-cols-3">
-              <div className="flex flex-col px-6">
+              <div className="flex flex-col px-0 md:px-6 border-b border-[#BEBEBE] md:border-b-0">
                 {paginatedAmenities[page]
                   ?.filter((_, idx) => idx % 3 === 0)
                   .map((amenity, idx) => (
@@ -42,7 +42,7 @@ export default function PDPAmenities({ amenities }: PDPAmenitiesProps) {
                     </p>
                   ))}
               </div>
-              <div className="flex flex-col px-6 border-l border-[#BEBEBE]">
+              <div className="flex flex-col px-0 md:px-6 border-b border-[#BEBEBE] md:border-b-0 md:border-l md:border-[#BEBEBE]">
                 {paginatedAmenities[page]
                   ?.filter((_, idx) => idx % 3 === 1)
                   .map((amenity, idx) => (
@@ -51,7 +51,7 @@ export default function PDPAmenities({ amenities }: PDPAmenitiesProps) {
                     </p>
                   ))}
               </div>
-              <div className="flex flex-col px-6 border-l border-[#BEBEBE]">
+              <div className="flex flex-col px-0 md:px-6 md:border-l md:border-[#BEBEBE]">
                 {paginatedAmenities[page]
                   ?.filter((_, idx) => idx % 3 === 2)
                   .map((amenity, idx) => (

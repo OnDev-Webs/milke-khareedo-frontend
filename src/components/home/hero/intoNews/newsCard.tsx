@@ -1,103 +1,59 @@
 "use client";
+
 import Image from "next/image";
 import { useState } from "react";
+import type { Blog } from "@/lib/api/services/home.service";
+import Link from "next/link";
 
-export default function NewsCard() {
-  const cards = [
-    {
-      id: 1,
-      title: "How Buying Together Actually Helps You Save",
-      desc: "What changes when buyers come together — and why pricing becomes more flexible.",
-      image: "/images/tp2.jpg",
-    },
-    {
-      id: 2,
-      title: "Documents You Should Check Before Saying...",
-      desc: "A simple checklist to help you feel confident before committing.",
-      image: "/images/tp2.jpg",
-    },
-    {
-      id: 3,
-      title: "Things to Check Before Buying",
-      desc: "Legal checks, pricing insights and locality analysis simplified for you.",
-      image: "/images/tp2.jpg",
-    },
-    {
-      id: 4,
-      title: "Things to Check Before Buying",
-      desc: "Legal checks, pricing insights and locality analysis simplified for you.",
-      image: "/images/tp2.jpg",
-    },
-    {
-      id: 5,
-      title: "Things to Check Before Buying",
-      desc: "Legal checks, pricing insights and locality analysis simplified for you.",
-      image: "/images/tp2.jpg",
-    },
-    {
-      id: 6,
-      title: "Things to Check Before Buying",
-      desc: "Legal checks, pricing insights and locality analysis simplified for you.",
-      image: "/images/tp2.jpg",
-    },
-    {
-      id: 7,
-      title: "Things to Check Before Buying",
-      desc: "Legal checks, pricing insights and locality analysis simplified for you.",
-      image: "/images/tp2.jpg",
-    },
-  ];
-
+export default function NewsCard({ blogs }: { blogs: Blog[] }) {
   const [visibleCount, setVisibleCount] = useState(2);
 
   return (
     <div className="w-full">
-      {/* Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {cards.slice(0, visibleCount).map((item) => (
-          <div
-            key={item.id}
-            className="shadow-[0_0_10px_rgba(0,0,0,0.08)] p-6 rounded-4xl w-full"
-          >
-            <div className="bg-white flex flex-col rounded-4xl overflow-hidden gap-4">
-              {/* Image */}
-              <div className="w-full h-56 bg-[#F9F9FF] rounded-4xl overflow-hidden">
-                <div className="relative w-full h-full">
-                  <Image
-                    src={item.image}
-                    alt="news image"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
+        {blogs.slice(0, visibleCount).map((item) => (
+          <div key={item._id} className="shadow-[0_0_10px_rgba(0,0,0,0.08)] p-6 rounded-4xl h-full">
+            <div className="flex flex-col h-full gap-4">
+              <div className="relative w-[140px] h-[80px] md:w-full md:h-[320px] rounded-4xl overflow-hidden">
+                <Image
+                  src={item.bannerImage}
+                  alt={item.title}
+                  fill
+                  sizes="(max-width: 760px) 100vw, 50vw"
+                  className="object-cover"
+                />
               </div>
 
-              {/* Content */}
-              <div className="flex flex-col items-start text-left space-y-4 p-4">
-                <h2 className="text-[#000000] font-bold text-[30px] leading-snug text-left">
+              <div className="flex flex-col flex-1 text-left">
+                
+                <h2 className="font-bold text-[22px] text-[#000000] line-clamp-2">
                   {item.title}
                 </h2>
 
-                <p className="text-[#373737] font-medium text-[16px] leading-relaxed text-left">
-                  {item.desc}
+                <p className="text-[#373737] text-medium text-[16px] mt-2 line-clamp-3">
+                  {(item.content || item.subtitle || "")
+                    .replace(/<[^>]*>/g, "")}
                 </p>
 
-                <button className="mt-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-8 py-3 text-sm font-semibold text-white hover:opacity-90 transition">
-                  Read More
-                </button>
+                <div className="mt-auto pt-4">
+                  <Link href={`/blogs/${item.slug}`}>
+                    <button className="rounded-full bg-[#1C4692] px-8 py-3 text-[14px] font-semibold text-white">
+                      Read More
+                    </button>
+                  </Link>
+                </div>
+
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Load More Button */}
-      {visibleCount < cards.length && (
-        <div className="md:col-span-3 col-span-1 flex justify-center mt-8">
+      {visibleCount < blogs.length && (
+        <div className="flex justify-center mt-8">
           <button
-            onClick={() => setVisibleCount(cards.length)}
-            className="px-8 py-3 rounded-full border border-[#F5F5F5] text-[#2D2D2D] bg-white font-semibold"
-          >
+            onClick={() => setVisibleCount(blogs.length)}
+            className="px-8 py-3 rounded-full border border-[#F5F5F5] font-semibold">
             Load More
           </button>
         </div>

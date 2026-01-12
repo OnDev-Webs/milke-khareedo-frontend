@@ -90,7 +90,7 @@ export default function PDPLayoutPlan({ configurations }: PDPLayoutPlanProps) {
             ))}
           </div>
 
-          <div className="relative mx-auto h-[400px] w-full max-w-[1160px] overflow-hidden rounded-lg border border-orange-400 bg-white shadow-lg">
+          <div className="relative mx-auto h-[450px] w-full max-w-[1486px] overflow-hidden rounded-[25px] border border-orange-400 bg-white shadow-lg">
             {currentPlan?.layoutPlanImages?.[0] ? (
               <Image
                 src={currentPlan.layoutPlanImages[0]}

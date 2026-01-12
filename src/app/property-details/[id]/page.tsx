@@ -187,11 +187,11 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
       <PDPSimilarProjects similarProjects={similarProjects} />
 
       {/* RERA Sticky Widget */}
-      <RERAStickyWidget
+      {/* <RERAStickyWidget
         reraId={property.reraId}
         reraQrImage={property.reraQrImage}
         reraDetailsLink={property.reraDetailsLink}
-      />
+      /> */}
     </>
   );
 }

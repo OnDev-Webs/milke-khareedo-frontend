@@ -234,17 +234,23 @@ export default function PropertyCard({
             <div className="mt-4 flex flex-col gap-3">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h3 className="text-sm font-semibold">{title}</h3>
+                        <h3 className="text-2xl font-semibold">{title}</h3>
                         <p
-                            className="text-xs text-gray-500 truncate max-w-[220px]"
+                            className="text-sm text-gray-600 truncate max-w-[220px]"
                             title={location}
                         >
                             {location}
                         </p>
                     </div>
 
-                    <button className="flex items-center gap-1 rounded-full bg-[#5fb946] px-3 py-2 text-xs text-white">
-                        <FaPhoneAlt size={14} /> Call
+                    <button className="flex items-center gap-1 rounded-full bg-[#66AE39] px-3 py-2  text-white">
+                        <Image
+                            src="/images/call.svg"
+                            alt="Compare"
+                            width={12}
+                            height={12}
+                            className="h-4.5 w-5"
+                        /> <span className="text-md"> Call</span>
                     </button>
                 </div>
 
@@ -256,24 +262,28 @@ export default function PropertyCard({
                 <div className="rounded-2xl bg-[#F7FAFF] p-4">
                     <div className="flex items-start justify-between">
                         <div>
-                            <p className="text-xs text-gray-500">Target Price</p>
-                            <p className="text-lg font-semibold text-gray-900">
+                            <p className="text-sm text-gray-900">Target Price</p>
+                            <p className="text-lg font-extrabold text-gray-900">
                                 {targetPrice}
                             </p>
                         </div>
 
                         <div className="text-right">
-                            <p className="text-xs text-gray-500">Developer price</p>
-                            <p className="text-sm text-gray-400 line-through">
+                            <p className="text-sm text-gray-900">Developer price</p>
+                            <p className="text-md text-gray-700 line-through">
                                 {developerPrice}
                             </p>
                         </div>
                     </div>
 
-                    <div className="mt-2 flex items-center gap-2 rounded-2xl bg-white px-3 py-2 text-sm text-green-600">
-                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-100 text-xs">
-                            %
-                        </span>
+                    <div className="mt-2 flex items-center gap-2 rounded-2xl bg-white px-3 py-2 text-sm text-[#66AE39]">
+                            <Image
+                            src="/images/Frame.svg"
+                            alt="Compare"
+                            width={12}
+                            height={12}
+                            className="h-4.5 w-5"
+                        /> 
                         <span>Up to {discountPercentage} off</span>
                     </div>
 
@@ -316,11 +326,11 @@ function StatBox({ label, value, className = "bg-[#F7FAFF]" }: StatBoxProps) {
 
     return (
         <div className={`rounded-xl px-4 py-3 text-center ${className}`}>
-            <p className="text-sm font-semibold text-gray-900">{label}</p>
+            <p className="text-md font-semibold text-gray-900">{label}</p>
 
             <p className="mt-1 text-sm">
                 <span className="font-bold text-xl text-[#1C4692]">{number}</span>{" "}
-                <span className="text-gray-600">{text}</span>
+                <span className="text-gray-600 ">{text}</span>
             </p>
         </div>
     );

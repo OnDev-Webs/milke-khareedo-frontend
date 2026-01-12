@@ -82,7 +82,7 @@ export default function ProfilePage() {
     };
 
     const handleSave = async () => {
-        
+
 
         await userDashboardService.updateUserProfile(form);
     };
@@ -185,11 +185,11 @@ export default function ProfilePage() {
                 />
 
 
-                <FieldInput
+                <VerifiedInput
                     label="Mobile Number"
                     value={`${form.countryCode} ${form.phoneNumber}`}
-                    disabled
                 />
+
 
 
 
@@ -316,56 +316,58 @@ function FieldInput({
     );
 }
 
-function PhoneInput({
+function VerifiedInput({
     label,
-    countryCode,
-    phoneNumber,
-    isVerified,
-    onChange,
-    onVerify,
+    value,
+    className = "",
 }: {
     label: string;
-    countryCode: string;
-    phoneNumber: string;
-    isVerified: boolean;
-    onChange: (value: string) => void;
-    onVerify: () => void;
+    value: string;
+    className?: string;
 }) {
     return (
-        <div className="relative">
+        <div className={`relative ${className}`}>
             <span className="absolute left-4 top-[-9px] bg-white px-2 text-xs text-gray-400">
                 {label}
             </span>
 
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm">
-                {countryCode}
-            </span>
-
             <input
-                value={phoneNumber}
-                onChange={(e) => {
-                    const digits = e.target.value.replace(/\D/g, "");
-                    if (digits.length <= 10) onChange(digits);
-                }}
-                className="h-14 w-full rounded-[10px] border pl-16 pr-24 text-sm"
+                value={value}
+                disabled
+                className="
+          h-14 w-full rounded-[10px] border
+          px-4 pr-12
+          text-sm
+          bg-gray-100
+          text-black
+          disabled:bg-gray-100
+        "
             />
 
-            {isVerified ? (
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-green-600">
-                    <Verified />
-                </span>
-            ) : (
-                <button
-                    type="button"
-                    onClick={onVerify}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-600 text-sm font-medium"
+            <span
+                className="
+          absolute right-4 top-1/2 -translate-y-1/2
+          flex h-6 w-6 items-center justify-center
+          rounded-full bg-[#1C4692]
+        "
+            >
+                <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                 >
-                    Verify
-                </button>
-            )}
+                    <polyline points="20 6 9 17 4 12" />
+                </svg>
+            </span>
         </div>
     );
 }
+
 
 
 

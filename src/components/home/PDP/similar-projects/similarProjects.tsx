@@ -9,6 +9,7 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import { homeService } from "@/lib/api/services/home.service";
 import AuthModal from "@/components/auth/AuthModal";
 import getPropertyImages from "@/utils/getPropertyImages";
+import Link from "next/link";
 
 interface PDPSimilarProjectsProps {
   similarProjects: SimilarProject[];
@@ -106,7 +107,7 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
         title: property.projectName,
         text: `Check out ${property.projectName} at ${property.location}`,
         url: `${window.location.origin}/property-details/${property.id}`,
-      }).catch(() => {});
+      }).catch(() => { });
     } else {
       navigator.clipboard.writeText(`${window.location.origin}/property-details/${property.id}`);
     }
@@ -140,12 +141,23 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
     <>
       <section className="w-full bg-white py-10">
         <div className="mx-auto container">
-          <h3 className="mb-6 mx-10 font-semibold text-3xl">Similar Projects</h3>
+          <div className="flex justify-between px-2">
+            <h3 className="mb-6 font-bold text-[35px] text-[#000000]">Similar Projects</h3>
+            <Link href="/properties">
+              <button
+                className="px-10 h-[44px] border border-[#F5F5F5] rounded-full text-[#2D2D2D] font-semibold text-[16px] bg-white hover:bg-[#F5F7FA] transition">
+                View All
+              </button>
+            </Link>
+          </div>
 
           <div className="overflow-x-auto pb-4 md:overflow-visible">
             <div className="grid gap-6 px-2 grid-cols-1 md:grid-cols-3 md:px-0">
               {convertedProperties.map((property) => {
                 const images = getPropertyImages(property);
+                const isJoinGroup =
+                  joinGroupStates[property.id] ?? property.isJoinGroup ?? false;
+                const isJoinGroupLoading = joinGroupLoading[property.id] ?? false;
                 const currentIdx = currentImageIndex[property.id] || 0;
                 const currentImg = images[currentIdx] || property.image || null;
 
@@ -155,8 +167,8 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
                     property={property}
                     isFavorite={favoriteStates[property.id] || false}
                     isLoading={favoriteLoading[property.id] || false}
-                    isJoinGroup={joinGroupStates[property.id] || false}
-                    isJoinGroupLoading={joinGroupLoading[property.id] || false}
+                    isJoinGroup={isJoinGroup}
+                    isJoinGroupLoading={isJoinGroupLoading}
                     images={images}
                     currentIndex={currentIdx}
                     hasMultipleImages={images.length > 1}

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { IoClose } from "react-icons/io5";
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 interface RERAStickyWidgetProps {
   reraId?: string;
@@ -17,7 +17,6 @@ export default function RERAStickyWidget({
 }: RERAStickyWidgetProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // Handle expand/collapse with smooth animation
   const handleToggle = (e?: React.MouseEvent) => {
     if (e) {
       e.stopPropagation();
@@ -25,7 +24,6 @@ export default function RERAStickyWidget({
     setIsExpanded((prev) => !prev);
   };
 
-  // Close on outside click
   useEffect(() => {
     if (isExpanded) {
       const handleClickOutside = (event: MouseEvent) => {
@@ -34,12 +32,11 @@ export default function RERAStickyWidget({
           setIsExpanded(false);
         }
       };
-      
-      // Add slight delay to prevent immediate close on open
+
       const timeoutId = setTimeout(() => {
         document.addEventListener('click', handleClickOutside);
       }, 100);
-      
+
       return () => {
         clearTimeout(timeoutId);
         document.removeEventListener('click', handleClickOutside);
@@ -47,130 +44,109 @@ export default function RERAStickyWidget({
     }
   }, [isExpanded]);
 
-  // Default RERA URL
   const defaultReraUrl = "https://maharera.maharashtra.gov.in/";
-  
-  // Use provided link or default URL (check if it's an image link)
+
   const getReraLink = () => {
     if (!reraDetailsLink) {
       return defaultReraUrl;
     }
-    // Check if the link is an image (common image extensions)
     const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
-    const isImageLink = imageExtensions.some(ext => 
+    const isImageLink = imageExtensions.some(ext =>
       reraDetailsLink.toLowerCase().includes(ext)
     );
-    // If it's an image link, use default URL, otherwise use provided link
     return isImageLink ? defaultReraUrl : reraDetailsLink;
   };
 
   const reraLink = getReraLink();
 
-  // Don't render if no RERA data at all
   if (!reraQrImage && !reraId) {
     return null;
   }
 
   return (
-    <div className="rera-widget-container fixed bottom-6 right-6 z-50">
-      {/* Collapsed State - Vertical Grey Button (Matching First Image Exactly) */}
+    <div className="rera-widget-container fixed top-90 -right-2 z-50 overflow-visible">
+
       <div
-        className={`transition-all duration-300 ease-in-out ${
-          isExpanded 
-            ? "opacity-0 scale-0 pointer-events-none absolute" 
-            : "opacity-100 scale-100 pointer-events-auto relative"
-        }`}
-        style={{ 
+        className={`transition-all duration-300 ease-in-out ${isExpanded
+          ? "opacity-0 scale-0 pointer-events-none absolute"
+          : "opacity-100 scale-100 pointer-events-auto relative"
+          }`}
+        style={{
           transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
           transformOrigin: "bottom right"
         }}
       >
         <button
           onClick={handleToggle}
-          className="bg-gray-600 hover:bg-gray-700 text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 px-5 py-4 flex flex-col items-center justify-center gap-0.5 min-w-[140px] border border-gray-500"
-          aria-label="View RERA Details"
-        >
-          <span className="text-xs leading-tight text-center font-normal">
+          className="bg-white text-black rounded-l-2xl px-4 py-4 shadow-2xl transition-all duration-200 flex flex-col items-center justify-center gap-0.5 min-w-[140px]"
+          aria-label="View RERA Details">
+          <span className="text-[20px] leading-tight text-center font-semibold">
             Click here For
           </span>
-          <span className="text-sm font-semibold text-center mt-0.5">
+          <span className="text-[20px] font-semibold text-center mt-0.5">
             RERA Details
           </span>
         </button>
       </div>
 
-      {/* Expanded State - Full Card (Matching Second Image) */}
       <div
-        className={`transition-all duration-300 ease-in-out ${
-          isExpanded
-            ? "opacity-100 scale-100 pointer-events-auto relative"
-            : "opacity-0 scale-95 pointer-events-none absolute"
-        }`}
-        style={{ 
+        className={`transition-all duration-300 ease-in-out ${isExpanded
+          ? "opacity-100 scale-100 pointer-events-auto relative"
+          : "opacity-0 scale-95 pointer-events-none absolute"
+          }`}
+        style={{
           transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
           transformOrigin: "bottom right"
         }}
       >
-        <div className="bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden min-w-[360px] max-w-[400px]">
-          {/* Header with Blue Background and Close Button (Matching Second Image) */}
-          <div className="relative bg-gradient-to-r from-blue-600 to-blue-700 px-5 py-4">
-            {/* Red Close Button - Top Left Corner */}
-            <button
-              onClick={handleToggle}
-              className="absolute top-3 left-3 w-8 h-8 flex items-center justify-center rounded-full bg-red-500 hover:bg-red-600 text-white transition-all duration-200 hover:scale-110 active:scale-95 shadow-lg z-10"
-              aria-label="Close RERA Details"
-            >
-              <IoClose className="w-5 h-5" />
-            </button>
-            
-            {/* Title - Matching reference exactly */}
-            <h3 className="text-white font-bold text-base ml-11 pr-4 leading-snug">
-              MehaRERA Registration numbers
-            </h3>
-          </div>
+        <div className="relative bg-white rounded-2xl shadow-2xl border border-gray-200 min-w-[360px] max-w-[420px] overflow-visible">
 
-          {/* Content Section - Matching reference layout */}
-          <div className="p-5">
-            <div className="flex gap-4 items-start">
-              {/* Left side - Text Content */}
-              <div className="flex-1 min-w-0">
-                {/* RERA Registration Number */}
-                {reraId && (
-                  <div className="mb-4">
-                    <p className="text-sm font-semibold text-gray-900 break-words leading-relaxed">
-                      {reraId}
-                    </p>
-                  </div>
-                )}
+          <button
+            onClick={handleToggle}
+            className="absolute -left-6 top-10 z-[9999] w-10 h-10 rounded-full bg-[#FB4848] text-white flex items-center justify-center shadow-xl transition">
+            <IoCloseCircleOutline className="w-5 h-5" />
+          </button>
 
-                {/* RERA Link - Always show the link */}
-                <div>
-                  <a
-                    href={reraLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-700 text-sm font-medium underline break-all transition-colors"
-                  >
-                    {reraLink}
-                  </a>
+          {/* CONTENT */}
+          {/* <div className="px-5 py-3 flex gap-4 items-center"> */}
+          <div className="px-5 py-3 flex flex-col-reverse sm:flex-row gap-4 items-center sm:items-start">
+            <div className="flex-1 min-w-0 mt-2 max-h-[140px] overflow-y-auto pr-2">
+
+              <h3 className="text-[16px] font-bold text-[#000000] mb-1 leading-snug">
+                MehaRERA Registration numbers
+              </h3>
+
+              {reraId && (
+                <p className="text-[#000000] text-[14px] font-normal break-all leading-snug mb-1">
+
+                  {reraId}
+                </p>
+              )}
+
+              <a
+                href={reraLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[16px] text-[#2659FF] font-normal block whitespace-nowrap overflow-hidden text-ellipsis max-w-full"
+                title={reraLink}
+              >
+                {reraLink}
+              </a>
+            </div>
+
+            {reraQrImage && (
+              <div className="flex-shrink-0">
+                <div className="relative w-22 h-22 bg-[#F5F5F5] rounded-lg p-2">
+                  <Image
+                    src={reraQrImage}
+                    alt="RERA QR Code"
+                    fill
+                    className="object-contain"
+                    sizes="112px"
+                  />
                 </div>
               </div>
-
-              {/* Right side - QR Code */}
-              {reraQrImage && (
-                <div className="flex-shrink-0">
-                  <div className="relative w-32 h-32 bg-white rounded border border-gray-300 p-2">
-                    <Image
-                      src={reraQrImage}
-                      alt="RERA QR Code"
-                      fill
-                      className="object-contain"
-                      sizes="128px"
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
+            )}
           </div>
         </div>
       </div>

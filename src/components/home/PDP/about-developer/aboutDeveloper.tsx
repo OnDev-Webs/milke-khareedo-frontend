@@ -43,7 +43,7 @@ export default function PDPAboutDeveloper({ developer }: PDPAboutDeveloperProps)
         </div>
 
         <div className="flex flex-col gap-6 px-6 py-6 md:flex-row md:items-start">
-          <div className="md:flex-1">
+          <div className="md:flex-1 md:pr-6 md:border-r md:border-[#D9D9D9]">
             {developer.logo && hasValidLogo && (
               <div className="mb-3">
                 {isConfigured ? (
@@ -65,13 +65,13 @@ export default function PDPAboutDeveloper({ developer }: PDPAboutDeveloperProps)
               </div>
             )}
 
-            <p className="max-w-2xl text-sm leading-relaxed text-gray-600">
+            <p className="text-[20px] leading-relaxed text-[#000000] font-normal">
               {developer.description}
             </p>
           </div>
 
-          <div className="flex w-full flex-col items-start gap-4 md:w-1/3 md:items-end">
-            <div className="flex gap-12">
+          <div className="flex w-full flex-col items-center justify-center gap-4 md:w-1/4">
+            <div className="flex gap-12 justify-center">
               <div className="flex flex-col gap-2.5 items-center justify-center w-30">
                 <div className="w-22 p-6.5 flex justify-center items-center gap-2 rounded-full bg-[#1C4692] shadow-sm">
                   <span className="text-3xl text-center font-bold text-[#FFFFFF]">

@@ -13,18 +13,18 @@ export default function PDPHighLights({ highlights }: PDPHighLightsProps) {
   return (
     <section>
       <div className="mx-auto container">
-        <div className="rounded-2xl bg-white shadow-sm">
+        <div className="rounded-[20px] bg-white shadow-sm">
           <div className="rounded-t-2xl bg-[#EEF4FF] px-6 py-4">
-            <h3 className="font-semibold text-[25px]">Highlights</h3>
+            <h3 className="font-semibold text-[25px] text-[#000000]">Highlights</h3>
           </div>
 
           <div className="px-6 py-8">
             <div className="space-y-4">
               {highlights.map((highlight, idx) => (
-                <div key={idx} className="flex gap-4 text-sm text-gray-700">
+                <div key={idx} className="flex gap-4">
                   <div className="rounded-lg flex w-full items-center gap-2.5 space-y-2.5 bg-[#EEF4FF] px-4">
-                    <BadgeCheck className="fill-[#2E6B2B] text-white size-5 mt-2" />
-                    <p className="leading-relaxed">{highlight}</p>
+                    <BadgeCheck className="fill-[#2E6B2B] text-white size-6 mt-2" />
+                    <p className="leading-relaxed text-[#000000] text-[14px] font-medium">{highlight}</p>
                   </div>
                 </div>
                 ),

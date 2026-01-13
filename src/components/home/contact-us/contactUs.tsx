@@ -19,11 +19,11 @@ const contactMethods = [
     title: "How to Reach Us",
     details: [
       {
-        icon: <Phone size={18} />,
+        icon: <Phone size={20} />,
         value: "+91 XXXXXXXXXX",
       },
       {
-        icon: <Mail size={18} />,
+        icon: <Mail size={20} />,
         value: "support@milkekhereedo.com",
       },
     ],
@@ -48,43 +48,42 @@ export default function ConnectWithUs() {
         description="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
         headingVariant="h3"
       />
-      <section className="w-full bg-white py-16">
-        <div className="mx-auto container sm:px-0 px-4">
+      <section className="w-full bg-white py-16 px-4 md:px-24">
+        <div className="mx-auto container px-0">
           {/* Title */}
           <div className="flex justify-center mb-6 md:mb-20">
             <Title text="Company" isDrawLine drawLineText="Overview" />
           </div>
 
           {/* Top cards */}
-          <div className="flex flex-col md:flex-row justify-center gap-6 mb-16">
+          <div className="flex flex-col items-center md:flex-row md:items-stretch justify-center gap-6 mb-16">
             {contactMethods.map((item, index) => (
               <div
                 key={index}
-                className="bg-[#EEF4FF] p-6 rounded-2xl md:w-[32%]"
-              >
-                <div className="relative flex h-12 w-12 items-center justify-center rounded-xl overflow-hidden">
+                className="bg-[#EEF4FF] p-7 rounded-2xl w-full max-w-[386px] h-[312px]">
+                <div className="relative flex h-[70px] w-[70px] items-center justify-center rounded-xl overflow-hidden">
                   <Image
                     src="/images/LightGradient.svg"
                     alt="LightGradient"
                     width={80}
-                    height={48}
+                    height={80}
                     className="absolute inset-0 object-contain"
                   />
                   <Image
                     src={item.icon}
                     alt={item.title}
-                    width={24}
-                    height={24}
+                    width={35}
+                    height={35}
                     className="relative z-10 object-contain"
                   />
                 </div>
 
-                <p className="font-bold text-black text-xl mt-2">
+                <p className="font-bold text-black text-[24px] mt-2">
                   {item.title}
                 </p>
 
                 {item.type === "normal" && (
-                  <p className="text-[#514F6F] mt-2 text-[14.5px]">
+                  <p className="text-[#514F6F] mt-2 text-[19px]">
                     {item.desc}
                   </p>
                 )}
@@ -94,12 +93,12 @@ export default function ConnectWithUs() {
                     {item.details?.map((d, i) => (
                       <div
                         key={i}
-                        className="flex items-center gap-1 text-[#514F6F]"
+                        className="flex items-center gap-1 text-[19px] text-[#514F6F]"
                       >
                         <div className="h-8 w-8 rounded-full flex items-center justify-center">
                           {d.icon}
                         </div>
-                        <span className="text-sm font-medium">{d.value}</span>
+                        <span>{d.value}</span>
                       </div>
                     ))}
                   </div>
@@ -112,11 +111,11 @@ export default function ConnectWithUs() {
           <div className="flex flex-col-reverse md:flex-row gap-8 items-stretch">
             {/* LEFT – FORM */}
             <div className="md:w-1/2 flex">
-              <div className="w-full bg-white p-6 rounded-[28px] border border-[#DDDDDD] flex flex-col justify-center">
-                <h3 className="font-bold text-black text-[28px] mb-2 text-left">
+              <div className="w-full bg-white md:p-6 p-4 rounded-[30px] border border-[#DDDDDD] flex flex-col justify-center md:px-8">
+                <h3 className="font-bold text-black text-[30px] mb-1 text-left px-1">
                   Let’s find the right deal for you
                 </h3>
-                <p className="text-[#373737] font-medium text-[16px] mb-6 text-left">
+                <p className="text-[#373737] font-medium text-[18px] mb-6 text-left px-1">
                   Fill out the form, and we’ll reach out within 24 hours.
                 </p>
 

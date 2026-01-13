@@ -37,47 +37,51 @@ export default function CompanyOverview() {
         {/* Content */}
         <div className="flex flex-col md:flex-row md:items-stretch gap-12">
           {/* LEFT SIDE */}
-          <div className="flex flex-col gap-8 w-full md:w-1/2 h-full">
-            <h3 className="text-[30px] font-bold text-black">
+          <div className="flex flex-col gap-4 w-full md:w-1/2 h-full">
+            <h3 className="text-[40px] font-bold text-[#000000]">
               Built to help buyers save more — together.
             </h3>
 
             <p className="text-[18px] font-normal text-[#373737]">
               Buying property together gives buyers more power. At
-              <span className="text-[#1C4692]"> Milke Khareedo,</span> we bring
-              buyers together so better pricing and clearer decisions become
-              possible.
+              <span className="text-[#1C4692]"> Milke Khareedo,</span> we bring buyers together so better pricing and clearer decisions become possible. We guide the process transparently — helping you buy with confidence and better value. Smarter buying. Together.
             </p>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-2 place-items-start"> */}
+            <div className="grid grid-cols-1 gap-4 place-items-center md:grid-cols-2 md:place-items-start">
+
               {features.map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-3 rounded-2xl bg-[#EEF4FF] p-4 shadow-[0_10px_20px_rgba(0,0,0,0.04)]"
-                >
-                  <div className="relative flex h-12 w-20 items-center justify-center rounded-xl overflow-hidden">
-                    {/* Fixed-size Background */}
+                  className="flex items-center gap-4 rounded-2xl bg-[#EEF4FF] px-5 py-4 shadow-[0_10px_20px_rgba(0,0,0,0.04)] w-[280px] min-w-[280px] max-w-[280px] h-[144px] min-h-[144px] max-h-[144px] box-border">
+                  {/* ICON BOX – SAME AS MISSION / VISION */}
+                  <div className="relative flex h-[80px] w-[80px] items-center justify-center rounded-xl overflow-hidden shrink-0">
+                    {/* Background */}
                     <Image
                       src="/images/LightGradient.svg"
                       alt="LightGradient"
                       width={80}
-                      height={48}
-                      className="absolute inset-0 object-contain"
+                      height={80}
+                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
                     />
-
                     {/* Icon */}
                     <Image
                       src={item.icon}
                       alt={item.title}
-                      width={24}
-                      height={24}
+                      width={30}
+                      height={30}
                       className="relative z-10 object-contain"
                     />
                   </div>
 
-                  <div>
-                    <h5 className="font-bold text-black">{item.title}</h5>
-                    <p className="text-[14px] text-[#9795B5]">{item.desc}</p>
+                  {/* CONTENT */}
+                  <div className="flex flex-col justify-center">
+                    <h5 className="font-bold text-[18px] text-black leading-tight">
+                      {item.title}
+                    </h5>
+                    <p className="text-[16px] pt-1 text-[#9795B5] leading-snug">
+                      {item.desc}
+                    </p>
                   </div>
                 </div>
               ))}

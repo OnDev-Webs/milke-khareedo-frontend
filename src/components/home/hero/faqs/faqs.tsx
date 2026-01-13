@@ -66,8 +66,8 @@ export default function FAQS() {
           Buyers Usually Ask
         </h2>
         <div className="flex gap-5 flex-col items-center">
-          {arr?.map((i, index) => (
-            <FAQSCard data={i} />
+          {arr?.map((i) => (
+            <FAQSCard key={i.id} data={i} />
           ))}
         </div>
       </div>

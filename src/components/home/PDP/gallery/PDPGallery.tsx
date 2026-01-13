@@ -31,8 +31,9 @@ export default function PDPGallery({
   reraDetailsLink,
 }: PDPGalleryProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const allImages = images && images.length > 0 ? images : (mainImage ? [mainImage] : []);
-  const thumbnails = imageDetails?.thumbnails || allImages.slice(1, 5);
+  const thumbnails = (imageDetails?.thumbnails || allImages.slice(1)).slice(0, 4);
   const displayImages = allImages.length > 0 ? allImages : ["/placeholder-property.jpg"];
 
   const goToNext = () => {
@@ -63,9 +64,10 @@ export default function PDPGallery({
         </Breadcrumb>
 
         <div className="relative">
-          <div className="grid gap-4 grid-cols-2 rounded-3xl">
+          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 rounded-3xl">
+
             {/* Main Image */}
-            <div className="relative bg-secondary flex items-center justify-center h-80 rounded-[18px] p-6 shadow-[0_0_10px_rgba(0,0,0,0.08)] overflow-hidden">
+            <div className="relative bg-secondary flex items-center justify-center h-[260px] md:h-80 rounded-[18px] p-4 md:p-6 shadow-[0_0_10px_rgba(0,0,0,0.08)] overflow-hidden">
               {displayImages[currentImageIndex] && (
                 <Image
                   src={displayImages[currentImageIndex]}
@@ -95,64 +97,114 @@ export default function PDPGallery({
                       <button
                         key={index}
                         onClick={() => goToImage(index)}
-                        className={`transition-all ${
-                          index === currentImageIndex
-                            ? "h-1.5 w-6 rounded-full bg-white"
-                            : "h-1.5 w-1.5 rounded-full bg-white/60 hover:bg-white/80"
-                        }`}
+                        className={`transition-all ${index === currentImageIndex
+                          ? "h-1.5 w-6 rounded-full bg-white"
+                          : "h-1.5 w-1.5 rounded-full bg-white/60 hover:bg-white/80"
+                          }`}
                         aria-label={`Go to image ${index + 1}`}
                       />
                     ))}
                   </div>
                 </>
               )}
-              {reraQrImage && reraDetailsLink && (
-                <a
-                  href={reraDetailsLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute top-3 right-3 bg-white rounded-lg px-4 py-2 text-sm font-medium shadow-md hover:bg-gray-50 transition-colors z-10"
-                >
-                  Click here For RERA Details
-                </a>
-              )}
             </div>
 
             {/* Thumbnails */}
-            <div className="h-80 grid grid-cols-2 gap-4">
-              {thumbnails.slice(0, 4).map((img, index) => (
-                <div
-                  key={index}
-                  className="relative rounded-xl overflow-hidden shadow-[0_0_10px_rgba(0,0,0,0.08)] bg-secondary cursor-pointer hover:opacity-90 transition-opacity"
-                  onClick={() => {
-                    const mainIndex = displayImages.findIndex((i) => i === img);
-                    if (mainIndex !== -1) {
-                      setCurrentImageIndex(mainIndex);
-                    }
-                  }}
-                >
-                  <Image
-                    src={img}
-                    alt={`Property thumbnail ${index + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-              {displayImages.length > 5 && (
-                <div className="relative rounded-xl overflow-hidden shadow-[0_0_10px_rgba(0,0,0,0.08)] bg-secondary flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity">
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">+{displayImages.length - 5}</span>
+            <div className="h-80 grid grid-cols-2 gap-4 overflow-visible relative">
+              {thumbnails.map((img, index) => {
+                const showViewAll =
+                  index === 3 && displayImages.length > 5;
+
+                return (
+                  <div
+                    key={index}
+                    className="relative rounded-xl overflow-hidden shadow-[0_0_10px_rgba(0,0,0,0.08)] bg-secondary cursor-pointer overflow-visible"
+                    onClick={() => {
+                      const mainIndex = displayImages.findIndex((i) => i === img);
+                      if (mainIndex !== -1) setCurrentImageIndex(mainIndex);
+                    }}
+                  >
+
+                    <div className="relative w-full h-full overflow-hidden rounded-xl">
+                      <Image
+                        src={img}
+                        alt={`Property thumbnail ${index + 1}`}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+
+                    {showViewAll && (
+                      <>
+                        <div className="absolute inset-0 flex items-end justify-center pb-4">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setIsModalOpen(true);
+                            }}
+                            className="rounded-full bg-white text-[#1C4692] px-8 py-2 text-[16px] font-semibold shadow-md"
+                          >
+                            View All
+                          </button>
+                        </div>
+                      </>
+                    )}
                   </div>
-                  <button className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full border border-gray-300 bg-white px-6 py-1 text-sm font-medium shadow-sm hover:bg-gray-50 transition-colors">
-                    View All
-                  </button>
-                </div>
-              )}
+                );
+              })}
+
             </div>
+
           </div>
         </div>
       </div>
+
+      {/* VIEW ALL MODAL */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-[999] bg-black/70 flex items-center justify-center">
+          <div className="relative w-[90%] max-w-5xl bg-white rounded-3xl p-4 shadow-xl">
+
+            <button onClick={() => setIsModalOpen(false)}
+              className="absolute -top-4 -right-4 z-[1000] h-10 w-10 rounded-full bg-[#1C4692] text-white text-xl font-bold flex items-center justify-center shadow-lg hover:bg-[#163b7a] transition">
+              ✕
+            </button>
+
+            <div className="relative h-[70vh] rounded-2xl overflow-hidden bg-gray-100">
+              <Image
+                src={displayImages[currentImageIndex]}
+                alt="Property image"
+                fill
+                className="object-cover"
+              />
+
+              <button
+                onClick={goToPrevious}
+                className="absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/90 shadow flex items-center justify-center">
+                <IoChevronBack className="h-6 w-6" />
+              </button>
+
+              <button
+                onClick={goToNext}
+                className="absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/90 shadow flex items-center justify-center">
+                <IoChevronForward className="h-6 w-6" />
+              </button>
+
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                {displayImages.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentImageIndex(idx)}
+                    className={`transition-all ${idx === currentImageIndex
+                      ? "w-6 h-2 bg-white rounded-full"
+                      : "w-2 h-2 bg-white/60 rounded-full"}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
     </section>
   );
 }

@@ -49,11 +49,11 @@ export default function ContactForm({ className }: ContactFormProps) {
             name="firstName"
             render={({ field }) => (
               <FormItem className="w-full relative">
-                <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 text-black text-[13px]">
-                  First name <span className="text-red-500">*</span>
+                <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 font-normal text-black text-[13px]">
+                  First Name <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter here" {...field} className="h-12" />
+                  <Input placeholder="Enter here" {...field} className="h-12 border border-[#262626] placeholder:text-[#BABABA] placeholder:text-[16px]" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -64,11 +64,11 @@ export default function ContactForm({ className }: ContactFormProps) {
             name="lastName"
             render={({ field }) => (
               <FormItem className="w-full relative">
-                <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 text-black text-[13px]">
-                  Last name <span className="text-red-500">*</span>
+                <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 font-normal text-black text-[13px]">
+                  Last Name <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter here" {...field} className="h-12" />
+                  <Input placeholder="Enter here" {...field} className="h-12 border border-[#262626] placeholder:text-[#BABABA] placeholder:text-[16px]" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -82,11 +82,11 @@ export default function ContactForm({ className }: ContactFormProps) {
             name="phone"
             render={({ field }) => (
               <FormItem className="w-full relative">
-                <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 text-black text-[13px]">
-                  Phone <span className="text-red-500">*</span>
+                <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 font-normal text-black text-[13px]">
+                  Phone Number <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="000 000 0000" {...field} className="h-12" />
+                  <Input placeholder="+91 000 000 0000" {...field} className="h-12 border border-[#262626] placeholder:text-[#BABABA] placeholder:text-[16px]" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -98,11 +98,11 @@ export default function ContactForm({ className }: ContactFormProps) {
             name="email"
             render={({ field }) => (
               <FormItem className="w-full relative">
-                <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 text-black text-[13px]">
-                  Email <span className="text-red-500">*</span>
+                <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 font-normal text-black text-[13px]">
+                  Email ID<span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="Enter Email" {...field} className="h-12" />
+                  <Input type="email" placeholder="Enter Email" {...field} className="h-12 border border-[#262626] placeholder:text-[#BABABA] placeholder:text-[16px]" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -115,11 +115,11 @@ export default function ContactForm({ className }: ContactFormProps) {
           name="description"
           render={({ field }) => (
             <FormItem className="w-full relative">
-              <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 text-black text-[13px]">
-                Note <span className="text-red-500">*</span>
+              <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 font-normal text-black text-[13px]">
+                Notes <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Textarea rows={4} placeholder="Enter here" {...field} className="h-24" />
+                <Textarea rows={4} placeholder="Enter here" {...field} className="h-24 border border-[#262626] placeholder:text-[#BABABA] placeholder:text-[16px]" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -128,7 +128,7 @@ export default function ContactForm({ className }: ContactFormProps) {
 
         <button
           type="submit"
-          className="w-full py-3 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] text-white font-semibold text-lg"
+          className="w-full py-[10px] rounded-full bg-[#1C4692] text-white font-semibold text-[16px] mb-4"
         >
           Submit
         </button>

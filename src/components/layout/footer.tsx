@@ -12,9 +12,9 @@ import {
 
 export default function FooterSection() {
   return (
-    <footer className="w-full bg-[#F5F5F5]">
+    <footer className="w-full bg-[#F5F5F5] px-10">
       <div className="mx-auto max-w-[1300px] py-12 lg:py-16">
-<div className="grid grid-cols-1 lg:grid-cols-12 gap-y-10 lg:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-10 lg:gap-12">
           {/* Left Column - Company Info */}
           <div className="lg:col-span-4">
             <Link href="/" className="mb-4 flex items-center gap-2">
@@ -74,7 +74,7 @@ export default function FooterSection() {
           </div>
 
           {/* Right Columns - Navigation Links */}
-<div className="grid grid-cols-1 gap-8 sm:grid-cols-3 lg:col-span-6 lg:col-start-7">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 lg:col-span-6 lg:col-start-7">
             {/* Explore Column */}
             <div>
               <h3 className="mb-4 text-base font-bold text-[#241F20] tracking-wide lg:text-lg">
@@ -162,7 +162,7 @@ export default function FooterSection() {
                     FAQ's
                   </Link>
                 </li>
-                
+
               </ul>
             </div>
 

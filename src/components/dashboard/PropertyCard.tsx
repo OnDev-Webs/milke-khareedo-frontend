@@ -3,7 +3,9 @@
 import Image from "next/image";
 import { Heart, Share2, Phone, Repeat } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { IoHeart } from "react-icons/io5";
+import { IoChevronBack, IoChevronForward, IoHeart } from "react-icons/io5";
+import { useState } from "react";
+import { FaPhoneAlt } from "react-icons/fa";
 
 type PropertyCardProps = {
     id: string;
@@ -57,26 +59,102 @@ export default function PropertyCard({
 }: PropertyCardProps) {
 
     const router = useRouter();
+    const images = [image];
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const hasMultipleImages = images.length > 1;
 
     return (
-        <div className="flex flex-col rounded-4xl bg-white p-4 shadow-sm">
-            <div className="relative overflow-hidden rounded-3xl">
-                <Image
-                    src={image}
-                    alt={title}
-                    width={400}
-                    height={260}
-                    className="h-[180px] w-full object-cover"
-                />
+        <div
+            onClick={() => router.push(`/property-details/${id}`)}
+            className="group flex flex-col rounded-4xl bg-white p-4 shadow-sm cursor-pointer"
+        >
 
-                {lastDayToJoin && (
-                    <span className="absolute hidden sm:block left-3 top-3 rounded-sm bg-white px-3 py-1 text-xs font-medium">
-                        {lastDayToJoin}
-                    </span>
+
+            <div className="relative aspect-[5/3.5] w-full overflow-hidden rounded-3xl">
+                <Image
+                    src={images[currentIndex]}
+                    alt={title}
+                    fill
+                    className="object-cover"
+                />
+                {hasMultipleImages && (
+                    <>
+                        {/* LEFT */}
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setCurrentIndex(
+                                    (prev) => (prev - 1 + images.length) % images.length
+                                );
+                            }}
+                            className="
+        absolute left-3 top-1/2 -translate-y-1/2
+        h-9 w-9 flex items-center justify-center
+        rounded-full bg-white/95 text-gray-700
+        shadow-lg border border-gray-200
+        transition-all duration-300
+        opacity-0 scale-90 pointer-events-none
+        group-hover:opacity-100
+        group-hover:scale-100
+        group-hover:pointer-events-auto
+      "
+                            aria-label="Previous image"
+                        >
+                            <IoChevronBack className="h-5 w-5" />
+                        </button>
+
+                        {/* RIGHT */}
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setCurrentIndex(
+                                    (prev) => (prev + 1) % images.length
+                                );
+                            }}
+                            className="
+        absolute right-3 top-1/2 -translate-y-1/2
+        h-9 w-9 flex items-center justify-center
+        rounded-full bg-white/95 text-gray-700
+        shadow-lg border border-gray-200
+        transition-all duration-300
+        opacity-0 scale-90 pointer-events-none
+        group-hover:opacity-100
+        group-hover:scale-100
+        group-hover:pointer-events-auto
+      "
+                            aria-label="Next image"
+                        >
+                            <IoChevronForward className="h-5 w-5" />
+                        </button>
+                    </>
                 )}
 
 
-                <div className="absolute right-3 top-3 flex flex-col gap-2">
+                {lastDayToJoin && (
+                    <span className="
+  absolute left-3 top-3
+  rounded-lg bg-white/95
+  px-3 py-1.5
+  text-xs font-medium text-black
+  shadow-md
+">
+                        {lastDayToJoin}
+                    </span>
+
+                )}
+
+
+                <div
+                    className="
+    absolute right-3 top-3 flex flex-col gap-2 z-20
+    opacity-0 translate-y-[-6px] pointer-events-none
+    transition-all duration-300
+    group-hover:opacity-100
+    group-hover:translate-y-0
+    group-hover:pointer-events-auto
+  "
+                >
+
 
                     <button
                         onClick={(e) => {
@@ -94,13 +172,26 @@ export default function PropertyCard({
                     >
                         <IoHeart
                             size={16}
-                            fill={isFavorite ? "#1C4692" : "none"}
-                            stroke={isFavorite ? "#1C4692" : "black"}
+                            fill={isFavorite ? "red" : "none"}
+                            stroke={isFavorite ? "red" : "black"}
                             strokeWidth={34}
                         />                    </button>
 
-                    <IconButton icon={<Repeat size={16} />} />
-
+                    <button
+                        // onClick={(e) => {
+                        //     e.stopPropagation();
+                        //     onCompareClick(property);
+                        // }}
+                        className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-white text-gray-700 hover:bg-white shadow-md transition-colors"
+                        aria-label="Add to compare"
+                    >
+                        <Image
+                            src="/images/convert.svg"
+                            alt="Compare"
+                            width={15}
+                            height={15}
+                            className="h-5 w-5"
+                        />          </button>
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
@@ -117,17 +208,49 @@ export default function PropertyCard({
                     </button>
 
                 </div>
+
+                <div
+                    className="
+    absolute bottom-3 left-1/2 -translate-x-1/2
+    flex gap-1.5 z-20
+    opacity-0 pointer-events-none
+    transition-opacity duration-300
+    group-hover:opacity-100
+    group-hover:pointer-events-auto
+  "
+                >
+                    {[0, 1, 2, 3].map((_, index) => (
+                        <span
+                            key={index}
+                            className="
+        h-1.5 w-1.5 rounded-full bg-white/70
+      "
+                        />
+                    ))}
+                </div>
+
             </div>
 
             <div className="mt-4 flex flex-col gap-3">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h3 className="text-sm font-semibold">{title}</h3>
-                        <p className="text-xs text-gray-500">{location}</p>
+                        <h3 className="text-2xl font-semibold">{title}</h3>
+                        <p
+                            className="text-sm text-gray-600 truncate max-w-[220px]"
+                            title={location}
+                        >
+                            {location}
+                        </p>
                     </div>
 
-                    <button className="flex items-center gap-1 rounded-full bg-[#5fb946] px-3 py-2 text-xs text-white">
-                        <Phone size={14} /> Call
+                    <button className="flex items-center gap-1 rounded-full bg-[#66AE39] px-3 py-2  text-white">
+                        <Image
+                            src="/images/call.svg"
+                            alt="Compare"
+                            width={12}
+                            height={12}
+                            className="h-4.5 w-5"
+                        /> <span className="text-md"> Call</span>
                     </button>
                 </div>
 
@@ -139,24 +262,28 @@ export default function PropertyCard({
                 <div className="rounded-2xl bg-[#F7FAFF] p-4">
                     <div className="flex items-start justify-between">
                         <div>
-                            <p className="text-xs text-gray-500">Target Price</p>
-                            <p className="text-lg font-semibold text-gray-900">
+                            <p className="text-sm text-gray-900">Target Price</p>
+                            <p className="text-lg font-extrabold text-gray-900">
                                 {targetPrice}
                             </p>
                         </div>
 
                         <div className="text-right">
-                            <p className="text-xs text-gray-500">Developer price</p>
-                            <p className="text-sm text-gray-400 line-through">
+                            <p className="text-sm text-gray-900">Developer price</p>
+                            <p className="text-md text-gray-700 line-through">
                                 {developerPrice}
                             </p>
                         </div>
                     </div>
 
-                    <div className="mt-2 flex items-center gap-2 rounded-2xl bg-white px-3 py-2 text-sm text-green-600">
-                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-100 text-xs">
-                            %
-                        </span>
+                    <div className="mt-2 flex items-center gap-2 rounded-2xl bg-white px-3 py-2 text-sm text-[#66AE39]">
+                            <Image
+                            src="/images/Frame.svg"
+                            alt="Compare"
+                            width={12}
+                            height={12}
+                            className="h-4.5 w-5"
+                        /> 
                         <span>Up to {discountPercentage} off</span>
                     </div>
 
@@ -199,11 +326,11 @@ function StatBox({ label, value, className = "bg-[#F7FAFF]" }: StatBoxProps) {
 
     return (
         <div className={`rounded-xl px-4 py-3 text-center ${className}`}>
-            <p className="text-sm font-semibold text-gray-900">{label}</p>
+            <p className="text-md font-semibold text-gray-900">{label}</p>
 
             <p className="mt-1 text-sm">
                 <span className="font-bold text-xl text-[#1C4692]">{number}</span>{" "}
-                <span className="text-gray-600">{text}</span>
+                <span className="text-gray-600 ">{text}</span>
             </p>
         </div>
     );

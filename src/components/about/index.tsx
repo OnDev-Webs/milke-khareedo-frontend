@@ -5,6 +5,7 @@ import TopDevelopers from "./TopDevelopers";
 import ValuesAchievements from "./ValuesAchievements";
 import HeroSection from "@/components/sections/HeroSection";
 import AboutHeroBg from "@/assets/about-us/about-hero-bg.png";
+import Teams from "./Teams";
 
 export default function About() {
   return (
@@ -22,6 +23,7 @@ export default function About() {
       <ValuesAchievements />
       <TopDevelopers />
       <Founders />
+      <Teams/>
     </>
   );
 }

@@ -8,7 +8,7 @@ interface PDPAmenitiesProps {
 
 export default function PDPAmenities({ amenities }: PDPAmenitiesProps) {
   const [page, setPage] = useState(0);
-  const itemsPerPage = 9;
+  const itemsPerPage = 12;
 
   // Split amenities into pages
   const paginatedAmenities = useMemo(() => {
@@ -27,17 +27,39 @@ export default function PDPAmenities({ amenities }: PDPAmenitiesProps) {
     <section className="w-full p-4">
       <div className="mx-auto container">
         <div className="rounded-2xl bg-white shadow-sm">
-          <div className="rounded-t-2xl bg-[#EEF4FF] px-6 py-4">
-            <h3 className="font-semibold text-[25px]">Amenities</h3>
+          <div className="rounded-t-[20px] bg-[#EEF4FF] px-6 py-4">
+            <h3 className="font-semibold text-[#000000] text-[25px]">Amenities</h3>
           </div>
 
           <div className="px-6 py-8">
-            <div className="grid gap-6 md:grid-cols-3">
-              {paginatedAmenities[page]?.map((amenity, idx) => (
-                <div key={idx} className="text-sm text-gray-700">
-                  <p className="leading-relaxed">{amenity}</p>
-                </div>
-              ))}
+            <div className="grid md:grid-cols-3">
+              <div className="flex flex-col px-0 md:px-6 border-b border-[#BEBEBE] md:border-b-0">
+                {paginatedAmenities[page]
+                  ?.filter((_, idx) => idx % 3 === 0)
+                  .map((amenity, idx) => (
+                    <p key={idx} className="text-[16px] font-medium text-[#000000] leading-relaxed">
+                      {amenity}
+                    </p>
+                  ))}
+              </div>
+              <div className="flex flex-col px-0 md:px-6 border-b border-[#BEBEBE] md:border-b-0 md:border-l md:border-[#BEBEBE]">
+                {paginatedAmenities[page]
+                  ?.filter((_, idx) => idx % 3 === 1)
+                  .map((amenity, idx) => (
+                    <p key={idx} className="text-[16px] font-medium text-[#000000] leading-relaxed">
+                      {amenity}
+                    </p>
+                  ))}
+              </div>
+              <div className="flex flex-col px-0 md:px-6 md:border-l md:border-[#BEBEBE]">
+                {paginatedAmenities[page]
+                  ?.filter((_, idx) => idx % 3 === 2)
+                  .map((amenity, idx) => (
+                    <p key={idx} className="text-[16px] font-medium text-[#000000] leading-relaxed">
+                      {amenity}
+                    </p>
+                  ))}
+              </div>
             </div>
           </div>
 
@@ -52,7 +74,7 @@ export default function PDPAmenities({ amenities }: PDPAmenitiesProps) {
                     className={
                       "h-2 rounded-full transition " +
                       (i === page
-                        ? "bg-gray-400 w-8"
+                        ? "bg-[#1C4692] w-8"
                         : "bg-gray-300/60 hover:bg-gray-300 w-2")
                     }
                   />

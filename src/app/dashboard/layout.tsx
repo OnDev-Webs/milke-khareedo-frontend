@@ -9,24 +9,20 @@ import {
   Globe,
   Search,
   SlidersHorizontal,
+  UserRoundIcon,
 } from "lucide-react";
+import { IoHeartOutline } from "react-icons/io5";
+import Image from "next/image";
 
 const tabs = [
-  { label: "User Profile", href: "/dashboard/profile", icon: User },
-  {
-    label: "Viewed Properties",
-    href: "/dashboard/viewed-properties",
-    icon: Building2,
-  },
-  { label: "My Favorite", href: "/dashboard/favorites", icon: Heart },
-  { label: "Site visits", href: "/dashboard/site-visits", icon: Globe },
-  { label: "My Searches", href: "/dashboard/searches", icon: Search },
-  {
-    label: "My Preference",
-    href: "/dashboard/preferences",
-    icon: SlidersHorizontal,
-  },
+  { label: "User Profile", href: "/dashboard/profile", icon: "/images/user.svg" },
+  { label: "Viewed Properties", href: "/dashboard/viewed-properties", icon: "/images/building.svg" },
+  { label: "My Favorite", href: "/dashboard/favorites", icon: "/images/heart.svg" },
+  { label: "Site visits", href: "/dashboard/site-visits", icon: "/images/global.svg" },
+  { label: "My Searches", href: "/dashboard/searches", icon: "/images/global-search.svg" },
+  { label: "My Preference", href: "/dashboard/preferences", icon: "/images/pet.svg" },
 ];
+
 
 export default function DashboardLayout({
   children,
@@ -58,7 +54,24 @@ export default function DashboardLayout({
                       : "bg-white text-gray-800 hover:bg-gray-100"
                     }`}
                 >
-                  <Icon className="h-4 w-4" />
+                  {active ? (
+                    <Image
+                      src={tab.icon}
+                      alt={tab.label}
+                      width={20}
+                      height={20}
+                      className="invert brightness-0"
+                    />
+                  ) : (
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
+                      <Image
+                        src={tab.icon}
+                        alt={tab.label}
+                        width={20}
+                        height={20}
+                      />
+                    </span>
+                  )}
                   <span className="whitespace-nowrap">{tab.label}</span>
                 </Link>
               );

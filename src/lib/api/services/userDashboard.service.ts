@@ -2,6 +2,20 @@ import { apiClient } from "../client";
 import { API_ENDPOINTS } from "../config";
 import type { ApiResponse } from "../types";
 
+
+type PaginationMeta = {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+};
+
+type PaginatedData<T> = {
+  data: T[];
+  pagination: PaginationMeta;
+};
+
+
 export type PropertyApi = {
     id: string;
     projectName: string;

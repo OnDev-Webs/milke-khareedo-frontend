@@ -8,12 +8,15 @@ import type {
     SearchHistoryItem,
 } from "@/lib/api/services/userDashboard.service";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function MySearchesPage() {
     const { data, loading } = useApi<SearchHistoryGroup[]>(() =>
         userDashboardService.getSearchHistory()
     );
 
+    const PAGE_SIZE = 10;
+    const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
     const groups = data ?? [];
 
@@ -24,24 +27,65 @@ export default function MySearchesPage() {
             </div>
         );
     }
+    const flatSearches = groups.flatMap((group) =>
+        group.searches.map((item) => ({
+            ...item,
+            dateLabel: group.dateLabel,
+        }))
+    );
+
+    const visibleSearches = flatSearches.slice(0, visibleCount);
+    const hasMore = visibleCount < flatSearches.length;
+    const groupedVisible = visibleSearches.reduce<Record<string, SearchHistoryItem[]>>(
+        (acc, item) => {
+            acc[item.dateLabel] = acc[item.dateLabel] || [];
+            acc[item.dateLabel].push(item);
+            return acc;
+        },
+        {}
+    );
 
     return (
         <div className="rounded-[24px] bg-white px-4 py-6 shadow sm:px-8 sm:py-8 min-h-[480px]">
             <div className="rounded-2xl bg-linear-to-b from-[#f5f8ff] to-[#f8fbff] p-4 min-h-[410px]">
                 <div className="flex flex-col gap-6">
-                    {groups.map((group) => (
-                        <div key={group.dateLabel}>
+                    {Object.entries(groupedVisible).map(([dateLabel, searches]) => (
+                        <div key={dateLabel}>
                             <h3 className="mb-3 text-sm font-semibold text-[#2b2b2b]">
-                                {group.dateLabel}
+                                {dateLabel}
                             </h3>
 
                             <div className="flex flex-col gap-3">
-                                {group.searches.map((item) => (
+                                {searches.map((item) => (
                                     <SearchRow key={item._id} item={item} />
                                 ))}
                             </div>
                         </div>
                     ))}
+
+{hasMore && (
+  <div className="mt-6 flex justify-center">
+    <button
+      onClick={() => setVisibleCount((v) => v + PAGE_SIZE)}
+      className="
+        rounded-full
+        border
+        border-[#1C4692]
+        px-6
+        py-2
+        text-sm
+        font-medium
+        text-[#1C4692]
+        transition
+        hover:bg-[#1C4692]
+        hover:text-white
+      "
+    >
+      Load more
+    </button>
+  </div>
+)}
+
                 </div>
             </div>
         </div>

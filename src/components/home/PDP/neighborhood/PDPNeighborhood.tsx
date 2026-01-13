@@ -3,9 +3,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import { type NeighborhoodData, type ConnectivityPoint } from "@/lib/api/services/home.service";
-import school from "@/assets/school.svg";
-import hospital from "@/assets/hospital.svg";
-import restaurant from "@/assets/restaurant.svg";
 
 
 const SCHOOL_SVG = `
@@ -293,7 +290,7 @@ export default function PDPNeighborhood({
         <circle cx="18" cy="18" r="12" 
                 fill="${color}" 
                 opacity="0.1"/>
-        ${icon ? `<text x="18" y="22" font-size="16" text-anchor="middle" dominant-baseline="middle" style="filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));">${icon}</text>` : ""}
+       ${icon ? `<g transform="translate(6,6) scale(0.9)">${icon}</g>` : ""}
       </svg>
     `;
 
@@ -358,9 +355,10 @@ export default function PDPNeighborhood({
   }
 
   return (
+    
     <section className="relative w-full min-h-[600px] overflow-hidden bg-gray-100">
       {/* Full-width Map Background - Fully Interactive */}
-      <div className="absolute inset-0 z-0 pointer-events-auto">
+      <div className="relative md:absolute inset-0 z-0 pointer-events-auto h-[360px] md:h-full">
         {isLoaded && (
           <GoogleMap
             mapContainerStyle={{ width: "100%", height: "100%" }}
@@ -431,12 +429,11 @@ export default function PDPNeighborhood({
       </div>
 
       {/* Blur Overlay and Content - Non-blocking for map interactions */}
-      <div className="relative z-10 mx-auto container py-12 pointer-events-none">
+      <div className="relative z-10 mx-auto container py-6 md:py-12 pointer-events-none">
         <div className="flex flex-col gap-10 md:flex-row md:items-start">
           {/* Left Panel - Category Selection with Blur Effect */}
           <div className="w-full md:w-1/3 bg-white/95 backdrop-blur-lg rounded-2xl p-6 shadow-2xl border border-white/30 pointer-events-auto">
             <h2 className="mb-6 font-semibold text-3xl text-gray-900">The Neighborhood</h2>
-
             <div className="space-y-3">
               {categories.map((category) => {
                 const isSelected = selectedCategory === category.key;
@@ -455,8 +452,7 @@ export default function PDPNeighborhood({
                           ? "bg-[#1C4692]/10 text-[#1C4692]"
                           : "bg-gray-100 text-black"
                         }
-                      `}
-                    >
+                      `}>
                       <span className={`transition-transform duration-300 ${isSelected ? "scale-110" : ""}`}>
                         {category.icon ? (
                           <div

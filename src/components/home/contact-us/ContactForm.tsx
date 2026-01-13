@@ -19,9 +19,10 @@ type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 interface ContactFormProps {
   className?: string;
+  nameMode?: "split" | "full";
 }
 
-export default function ContactForm({ className }: ContactFormProps) {
+export default function ContactForm({ className, nameMode = "split" }: ContactFormProps) {
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -33,50 +34,88 @@ export default function ContactForm({ className }: ContactFormProps) {
     },
   });
 
+  const isSingleColumn = nameMode === "full";
+
+
   function handleFormSubmit(values: ContactFormValues) {
-    console.log("values", values);
+    let firstName = values.firstName;
+    let lastName = values.lastName || "";
+
+    if (!values.lastName) {
+      const nameParts = values.firstName.trim().split(/\s+/);
+
+      firstName = nameParts[0] || "";
+      lastName = nameParts.slice(1).join(" ") || "";
+    }
+
+    const payload = {
+      ...values,
+      firstName,
+      lastName,
+    };
+
+    console.log("FINAL PAYLOAD 👉", payload);
+
   }
 
   return (
     <Form {...form}>
-      <form
-        className={className ?? "space-y-4"}
-        onSubmit={form.handleSubmit(handleFormSubmit)}
-      >
-        <div className="flex flex-col md:flex-row gap-4">
+      <form className={className ?? "space-y-4"} onSubmit={form.handleSubmit(handleFormSubmit)}>
+        {nameMode === "split" ? (
+          <div className="flex flex-col md:flex-row gap-4">
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem className="w-full relative">
+                  <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 text-[13px]">
+                    First Name <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Enter first name" className="h-12 border border-[#262626]" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem className="w-full relative">
+                  <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 text-[13px]">
+                    Last Name <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Enter last name" className="h-12 border border-[#262626]" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        ) : (
           <FormField
             control={form.control}
             name="firstName"
             render={({ field }) => (
               <FormItem className="w-full relative">
-                <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 font-normal text-black text-[13px]">
-                  First Name <span className="text-red-500">*</span>
+                <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 text-[13px]">
+                  Full Name <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter here" {...field} className="h-12 border border-[#262626] placeholder:text-[#BABABA] placeholder:text-[16px]" />
+                  <Input {...field} placeholder="Enter full name" className="h-12 border border-[#262626]" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field }) => (
-              <FormItem className="w-full relative">
-                <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 font-normal text-black text-[13px]">
-                  Last Name <span className="text-red-500">*</span>
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter here" {...field} className="h-12 border border-[#262626] placeholder:text-[#BABABA] placeholder:text-[16px]" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        )}
 
-        <div className="flex flex-col md:flex-row gap-4">
+        <div
+          className={`flex flex-col gap-4 ${isSingleColumn ? "" : "md:flex-row"
+            }`}
+        >
           <FormField
             control={form.control}
             name="phone"

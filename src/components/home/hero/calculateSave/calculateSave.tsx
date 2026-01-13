@@ -23,40 +23,34 @@ const partnerLogos = [
 export default function CalculateSave() {
   const router = useRouter();
 
-  // Default values - starting with ₹ 3.6 Crore (36000000) as per reference image
-  const [loanAmount, setLoanAmount] = useState(36000000); // ₹ 3.6 Crore
+  const [loanAmount, setLoanAmount] = useState(36000000); 
   const [rateOfInterest, setRateOfInterest] = useState(8.9);
-  const [loanTenure, setLoanTenure] = useState(60); // 60 months
+  const [loanTenure, setLoanTenure] = useState(60); 
   const [currency, setCurrency] = useState("INR");
-
   const [activeIndex, setActiveIndex] = useState(0);
+  const visibleIndex = ((activeIndex % partnerLogos.length) + partnerLogos.length) % partnerLogos.length;
+  const ITEM_WIDTH = 44;
+  const extendedLogos = [...partnerLogos, ...partnerLogos, ...partnerLogos];
+  const baseOffset = partnerLogos.length * ITEM_WIDTH;
 
   const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % partnerLogos.length);
+    setActiveIndex((prev) => prev + 1);
   };
 
   const handlePrev = () => {
-    setActiveIndex((prev) => (prev === 0 ? partnerLogos.length - 1 : prev - 1));
+    setActiveIndex((prev) => prev - 1);
   };
 
   const [emiData, setEmiData] = useState<EMICalculatorResponse | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
 
-  // Slider ranges - ₹30 lakh to ₹50 crore
-  const loanAmountRange = { min: 3000000, max: 500000000 }; // ₹ 30 Lakh to ₹ 50 Crore
+  const loanAmountRange = { min: 3000000, max: 500000000 }; 
   const rateRange = { min: 7, max: 11 };
   const tenureRange = { min: 12, max: 60 };
 
-  // Calculate slider percentages
-  const loanAmountPercent =
-    ((loanAmount - loanAmountRange.min) /
-      (loanAmountRange.max - loanAmountRange.min)) *
-    100;
-  const ratePercent =
-    ((rateOfInterest - rateRange.min) / (rateRange.max - rateRange.min)) * 100;
-  const tenurePercent =
-    ((loanTenure - tenureRange.min) / (tenureRange.max - tenureRange.min)) *
-    100;
+  const loanAmountPercent = ((loanAmount - loanAmountRange.min) / (loanAmountRange.max - loanAmountRange.min)) * 100;
+  const ratePercent = ((rateOfInterest - rateRange.min) / (rateRange.max - rateRange.min)) * 100;
+  const tenurePercent = ((loanTenure - tenureRange.min) / (tenureRange.max - tenureRange.min)) * 100;
 
   // Format loan amount for display
   const formatLoanAmount = (amount: number) => {
@@ -130,10 +124,29 @@ export default function CalculateSave() {
     router.push("/contact");
   };
 
-  // Get pie chart percentages from API response
-  const principalPercentage =
-    emiData?.emiBreakdown?.principalPercentage || 80.5;
-  const interestPercentage = emiData?.emiBreakdown?.interestPercentage || 19.5;
+  const principalPercentage = emiData?.emiBreakdown?.principalPercentage || 80.5;
+
+  const formatCurrencyShort = (amount?: number | string) => {
+    if (!amount) return "₹ 0";
+
+    const value = typeof amount === "string"
+      ? Number(amount.replace(/,/g, ""))
+      : amount;
+
+    if (value >= 1e7) {
+      return `₹ ${(value / 1e7).toFixed(2)} Cr`;
+    }
+
+    if (value >= 1e5) {
+      return `₹ ${(value / 1e5).toFixed(2)} L`;
+    }
+
+    if (value >= 1e3) {
+      return `₹ ${(value / 1e3).toFixed(1)} K`;
+    }
+    return `₹ ${value}`;
+  };
+
 
   return (
     <section
@@ -164,6 +177,7 @@ export default function CalculateSave() {
                   <div className="absolute inset-[12%] flex flex-col items-center justify-center rounded-full bg-white text-center shadow-sm">
                     <p className="text-base sm:text-lg md:text-xl font-bold text-black leading-tight px-2">
                       {emiData?.monthlyEMI?.formatted || "₹ 7,47,873.00"}
+                      {/* {formatCurrencyShort(emiData?.monthlyEMI?.value)} */}
                     </p>
                     <p className="text-[10px] sm:text-xs text-gray-600 mt-0.5 px-2">
                       Your Monthly EMI
@@ -179,39 +193,35 @@ export default function CalculateSave() {
 
                   <div className="bg-[#ffffff] py-4 px-2 rounded-md">
                     <div className="space-y-2 text-sm">
-                      <div className="flex items-center">
+                      <div className="flex items-center justify-between px-2">
                         <p className="flex items-center text-[12px] gap-2 font-medium text-[#000000] pe-2">
                           <span className="text-[#38BA50]">●</span> Principal
                           Amount
                         </p>
                         <span className="font-semibold text-black text-[12px]">
-                          {emiData?.principalAmount?.formatted ||
-                            "₹ 3,61,11,931.00"}
+                          {formatCurrencyShort(emiData?.principalAmount?.value)}
                         </span>
                       </div>
 
-                      <div className="flex items-center">
+                      <div className="flex items-center justify-between px-2">
                         <p className="flex items-center text-[12px] gap-2 font-medium text-[#000000] pe-8">
                           <span className="text-[#FFA322]">●</span> Total
                           Interest
                         </p>
                         <span className="font-semibold text-black text-[12px]">
-                          +{" "}
-                          {emiData?.totalInterest?.formatted ||
-                            "₹ 87,60,442.00"}
+                          + {formatCurrencyShort(emiData?.totalInterest?.value)}
                         </span>
                       </div>
                     </div>
 
                     <div className="my-2 sm:my-2 h-px w-[200px] mx-6 bg-gray-200" />
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between px-1">
                       <p className="text-[14px] text-[#000000] font-semibold">
                         Total Amount
                       </p>
                       <p className="text-[14px] font-semibold text-black">
-                        {emiData?.totalAmountPayable?.formatted ||
-                          "₹ 4,48,72,373.00"}
+                        {formatCurrencyShort(emiData?.totalAmountPayable?.value)}
                       </p>
                     </div>
                   </div>
@@ -229,7 +239,7 @@ export default function CalculateSave() {
 
                   {/* Active Score */}
                   <p className="text-lg font-semibold text-black">
-                    {partnerLogos[activeIndex].score}
+                    {partnerLogos[visibleIndex].score}
                   </p>
 
                   {/* Right Arrow */}
@@ -245,19 +255,21 @@ export default function CalculateSave() {
                   <div
                     className="flex gap-4 transition-transform duration-300 ease-in-out"
                     style={{
-                      transform: `translateX(-${activeIndex * 56}px)`,
+                      transform: `translateX(-${baseOffset + visibleIndex * ITEM_WIDTH
+                        }px)`,
                     }}
                   >
-                    {partnerLogos.map((partner, idx) => {
-                      const isActive = idx === activeIndex;
+                    {extendedLogos.map((partner, idx) => {
+                      const isActive =
+                        idx % partnerLogos.length === visibleIndex;
+
                       return (
                         <div
                           key={idx}
-                          className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 transition-all ${
-                            isActive
+                          className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 transition-all ${isActive
                               ? "scale-110 border-blue-400"
                               : "bg-gray-100 border-gray-200"
-                          }`}
+                            }`}
                         >
                           <img
                             src={partner.logo}
@@ -265,7 +277,6 @@ export default function CalculateSave() {
                             className="h-10 w-10 object-contain"
                           />
 
-                          {/* Active Dot */}
                           {isActive && (
                             <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-2 w-2 rounded-full bg-blue-500" />
                           )}
@@ -274,6 +285,8 @@ export default function CalculateSave() {
                     })}
                   </div>
                 </div>
+
+
               </div>
             </div>
 

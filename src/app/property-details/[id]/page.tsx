@@ -164,7 +164,7 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
             }}
             onRefresh={() => fetchPropertyDetails(propertyId)}
           />
-          <PDPSupport relationshipManager={property.relationshipManager} />
+          <PDPSupport relationshipManager={property.relationshipManager} propertyId={property.id} />
         </div>
       </div>
 

@@ -1,8 +1,5 @@
 "use client";
 
-import { Play } from "lucide-react";
-import Image from "next/image";
-import { IoCloseCircle } from "react-icons/io5";
 import { useRef, useState } from "react";
 
 export default function Heading() {
@@ -38,47 +35,6 @@ export default function Heading() {
               Submit
             </button>
           </div>
-          {showVideo && (
-            <div className="absolute -bottom-10 md:-bottom-[290px] right-0 w-[150px] md:w-[230px] h-[200px] md:h-[330px] rounded-3xl overflow-hidden shadow-lg z-20 hidden md:block bg-black">
-
-              <video
-                ref={videoRef}
-                src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/185341-875417497.mp4"
-                className="w-full h-full object-cover"
-                controls={isPlaying}
-                preload="metadata"
-              />
-
-              {!isPlaying && (
-                <button
-                  onClick={() => {
-                    videoRef.current?.play();
-                    setIsPlaying(true);
-                  }}
-                  className="absolute bottom-2 left-2 z-30 h-8 w-8 md:h-10 md:w-10 bg-white rounded-full flex items-center justify-center shadow"
-                  aria-label="Play video"
-                >
-                  <Play size={20} className="text-black" />
-                </button>
-              )}
-
-              <button
-                onClick={() => {
-                  if (videoRef.current) {
-                    videoRef.current.pause();
-                    videoRef.current.currentTime = 0;
-                  }
-                  setIsPlaying(false);
-                  setShowVideo(false); 
-                }}
-                className="absolute top-2 right-2 z-30 h-8 w-8 md:h-10 md:w-10 bg-white rounded-full flex items-center justify-center shadow"
-                aria-label="Close video"
-              >
-                <IoCloseCircle size={20} className="text-black" />
-              </button>
-            </div>
-          )}
-
         </div>
       </div>
     </section>

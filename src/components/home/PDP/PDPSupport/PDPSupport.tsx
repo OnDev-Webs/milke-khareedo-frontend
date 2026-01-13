@@ -1,19 +1,55 @@
 "use client";
 
-import { type RelationshipManager } from "@/lib/api/services/home.service";
+import { homeService, type RelationshipManager } from "@/lib/api/services/home.service";
 import { useState } from "react";
 import Image from "next/image";
 import { FaPhoneAlt } from "react-icons/fa";
 import { HiMail } from "react-icons/hi";
-import { IoStar } from "react-icons/io5";
 import Star from "@/assets/star.svg";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 interface PDPSupportProps {
   relationshipManager: RelationshipManager;
+  propertyId: string;
 }
 
-export default function PDPSupport({ relationshipManager }: PDPSupportProps) {
+export default function PDPSupport({ relationshipManager ,propertyId }: PDPSupportProps) {
   const [isBooking, setIsBooking] = useState(false);
+  const [openVisit, setOpenVisit] = useState(false);
+  const [step, setStep] = useState<"date" | "time">("date");
+  const [hour, setHour] = useState<number>(10);
+  const [amPm, setAmPm] = useState<"AM" | "PM">("AM");
+  const hours = [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8];
+  const today = new Date();
+  const [calendarMonth, setCalendarMonth] = useState(today.getMonth()); 
+  const [calendarYear, setCalendarYear] = useState(today.getFullYear());
+  const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+  const jsDay = new Date(calendarYear, calendarMonth, 1).getDay();
+  const firstDay = (jsDay + 6) % 7;
+
+  const [selectedDate, setSelectedDate] = useState<{
+    day: number;
+    month: number;
+    year: number;
+  } | null>(null);
+
+  const handlePrevMonth = () => {
+    if (calendarMonth === 0) {
+      setCalendarMonth(11);
+      setCalendarYear((y) => y - 1);
+    } else {
+      setCalendarMonth((m) => m - 1);
+    }
+  };
+
+  const handleNextMonth = () => {
+    if (calendarMonth === 11) {
+      setCalendarMonth(0);
+      setCalendarYear((y) => y + 1);
+    } else {
+      setCalendarMonth((m) => m + 1);
+    }
+  };
 
   const handleCall = () => {
     if (relationshipManager.phone) {
@@ -27,13 +63,33 @@ export default function PDPSupport({ relationshipManager }: PDPSupportProps) {
     }
   };
 
-  const handleBookVisit = async () => {
+  const handleConfirmVisit = async () => {
+  if (!selectedDate) return;
+
+  try {
     setIsBooking(true);
-    // TODO: Implement book visit functionality
-    setTimeout(() => {
-      setIsBooking(false);
-    }, 1000);
-  };
+    const visitDateObj = new Date(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day
+    );
+
+    const visitDate = visitDateObj.toISOString().split("T")[0];
+    const visitTime = `${hour}:00 ${amPm}`;
+    await homeService.bookVisit({
+      propertyId,
+      visitDate,
+      visitTime,
+    });
+
+    setOpenVisit(false);
+  } catch (error) {
+    console.error("BOOK VISIT ERROR:", error);
+  } finally {
+    setIsBooking(false);
+  }
+};
+
 
   return (
     <div className="w-full rounded-3xl bg-white border border-[#F3F3F3] py-4 text-center">
@@ -127,16 +183,179 @@ export default function PDPSupport({ relationshipManager }: PDPSupportProps) {
         </div>
       </div>
 
-
       <div className="flex flex-col gap-3 px-4 mt-4">
         <button
-          onClick={handleBookVisit}
+          onClick={() => {
+            setOpenVisit(true);
+            setStep("date");
+          }}
           disabled={isBooking}
           className="w-full rounded-[110px] bg-[#1C4692] text-white py-3 px-6 text-sm font-semibold hover:bg-[#1a3d7a] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
         >
           {isBooking ? "Booking..." : "Book A Visit"}
         </button>
+
       </div>
+      {openVisit && (
+        <div className="fixed inset-0 z-[999] bg-black/40 flex items-center justify-center">
+          {/* MODAL CARD */}
+          <div className="w-[92%] max-w-[420px] bg-white rounded-3xl p-5 animate-scaleIn">
+
+            {/* HEADER */}
+            <div className="flex items-center justify-between mb-6">
+              <p className="text-[22px] font-bold text-black">
+                Schedule Visit
+              </p>
+              <button
+                onClick={() => setOpenVisit(false)}
+                className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* ================= DATE STEP ================= */}
+            {step === "date" && (
+              <>
+                <div className="flex items-center justify-between mb-6">
+                  <button
+                    onClick={handlePrevMonth}
+                    className="h-8 w-8 rounded-full bg-gray-100 flex justify-center items-center">
+                    <ArrowLeft size={16} />
+                  </button>
+                  <p className="text-[16px] font-semibold text-[#000000]">
+                    {new Date(calendarYear, calendarMonth).toLocaleString("en-US", {
+                      month: "long",
+                    })}{" "}
+                    {calendarYear}
+                  </p>
+                  <button
+                    onClick={handleNextMonth}
+                    className="h-8 w-8 rounded-full bg-gray-100 flex justify-center items-center">
+                    <ArrowRight size={16} />
+                  </button>
+                </div>
+
+                {/* WEEK DAYS HEADER */}
+                <div className="grid grid-cols-7 text-center text-xs text-gray-400 mb-2">
+                  {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((d) => (
+                    <span key={d}>{d}</span>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-7 gap-2 text-center text-sm">
+
+                  {/* Empty cells before month start */}
+                  {Array.from({ length: firstDay }).map((_, i) => (
+                    <div key={`empty-${i}`} />
+                  ))}
+
+                  {/* Days */}
+                  {Array.from({ length: daysInMonth }).map((_, i) => {
+                    const day = i + 1;
+                    const todayMidnight = new Date();
+                    todayMidnight.setHours(0, 0, 0, 0);
+                    const isPast = new Date(calendarYear, calendarMonth, day) < todayMidnight;
+                    const isSelected = selectedDate?.day === day && selectedDate?.month === calendarMonth && selectedDate?.year === calendarYear;
+
+                    return (
+                      <button
+                        key={day}
+                        disabled={isPast}
+                        onClick={() => {
+                          setSelectedDate({
+                            day,
+                            month: calendarMonth,
+                            year: calendarYear,
+                          });
+                          setStep("time");
+                        }}
+                        className={`h-10 w-10 rounded-lg border text-sm font-medium transition-all
+                          ${isPast
+                            ? "text-gray-300 cursor-not-allowed border-transparent"
+                            : isSelected
+                              ? "text-[#1C4692] border-[#1C4692] scale-[1.05]"
+                              : "border-transparent text-gray-700 hover:border-[#1C4692] hover:text-[#1C4692]"
+                          }`}
+                      >
+                        {day}
+                      </button>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+
+            {/* ================= TIME STEP ================= */}
+            {step === "time" && (
+              <>
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-sm font-medium">
+                    <span>Selected Date</span> <span className="font-bold">
+                      {selectedDate?.day}{" "}
+                      {new Date(
+                        selectedDate!.year,
+                        selectedDate!.month
+                      ).toLocaleString("en-US", { month: "long" })}{" "}
+                      {selectedDate?.year}
+                    </span>
+                  </p>
+
+                  <button
+                    onClick={() => setStep("date")}
+                    className="text-[12px] bg-[#1C4692] text-white py-2 px-4 rounded-md"
+                  >
+                    Back
+                  </button>
+                </div>
+
+                <p className="text-[16px] font-medium mb-4">Select Time</p>
+
+                <div className="grid grid-cols-4 gap-3 mb-6">
+                  {hours.map((h) => (
+                    <button
+                      key={h}
+                      onClick={() => setHour(h)}
+                      className={`py-3 rounded-xl border text-sm font-medium transition-all
+                        ${hour === h
+                          ? "text-[#1C4692] border-[#1C4692] scale-[1.02]"
+                          : "bg-white text-gray-700 "
+                        }`}
+                    >
+                      {h}:00
+                    </button>
+                  ))}
+                </div>
+
+                {/* AM / PM */}
+                <div className="flex rounded-full bg-[#F5F7FB] p-1 mb-6 gap-1">
+                  {["AM", "PM"].map((v) => (
+                    <button
+                      key={v}
+                      onClick={() => setAmPm(v as "AM" | "PM")}
+                      className={`flex-1 py-2 text-sm font-semibold rounded-full transition-all
+                      ${amPm === v
+                          ? "border-2 border-[#1C4692] text-[#1C4692] bg-white shadow-sm"
+                          : "border-2 border-transparent text-gray-600 hover:text-[#1C4692]"
+                        }`}
+                    >
+                      {v}
+                    </button>
+                  ))}
+                </div>
+
+                {/* CONFIRM */}
+                <button
+                  onClick={handleConfirmVisit}
+                  className="w-full bg-[#1C4692] text-white py-3 rounded-xl font-semibold"
+                >
+                  Confirm Visit
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

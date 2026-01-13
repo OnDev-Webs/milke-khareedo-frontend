@@ -141,11 +141,14 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
     <>
       <section className="w-full bg-white py-10">
         <div className="mx-auto container">
-          <div className="flex justify-between px-2">
-            <h3 className="mb-6 font-bold text-[35px] text-[#000000]">Similar Projects</h3>
+          <div className="flex items-center justify-between px-4 md:px-2 gap-3">
+            <h3 className="font-bold text-[18px] md:text-[35px] text-[#000000] whitespace-nowrap">
+              Similar Projects
+            </h3>
             <Link href="/properties">
               <button
-                className="px-10 h-[44px] border border-[#F5F5F5] rounded-full text-[#2D2D2D] font-semibold text-[16px] bg-white hover:bg-[#F5F7FA] transition">
+                className="px-4 md:px-10 h-[36px] md:h-[44px] border border-[#F5F5F5] rounded-full text-[#2D2D2D] font-semibold text-[14px] md:text-[16px] bg-white hover:bg-[#F5F7FA] transition whitespace-nowrap"
+              >
                 View All
               </button>
             </Link>

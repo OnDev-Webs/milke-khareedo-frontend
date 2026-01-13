@@ -5,13 +5,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import PropertyMap from "@/components/map/PropertyMap";
 import { FaMapMarkerAlt, FaSearch } from "react-icons/fa";
-import { cn } from "@/lib/utils";
 import CitySelector from "../home/hero/CitySelector";
 import {
   Popover,
@@ -36,58 +33,63 @@ export default function SearchResultsGrid() {
     [key: string]: number;
   }>({});
 
-  const [priceValue, setPriceValue] = useState(70);
   const [selectedBhk, setSelectedBhk] = useState("2.5 BHK");
-  const [areaValue, setAreaValue] = useState(40);
   const [selectedPossession, setSelectedPossession] = useState("Ready to Move");
-  const [results, setResults] = useState<Property[] | null>(null);
+  const [results, setResults] = useState<Property[]>([]);
   const [paginationData, setPaginationData] = useState<PaginationInfo | null>(
     null,
   );
 
   const searchParams = useSearchParams();
 
-  useEffect(() => {
-    // try sessionStorage first
-    const cached = sessionStorage.getItem("searchResults");
-    if (cached) {
-      try {
-        const parsed = JSON.parse(cached);
-        // parsed.results should match what HeroSection stored
-        setResults(parsed.results?.data ?? parsed.results ?? []);
-        setPaginationData(parsed.pagination ?? null);
-        return;
-      } catch (e) {
-        console.warn("Invalid cached searchResults", e);
-      }
-    }
+  const fetchProperties = async (params: {
+    city?: string;
+    searchText?: string;
+    bhk?: string;
+    projectStatus?: string;
+    sortBy?: string;
+  }) => {
+    try {
+      const resp = await homeService.searchProperties({
+        ...params,
+        page: 1,
+        limit: 10,
+      });
 
-    // fallback: fetch based on query params
-    const city = searchParams.get("city") ?? undefined;
-    const q = searchParams.get("search") ?? undefined;
-    if (city || q) {
-      (async () => {
-        const resp = await homeService.searchProperties({
-          city,
-          searchText: q,
-          page: Number(searchParams.get("page") || 1),
-          limit: Number(searchParams.get("limit") || 10),
-        });
-        if (resp.success && resp.data)
-          setResults(resp.data.results || resp.data.data || []);
-        else setResults([]);
-      })();
-    } else {
+      if (resp.success && Array.isArray(resp.data)) {
+        setResults(resp.data);
+        setPaginationData(resp.pagination ?? null);
+      } else {
+        setResults([]);
+      }
+    } catch (err) {
+      console.error(err);
       setResults([]);
     }
-  }, [searchParams]);
+  };
+
+  useEffect(() => {
+    const city = searchParams.get("city") ?? undefined;
+    const q = searchParams.get("search") ?? undefined;
+
+    if (!city && !q) {
+      setResults([]);
+      return;
+    }
+
+    fetchProperties({
+      city,
+      searchText: q,
+      sortBy,
+    });
+  }, [searchParams, sortBy]);
+
 
   const getImageIndex = (propertyId: string) =>
     currentImageIndex[propertyId] || 0;
 
   const handleCityChange = (cityValue: string) => {
     setSelectedCity(cityValue);
-    // You can add additional logic here, such as filtering properties based on city
     console.log("Selected city:", cityValue);
   };
 
@@ -103,44 +105,27 @@ export default function SearchResultsGrid() {
     }));
   };
 
-  const handleSearch = async () => {
-    const query = String(searchQuery).trim();
+  const handleSearch = () => {
+    fetchProperties({
+      city: selectedCity.split(",").pop()?.trim(),
+      searchText: searchQuery.trim(),
+      bhk: selectedBhk,
+      projectStatus: selectedPossession,
+      sortBy,
+    });
+  };
 
-    try {
-      const response = await homeService.searchProperties({
-        city: selectedCity.split(",").pop()?.trim() || selectedCity,
-        searchText: query,
-        sortBy: sortBy.toLowerCase().replace(/ /g, ""),
-        page: 1,
-        limit: 10,
-        // priceMin,
-        // priceMax,
-        bhk: selectedBhk,
-        // propertyType: ,
-        projectStatus: selectedPossession,
-        // sortBy,
-      })
-
-      if (response.success && response.data) {
-        setResults(response.data.results || response.data.data || []);
-        setPaginationData(response.pagination || null);
-      } else {
-        setResults([]);
-      }
-    } catch (error) {
-      console.error("Search error:", error);
-    }
-  }
 
   return (
     <>
-      <div className="flex items-center justify-between border-b border-[#F3F3F3] mb-5 px-4">
-        <div className="inline-flex w-full max-w-md">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-[#F3F3F3] mb-5 px-4">
+        {/* CITY + SEARCH */}
+        <div className="inline-flex w-full md:max-w-md">
           <div className="relative flex flex-col justify-center pe-4 py-4 min-w-[130px]">
             <label className="text-sm font-bold text-gray-800 mb-2.5">
               City
             </label>
-            <div className="relative" style={{ zIndex: 1000 }}>
+            <div className="relative z-[1000]">
               <CitySelector
                 value={selectedCity}
                 onChange={handleCityChange}
@@ -148,253 +133,116 @@ export default function SearchResultsGrid() {
                 showLabel={false}
               />
             </div>
-            <span
-              className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2
-                           h-10 w-0.5 bg-[#DCDCEB]"
-            />
+            <span className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 h-10 w-0.5 bg-[#DCDCEB]" />
           </div>
           <div className="relative flex-1 flex flex-col justify-start ps-4 pe-6 py-4">
             <div className="relative">
-              <p className="text-base font-semibold text-gray-900">
-                Find your Dream Home
-              </p>
-              <div className="flex items-center gap-1.5 mt-[5px]">
-                <FaMapMarkerAlt className="text-gray-500 text-xs shrink-0" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={() => setIsSearchFocused(!isSearchFocused)}
-                  onBlur={() => setIsSearchFocused(false)}
-                  placeholder="Search for Developers, Location, Projects"
-                  className="w-full bg-transparent outline-none border-none focus:ring-0 transition-all duration-300 text-xs text-gray-500"
-                />
-              </div>
-              {/* <input
+              <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
                 placeholder="Find your Dream Home"
-                className="w-full bg-transparent text-base font-bold text-gray-800 outline-none border-none focus:outline-none focus:ring-0 placeholder:text-base placeholder:font-bold placeholder:text-gray-800 transition-all duration-300 min-h-[24px]"
+                className="w-full bg-transparent text-base font-bold text-gray-800 outline-none border-none focus:ring-0 placeholder:text-base placeholder:font-bold placeholder:text-gray-800"
               />
-              <div
-                className={`absolute left-0 top-full mt-1.5 flex items-center gap-1.5 text-xs text-gray-500 pointer-events-none transition-opacity duration-300 ${searchQuery || isSearchFocused ? "opacity-0" : "opacity-100"}`}
-              >
-                <FaMapMarkerAlt className="text-gray-500 text-xs flex-shrink-0" />
+              <div className={`absolute left-0 top-full mt-1.5 flex items-center gap-1.5 text-xs text-gray-500 pointer-events-none transition-opacity ${searchQuery || isSearchFocused ? "opacity-0" : "opacity-100"}`}>
+                <FaMapMarkerAlt className="text-xs" />
                 <span>Search for Developers, Location, Projects</span>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          {/* Price Range Popover */}
+
+        {/* FILTERS */}
+        <div className="flex items-center gap-2 overflow-x-auto md:overflow-visible whitespace-nowrap pb-2 md:pb-0">
           <Popover>
             <PopoverTrigger className="bg-[#EEF4FF] rounded-[16px] px-5 py-[17px] text-sm font-medium">
               50L-100 CR
             </PopoverTrigger>
-            <PopoverContent className="w-80">
-              {/* inside PopoverContent for Price */}
-              <div className="px-4 py-4">
-                {/* <Progress className="w-full" value={priceValue} max={100} /> */}
-
-                <div className="flex items-center flex-col gap-3">
-                  <input
-                    type="range"
-                    min={0}
-                    max={100}
-                    value={priceValue}
-                    onChange={(e) => setPriceValue(Number(e.target.value))}
-                    className="w-full"
-                  />
-                  <div className="min-w-[90px] text-sm text-[#1C4692] font-semibold text-center">
-                    {priceValue}%
-                    {/* or format to currency if you map percent -> amount */}
-                  </div>
-                </div>
-              </div>
-            </PopoverContent>
+            <PopoverContent className="w-80" />
           </Popover>
 
-          {/* BHK Popover */}
           <Popover>
             <PopoverTrigger className="bg-[#EEF4FF] rounded-[16px] px-5 py-[17px] text-sm font-medium">
               {selectedBhk}
             </PopoverTrigger>
-            <PopoverContent className="w-96">
-              <div className="p-6">
-                <div className="grid grid-cols-3 gap-4 max-h-56 overflow-y-auto pr-2">
-                  {[
-                    "1 BHK",
-                    "1.5 BHK",
-                    "2 BHK",
-                    "2.5 BHK",
-                    "3 BHK",
-                    "3.5 BHK",
-                    "4 BHK",
-                    "4.5 BHK",
-                    "5 BHK",
-                    "5.5 BHK",
-                    "6 BHK",
-                    "6.5 BHK",
-                    "7 BHK",
-                    "7.5 BHK",
-                    "8 BHK",
-                  ].map((bhk) => (
-                    <button
-                      key={bhk}
-                      onClick={() => setSelectedBhk(bhk)}
-                      className={cn(
-                        "py-3 px-6 rounded-full text-sm font-medium",
-                        selectedBhk === bhk
-                          ? "bg-[#1C4692] text-white"
-                          : "bg-[#F7F9FB] text-black",
-                      )}
-                    >
-                      {bhk}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </PopoverContent>
+            <PopoverContent className="w-96" />
           </Popover>
 
-          {/* Super Area Popover */}
           <Popover>
             <PopoverTrigger className="bg-[#EEF4FF] rounded-[16px] px-5 py-[17px] text-sm font-medium">
               Super Area sq.ft
             </PopoverTrigger>
-            <PopoverContent className="w-80">
-              {/* inside PopoverContent for Super Area */}
-              <div className="px-4 py-4">
-                {/* <Progress className="w-full" value={areaValue} max={100} /> */}
-
-                <div className="flex flex-col items-center gap-3">
-                  <input
-                    type="range"
-                    min={0}
-                    max={100}
-                    value={areaValue}
-                    onChange={(e) => setAreaValue(Number(e.target.value))}
-                    className="w-full"
-                  />
-                  <div className="min-w-[90px] text-sm text-[#1C4692] font-semibold text-center">
-                    {areaValue}%
-                  </div>
-                </div>
-              </div>
-            </PopoverContent>
+            <PopoverContent className="w-80" />
           </Popover>
 
-          {/* Possession Status Popover */}
           <Popover>
             <PopoverTrigger className="bg-[#EEF4FF] rounded-[16px] px-5 py-[17px] text-sm font-medium">
               Possession Status
             </PopoverTrigger>
-            <PopoverContent className="w-80">
-              <div className="p-6">
-                <div className="flex flex-wrap gap-4">
-                  {[
-                    "Available",
-                    "Under Construction",
-                    "Ready to Move",
-                    "Sold",
-                    "Occupied",
-                    "Pending",
-                  ].map((status) => (
-                    <button
-                      key={status}
-                      onClick={() => setSelectedPossession(status)}
-                      className={cn(
-                        "py-2 px-4 rounded-full text-sm font-medium",
-                        selectedPossession === status
-                          ? "bg-[#1C4692] text-white"
-                          : "bg-[#F7F9FB] text-black",
-                      )}
-                    >
-                      {status}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </PopoverContent>
+            <PopoverContent className="w-80" />
           </Popover>
 
-          {/* Search Button */}
-          <button onClick={handleSearch} className="ml-2 inline-flex items-center gap-2 bg-[#1C4692] text-white px-6 py-3 rounded-[16px] font-semibold  transition-colors">
+          <button
+            onClick={handleSearch}
+            className="inline-flex items-center gap-2 bg-[#1C4692] text-white px-6 py-3 rounded-[16px] font-semibold"
+          >
             <FaSearch /> Search
           </button>
         </div>
       </div>
-      <div className="flex gap-2">
-        {/* Properties Grid */}
-        <div className="flex-1 px-4">
+
+      <div className="flex flex-col md:flex-row gap-2">
+        <div className="w-full md:w-1/3 order-1 md:order-2">
+          <div className="h-[300px] md:sticky md:top-20 md:h-[calc(100vh-5rem)] overflow-hidden">
+            <PropertyMap properties={results} />
+          </div>
+        </div>
+
+        {/* PROPERTY LIST */}
+        <div className="flex-1 px-4 order-2 md:order-1">
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-2xl font-semibold text-black">
               Projects in Mumbai Central, Mumbai
             </h2>
-            <div className="flex items-center gap-2">
-              <DropdownMenu>
-                <DropdownMenuTrigger className="bg-[#EEF4FF] rounded-[10px] py-2.5 px-[15px]">
-                  Short by: {sortBy}
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem onClick={() => setSortBy("New Added")}>
-                    New Added
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => setSortBy("Price: Low to High")}
-                  >
-                    Price: Low to High
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => setSortBy("Price: High to Low")}
-                  >
-                    Price: High to Low
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuLabel onClick={() => setSortBy("More Options")}>
-                    More Options
-                  </DropdownMenuLabel>
-                  <DropdownMenuItem onClick={() => setSortBy("Most Popular")}>
-                    Most Popular
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setSortBy("Highest Rated")}>
-                    Highest Rated
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger className="bg-[#EEF4FF] rounded-[10px] py-2.5 px-[15px]">
+                Sort by: {sortBy}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={() => setSortBy("New Added")}>
+                  New Added
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortBy("Price: Low to High")}>
+                  Price: Low to High
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortBy("Price: High to Low")}>
+                  Price: High to Low
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
-          <p className="mb-6 text-sm text-[#141414]">Showing 4 of 4 Projects</p>
+          <p className="mb-6 text-sm text-[#141414]">
+            Showing {results.length} of {paginationData?.total ?? results.length} Projects
+          </p>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {/* Property Cards */}
-            {results && results.length > 0 ? (
-              results.map((property) => {
-                const images = getPropertyImages(property);
-                return (
-                  <SearchPropertyCard
-                    key={property.id}
-                    property={property}
-                    images={images}
-                  />
-                );
-              })
+            {results.length > 0 ? (
+              results.map((property) => (
+                <SearchPropertyCard
+                  key={property.id}
+                  property={property}
+                  images={getPropertyImages(property)}
+                />
+              ))
             ) : (
-              <div className="col-span-2 text-center py-10">
-                <p className="text-gray-500">No properties found</p>
+              <div className="col-span-2 text-center py-10 text-gray-500">
+                No properties found
               </div>
             )}
-          </div>
-        </div>
-
-        {/* Map Sidebar */}
-        <div className="w-1/3 h-screen">
-          <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-hidden">
-            <PropertyMap properties={results} />
           </div>
         </div>
       </div>

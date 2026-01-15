@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import { type NeighborhoodData, type ConnectivityPoint } from "@/lib/api/services/home.service";
+import Loader from "@/components/ui/loader";
 
 
 const SCHOOL_SVG = `
@@ -90,14 +91,12 @@ export default function PDPNeighborhood({
     return cats;
   }, [neighborhood]);
 
-  // Update selected category when categories change (set first as default)
   useEffect(() => {
     if (categories.length > 0 && !selectedCategory) {
       setSelectedCategory(categories[0].key);
     }
   }, [categories, selectedCategory]);
 
-  // Check if Google Maps is already loaded (from GoogleMapsProvider)
   useEffect(() => {
     const checkGoogleMaps = () => {
       if (typeof window !== "undefined" && (window as any).google?.maps) {
@@ -107,14 +106,12 @@ export default function PDPNeighborhood({
       return false;
     };
 
-    // Check immediately
     if (checkGoogleMaps()) {
       return;
     }
 
-    // If not loaded, check periodically with timeout
     let attempts = 0;
-    const maxAttempts = 50; // 5 seconds max wait time
+    const maxAttempts = 50;
 
     const interval = setInterval(() => {
       attempts++;
@@ -123,11 +120,9 @@ export default function PDPNeighborhood({
       }
     }, 100);
 
-    // Cleanup
     return () => clearInterval(interval);
   }, []);
 
-  // Get all markers (property + connectivity points) with animations
   const allMarkers = useMemo(() => {
     const markers: Array<{
       lat: number;
@@ -139,16 +134,14 @@ export default function PDPNeighborhood({
       category?: string;
     }> = [];
 
-    // Add property marker (always visible)
     markers.push({
       lat: propertyLocation.lat,
       lng: propertyLocation.lng,
       type: "property",
       title: "Property Location",
-      color: "#1C4692", // Theme blue
+      color: "#1C4692",
     });
 
-    // Add connectivity markers (only for selected category or all if none selected)
     if (neighborhood?.connectivity) {
       Object.entries(neighborhood.connectivity).forEach(([key, points]) => {
         if (Array.isArray(points) && (!selectedCategory || selectedCategory === key)) {
@@ -175,7 +168,6 @@ export default function PDPNeighborhood({
     setMap(mapInstance);
   };
 
-  // Fit bounds to show all markers with smooth animation
   useEffect(() => {
     if (map && allMarkers.length > 0 && typeof window !== "undefined" && (window as any).google?.maps) {
       const googleMaps = (window as any).google.maps;
@@ -190,19 +182,15 @@ export default function PDPNeighborhood({
       });
 
       if (hasValidMarkers && !bounds.isEmpty()) {
-        // Smooth transition when category changes - wait for markers to animate
         const timeoutId = setTimeout(() => {
-          // Add padding to account for left panel
           const padding = {
             top: 80,
             right: 80,
             bottom: 80,
-            left: window.innerWidth > 768 ? 380 : 80, // Account for left panel on desktop
+            left: window.innerWidth > 768 ? 380 : 80,
           };
 
           map.fitBounds(bounds, padding);
-
-          // Ensure minimum zoom level for better visibility
           const listener = googleMaps.event.addListener(map, 'bounds_changed', () => {
             const zoom = map.getZoom();
             if (zoom !== undefined && zoom > 18) {
@@ -210,11 +198,10 @@ export default function PDPNeighborhood({
             }
             googleMaps.event.removeListener(listener);
           });
-        }, 400); // Delay to allow marker animations to start
+        }, 400);
 
         return () => clearTimeout(timeoutId);
       } else if (allMarkers.length === 1) {
-        // Single marker - center on it with appropriate zoom
         const marker = allMarkers[0];
         if (marker.lat && marker.lng) {
           map.setCenter(new googleMaps.LatLng(marker.lat, marker.lng));
@@ -229,7 +216,6 @@ export default function PDPNeighborhood({
       return undefined;
     }
 
-    // Property marker - premium, slightly smaller
     if (isProperty) {
       const svg = `
         <svg width="40" height="50" viewBox="0 0 40 50" xmlns="http://www.w3.org/2000/svg">
@@ -266,7 +252,6 @@ export default function PDPNeighborhood({
       };
     }
 
-    // Category markers - smaller, premium circular design
     const svg = `
       <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -306,10 +291,8 @@ export default function PDPNeighborhood({
     }
   };
 
-  // Trigger animations when category changes
   useEffect(() => {
     if (allMarkers.length > 0) {
-      // Reset all markers
       const newState: Record<string, boolean> = {};
       allMarkers.forEach((marker, index) => {
         const key = `${marker.type}-${marker.lat}-${marker.lng}-${index}`;
@@ -317,27 +300,23 @@ export default function PDPNeighborhood({
       });
       setMarkerAnimationState(newState);
 
-      // Trigger staggered animations
       setTimeout(() => {
         allMarkers.forEach((marker, index) => {
           const key = `${marker.type}-${marker.lat}-${marker.lng}-${index}`;
           setTimeout(() => {
             setMarkerAnimationState((prev) => ({ ...prev, [key]: true }));
-          }, index * 60); // Stagger by 60ms for smooth cascade
+          }, index * 60);
         });
       }, 150);
 
-      // Increment trigger to force re-render
       setAnimationTrigger((prev) => prev + 1);
     }
   }, [selectedCategory, allMarkers.length]);
 
-  // Handle category selection with smooth transition
   const handleCategoryClick = (categoryKey: string) => {
     setSelectedCategory(selectedCategory === categoryKey ? null : categoryKey);
   };
 
-  // Early return AFTER all hooks - this is now safe
   if (!isLoaded) {
     return (
       <section className="relative w-full min-h-[600px] overflow-hidden">
@@ -346,7 +325,7 @@ export default function PDPNeighborhood({
           <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
             <div className="w-full md:w-1/3 bg-white/90 backdrop-blur-md rounded-2xl p-6">
               <h2 className="mb-6 font-semibold text-3xl text-gray-900">The Neighborhood</h2>
-              <div className="text-center text-gray-600">Loading map...</div>
+              <div className="text-center text-gray-600"><Loader size={38}/></div>
             </div>
           </div>
         </div>
@@ -355,10 +334,8 @@ export default function PDPNeighborhood({
   }
 
   return (
-    
-    <section className="relative w-full min-h-[600px] overflow-hidden bg-gray-100">
-      {/* Full-width Map Background - Fully Interactive */}
-      <div className="relative md:absolute inset-0 z-0 pointer-events-auto h-[360px] md:h-full">
+    <section className="relative w-full min-h-[600px] overflow-hidden bg-gray-100 flex flex-col md:block">
+      <div className="relative order-2 md:order-none md:absolute inset-0 z-0 pointer-events-auto h-[360px] md:h-full">
         {isLoaded && (
           <GoogleMap
             mapContainerStyle={{ width: "100%", height: "100%" }}
@@ -373,7 +350,7 @@ export default function PDPNeighborhood({
               streetViewControl: false,
               fullscreenControl: false,
               draggable: true,
-              gestureHandling: "greedy", // Allows all gestures
+              gestureHandling: "greedy", 
               keyboardShortcuts: true,
               styles: [
                 {
@@ -429,25 +406,27 @@ export default function PDPNeighborhood({
       </div>
 
       {/* Blur Overlay and Content - Non-blocking for map interactions */}
-      <div className="relative z-10 mx-auto container py-6 md:py-12 pointer-events-none">
-        <div className="flex flex-col gap-10 md:flex-row md:items-start">
+      <div className=" relative z-10 order-1 md:order-none mx-auto container py-6 md:py-12 pointer-events-none">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-10 md:items-start px-8">
+
           {/* Left Panel - Category Selection with Blur Effect */}
-          <div className="w-full md:w-1/3 bg-white/95 backdrop-blur-lg rounded-2xl p-6 shadow-2xl border border-white/30 pointer-events-auto">
+          <div className="w-full md:w-1/3 order-1 md:order-none bg-white/95 backdrop-blur-lg rounded-2xl p-6 shadow-2xl border border-white/30 pointer-events-auto">
             <h2 className="mb-6 font-semibold text-3xl text-gray-900">The Neighborhood</h2>
-            <div className="space-y-3">
+            <div className="flex gap-3 overflow-x-auto no-scrollbar md:flex-col md:overflow-visible md:gap-3">
               {categories.map((category) => {
                 const isSelected = selectedCategory === category.key;
                 return (
                   <button
                     key={category.key}
                     onClick={() => handleCategoryClick(category.key)}
-                    className={`flex w-full items-center gap-4 rounded-2xl border-2 p-5 transition-all duration-300 ease-in-out transform hover:scale-[1.02] active:scale-[0.98] ${isSelected
-                      ? "border-[#1C4692] bg-[#EEF4FF] shadow-md"
-                      : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
+                    className={`flex items-center gap-3 rounded-xl border-2 p-3 md:p-5 min-w-[160px] md:w-full shrink-0 transition-all duration-300
+                    ${isSelected
+                        ? "border-[#1C4692] bg-[#EEF4FF]"
+                        : "border-gray-200 bg-white"
                       }`}
                   >
                     <div
-                      className={`flex items-center justify-center rounded-full size-10 p-2 transition-all duration-300
+                      className={`flex items-center justify-center rounded-full size-9 md:size-10 p-2 transition-all duration-300
                       ${isSelected
                           ? "bg-[#1C4692]/10 text-[#1C4692]"
                           : "bg-gray-100 text-black"

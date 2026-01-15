@@ -301,6 +301,7 @@ export interface SimilarProject {
   projectName: string;
   images: string[];
   imageUrl: string | null;
+  lastDayToJoin?: string | null;
   status: string;
   groupSize: number;
   configuration: string;

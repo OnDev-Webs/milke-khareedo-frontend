@@ -6,7 +6,7 @@ interface PDPPropertyDetailsProps {
 
 export default function PDPPropertyDetails({ property }: PDPPropertyDetailsProps) {
   return (
-    <section className="">
+    <section className="px-4 pe-10 md:pe-0">
       <div className="mx-4 md:mx-auto container rounded-2xl bg-white shadow-sm">
         <div className="rounded-t-[20px] bg-[#EEF4FF] px-6 py-4">
           <h3 className="text-[25px] font-semibold text-[#000000]">

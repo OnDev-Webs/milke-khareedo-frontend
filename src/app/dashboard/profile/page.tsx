@@ -70,10 +70,6 @@ export default function ProfilePage() {
         });
     }, [data]);
 
-
-
-
-
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
@@ -82,15 +78,11 @@ export default function ProfilePage() {
     };
 
     const handleSave = async () => {
-
-
         await userDashboardService.updateUserProfile(form);
     };
 
-
     const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const countryCode = e.target.value;
-
         setForm((prev) => ({
             ...prev,
             country: countryCode,
@@ -128,8 +120,6 @@ export default function ProfilePage() {
 
     //     setShowOtp(true);
     // };
-
-
 
     // const handleVerifyOtp = async () => {
     //     if (otp.length !== 6) {
@@ -184,17 +174,10 @@ export default function ProfilePage() {
                     disabled
                 />
 
-
                 <VerifiedInput
                     label="Mobile Number"
                     value={`${form.countryCode} ${form.phoneNumber}`}
                 />
-
-
-
-
-
-
 
                 <FieldInput
                     label="Full Address *"
@@ -216,9 +199,6 @@ export default function ProfilePage() {
                     }}
                 />
 
-
-
-
                 <FieldSelect
                     label="Country"
                     name="country"
@@ -231,7 +211,6 @@ export default function ProfilePage() {
                         </option>
                     ))}
                 </FieldSelect>
-
 
                 <FieldSelect
                     label="State"
@@ -250,8 +229,6 @@ export default function ProfilePage() {
                     )}
                 </FieldSelect>
 
-
-
                 <FieldSelect
                     label="City"
                     name="city"
@@ -268,8 +245,6 @@ export default function ProfilePage() {
                         ))
                     )}
                 </FieldSelect>
-
-
             </div>
 
             <div className="mt-12">

@@ -8,6 +8,7 @@ import AuthModal from "@/components/auth/AuthModal";
 import { useRouter } from "next/navigation";
 import PropertyCard from "@/components/cards/PropertyCard";
 import getPropertyImages from "@/utils/getPropertyImages";
+import Loader from "@/components/ui/loader";
 
 export default function TopProperties() {
   const LIMIT = 6;
@@ -322,37 +323,27 @@ export default function TopProperties() {
     <section className="w-full py-16 bg-gray-50 px-6">
       <div className="max-w-[1350px] mx-auto px-6">
         {/* Heading */}
-       <h2 className="text-3xl font-bold text-black mb-6">
-  Top{" "}
-  <span className="relative inline-block text-[#1C4692] font-bold">
-    Properties
-
-    <svg
-      className="
-        absolute
-        left-3/5
-        -translate-x-1/2
-        -bottom-4
-        w-[120%]
-        h-3.5
-      "
-      viewBox="0 0 120 14"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="none"
-    >
-      <path
-        d="M2 11
-           C 30 3, 90 3, 118 11"
-        stroke="#1C4692"
-        strokeWidth="3"
-        strokeLinecap="round"
-        fill="none"
-      />
-    </svg>
-  </span>
-</h2>
-
+        <h2 className="text-3xl font-bold text-black mb-6">
+          Top{" "}
+          <span className="relative inline-block text-[#1C4692] font-bold">
+            Properties
+            <svg
+              className="absolute left-3/5 -translate-x-1/2 -bottom-4 w-[120%] h-3.5"
+              viewBox="0 0 120 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M2 11 C 30 3, 90 3, 118 11"
+                stroke="#1C4692"
+                strokeWidth="3"
+                strokeLinecap="round"
+                fill="none"
+              />
+            </svg>
+          </span>
+        </h2>
 
         {/* Tabs */}
         <div className="flex flex-wrap gap-6 mb-8 py-2 border-b border-[#E0E0E0]">
@@ -364,11 +355,9 @@ export default function TopProperties() {
                 key={idx}
                 onClick={() => handleTabChange(tab)}
                 className={`relative px-1 pb-1 text-sm font-medium transition-colors
-          ${isActive ? "text-[#1C4692]" : "text-[#818181]"}
-        `}
+                ${isActive ? "text-[#1C4692]" : "text-[#818181]"}`}
               >
                 {tab}
-
                 {isActive && (
                   <span className="absolute left-0 right-0 -bottom-[9px] h-[2px] bg-[#1C4692]" />
                 )}
@@ -380,7 +369,7 @@ export default function TopProperties() {
         {/* Loading State */}
         {isLoadingMore && properties.length === 0 && (
           <div className="flex justify-center items-center py-20">
-            <div className="text-gray-500">Loading properties...</div>
+            <div className="text-gray-500"><Loader size={38}/></div>
           </div>
         )}
 
@@ -388,11 +377,9 @@ export default function TopProperties() {
         {!isLoadingMore || properties.length > 0 ? (
           <div className="grid gap-6 md:grid-cols-3">
             {properties.map((prop) => {
-              const isFavorite =
-                favoriteStates[prop.id] ?? prop.isFavorite ?? false;
+              const isFavorite = favoriteStates[prop.id] ?? prop.isFavorite ?? false;
               const isLoading = favoriteLoading[prop.id] ?? false;
-              const isJoinGroup =
-                joinGroupStates[prop.id] ?? prop.isJoinGroup ?? false;
+              const isJoinGroup = joinGroupStates[prop.id] ?? prop.isJoinGroup ?? false;
               const isJoinGroupLoading = joinGroupLoading[prop.id] ?? false;
               const images = getPropertyImages(prop);
               const currentIndex = currentImageIndex[prop.id] ?? 0;
@@ -438,7 +425,7 @@ export default function TopProperties() {
                   disabled={isLoadingMore}
                   className="px-8 py-3 rounded-full border border-[#F5F5F5] text-[#2D2D2D] bg-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isLoadingMore ? "Loading..." : "Load More"}
+                  {isLoadingMore ? <Loader size={38}/> : "Load More"}
                 </button>
               </div>
             )}

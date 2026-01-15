@@ -1,8 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { IoHeart, IoHeartOutline, IoShareSocialOutline } from "react-icons/io5";
-import { MdCompareArrows } from "react-icons/md";
+
 interface PDPSectionsProps {
   activeTab?: string;
   onTabChange?: (tab: string) => void;
@@ -29,161 +30,138 @@ export default function PDPSections({
   onShareClick,
   isFavorite,
 }: PDPSectionsProps) {
-
-  const [activeSection, setActiveSection] = useState(activeTab || "Property Details");
+  const [activeSection, setActiveSection] = useState(
+    activeTab || "Property Details"
+  );
   const [isScrolling, setIsScrolling] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
-  // Handle smooth scroll to section
-  const scrollToSection = (sectionId: string, title: string) => {
+  const scrollToSection = (id: string, title: string) => {
     setIsScrolling(true);
-    const element = document.getElementById(sectionId);
+    const el = document.getElementById(id);
+    if (!el) return;
 
-    if (element) {
-      // Calculate offset for sticky header/nav
-      // Header height (~80px) + Navigation bar height (~60px) + some padding
-      const headerOffset = 160;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    const y =
+      el.getBoundingClientRect().top + window.pageYOffset - 160;
 
-      // Update active section immediately for better UX
-      setActiveSection(title);
-      if (onTabChange) {
-        onTabChange(title);
-      }
+    setActiveSection(title);
+    onTabChange?.(title);
 
-      // Smooth scroll
-      window.scrollTo({
-        top: Math.max(0, offsetPosition),
-        behavior: "smooth",
-      });
-
-      // Reset scrolling flag after animation completes (smooth scroll typically takes 500-800ms)
-      setTimeout(() => {
-        setIsScrolling(false);
-      }, 1000);
-    }
+    window.scrollTo({ top: y, behavior: "smooth" });
+    setTimeout(() => setIsScrolling(false), 800);
   };
 
-  // Set up Intersection Observer to detect which section is in view
   useEffect(() => {
-    // Clean up previous observer
-    if (observerRef.current) {
-      observerRef.current.disconnect();
-    }
+    observerRef.current?.disconnect();
 
-    // Create new observer
     observerRef.current = new IntersectionObserver(
       (entries) => {
-        // Only update if not manually scrolling
         if (isScrolling) return;
 
-        // Find the section that's most visible in the viewport
-        let maxVisible = 0;
-        let mostVisibleSection: string | null = null;
+        let max = 0;
+        let visible: string | null = null;
 
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Calculate how much of the section is visible
-            const visibleRatio = entry.intersectionRatio;
-            if (visibleRatio > maxVisible) {
-              maxVisible = visibleRatio;
-              const sectionTitle = sections.find(
-                (s) => s.id === entry.target.id
-              )?.title;
-              if (sectionTitle) {
-                mostVisibleSection = sectionTitle;
-              }
-            }
+        entries.forEach((e) => {
+          if (e.isIntersecting && e.intersectionRatio > max) {
+            max = e.intersectionRatio;
+            visible =
+              sections.find((s) => s.id === e.target.id)?.title ||
+              null;
           }
         });
 
-        // Update active section if we found one that's significantly visible
-        if (mostVisibleSection && mostVisibleSection !== activeSection && maxVisible > 0.1) {
-          setActiveSection(mostVisibleSection);
-          if (onTabChange) {
-            onTabChange(mostVisibleSection);
-          }
+        if (visible && visible !== activeSection) {
+          setActiveSection(visible);
+          onTabChange?.(visible);
         }
       },
       {
-        root: null,
-        rootMargin: "-180px 0px -60% 0px", // Account for sticky header + nav (~160px) + some buffer
-        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1], // More granular thresholds for better detection
+        rootMargin: "-160px 0px -55% 0px",
+        threshold: [0.2, 0.4],
       }
     );
 
-    // Observe all sections
-    sections.forEach((section) => {
-      const element = document.getElementById(section.id);
-      if (element && observerRef.current) {
-        observerRef.current.observe(element);
-      }
+    sections.forEach((s) => {
+      const el = document.getElementById(s.id);
+      if (el) observerRef.current?.observe(el);
     });
 
-    // Cleanup on unmount
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, [isScrolling, activeSection, onTabChange]);
+    return () => observerRef.current?.disconnect();
+  }, [activeSection, isScrolling, onTabChange]);
 
-  // Sync with external activeTab prop
   useEffect(() => {
     if (activeTab && activeTab !== activeSection) {
       setActiveSection(activeTab);
     }
   }, [activeTab]);
-  
 
   return (
-    <section className="sticky top-0 z-40 bg-white">
+    <section className="sticky top-0 z-40 bg-white px-4">
       <div className="container mx-auto">
-        <div className="flex items-center justify-between border-b-2 border-[#F8F8F8]">
-          {/* LEFT – MENU */}
-          <div className="flex gap-4 overflow-x-auto scrollbar-hide">
+        <div className="flex items-center border-b border-[#F3F3F3] h-[64px]">
+
+          {/* MENU */}
+          <div className="flex-1 min-w-0 overflow-x-auto scrollbar-hide flex">
             {sections.map((section) => {
               const isActive = activeSection === section.title;
               return (
                 <button
                   key={section.id}
-                  onClick={() => scrollToSection(section.id, section.title)}
-                  className={`px-3.5 py-4 text-[18px] font-semibold whitespace-nowrap ${isActive
-                    ? "text-[#1C4692] border-b-2 border-[#1C4692] font-semibold bg-[linear-gradient(180deg,#FFFFFF_0%,#EEF4FF80_50%,#EEF4FFCC_80%)]"
-                    : "text-[#6D6D6D] font-normal"
-                    }`}>
+                  onClick={() =>
+                    scrollToSection(section.id, section.title)
+                  }
+                  className={`
+                    px-3 lg:px-4 h-full
+                    text-[14px] md:text-[15px] lg:text-[18px]
+                    whitespace-nowrap transition
+                    ${isActive
+                      ? "text-[#1C4692] border-b-2 border-[#1C4692] bg-[linear-gradient(180deg,#FFFFFF_0%,#EEF4FF80_50%,#EEF4FFCC_80%)] font-semibold"
+                      : "text-[#6D6D6D] font-normal"
+                    }
+                  `}
+                >
                   {section.title}
                 </button>
               );
             })}
           </div>
 
-          {/* RIGHT – WORKING ICONS */}
-          <div className="hidden md:flex items-center gap-3 pr-4">
+          {/* ICONS – ALWAYS VISIBLE */}
+          <div className="flex items-center gap-2 pl-2 shrink-0">
             <button
               onClick={onFavoriteClick}
-              className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#EEF4FF]"
+              className="h-[40px] w-[40px] md:h-[44px] md:w-[44px]
+              flex items-center justify-center rounded-full bg-[#EEF4FF]"
             >
-              {isFavorite ? <IoHeart size={18}/> : <IoHeartOutline />}
+              {isFavorite ? (
+                <IoHeart className="h-5 w-5 text-red-500" />
+              ) : (
+                <IoHeartOutline className="h-5 w-5" />
+              )}
             </button>
 
             <button
               onClick={onCompareClick}
-              className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#EEF4FF]"
+              className="h-[40px] w-[40px] md:h-[44px] md:w-[44px]
+              flex items-center justify-center rounded-full bg-[#EEF4FF]"
             >
-              <MdCompareArrows size={18} />
+              <Image
+                src="/images/convert.svg"
+                alt="Compare"
+                width={18}
+                height={18}
+              />
             </button>
 
             <button
               onClick={onShareClick}
-              className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#EEF4FF]"
+              className="h-[40px] w-[40px] md:h-[44px] md:w-[44px]
+              flex items-center justify-center rounded-full bg-[#EEF4FF]"
             >
-              <IoShareSocialOutline size={18} />
+              <IoShareSocialOutline className="h-5 w-5" />
             </button>
           </div>
         </div>
-
       </div>
     </section>
   );

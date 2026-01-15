@@ -74,7 +74,7 @@ export default function Teams() {
   };
 
   return (
-    <section className="w-full bg-white py-16 relative overflow-visible mb-[100px]">
+    <section className="w-full bg-white py-16 relative overflow-visible mb-[100px] px-6">
       <svg
         className="absolute inset-0 w-full h-full opacity-20 pointer-events-none"
         xmlns="http://www.w3.org/2000/svg"

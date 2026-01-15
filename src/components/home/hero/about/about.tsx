@@ -1,5 +1,7 @@
 "use client";
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { IoPause, IoPlay, IoVolumeHigh, IoVolumeMute } from "react-icons/io5";
+import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 
 export default function AboutSection() {
   const points = [
@@ -25,27 +27,53 @@ export default function AboutSection() {
     },
   ];
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [muted, setMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showControls, setShowControls] = useState(false);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () =>
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
+
   return (
-  
-<section className="w-full bg-[#F2F5F9]">
-  <div
-    className="
-      mx-auto
-      max-w-[1400px]
-      px-6 sm:px-10 lg:px-16
-      py-20
-    "
-  >
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <section className="relative w-full bg-[#F2F5F9] overflow-hidden">
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <pattern
+            id="dotPattern"
+            width="16"
+            height="16"
+            patternUnits="userSpaceOnUse"
+          >
+            <circle cx="4" cy="4" r="3" fill="#f0f0f0" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#dotPattern)" />
+      </svg>
+
+      <div className="relative z-10 mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-16 py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* LEFT SIDE */}
           <div className="max-w-[640px]">
             <h3 className="text-[24px] md:text-[30px] font-semibold text-[#000] mb-6 md:mb-8 pe-0 md:pe-0">
-              How <span className="text-[#1C4692]"> Milke Khareedo</span> Makes
+              How
               <span className="relative inline-block pe-2">
-                Buying
+                <span className="text-[#1C4692] ms-2"> Milke Khareedo</span>
                 <svg
                   className="absolute left-0 -bottom-2"
-                  width="128"
+                  width="228"
                   height="11"
                   viewBox="0 0 228 11"
                   fill="none"
@@ -54,13 +82,13 @@ export default function AboutSection() {
                   <path
                     d="M2 8.5C60 1.5 170 5.5 226 8.5"
                     stroke="#1C4692"
-                    strokeWidth="6"
+                    strokeWidth="3"
                     strokeLinecap="round"
                     fill="none"
                   />
                 </svg>
               </span>
-              Easier
+              Makes Buying Easier
             </h3>
 
             <div className="space-y-6">
@@ -87,18 +115,40 @@ export default function AboutSection() {
 
           {/* RIGHT SIDE */}
           <div className="flex justify-center h-[350px] md:h-[500px]">
-           <div className="relative w-full max-w-[360px] h-[520px] rounded-3xl overflow-hidden shadow-xl">
-  <video
-    src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/185341-875417497.mp4"
-    className="absolute inset-0 w-full h-full object-cover scale-[1.15]"
-    muted
-    playsInline
-    autoPlay
-    loop
-    preload="metadata"
-  />
+            <div ref={containerRef} className="relative w-full max-w-[360px] h-[520px] rounded-3xl overflow-hidden shadow-xl"
+              onMouseEnter={() => setShowControls(true)}
+              onMouseLeave={() => setShowControls(false)}>
+              <video
+                ref={videoRef}
+                src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/185341-875417497.mp4"
+                className="absolute inset-0 w-full h-full object-cover scale-[1.15]"
+                muted={muted}
+                autoPlay
+                loop
+                playsInline
+                preload="metadata"
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+              />
 
-
+              <div
+                className={`absolute inset-0 mt-118 ms-4 flex justify-start z-30 transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0"
+                  }`}
+              >
+                <button
+                  onClick={() => {
+                    if (!videoRef.current) return;
+                    if (isPlaying) {
+                      videoRef.current.pause();
+                    } else {
+                      videoRef.current.play();
+                    }
+                  }}
+                  className="h-10 w-10 rounded-full bg-white/90 flex items-center justify-center shadow-lg"
+                >
+                  {isPlaying ? <IoPause size={20} /> : <IoPlay size={20} />}
+                </button>
+              </div>
 
               {/* Top Left */}
               <div className="absolute top-2 md:top-2 left-2 md:left-2 z-20 flex items-center gap-2 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-semibold text-white">
@@ -116,26 +166,38 @@ export default function AboutSection() {
               </div>
 
               {/* Top Right */}
-              <div className="absolute top-2 md:top-4 right-2 md:right-4 flex gap-2">
-                <div className="h-7 md:h-9 w-7 md:w-9 bg-white rounded-full flex items-center justify-center shadow">
-                  <svg
-                    className="h-3 md:h-4 w-3 md:w-4"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M11 5L6 9H2v6h4l5 4z" />
-                  </svg>
-                </div>
-
-                <div className="h-7 md:h-9 w-7 md:w-9 bg-white rounded-full flex items-center justify-center shadow">
-                  <svg
-                    className="h-3 md:h-4 w-3 md:w-4"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zm6 10v6h-6v-2h4v-4zM4 14h2v4h4v2H4z" />
-                  </svg>
-                </div>
+              <div className="absolute top-2 right-2 z-40 flex gap-2">
+                <button
+                  onClick={() => {
+                    if (!videoRef.current) return;
+                    const nextMuted = !muted;
+                    videoRef.current.muted = nextMuted;
+                    setMuted(nextMuted);
+                    if (!nextMuted) {
+                      videoRef.current.play().catch(() => { });
+                    }
+                  }}
+                  className="h-9 w-9 bg-white rounded-full flex items-center justify-center shadow">
+                  {muted ? <IoVolumeMute size={18} /> : <IoVolumeHigh size={18} />}
+                </button>
+                
+                <button
+                  onClick={() => {
+                    if (!containerRef.current) return;
+                    if (!document.fullscreenElement) {
+                      containerRef.current.requestFullscreen().catch(() => { });
+                    } else {
+                      document.exitFullscreen().catch(() => { });
+                    }
+                  }}
+                  className="h-9 w-9 bg-white rounded-full flex items-center justify-center shadow"
+                >
+                  {isFullscreen ? (
+                    <MdFullscreenExit size={18} />
+                  ) : (
+                    <MdFullscreen size={18} />
+                  )}
+                </button>
               </div>
             </div>
           </div>

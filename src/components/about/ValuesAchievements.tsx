@@ -31,7 +31,7 @@ const items = [
 
 export default function ValuesAchievements() {
   return (
-    <section className="relative w-full bg-[#F5F9FF] py-16 mt-[100px] overflow-hidden">
+    <section className="relative w-full bg-[#F5F9FF] py-16 mt-[100px] overflow-hidden px-10">
       <svg
         className="absolute inset-0 w-full h-full opacity-20 pointer-events-none"
         xmlns="http://www.w3.org/2000/svg"

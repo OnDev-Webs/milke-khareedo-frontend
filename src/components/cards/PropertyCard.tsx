@@ -6,10 +6,7 @@ import {
   IoHeartOutline,
   IoHeart,
   IoShareSocialOutline,
-  IoChevronBack,
-  IoChevronForward,
 } from "react-icons/io5";
-import { MdCompareArrows } from "react-icons/md";
 import { type Property } from "@/lib/api/services/home.service";
 import Link from "next/link";
 import upPrice from "@/assets/upPrice.svg";
@@ -66,6 +63,12 @@ export default function PropertyCard({
     return value.replace(/\.00%$/, "%");
   };
 
+  const hasValidDiscount = (value?: string) => {
+    if (!value) return false;
+    const num = Number(value.replace("%", ""));
+    return num > 0;
+  };
+
   return (
     <div
       className="flex flex-col rounded-3xl p-4 bg-white shadow-lg overflow-hidden group relative cursor-pointer"
@@ -111,18 +114,12 @@ export default function PropertyCard({
               onFavoriteClick(property);
             }}
             disabled={isLoading}
-            className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all ${isFavorite
-              ? "border-[#1C4692] bg-[#1C4692] text-white"
-              : "border-white bg-white/90 text-gray-700 hover:bg-white"
-              } disabled:opacity-50 disabled:cursor-not-allowed shadow-md`}
-            aria-label={
-              isFavorite ? "Remove from favorites" : "Add to favorites"
-            }
+            className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all border-white bg-white/90 text-gray-700 hover:bg-white  shadow-md`}
           >
             {isFavorite ? (
-              <IoHeart className="h-5 w-5 " />
+              <IoHeart className="h-5 w-5 text-red-500" />
             ) : (
-              <IoHeartOutline className="h-5 w-5" />
+              <IoHeartOutline className="h-5 w-5 text-gray-700" />
             )}
           </button>
 
@@ -247,9 +244,13 @@ export default function PropertyCard({
             <div className="text-[16px] font-semibold text-[#4B4B4B] line-through">
               {property.developerPrice.formatted}
             </div>
-            <span className="mt-3 inline-block rounded-full w-[94px] h-[26px] bg-white border border-[#F6F6F6] px-2 py-1 text-xs font-semibold text-[#FF3232]">
-              {formatPercentage(property.discountPercentage)} Off*
-            </span>
+            <div className="mt-3 h-[26px]">
+              {hasValidDiscount(property.discountPercentage) && (
+                <span className="inline-block rounded-full w-[94px] h-[26px] bg-white border border-[#F6F6F6] px-2 py-1 text-xs font-semibold text-[#FF3232]">
+                  {formatPercentage(property.discountPercentage)} Off*
+                </span>
+              )}
+            </div>
           </div>
         </div>
 
@@ -258,7 +259,7 @@ export default function PropertyCard({
           onClick={(e) => {
             if (isJoinGroup) {
               e.stopPropagation();
-              return; 
+              return;
             }
             e.stopPropagation();
             onJoinGroupClick(property);

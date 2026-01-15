@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { FaChevronDown, FaSearch } from "react-icons/fa";
 import { Country, City as CSCity } from "country-state-city";
+import Loader from "@/components/ui/loader";
 
 export interface City {
     city: string;
@@ -314,7 +315,7 @@ export default function CitySelector({
             <div className={`relative ${className}`}>
                 <div className="w-full bg-transparent flex items-center">
                     <span className="text-base font-medium text-[#1C4692]">
-                        Loading...
+                        <Loader size={28}/>
                     </span>
                 </div>
             </div>
@@ -396,7 +397,7 @@ export default function CitySelector({
                                 <div className="px-4 py-12 text-center">
                                     <div className="inline-flex items-center gap-2 text-sm text-gray-500">
                                         <div className="h-4 w-4 border-2 border-[#1C4692] border-t-transparent rounded-full animate-spin"></div>
-                                        <span>Loading cities...</span>
+                                        <span><Loader size={38}/></span>
                                     </div>
                                 </div>
                             ) : filteredCities.length === 0 ? (

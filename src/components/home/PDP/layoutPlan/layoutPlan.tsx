@@ -9,9 +9,10 @@ interface PDPLayoutPlanProps {
 }
 
 export default function PDPLayoutPlan({ configurations }: PDPLayoutPlanProps) {
-
   const [selectedBhk, setSelectedBhk] = useState("");
   const [selectedCarpet, setSelectedCarpet] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const availableBHKs = useMemo(() => {
     return configurations.map((c) => c.unitType);
@@ -48,7 +49,7 @@ export default function PDPLayoutPlan({ configurations }: PDPLayoutPlanProps) {
   if (!configurations.length) return null;
 
   return (
-    <section className="w-full px-4 py-8">
+    <section className="w-full px-6 py-8">
       <div className="container mx-auto rounded-2xl bg-white shadow-sm">
 
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-t-2xl bg-[#EEF4FF] px-6 py-4">
@@ -98,8 +99,12 @@ export default function PDPLayoutPlan({ configurations }: PDPLayoutPlanProps) {
                 fill
                 priority
                 sizes="(max-width: 1200px) 100vw, 1160px"
-                className="object-cover"
                 quality={100}
+                className="object-cover cursor-zoom-in"
+                onClick={() => {
+                  setCurrentImageIndex(0);
+                  setIsModalOpen(true);
+                }}
               />
             ) : (
               <div className="flex h-full items-center justify-center bg-gray-100 text-gray-500">
@@ -120,6 +125,59 @@ export default function PDPLayoutPlan({ configurations }: PDPLayoutPlanProps) {
           </div>
         </div>
       </div>
+      {isModalOpen && currentPlan && (
+        <div className="fixed inset-0 z-[999] bg-black/70 flex items-center justify-center">
+          <div className="relative w-[90%] max-w-5xl bg-white rounded-3xl p-4 shadow-xl">
+
+            {/* Close */}
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="absolute -top-4 -right-4 h-10 w-10 rounded-full bg-[#1C4692] text-white flex items-center justify-center text-xl shadow hover:bg-[#163b7a]"
+            >
+              ✕
+            </button>
+
+            {/* Image */}
+            <div className="relative h-[70vh] rounded-2xl overflow-hidden bg-gray-100">
+              <Image
+                src={currentPlan.layoutPlanImages[currentImageIndex]}
+                alt="Layout Plan"
+                fill
+                className="object-contain"
+                quality={100}
+              />
+
+              {/* Left */}
+              {currentPlan.layoutPlanImages.length > 1 && (
+                <button
+                  onClick={() =>
+                    setCurrentImageIndex((p) =>
+                      p === 0 ? currentPlan.layoutPlanImages.length - 1 : p - 1
+                    )
+                  }
+                  className="absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/90 shadow flex items-center justify-center"
+                >
+                  ‹
+                </button>
+              )}
+
+              {/* Right */}
+              {currentPlan.layoutPlanImages.length > 1 && (
+                <button
+                  onClick={() =>
+                    setCurrentImageIndex((p) =>
+                      (p + 1) % currentPlan.layoutPlanImages.length
+                    )
+                  }
+                  className="absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/90 shadow flex items-center justify-center"
+                >
+                  ›
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

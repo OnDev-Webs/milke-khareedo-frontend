@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { homeService } from "@/lib/api/services/home.service";
 import type { Blog } from "@/lib/api/services/home.service";
 import Link from "next/link";
+import Loader from "../ui/loader";
 
 interface RecentBlogProps {
   excludeBlogId?: string;
@@ -57,7 +58,7 @@ const RecentBlog = ({ excludeBlogId, excludeSlug }: RecentBlogProps) => {
       <section className="py-[30px] md:py-[50px]">
         <div className="container mx-auto px-4 md:px-0">
           <div className="flex justify-center items-center py-10">
-            <div className="text-gray-500">Loading recent blogs...</div>
+            <div className="text-gray-500"><Loader size={38}/></div>
           </div>
         </div>
       </section>

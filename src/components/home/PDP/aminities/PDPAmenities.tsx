@@ -24,7 +24,7 @@ export default function PDPAmenities({ amenities }: PDPAmenitiesProps) {
   }
 
   return (
-    <section className="w-full p-4">
+    <section className="w-full py-4 px-6">
       <div className="mx-auto container">
         <div className="rounded-2xl bg-white shadow-sm">
           <div className="rounded-t-[20px] bg-[#EEF4FF] px-6 py-4">

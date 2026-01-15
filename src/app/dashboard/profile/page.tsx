@@ -84,7 +84,6 @@ export default function ProfilePage() {
 
     const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const countryCode = e.target.value;
-
         setForm((prev) => ({
             ...prev,
             country: countryCode,

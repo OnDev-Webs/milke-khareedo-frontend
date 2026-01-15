@@ -17,6 +17,7 @@ import React from "react";
 import { homeService } from "@/lib/api/services/home.service";
 import type { BlogDetail, Blog } from "@/lib/api/services/home.service";
 import Link from "next/link";
+import Loader from "@/components/ui/loader";
 
 const getCategoryName = (
   category?: string | { name: string }
@@ -93,7 +94,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
       <section className="py-[30px]">
         <div className="container mx-auto">
           <div className="flex justify-center items-center py-20">
-            <div className="text-gray-500">Loading blog...</div>
+            <div className="text-gray-500"><Loader size={38}/></div>
           </div>
         </div>
       </section>

@@ -16,9 +16,13 @@ import RERAStickyWidget from "@/components/home/PDP/rera-widget/RERAStickyWidget
 import { homeService, type PropertyDetail, type SimilarProject } from "@/lib/api/services/home.service";
 import { useCompare } from "@/contexts/CompareContext";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Loader from "@/components/ui/loader";
 
 export default function PropertyDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { clearAndAddToCompare } = useCompare();
+  const router = useRouter();
+
   const unwrappedParams = React.use(params);
   const propertyId = unwrappedParams.id;
 
@@ -53,7 +57,7 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-lg text-gray-600">Loading property details...</div>
+        <div className="text-lg text-gray-600"><Loader size={38}/></div>
       </div>
     );
   }
@@ -67,21 +71,29 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
   }
 
   const handleFavoriteClick = async () => {
-    if (!property) return;
+    setProperty(prev => {
+      if (!prev) return prev;
+      return { ...prev, isFavorite: !prev.isFavorite };
+    });
 
     try {
-      const response = await homeService.toggleFavorite(property.id);
-      if (response.success && response.data) {
-        setProperty({ ...property, isFavorite: response.data.isFavorite });
+      const { success, data } = await homeService.toggleFavorite(propertyId);
+      if (success && data) {
+        setProperty(prev => {
+          if (!prev) return prev;
+          return { ...prev, isFavorite: data.isFavorite };
+        });
       }
     } catch (error) {
-      console.error("Error toggling favorite:", error);
+      setProperty(prev => {
+        if (!prev) return prev;
+        return { ...prev, isFavorite: !prev.isFavorite };
+      });
     }
   };
 
   const handleCompareClick = () => {
     if (!property) return;
-
     clearAndAddToCompare({
       id: property.id,
       title: property.projectName,
@@ -90,6 +102,7 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
       image: property.image,
       developer: property.developer?.name || "",
     });
+    router.push("/compare"); 
   };
 
   const handleShareClick = () => {
@@ -105,7 +118,6 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
       navigator.clipboard.writeText(window.location.href);
     }
   };
-
 
   return (
     <>
@@ -126,7 +138,10 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
         isFavorite={property.isFavorite}
         propertyId={property.id}
         onFavoriteChange={(isFavorite) => {
-          setProperty({ ...property, isFavorite });
+          setProperty(prev => {
+            if (!prev) return prev;
+            return { ...prev, isFavorite };
+          });
         }}
       />
 

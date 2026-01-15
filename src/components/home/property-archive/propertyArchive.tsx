@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import PropertyCard from "@/components/cards/PropertyCard";
 import getPropertyImages from "@/utils/getPropertyImages";
 import Title from "@/components/typography/title";
+import Loader from "@/components/ui/loader";
 
 export default function PropertyArchive() {
   const LIMIT = 9;
@@ -384,7 +385,7 @@ export default function PropertyArchive() {
         {/* Loading State */}
         {isLoadingMore && properties.length === 0 && (
           <div className="flex justify-center items-center py-20">
-            <div className="text-gray-500">Loading properties...</div>
+            <div className="text-gray-500"><Loader size={38}/></div>
           </div>
         )}
 
@@ -442,7 +443,7 @@ export default function PropertyArchive() {
                   disabled={isLoadingMore}
                   className="px-8 py-3 rounded-full border border-[#F5F5F5] text-[#2D2D2D] bg-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
                 >
-                  {isLoadingMore ? "Loading..." : "Load More"}
+                  {isLoadingMore ? <Loader size={38}/> : "Load More"}
                 </button>
               </div>
             )}

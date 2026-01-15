@@ -36,7 +36,7 @@ export default function PDPAboutDeveloper({ developer }: PDPAboutDeveloperProps)
   const isConfigured = developer.logo && isConfiguredDomain(developer.logo);
 
   return (
-    <section className="w-full px-4 py-6">
+    <section className="w-full px-6 py-6">
       <div className="mx-auto container rounded-2xl bg-white shadow-sm">
         <div className="rounded-t-2xl bg-[#EEF4FF] px-6 py-3">
           <h3 className="font-semibold text-[#000000] text-[25px]">About Developer</h3>

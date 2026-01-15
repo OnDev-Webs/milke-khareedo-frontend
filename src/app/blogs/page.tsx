@@ -7,6 +7,7 @@ import BlogCard from "@/components/cards/BlogCard";
 import { homeService } from "@/lib/api/services/home.service";
 import type { Blog } from "@/lib/api/services/home.service";
 import Link from "next/link";
+import Loader from "@/components/ui/loader";
 
 export default function Page() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -82,12 +83,12 @@ export default function Page() {
         <div className="container mx-auto px-4 sm:px-0">
           {isLoading && (!blogs || blogs.length === 0) ? (
             <div className="flex justify-center items-center py-20">
-              <div className="text-gray-500">Loading blogs...</div>
+              <div className="text-gray-500"><Loader size={38}/></div>
             </div>
           ) : (
             <>
               {blogs && blogs.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 md:px-10">
                   {blogs.map((blog) => (
                     <Link
                       key={blog._id}
@@ -118,7 +119,7 @@ export default function Page() {
                     disabled={isLoadingMore}
                     className="px-8 py-3 rounded-full border border-[#F5F5F5] text-[#2D2D2D] bg-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
                   >
-                    {isLoadingMore ? "Loading..." : "Load More"}
+                    {isLoadingMore ? <Loader size={38}/> : "Load More"}
                   </button>
                 </div>
               )}

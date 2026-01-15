@@ -1,7 +1,7 @@
 "use client";
 
-import upPrice from "@/assets/upPrice.svg"
-import Image from "next/image"
+import upPrice from "@/assets/upPrice.svg";
+import Image from "next/image";
 import { type PropertyPrice } from "@/lib/api/services/home.service";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { useState } from "react";
@@ -31,7 +31,6 @@ export default function PDPHeader({
   developerPrice,
   bookingDeadlinePrice,
   discountPercentage,
-  isFavorite,
   propertyId,
   onFavoriteChange,
 }: PDPHeaderProps) {
@@ -44,7 +43,6 @@ export default function PDPHeader({
       setShowAuthModal(true);
       return;
     }
-
     setFavoriteLoading(true);
     try {
       const response = await homeService.toggleFavorite(propertyId);
@@ -58,77 +56,77 @@ export default function PDPHeader({
     }
   };
 
-  const discountAmount = bookingDeadlinePrice
-    ? bookingDeadlinePrice.value - startingPrice.value
-    : 0;
-  const discountFormatted = discountAmount >= 10000000
-    ? `₹ ${(discountAmount / 10000000).toFixed(2)} Crore`
-    : discountAmount >= 100000
-      ? `₹ ${(discountAmount / 100000).toFixed(2)} Lakh`
-      : `₹ ${(discountAmount / 1000).toFixed(0)} K`;
+  const discountAmount = bookingDeadlinePrice ? bookingDeadlinePrice.value - startingPrice.value: 0;
+
+  const discountFormatted =
+    discountAmount >= 10000000
+      ? `₹ ${(discountAmount / 10000000).toFixed(2)} Crore`
+      : discountAmount >= 100000
+        ? `₹ ${(discountAmount / 100000).toFixed(2)} Lakh`
+        : `₹ ${(discountAmount / 1000).toFixed(0)} K`;
 
   const formatPrice = (value: number) => {
-    if (value >= 10000000) {
-      return `₹ ${(value / 10000000).toFixed(2)} Crore`;
-    }
-    if (value >= 100000) {
-      return `₹ ${(value / 100000).toFixed(2)} Lakh`;
-    }
+    if (value >= 10000000) return `₹ ${(value / 10000000).toFixed(2)} Crore`;
+    if (value >= 100000) return `₹ ${(value / 100000).toFixed(2)} Lakh`;
     return `₹ ${(value / 1000).toFixed(0)} K`;
   };
 
-  const developerPriceNumber =
-    typeof developerPrice === "string"
-      ? Number(developerPrice.replace(/[₹,\sA-Za-z]/g, ""))
-      : developerPrice;
+  const developerPriceNumber = typeof developerPrice === "string" ? Number(developerPrice.replace(/[₹,\sA-Za-z]/g, "")) : developerPrice;
 
   return (
     <>
-      <section className="py-8">
-        <div className="container mx-auto p-7 bg-white rounded-[30px] shadow-[0px_0px_50px_0px_rgba(0,0,0,0.05)] outline -outline-offset-1 outline-zinc-100 flex flex-col justify-center items-center gap-2.5">
-          <div className="self-stretch flex flex-col justify-center items-start gap-3.5">
-            {/* <div className="self-stretch inline-flex justify-between items-center"> */}
-            <div className="self-stretch flex flex-col gap-6 md:flex-row md:justify-between md:items-center">
+      <section className="py-6 lg:py-8">
+        <div className="container mx-auto p-5 md:p-6 lg:p-7 bg-white rounded-[30px] shadow-[0_0_50px_rgba(0,0,0,0.05)] outline outline-1 outline-zinc-100 flex flex-col gap-3">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-4 lg:gap-6">
 
-              <div className="w-full max-w-[700px] inline-flex flex-col justify-start items-start gap-2">
-                <div className="self-stretch justify-start text-[#1C4692] text-[45px] font-bold font-['Figtree']">{projectName}</div>
-                <div className="self-stretch justify-start text-[#000000] text-[22px] font-normal font-['Figtree']">{location}</div>
-              </div>
+            {/* LEFT */}
+            <div className="w-full max-w-[600px] flex flex-col gap-1.5">
+              <h1 className="text-[#1C4692] font-bold font-['Figtree']
+                text-[30px] md:text-[34px] lg:text-[45px] leading-tight">
+                {projectName}
+              </h1>
+              <p className="text-[#000000] font-normal font-['Figtree']
+                text-[16px] md:text-[18px] lg:text-[22px]">
+                {location}
+              </p>
+            </div>
 
-              <div className="w-full md:flex-1 p-4 md:p-5 bg-[#EEF4FF] rounded-[20px] flex flex-col">
-                <div className="self-stretch flex flex-col justify-center items-center gap-2.5">
-                  <div className="self-stretch flex flex-col gap-4 md:flex-row md:justify-between md:items-end">
-
-                    <div className="size- inline-flex flex-col justify-start items-start gap-2.5">
-                      <div className="justify-start text-[#000000] text-[16px] font-medium font-['Figtree']">Starting Price</div>
-                      <div className="justify-start text-[#000000] text-[35px] font-bold">
-                        {formatPrice(startingPrice.value)}
-                      </div>
-
-                    </div>
-                    <div className="self-stretch inline-flex flex-col justify-between items-start md:items-end">
-                      <div className="justify-start text-[#000000] text-[16px] font-medium font-['Figtree']">Starting Developer price</div>
-                      <div className="justify-start text-[#4B4B4B] text-[24px] font-semibold line-through">
-                        {formatPrice(developerPriceNumber)}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="self-stretch h-0 outline-1 outline-offset-[-0.50px] outline-neutral-200"></div>
-                  <div className="self-stretch flex flex-col gap-3 md:flex-row md:items-center md:gap-2.5">
-                    <div className="flex-1 px-2.5 py-1.5 bg-white rounded-[60px] inline-flex flex-col justify-center items-start gap-2.5">
-                      <div className="size- inline-flex justify-center items-center text-[#66AE39]  gap-[5px]">
-                        <Image src={upPrice} alt="Up Price" width={21} height={21} />
-                        <div className="text-center justify-start text-lime-600 text-[14px] font-medium font-['Figtree']">
-                          {bookingDeadlinePrice?.note || `Up to ${discountFormatted} off`}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-center justify-start text-[#FF3232] text-[14px] font-normal font-['Figtree']">
-                      Get upto {discountPercentage} discount on this property
-                    </div>
-                  </div>
+            {/* RIGHT */}
+            <div className="w-full md:flex-1 bg-[#EEF4FF] rounded-[20px] p-4 md:p-4 lg:p-5 flex flex-col gap-3">
+              <div className="grid grid-cols-2 gap-4 items-end">
+                <div className="flex flex-col gap-1">
+                  <span className="text-[14px] md:text-[15px] font-medium">
+                    Starting Price
+                  </span>
+                  <span className="text-[24px] md:text-[28px] lg:text-[35px] font-bold leading-none whitespace-nowrap">
+                    {formatPrice(startingPrice.value)}
+                  </span>
+                </div>
+                {/* Developer Price */}
+                <div className="flex flex-col gap-1 items-end">
+                  <span className="text-[14px] md:text-[15px] font-medium">
+                    Starting Developer price
+                  </span>
+                  <span className="text-[18px] md:text-[20px] lg:text-[24px] font-semibold line-through text-[#4B4B4B] leading-none whitespace-nowrap">
+                    {formatPrice(developerPriceNumber)}
+                  </span>
                 </div>
               </div>
+              <div className="h-px bg-neutral-200" />
+
+              {/* DISCOUNT ROW */}
+              <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                <div className="inline-flex items-center bg-white rounded-full px-4 h-[36px] min-w-max shadow-sm">
+                  <Image src={upPrice} alt="Up Price" width={18} height={18} />
+                  <span className="ml-2 text-[13px] lg:text-[14px] text-lime-600 font-medium leading-none whitespace-nowrap">
+                    {bookingDeadlinePrice?.note || `Up to ${discountFormatted} off`}
+                  </span>
+                </div>
+                <span className="text-[13px] lg:text-[14px] text-[#FF3232] md:whitespace-nowrap">
+                  Get upto {discountPercentage} discount on this property
+                </span>
+              </div>
+
             </div>
           </div>
         </div>

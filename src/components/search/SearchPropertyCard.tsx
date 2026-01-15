@@ -11,18 +11,32 @@ import upPrice from "@/assets/upPrice.svg";
 interface SearchPropertyCardProps {
   property: Property;
   images: string[];
+  isFavorite: boolean;
+  isFavoriteLoading?: boolean;
+  isJoinGroup: boolean;
+  isJoinGroupLoading?: boolean;
+  onFavoriteClick: (property: Property) => void;
+  onCompareClick: (property: Property) => void;
+  onShareClick: (property: Property) => void;
+  onJoinGroupClick: (property: Property) => void;
 }
 
 export default function SearchPropertyCard({
   property,
   images,
+  isFavorite,
+  isFavoriteLoading,
+  isJoinGroup,
+  isJoinGroupLoading,
+  onFavoriteClick,
+  onCompareClick,
+  onShareClick,
+  onJoinGroupClick,
 }: SearchPropertyCardProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isFavorite, setIsFavorite] = useState(property.isFavorite ?? false);
   const currentImage = images[currentIndex] || null;
   const hasMultipleImages = images.length > 1;
   const [isHovered, setIsHovered] = useState(false);
-  const [isJoining, setIsJoining] = useState(false);
 
   const formatTwoDigits = (value: number) => {
     return value.toString().padStart(2, "0");
@@ -32,9 +46,13 @@ export default function SearchPropertyCard({
     return value.replace(/\.00%$/, "%");
   };
 
+  const hasValidDiscount = (value?: string) => {
+    if (!value) return false;
+    const num = Number(value.replace("%", ""));
+    return num > 0;
+  };
 
   return (
-    // <div className="flex flex-col rounded-3xl bg-white shadow-lg overflow-hidden group">
     <div
       className="relative flex flex-col rounded-3xl bg-white shadow-lg overflow-hidden group cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
@@ -83,19 +101,15 @@ export default function SearchPropertyCard({
             <button
               onClick={(e) => {
                 e.stopPropagation();
+                onFavoriteClick(property);
               }}
-              className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all ${isFavorite
-                ? "border-[#1C4692] bg-[#1C4692] text-white"
-                : "border-white bg-white/90 text-gray-700 hover:bg-white"
-                } disabled:opacity-50 disabled:cursor-not-allowed shadow-md`}
-              aria-label={
-                isFavorite ? "Remove from favorites" : "Add to favorites"
-              }
+              disabled={isFavoriteLoading}
+              className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all border-white bg-white/90`}
             >
               {isFavorite ? (
-                <IoHeart className="h-5 w-5 " />
+                <IoHeart className="h-5 w-5 text-red-500" />
               ) : (
-                <IoHeartOutline className="h-5 w-5" />
+                <IoHeartOutline className="h-5 w-5 text-gray-700" />
               )}
             </button>
 
@@ -103,30 +117,24 @@ export default function SearchPropertyCard({
             <button
               onClick={(e) => {
                 e.stopPropagation();
+                onCompareClick(property);
               }}
-              className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-white/90 text-gray-700 hover:bg-white shadow-md transition-colors"
-              aria-label="Add to compare"
+              className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-white/90"
             >
-              <Image
-                src="/images/convert.svg"
-                alt="Compare"
-                width={20}
-                height={20}
-                className="h-5 w-5"
-              />          </button>
+              <Image src="/images/convert.svg" alt="Compare" width={20} height={20} />
+            </button>
 
             {/* Share Icon */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
+                onShareClick(property);
               }}
-              className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-white/90 text-gray-700 hover:bg-white shadow-md transition-colors"
-              aria-label="Share property"
+              className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-white/90"
             >
               <IoShareSocialOutline className="h-5 w-5" />
             </button>
           </div>
-          <button onClick={(e) => e.stopPropagation()}>🔗</button>
         </div>
 
         {/* Image Navigation Dots */}
@@ -216,9 +224,13 @@ export default function SearchPropertyCard({
             <div className="text-[16px] font-semibold text-[#4B4B4B] line-through">
               {property.developerPrice.formatted}
             </div>
-            <span className="mt-3 inline-block rounded-full w-[94px] h-[26px] bg-white border border-[#F6F6F6] px-2 py-1 text-xs font-semibold text-[#FF3232]">
-              {formatPercentage(property.discountPercentage)} Off*
-            </span>
+            <div className="mt-3 h-[26px]">
+              {hasValidDiscount(property.discountPercentage) && (
+                <span className="inline-block rounded-full w-[94px] h-[26px] bg-white border border-[#F6F6F6] px-2 py-1 text-xs font-semibold text-[#FF3232]">
+                  {formatPercentage(property.discountPercentage)} Off*
+                </span>
+              )}
+            </div>
           </div>
         </div>
 
@@ -226,20 +238,18 @@ export default function SearchPropertyCard({
         <button
           onClick={(e) => {
             e.stopPropagation();
-            if (property.isJoinGroup) return;
-
-            setIsJoining(true);
-            setTimeout(() => setIsJoining(false), 1000);
+            onJoinGroupClick(property);
           }}
-          disabled={property.isJoinGroup || isJoining}
-          className={`mt-4 w-full py-3 rounded-3xl font-semibold transition-all ${property.isJoinGroup
-            ? "bg-white border-2 border-[#1C4692] text-[#1C4692]"
-            : "bg-[#1C4692] hover:bg-[#1c4692e6] text-white"
-            }`}
+          disabled={isJoinGroup || isJoinGroupLoading}
+          className={`mt-4 w-full py-3 rounded-3xl font-semibold
+          ${isJoinGroup
+              ? "bg-white border-2 border-[#1C4692] text-[#1C4692]"
+              : "bg-[#1C4692] text-white"}
+          `}
         >
-          {property.isJoinGroup
+          {isJoinGroup
             ? "Joined"
-            : isJoining
+            : isJoinGroupLoading
               ? "Joining..."
               : "Join Group"}
         </button>

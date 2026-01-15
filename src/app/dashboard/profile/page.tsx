@@ -1,15 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useApi } from "@/lib/api/hooks/useApi";
-import { userDashboardService } from "@/lib/api/services/userDashboard.service";
-import type { UpdateProfilePayload, GetProfileResponse } from "@/lib/api/services/userDashboard.service";
+import {
+    userDashboardService,
+    type UpdateProfilePayload,
+    type GetProfileResponse,
+} from "@/lib/api/services/userDashboard.service";
 import { getCities, getCountries, getStates } from "@/lib/location";
-import { Verified } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { authService } from "@/lib/api/services/auth.service";
+
 
 export default function ProfilePage() {
+    const countries = useMemo(() => getCountries(), []);
 
     const [form, setForm] = useState<UpdateProfilePayload>({
         firstName: "",
@@ -24,31 +26,29 @@ export default function ProfilePage() {
         country: "",
     });
 
-    const [countries] = useState(getCountries());
     const [states, setStates] = useState<any[]>([]);
     const [cities, setCities] = useState<any[]>([]);
-    const router = useRouter();
-    const { data, loading } = useApi<GetProfileResponse>(() =>
-        userDashboardService.getUserProfile()
-    );
+
+    const { data, loading } = useApi<{
+        user: GetProfileResponse["user"];
+    }>(() => userDashboardService.getUserProfile());
 
     useEffect(() => {
         if (!data?.user) return;
 
-
         const user = data.user;
 
         const countryCode =
-            getCountries().some(c => c.isoCode === user.country)
+            countries.some((c) => c.isoCode === user.country)
                 ? user.country
-                : getCountries().find(c => c.name === user.country)?.isoCode ?? "";
+                : countries.find((c) => c.name === user.country)?.isoCode ?? "";
 
         const statesList = countryCode ? getStates(countryCode) : [];
 
         const stateCode =
-            statesList.some(s => s.isoCode === user.state)
+            statesList.some((s) => s.isoCode === user.state)
                 ? user.state
-                : statesList.find(s => s.name === user.state)?.isoCode ?? "";
+                : statesList.find((s) => s.name === user.state)?.isoCode ?? "";
 
         const citiesList =
             countryCode && stateCode ? getCities(countryCode, stateCode) : [];
@@ -64,11 +64,12 @@ export default function ProfilePage() {
             countryCode: user.countryCode ?? "+91",
             address: user.address ?? "",
             pincode: user.pincode ?? "",
-            country: countryCode ?? "",
-            state: stateCode ?? "",
+            country: countryCode || "",
+            state: stateCode || "",
             city: user.city ?? "",
         });
-    }, [data]);
+    }, [data, countries]);
+
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -107,77 +108,23 @@ export default function ProfilePage() {
     };
 
 
-    // const handleSendOtp = async () => {
-    //     if (form.phoneNumber.length !== 10) {
-    //         alert("Enter valid phone number");
-    //         return;
-    //     }
-
-    //     await authService.loginOrRegister({
-    //         phoneNumber: form.phoneNumber,
-    //         countryCode: form.countryCode,
-    //     });
-
-    //     setShowOtp(true);
-    // };
-
-    // const handleVerifyOtp = async () => {
-    //     if (otp.length !== 6) {
-    //         alert("Invalid OTP");
-    //         return;
-    //     }
-
-    //     await authService.verifyOTP({
-    //         phoneNumber: form.phoneNumber,
-    //         countryCode: form.countryCode,
-    //         otp,
-    //     });
-
-    //     setIsPhoneVerified(true);
-
-    //     setOtp("");
-    //     setShowOtp(false);
-    // };
-
-
-    // const handleResendOtp = async () => {
-    //     await authService.resendOTP({
-    //         phoneNumber: form.phoneNumber,
-    //         countryCode: form.countryCode,
-    //         type: "login",
-    //     });
-    // };
-
+    if (loading) {
+        return (
+            <div className="rounded-[24px] bg-white p-10 shadow">
+                Loading profile...
+            </div>
+        );
+    }
 
     return (
         <div className="rounded-[24px] bg-white px-5 py-8 sm:px-10 sm:py-10 shadow">
             <h2 className="mb-8 text-[22px] font-semibold">My Profile</h2>
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
-                <FieldInput
-                    label="First Name *"
-                    name="firstName"
-                    value={form.firstName}
-                    onChange={handleChange}
-                />
-
-                <FieldInput
-                    label="Last Name *"
-                    name="lastName"
-                    value={form.lastName}
-                    onChange={handleChange}
-                />
-
-                <FieldInput
-                    label="Email Address"
-                    value={form.email}
-                    disabled
-                />
-
-                <VerifiedInput
-                    label="Mobile Number"
-                    value={`${form.countryCode} ${form.phoneNumber}`}
-                />
+                <FieldInput label="First Name *" name="firstName" value={form.firstName} onChange={handleChange} />
+                <FieldInput label="Last Name *" name="lastName" value={form.lastName} onChange={handleChange} />
+                <FieldInput label="Email Address" value={form.email} disabled />
+                <VerifiedInput label="Mobile Number" value={`${form.countryCode} ${form.phoneNumber}`} />
 
                 <FieldInput
                     label="Full Address *"
@@ -191,59 +138,34 @@ export default function ProfilePage() {
                     label="Pin code *"
                     name="pincode"
                     value={form.pincode}
-                    onChange={(e) => {
-                        const digitsOnly = e.target.value.replace(/\D/g, "");
-                        if (digitsOnly.length <= 6) {
-                            setForm((prev) => ({ ...prev, pincode: digitsOnly }));
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        const digits = e.target.value.replace(/\D/g, "");
+                        if (digits.length <= 6) {
+                            setForm((prev) => ({ ...prev, pincode: digits }));
                         }
                     }}
                 />
 
-                <FieldSelect
-                    label="Country"
-                    name="country"
-                    value={form.country}
-                    onChange={handleCountryChange}
-                >
+                <FieldSelect label="Country" name="country" value={form.country} onChange={handleCountryChange}>
                     {countries.map((c) => (
-                        <option key={c.isoCode} value={c.isoCode}>
-                            {c.name}
-                        </option>
+                        <option key={c.isoCode} value={c.isoCode}>{c.name}</option>
                     ))}
                 </FieldSelect>
 
-                <FieldSelect
-                    label="State"
-                    name="state"
-                    value={form.state}
-                    onChange={handleStateChange}
-                >
-                    {states.length === 0 ? (
-                        <option disabled>Select Country First</option>
-                    ) : (
-                        states.map((s) => (
-                            <option key={s.isoCode} value={s.isoCode}>
-                                {s.name}
-                            </option>
-                        ))
-                    )}
+                <FieldSelect label="State" name="state" value={form.state} onChange={handleStateChange}>
+                    {states.length === 0
+                        ? <option disabled>Select Country First</option>
+                        : states.map((s) => (
+                            <option key={s.isoCode} value={s.isoCode}>{s.name}</option>
+                        ))}
                 </FieldSelect>
 
-                <FieldSelect
-                    label="City"
-                    name="city"
-                    value={form.city}
-                    onChange={handleChange}
-                >
-                    {cities.length === 0 ? (
-                        <option disabled>Select State First</option>
-                    ) : (
-                        cities.map((c) => (
-                            <option key={c.name} value={c.name}>
-                                {c.name}
-                            </option>
-                        ))
-                    )}
+                <FieldSelect label="City" name="city" value={form.city} onChange={handleChange}>
+                    {cities.length === 0
+                        ? <option disabled>Select State First</option>
+                        : cities.map((c) => (
+                            <option key={c.name} value={c.name}>{c.name}</option>
+                        ))}
                 </FieldSelect>
             </div>
 
@@ -260,21 +182,7 @@ export default function ProfilePage() {
 }
 
 
-function FieldInput({
-    label,
-    name,
-    value,
-    onChange,
-    disabled = false,
-    className = "",
-}: {
-    label: string;
-    name?: string;
-    value?: string;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    disabled?: boolean;
-    className?: string;
-}) {
+function FieldInput({ label, name, value, onChange, disabled = false, className = "" }: any) {
     return (
         <div className={`relative ${className}`}>
             <span className="absolute left-4 top-[-9px] bg-white px-2 text-xs text-gray-400">
@@ -291,51 +199,19 @@ function FieldInput({
     );
 }
 
-function VerifiedInput({
-    label,
-    value,
-    className = "",
-}: {
-    label: string;
-    value: string;
-    className?: string;
-}) {
+function VerifiedInput({ label, value }: any) {
     return (
-        <div className={`relative ${className}`}>
+        <div className="relative">
             <span className="absolute left-4 top-[-9px] bg-white px-2 text-xs text-gray-400">
                 {label}
             </span>
-
             <input
                 value={value}
                 disabled
-                className="
-          h-14 w-full rounded-[10px] border
-          px-4 pr-12
-          text-sm
-          bg-gray-100
-          text-black
-          disabled:bg-gray-100
-        "
+                className="h-14 w-full rounded-[10px] border px-4 pr-12 text-sm bg-gray-100"
             />
-
-            <span
-                className="
-          absolute right-4 top-1/2 -translate-y-1/2
-          flex h-6 w-6 items-center justify-center
-          rounded-full bg-[#1C4692]
-        "
-            >
-                <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="white"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                >
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 flex h-6 w-6 items-center justify-center rounded-full bg-[#1C4692]">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
                     <polyline points="20 6 9 17 4 12" />
                 </svg>
             </span>
@@ -343,69 +219,21 @@ function VerifiedInput({
     );
 }
 
-
-
-
-function FieldSelect({
-    label,
-    name,
-    value,
-    onChange,
-    children,
-}: {
-    label: string;
-    name: string;
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-    children: React.ReactNode;
-}) {
+function FieldSelect({ label, name, value, onChange, children }: any) {
     return (
         <div className="relative">
-            {/* Floating Label */}
             <span className="absolute left-4 top-[-9px] bg-white px-2 text-xs text-gray-400 z-10">
                 {label}
             </span>
-
-            {/* Select */}
             <select
                 name={name}
                 value={value}
                 onChange={onChange}
-                className="
-          h-14
-          w-full
-          rounded-[10px]
-          border
-          px-4
-          pr-12
-          text-sm
-          appearance-none
-          focus:border-[#1C4692]
-          focus:outline-none
-          bg-white
-        "
+                className="h-14 w-full rounded-[10px] border px-4 pr-12 text-sm appearance-none bg-white focus:border-[#1C4692]"
             >
                 <option value="">Select {label}</option>
                 {children}
             </select>
-
-            {/* Custom Arrow */}
-            <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">
-                <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                >
-                    <polyline points="6 9 12 15 18 9" />
-                </svg>
-            </span>
         </div>
     );
 }
-
-

@@ -101,24 +101,20 @@ export default function PDPHeader({
 
                     <div className="size- inline-flex flex-col justify-start items-start gap-2.5">
                       <div className="justify-start text-[#000000] text-[16px] font-medium font-['Figtree']">Starting Price</div>
-                      {/* <div className="justify-start text-[#000000] text-[35px] font-bold font-['Figtree']">{startingPrice.formatted}</div> */}
                       <div className="justify-start text-[#000000] text-[35px] font-bold">
                         {formatPrice(startingPrice.value)}
                       </div>
 
                     </div>
-                    <div className="self-stretch inline-flex flex-col justify-between items-end">
+                    <div className="self-stretch inline-flex flex-col justify-between items-start md:items-end">
                       <div className="justify-start text-[#000000] text-[16px] font-medium font-['Figtree']">Starting Developer price</div>
-                      {/* <div className="justify-start text-[#4B4B4B] text-[24px] font-semibold font-['Figtree'] line-through">{developerPrice}</div> */}
                       <div className="justify-start text-[#4B4B4B] text-[24px] font-semibold line-through">
                         {formatPrice(developerPriceNumber)}
                       </div>
-
                     </div>
                   </div>
                   <div className="self-stretch h-0 outline-1 outline-offset-[-0.50px] outline-neutral-200"></div>
                   <div className="self-stretch flex flex-col gap-3 md:flex-row md:items-center md:gap-2.5">
-
                     <div className="flex-1 px-2.5 py-1.5 bg-white rounded-[60px] inline-flex flex-col justify-center items-start gap-2.5">
                       <div className="size- inline-flex justify-center items-center text-[#66AE39]  gap-[5px]">
                         <Image src={upPrice} alt="Up Price" width={21} height={21} />

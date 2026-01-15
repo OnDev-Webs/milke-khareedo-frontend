@@ -14,7 +14,8 @@ export default function Hero() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  console.log("searchQuery", searchQuery);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
 
   const handleCityChange = (cityValue: string) => {
     setSelectedCity(cityValue);
@@ -171,9 +172,10 @@ export default function Hero() {
           </div>
 
           {/* SEARCH INPUT SECTION */}
-          <div className="relative flex-1 flex flex-col justify-start ps-4 pe-6 py-4">
+          <div className="relative flex-1 flex flex-col justify-start ps-4 pe-6 py-4" onClick={() => searchInputRef.current?.focus()}>
             <div className="relative">
               <input
+                ref={searchInputRef}
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}

@@ -6,6 +6,7 @@ import AboutHeroBg from "@/assets/about-us/about-hero-bg.png";
 import BlogCard from "@/components/cards/BlogCard";
 import { homeService } from "@/lib/api/services/home.service";
 import type { Blog } from "@/lib/api/services/home.service";
+import Link from "next/link";
 
 export default function Page() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -88,16 +89,23 @@ export default function Page() {
               {blogs && blogs.length > 0 && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5">
                   {blogs.map((blog) => (
-                    <BlogCard
+                    <Link
                       key={blog._id}
-                      image={blog.bannerImage}
-                      date={blog.date}
-                      title={blog.title}
-                      description={blog.subtitle}
-                      content={blog.content}
-                      buttonText="Read More"
                       href={`/blogs/${blog.slug}`}
-                    />
+                      className="block"
+                    >
+                      <BlogCard
+                        key={blog._id}
+                        image={blog.bannerImage}
+                        date={blog.date}
+                        title={blog.title}
+                        description={blog.subtitle}
+                        content={blog.content}
+                        category={blog.category}
+                        buttonText="Read More"
+                        href={`/blogs/${blog.slug}`}
+                      />
+                    </Link>
                   ))}
                 </div>
               )}

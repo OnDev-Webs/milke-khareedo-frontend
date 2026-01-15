@@ -14,7 +14,7 @@ const reviews = [
       "The entire experience was smooth and transparent from start to finish.",
     text2:
       "I finally felt confident making such a big decision without pressure.",
-    user: "User Name",
+    user: "Amit Sharma",
     avatar: "/images/user.jpg",
   },
   {
@@ -22,7 +22,7 @@ const reviews = [
     title: "Clear process from start to end.",
     text1: "We always knew what was happening next.",
     text2: "Buying together made pricing feel more transparent.",
-    user: "User Name",
+    user: "Rahul Mehta",
     avatar: "/images/user1.jpg",
   },
   {
@@ -30,7 +30,7 @@ const reviews = [
     title: "Didn’t feel like I was negotiating alone.",
     text1: "Normally, pricing conversations are uncomfortable",
     text2: " Here, it felt calmer and more balanced.",
-    user: "User Name",
+    user: "Ankit Jain",
     avatar: "/images/user3.jpg",
   },
   {
@@ -39,7 +39,7 @@ const reviews = [
     text1:
       "We were given time to understand and decide.That made all the difference.",
     text2: "Saved me a lot of time and confusion.",
-    user: "User Name",
+    user: "Rohit Agarwal",
     avatar: "/images/user4.jpg",
   },
   {
@@ -47,7 +47,7 @@ const reviews = [
     title: "Trustworthy & easy",
     text1: "Everything was explained clearly and professionally.",
     text2: "Saved me a lot of time and confusion.",
-    user: "User Name",
+    user: "Suresh Iyer",
     avatar: "/images/user.jpg",
   },
   {
@@ -55,7 +55,7 @@ const reviews = [
     title: "Trustworthy & easy",
     text1: "Everything was explained clearly and professionally.",
     text2: "Saved me a lot of time and confusion.",
-    user: "User Name",
+    user: "Nehal Gupta",
     avatar: "/images/user1.jpg",
   },
   {
@@ -63,7 +63,7 @@ const reviews = [
     title: "Trustworthy & easy",
     text1: "Everything was explained clearly and professionally.",
     text2: "Saved me a lot of time and confusion.",
-    user: "User Name",
+    user: "Kaviya Nair",
     avatar: "/images/user3.jpg",
   },
   {
@@ -71,7 +71,7 @@ const reviews = [
     title: "Trustworthy & easy",
     text1: "Everything was explained clearly and professionally.",
     text2: "Saved me a lot of time and confusion.",
-    user: "User Name",
+    user: "Sneh Patil",
     avatar: "/images/user4.jpg",
   },
   {
@@ -79,7 +79,7 @@ const reviews = [
     title: "Trustworthy & easy",
     text1: "Everything was explained clearly and professionally.",
     text2: "Saved me a lot of time and confusion.",
-    user: "User Name",
+    user: "Priyam Verma",
     avatar: "/images/user.jpg",
   },
   {
@@ -87,7 +87,7 @@ const reviews = [
     title: "Trustworthy & easy",
     text1: "Everything was explained clearly and professionally.",
     text2: "Saved me a lot of time and confusion.",
-    user: "User Name",
+    user: "Vishal Singh",
     avatar: "/images/user1.jpg",
   },
 ];

@@ -228,7 +228,7 @@ export default function PropertyCard({
               {property.targetPrice.formatted}
             </div>
             {property.discount && (
-              <span className="mt-2 inline-flex items-center w-[256px] h-[26px] gap-1.5 bg-white border border-[#F6F6F6] rounded-xl px-2 py-0.5 text-xs font-semibold text-[#66AE39]">
+              <span className="mt-2 inline-flex items-center w-[252px] h-[26px] gap-1.5 bg-white border border-[#F6F6F6] rounded-xl px-2 py-0.5 text-xs font-semibold text-[#66AE39]">
                 <Image
                   src={upPrice}
                   alt="Offer"
@@ -247,7 +247,7 @@ export default function PropertyCard({
             <div className="text-[16px] font-semibold text-[#4B4B4B] line-through">
               {property.developerPrice.formatted}
             </div>
-            <span className="mt-3 inline-block rounded-full w-[84px] h-[26px] bg-white border border-[#F6F6F6] px-2 py-1 text-xs font-semibold text-[#FF3232]">
+            <span className="mt-3 inline-block rounded-full w-[94px] h-[26px] bg-white border border-[#F6F6F6] px-2 py-1 text-xs font-semibold text-[#FF3232]">
               {formatPercentage(property.discountPercentage)} Off*
             </span>
           </div>

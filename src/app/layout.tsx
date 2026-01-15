@@ -6,6 +6,7 @@ import Header from "@/components/layout/header";
 import FooterWrapper from "@/components/layout/FooterWrapper";
 import { SchemaMarkup, organizationSchema } from "@/lib/schema-markup";
 import { Providers } from "@/providers/providers";
+import StickyVideo from "@/components/ui/stickyVideo";
 
 const figtreeSans = Figtree({
   variable: "--font-figtree-sans",
@@ -90,6 +91,7 @@ export default function RootLayout({
         <Providers>
           <Header />
           <main>{children}</main>
+          <StickyVideo/>
           <FooterWrapper />
         </Providers>
       </body>

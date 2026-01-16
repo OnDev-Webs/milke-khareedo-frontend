@@ -115,7 +115,7 @@ export default function PDPHeader({
               <div className="h-px bg-neutral-200" />
 
               {/* DISCOUNT ROW */}
-              <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-3">
                 <div className="inline-flex items-center bg-white rounded-full px-4 h-[36px] min-w-max shadow-sm">
                   <Image src={upPrice} alt="Up Price" width={18} height={18} />
                   <span className="ml-2 text-[13px] lg:text-[14px] text-lime-600 font-medium leading-none whitespace-nowrap">

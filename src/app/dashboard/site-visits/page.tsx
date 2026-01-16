@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import EmptyState from "@/components/dashboard/EmptyState";
 import PropertyGrid from "@/components/dashboard/PropertyGrid";
 import { usePropertyActions } from "@/hooks/usePropertyActions";
@@ -8,20 +9,27 @@ import {
   userDashboardService,
   PropertyApi,
 } from "@/lib/api/services/userDashboard.service";
-import { useMemo } from "react";
+import Loader from "@/components/ui/loader";
 
-type SiteVisitApi = PropertyApi;
 
-type VisitedResponse = {
-  data: SiteVisitApi[];
+type VisitedApiItem = {
+  property: PropertyApi;
+  lead?: {
+    updatedAt?: string;
+  };
 };
 
 export default function SiteVisitsPage() {
-  const { data, loading } = useApi<VisitedResponse>(() =>
+  const { data, loading } = useApi<any>(() =>
     userDashboardService.getVisitedProperties()
   );
 
-  const visits = data?.data ?? [];
+  const visits = useMemo<VisitedApiItem[]>(() => {
+    return [
+      ...(data?.upcoming ?? []),
+      ...(data?.completed ?? []),
+    ];
+  }, [data]);
 
   const {
     handleShareClick,
@@ -31,12 +39,12 @@ export default function SiteVisitsPage() {
   } = usePropertyActions();
 
   const mappedProperties = useMemo(() => {
-    return visits.map((p) => {
-      const coverImage = p.images?.[0] ?? "/images/empty_property.png";
+    return visits.map((item) => {
+      const p = item.property;
 
       return {
         id: p.id,
-        image: coverImage,
+        image: p.images?.[0] ?? "/images/empty_property.png",
         title: p.projectName,
         location: p.location,
         openingLeft: p.openingLeft ?? 0,
@@ -45,7 +53,7 @@ export default function SiteVisitsPage() {
         developerPrice: p.developerPrice?.formatted ?? "—",
         showDiscount: false,
         discountPercentage: undefined,
-        lastViewedAt: p.lastViewedAt,
+        lastViewedAt: item.lead?.updatedAt,
       };
     });
   }, [visits]);
@@ -53,7 +61,7 @@ export default function SiteVisitsPage() {
   if (loading) {
     return (
       <div className="rounded-[24px] bg-white px-6 py-10 shadow sm:px-10">
-        Loading site visits...
+        <Loader size={38}/>
       </div>
     );
   }
@@ -71,26 +79,14 @@ export default function SiteVisitsPage() {
   }
 
   return (
-    <>
-      <div className="block sm:hidden">
-        <PropertyGrid
-          properties={mappedProperties}
-          onFavoriteClick={handleFavoriteClick}
-          onShareClick={handleShareClick}
-          favoriteStates={favoriteStates}
-          favoriteLoading={favoriteLoading}
-        />
-      </div>
-
-      <div className="hidden sm:block rounded-[24px] bg-[#f8fbff] px-10 py-10 shadow">
-        <PropertyGrid
-          properties={mappedProperties}
-          onFavoriteClick={handleFavoriteClick}
-          onShareClick={handleShareClick}
-          favoriteStates={favoriteStates}
-          favoriteLoading={favoriteLoading}
-        />
-      </div>
-    </>
+    <div className="rounded-[24px] bg-[#f8fbff] px-6 py-6 sm:px-10 sm:py-10 shadow">
+      <PropertyGrid
+        properties={mappedProperties}
+        onFavoriteClick={handleFavoriteClick}
+        onShareClick={handleShareClick}
+        favoriteStates={favoriteStates}
+        favoriteLoading={favoriteLoading}
+      />
+    </div>
   );
 }

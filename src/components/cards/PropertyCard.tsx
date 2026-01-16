@@ -79,7 +79,6 @@ export default function PropertyCard({
         href={`/property-details/${property.id}`}
         className="absolute inset-0 z-10"
       />
-      {/* Image Section with Slider */}
       <div className="relative h-52 w-full bg-gray-100 rounded-3xl flex items-center justify-center overflow-hidden">
         {currentImage ? (
           <Image
@@ -93,21 +92,18 @@ export default function PropertyCard({
           <div className="text-gray-400 text-sm">No Image</div>
         )}
 
-        {/* Last Day to join Banner */}
         {property.lastDayToJoin && (
           <div className="absolute top-3 left-3 bg-white/82 backdrop-blur-md rounded-[6px] px-3 py-1.5 shadow-md z-10 text-[12px] text-[#000000] font-normal">
             Last Day to join: {formatDate(property.lastDayToJoin)}
           </div>
         )}
 
-        {/* Action Icons - Right Side (Stacked) - Only visible on hover */}
         <div
           className={`absolute top-3 right-3 flex flex-col gap-2 z-20 transition-all duration-300 ${isHovered
             ? "opacity-100 visible translate-y-0"
             : "opacity-0 invisible -translate-y-2 pointer-events-none"
             }`}
         >
-          {/* Heart Icon (Favorite) */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -123,7 +119,6 @@ export default function PropertyCard({
             )}
           </button>
 
-          {/* Compare Icon */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -138,9 +133,9 @@ export default function PropertyCard({
               width={20}
               height={20}
               className="h-5 w-5"
-            />          </button>
+            />
+          </button>
 
-          {/* Share Icon */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -153,7 +148,6 @@ export default function PropertyCard({
           </button>
         </div>
 
-        {/* Image Navigation Dots - Only show if multiple images */}
         {hasMultipleImages && (
           <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
             {images.map((_, index) => (
@@ -171,9 +165,7 @@ export default function PropertyCard({
         )}
       </div>
 
-      {/* Content Section */}
       <div className="pt-4">
-        {/* Title + Location + Call button */}
         <div className="flex justify-between items-start mb-4">
           <div className="flex-1 min-w-0">
             <h3 className="text-[20px] font-semibold text-black truncate">
@@ -188,9 +180,7 @@ export default function PropertyCard({
           </button>
         </div>
 
-        {/* Group Size + Opening */}
         <div className="flex justify-between mt-2 mb-2 gap-2">
-          {/* GROUP SIZE */}
           <div className="flex flex-col items-center bg-[#EEF4FF] px-4 py-2 rounded-[15px] text-center flex-1">
             <span className="text-[16px] text-[#000000] font-semibold">
               Group Size
@@ -202,7 +192,6 @@ export default function PropertyCard({
               </span>
             </span>
           </div>
-          {/* OPENING */}
           <div className="flex flex-col items-center bg-[#EEF4FF] px-4 py-2 rounded-[15px] text-center flex-1">
             <span className="text-[16px] text-[#000000] font-semibold">
               Opening
@@ -216,21 +205,23 @@ export default function PropertyCard({
           </div>
         </div>
 
-        {/* Target Price + Developer Price */}
-        <div className="flex justify-between items-start mt-3 bg-[#EEF4FF] px-3 py-2 rounded-[15px]">
-          {/* Target Price */}
+        <div className="grid grid-cols-2 gap-2 sm:gap-3 mt-3 bg-[#EEF4FF] px-2.5 py-2 sm:px-3 sm:py-3 rounded-[15px]">
           <div>
-            <span className="text-[14px] text-[#000000] font-normal">Target Price</span>
-            <div className="text-[19px] font-bold text-[#000000]">
+            <span className="text-[12px] sm:text-[14px] text-[#000000] font-normal">
+              Target Price
+            </span>
+
+            <div className="text-[16px] sm:text-[17px] lg:text-[18px] font-bold text-[#000000]">
               {property.targetPrice.formatted}
             </div>
             {property.discount && (
-              <span className="mt-2 inline-flex items-center w-[252px] h-[26px] gap-1.5 bg-white border border-[#F6F6F6] rounded-xl px-2 py-0.5 text-xs font-semibold text-[#66AE39]">
+              <span
+                className="mt-1.5 sm:mt-2 inline-flex items-center w-[100px] sm:w-[120px] lg:w-[218px] h-[22px] sm:h-[26px] gap-1 bg-white border border-[#F6F6F6] rounded-xl px-2 text-[10px] sm:text-xs font-semibold text-[#66AE39] whitespace-nowrap">
                 <Image
                   src={upPrice}
                   alt="Offer"
-                  width={14}
-                  height={14}
+                  width={12}
+                  height={12}
                   className="object-contain"
                 />
                 {property.discount.displayText}
@@ -240,13 +231,18 @@ export default function PropertyCard({
 
           {/* Developer Price */}
           <div className="text-right">
-            <span className="text-[14px] text-[#000000] font-normal">Developer price</span>
-            <div className="text-[16px] font-semibold text-[#4B4B4B] line-through">
+            <span className="text-[12px] sm:text-[14px] text-[#000000] font-normal">
+              Developer price
+            </span>
+
+            <div className="text-[13px] sm:text-[15px] lg:text-[16px] font-semibold text-[#4B4B4B] line-through">
               {property.developerPrice.formatted}
             </div>
-            <div className="mt-3 h-[26px]">
+
+            <div className="mt-2 sm:mt-3 h-[22px] sm:h-[26px]">
               {hasValidDiscount(property.discountPercentage) && (
-                <span className="inline-block rounded-full w-[94px] h-[26px] bg-white border border-[#F6F6F6] px-2 py-1 text-xs font-semibold text-[#FF3232]">
+                <span
+                  className="inline-flex items-center justify-center w-[70px] sm:w-[88px] h-[22px] sm:h-[26px] bg-white border border-[#F6F6F6] px-2 text-[10px] sm:text-xs font-semibold text-[#FF3232] rounded-full whitespace-nowrap">
                   {formatPercentage(property.discountPercentage)} Off*
                 </span>
               )}
@@ -254,7 +250,6 @@ export default function PropertyCard({
           </div>
         </div>
 
-        {/* Join Group Button */}
         <button
           onClick={(e) => {
             if (isJoinGroup) {

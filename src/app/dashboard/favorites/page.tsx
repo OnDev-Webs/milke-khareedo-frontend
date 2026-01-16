@@ -2,6 +2,7 @@
 
 import EmptyState from "@/components/dashboard/EmptyState";
 import PropertyGrid from "@/components/dashboard/PropertyGrid";
+import Loader from "@/components/ui/loader";
 import { usePropertyActions } from "@/hooks/usePropertyActions";
 import { useApi } from "@/lib/api/hooks/useApi";
 import {
@@ -62,7 +63,7 @@ export default function MyFavoritePage() {
   if (loading) {
     return (
       <div className="rounded-[24px] bg-white px-6 py-10 shadow sm:px-10">
-        Loading favorites...
+        <Loader size={38}/>
       </div>
     );
   }

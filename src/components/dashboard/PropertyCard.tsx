@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Heart, Share2, Phone, Repeat } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { IoChevronBack, IoChevronForward, IoHeart } from "react-icons/io5";
+import { IoChevronBack, IoChevronForward, IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useState } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 
@@ -170,12 +170,12 @@ export default function PropertyCard({
                         className={`rounded-full p-2 shadow  ${isFavorite ? "bg-white  text-white" : "bg-white"
                             }`}
                     >
-                        <IoHeart
-                            size={16}
-                            fill={isFavorite ? "red" : "none"}
-                            stroke={isFavorite ? "red" : "black"}
-                            strokeWidth={34}
-                        />                    </button>
+                        {isFavorite ? (
+                            <IoHeart className="h-5 w-5 text-red-500" />
+                        ) : (
+                            <IoHeartOutline className="h-5 w-5 text-gray-700" />
+                        )}
+                    </button>
 
                     <button
                         // onClick={(e) => {
@@ -277,13 +277,13 @@ export default function PropertyCard({
                     </div>
 
                     <div className="mt-2 flex items-center gap-2 rounded-2xl bg-white px-3 py-2 text-sm text-[#66AE39]">
-                            <Image
+                        <Image
                             src="/images/Frame.svg"
                             alt="Compare"
                             width={12}
                             height={12}
                             className="h-4.5 w-5"
-                        /> 
+                        />
                         <span>Up to {discountPercentage} off</span>
                     </div>
 

@@ -9,6 +9,7 @@ import type {
 } from "@/lib/api/services/userDashboard.service";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import Loader from "@/components/ui/loader";
 
 export default function MySearchesPage() {
   const { data, loading } = useApi<SearchHistoryGroup[]>(() =>
@@ -50,7 +51,7 @@ export default function MySearchesPage() {
   if (loading) {
     return (
       <div className="rounded-[24px] bg-white px-6 py-10 shadow">
-        Loading searches...
+        <Loader size={38}/>
       </div>
     );
   }
@@ -65,7 +66,7 @@ export default function MySearchesPage() {
 
   return (
     <div className="rounded-[24px] bg-white px-4 py-6 shadow sm:px-8 sm:py-8 min-h-[480px]">
-      <div className="rounded-2xl bg-linear-to-b from-[#f5f8ff] to-[#f8fbff] p-4 min-h-[410px]">
+      <div className="rounded-2xl bg-[#F3F6FF] p-4 min-h-[410px]">
         <div className="flex flex-col gap-6">
           {Object.entries(groupedVisible).map(([dateLabel, searches]) => (
             <div key={dateLabel}>
@@ -132,7 +133,7 @@ function SearchRow({ item }: { item: SearchHistoryItem }) {
       className="
         flex cursor-pointer items-center justify-between gap-3
         rounded-xl bg-white px-4 py-3 shadow-sm
-        transition hover:bg-[#f6f9ff]
+        transition
       "
     >
       <div className="flex items-center gap-3 min-w-0">

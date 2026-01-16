@@ -26,7 +26,7 @@ export default function DashboardTabs() {
             key={tab.href}
             href={tab.href}
             prefetch
-              className={`flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition
+              className={`flex shrink-0 items-center gap-2 rounded-full px-4 py-3 text-[16px] font-medium transition
                     ${active
                       ? "bg-[#1C4692] hover:bg-[#1c4692e6] text-white"
                       : "bg-white text-gray-800 hover:bg-gray-100"
@@ -36,8 +36,8 @@ export default function DashboardTabs() {
             <Image
               src={tab.icon}
               alt={tab.label}
-              width={18}
-              height={18}
+              width={20}
+              height={20}
               className={active ? "invert brightness-0" : ""}
             />
             <span className="whitespace-nowrap">{tab.label}</span>

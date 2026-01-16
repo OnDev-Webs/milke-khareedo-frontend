@@ -2,8 +2,16 @@
 
 import { IoCloseCircle } from "react-icons/io5";
 import { useRef, useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function StickyVideo() {
+
+   const pathname = usePathname();
+
+
+   if (pathname.startsWith("/dashboard")) {
+    return null;
+  }
   const [visible, setVisible] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);

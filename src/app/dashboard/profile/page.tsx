@@ -14,7 +14,7 @@ import Loader from "@/components/ui/loader";
 export default function ProfilePage() {
     const countries = useMemo(() => getCountries(), []);
 
-    const [form, setForm] = useState<UpdateProfilePayload>({
+    const [form, setForm] = useState<Partial<UpdateProfilePayload>>({
         firstName: "",
         lastName: "",
         email: "",
@@ -58,17 +58,18 @@ export default function ProfilePage() {
         setCities(citiesList);
 
         setForm({
-            firstName: user.firstName ?? "",
-            lastName: user.lastName ?? "",
-            email: user.email ?? "",
-            phoneNumber: user.phoneNumber ?? "",
-            countryCode: user.countryCode ?? "+91",
-            address: user.address ?? "",
-            pincode: user.pincode ?? "",
-            country: countryCode || "",
-            state: stateCode || "",
-            city: user.city ?? "",
+            firstName: user.firstName || undefined,
+            lastName: user.lastName || undefined,
+            email: user.email || undefined,
+            phoneNumber: user.phoneNumber || undefined,
+            countryCode: user.countryCode || "+91",
+            address: user.address || undefined,
+            pincode: user.pincode || undefined,
+            country: countryCode || undefined,
+            state: stateCode || undefined,
+            city: user.city || undefined,
         });
+
     }, [data, countries]);
 
 
@@ -79,12 +80,29 @@ export default function ProfilePage() {
         setForm((prev) => ({ ...prev, [name]: value }));
     };
 
+
+    const buildPayload = (): UpdateProfilePayload => ({
+        firstName: form.firstName ?? "",
+        lastName: form.lastName ?? "",
+        email: form.email ?? "",
+        phoneNumber: form.phoneNumber ?? "",
+        countryCode: form.countryCode ?? "+91",
+        address: form.address ?? "",
+        pincode: form.pincode ?? "",
+        city: form.city ?? "",
+        state: form.state ?? "",
+        country: form.country ?? "",
+    });
+
+
     const handleSave = async () => {
-        await userDashboardService.updateUserProfile(form);
+        await userDashboardService.updateUserProfile(buildPayload());
     };
+
 
     const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const countryCode = e.target.value;
+
         setForm((prev) => ({
             ...prev,
             country: countryCode,
@@ -105,8 +123,14 @@ export default function ProfilePage() {
             city: "",
         }));
 
+        if (!form.country) {
+            setCities([]);
+            return;
+        }
+
         setCities(getCities(form.country, stateCode));
     };
+
 
 
     if (loading) {
@@ -117,28 +141,37 @@ export default function ProfilePage() {
         );
     }
 
+
+
     return (
         <div className="rounded-[24px] bg-white px-5 py-8 sm:px-10 sm:py-10 shadow">
             <h2 className="mb-8 text-[22px] font-semibold">My Profile</h2>
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
-                <FieldInput label="First Name *" name="firstName" value={form.firstName} onChange={handleChange} />
-                <FieldInput label="Last Name *" name="lastName" value={form.lastName} onChange={handleChange} />
-                <FieldInput label="Email Address" value={form.email} disabled />
-                <VerifiedInput label="Mobile Number" value={`${form.countryCode} ${form.phoneNumber}`} />
+                <FieldInput label="First Name *" name="firstName" value={form.firstName ?? ""} placeholder="Enter first name" onChange={handleChange} />
+                <FieldInput label="Last Name *" name="lastName" value={form.lastName ?? ""} placeholder="Enter last name" onChange={handleChange} />
+                <FieldInput label="Email Address" value={form.email ?? ""} placeholder="Enter email address" disabled />
+                <VerifiedInput label="Mobile Number" value={
+                    form.phoneNumber
+                        ? `${form.countryCode ?? "+91"} ${form.phoneNumber}`
+                        : ""
+                }
+                    placeholder="Enter mobile number" />
 
                 <FieldInput
                     label="Full Address *"
                     name="address"
-                    value={form.address}
+                    value={form.address ?? ""}
                     onChange={handleChange}
+                    placeholder="Enter full address"
                     className="md:col-span-2"
                 />
 
                 <FieldInput
                     label="Pin code *"
                     name="pincode"
-                    value={form.pincode}
+                    value={form.pincode ?? ""}
+                    placeholder="Enter pin code"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         const digits = e.target.value.replace(/\D/g, "");
                         if (digits.length <= 6) {
@@ -147,13 +180,13 @@ export default function ProfilePage() {
                     }}
                 />
 
-                <FieldSelect label="Country" name="country" value={form.country} onChange={handleCountryChange}>
+                <FieldSelect label="Country" name="country" value={form.country ?? ""} onChange={handleCountryChange} placeholder="Select your country">
                     {countries.map((c) => (
                         <option key={c.isoCode} value={c.isoCode}>{c.name}</option>
                     ))}
                 </FieldSelect>
 
-                <FieldSelect label="State" name="state" value={form.state} onChange={handleStateChange}>
+                <FieldSelect label="State" name="state" value={form.state ?? ""} onChange={handleStateChange} placeholder="Select your state">
                     {states.length === 0
                         ? <option disabled>Select Country First</option>
                         : states.map((s) => (
@@ -161,7 +194,7 @@ export default function ProfilePage() {
                         ))}
                 </FieldSelect>
 
-                <FieldSelect label="City" name="city" value={form.city} onChange={handleChange}>
+                <FieldSelect label="City" name="city" value={form.city ?? ""} onChange={handleChange} placeholder="Select your city">
                     {cities.length === 0
                         ? <option disabled>Select State First</option>
                         : cities.map((c) => (
@@ -183,54 +216,102 @@ export default function ProfilePage() {
 }
 
 
-function FieldInput({ label, name, value, onChange, disabled = false, className = "" }: any) {
+function FieldInput({
+    label,
+    name,
+    value,
+    placeholder,
+    onChange,
+    disabled = false,
+    className = "",
+}: any) {
+    const isFilled = Boolean(value);
+
     return (
         <div className={`relative ${className}`}>
-            <span className="absolute left-4 top-[-9px] bg-white px-2 text-xs text-gray-400">
+            <span
+                className={`
+          absolute left-4 top-[-9px] bg-white px-2 text-xs
+          ${isFilled ? "text-black" : "text-gray-400"}
+        `}
+            >
                 {label}
             </span>
+
             <input
                 name={name}
                 value={value}
                 onChange={onChange}
+                placeholder={placeholder}
                 disabled={disabled}
-                className="h-14 w-full rounded-[10px] border px-4 text-sm focus:border-[#1C4692] focus:outline-none disabled:bg-gray-100"
+                className={`
+          h-14 w-full rounded-[10px] px-4 text-sm outline-none
+          ${isFilled ? "border border-black text-black" : "border border-gray-300 text-gray-400"}
+          focus:border-black focus:text-black
+          disabled:bg-gray-100
+        `}
             />
         </div>
     );
 }
+
 
 function VerifiedInput({ label, value }: any) {
-    return (
-        <div className="relative">
-            <span className="absolute left-4 top-[-9px] bg-white px-2 text-xs text-gray-400">
-                {label}
-            </span>
-            <input
-                value={value}
-                disabled
-                className="h-14 w-full rounded-[10px] border px-4 pr-12 text-sm bg-gray-100"
-            />
-            <span className="absolute right-4 top-1/2 -translate-y-1/2 flex h-6 w-6 items-center justify-center rounded-full bg-[#1C4692]">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
-                    <polyline points="20 6 9 17 4 12" />
-                </svg>
-            </span>
-        </div>
-    );
+  const isFilled = Boolean(value);
+
+  return (
+    <div className="relative">
+      <span
+        className={`
+          absolute left-4 top-[-9px] bg-white px-2 text-xs
+          ${isFilled ? "text-black" : "text-gray-400"}
+        `}
+      >
+        {label}
+      </span>
+
+      <input
+        value={value}
+        disabled
+        className={`
+          h-14 w-full rounded-[10px] px-4 pr-12 text-sm bg-gray-100
+          ${isFilled ? "border border-black text-black" : "border border-gray-300 text-gray-400"}
+        `}
+      />
+
+      <span className="absolute right-4 top-1/2 -translate-y-1/2 flex h-6 w-6 items-center justify-center rounded-full bg-[#1C4692]">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </span>
+    </div>
+  );
 }
 
+
 function FieldSelect({ label, name, value, onChange, children }: any) {
+    const isFilled = Boolean(value);
+
     return (
         <div className="relative">
-            <span className="absolute left-4 top-[-9px] bg-white px-2 text-xs text-gray-400 z-10">
+            <span
+                className={`
+          absolute left-4 top-[-9px] bg-white px-2 text-xs z-10
+          ${isFilled ? "text-black" : "text-gray-400"}
+        `}
+            >
                 {label}
             </span>
+
             <select
                 name={name}
                 value={value}
                 onChange={onChange}
-                className="h-14 w-full rounded-[10px] border px-4 pr-12 text-sm appearance-none bg-white focus:border-[#1C4692]"
+                className={`
+          h-14 w-full rounded-[10px] px-4 pr-12 text-sm appearance-none outline-none bg-white
+          ${isFilled ? "border border-black text-black" : "border border-gray-300 text-gray-400"}
+          focus:border-black focus:text-black
+        `}
             >
                 <option value="">Select {label}</option>
                 {children}
@@ -238,3 +319,4 @@ function FieldSelect({ label, name, value, onChange, children }: any) {
         </div>
     );
 }
+

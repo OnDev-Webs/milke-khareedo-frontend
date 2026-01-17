@@ -5,11 +5,11 @@ import { Heart, Share2, Phone, Repeat } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { IoChevronBack, IoChevronForward, IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useState } from "react";
-import { FaPhoneAlt } from "react-icons/fa";
+import { FaPhoneAlt, FaShare } from "react-icons/fa";
 
 type PropertyCardProps = {
     id: string;
-    image: string;
+    images: string[];
     title: string;
     location: string;
     groupSize: number;
@@ -41,7 +41,7 @@ type PropertyCardProps = {
 
 export default function PropertyCard({
     id,
-    image,
+    images,
     title,
     location,
     groupSize,
@@ -59,9 +59,11 @@ export default function PropertyCard({
 }: PropertyCardProps) {
 
     const router = useRouter();
-    const images = [image];
     const [currentIndex, setCurrentIndex] = useState(0);
     const hasMultipleImages = images.length > 1;
+    const actionBtn =
+        "flex h-9 w-9 items-center font-black justify-center rounded-full bg-white shadow-md";
+
 
     return (
         <div
@@ -88,7 +90,7 @@ export default function PropertyCard({
                                 );
                             }}
                             className="
-        absolute left-3 top-1/2 -translate-y-1/2
+        absolute left-4 bottom-6
         h-9 w-9 flex items-center justify-center
         rounded-full bg-white/95 text-gray-700
         shadow-lg border border-gray-200
@@ -112,7 +114,7 @@ export default function PropertyCard({
                                 );
                             }}
                             className="
-        absolute right-3 top-1/2 -translate-y-1/2
+        absolute right-4 bottom-6
         h-9 w-9 flex items-center justify-center
         rounded-full bg-white/95 text-gray-700
         shadow-lg border border-gray-200
@@ -144,10 +146,12 @@ export default function PropertyCard({
                 )}
 
 
+
                 <div
                     className="
-    absolute right-3 top-3 flex flex-col gap-2 z-20
-    opacity-0 translate-y-[-6px] pointer-events-none
+    absolute right-3 top-3 z-20
+    flex flex-col gap-2
+    opacity-0 -translate-y-1.5 pointer-events-none
     transition-all duration-300
     group-hover:opacity-100
     group-hover:translate-y-0
@@ -156,56 +160,49 @@ export default function PropertyCard({
                 >
 
 
+
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
-                            onFavoriteClick?.({
-                                id,
-                                projectName: title,
-                                location,
-                            });
-
+                            onFavoriteClick?.({ id, projectName: title, location });
                         }}
                         disabled={isFavoriteLoading}
-                        className={`rounded-full p-2 shadow  ${isFavorite ? "bg-white  text-white" : "bg-white"
-                            }`}
+                        className={actionBtn}
                     >
-                        {isFavorite ? (
-                            <IoHeart className="h-5 w-5 text-red-500" />
-                        ) : (
-                            <IoHeartOutline className="h-5 w-5 text-gray-700" />
-                        )}
+                        <IoHeart
+                            size={16}
+                            fill={isFavorite ? "red" : "none"}
+                            stroke={isFavorite ? "red" : "black"}
+                            strokeWidth={32}
+                        />
                     </button>
 
-                    <button
-                        // onClick={(e) => {
-                        //     e.stopPropagation();
-                        //     onCompareClick(property);
-                        // }}
-                        className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-white text-gray-700 hover:bg-white shadow-md transition-colors"
-                        aria-label="Add to compare"
-                    >
+
+
+                    <button className={actionBtn} aria-label="Add to compare">
                         <Image
                             src="/images/convert.svg"
                             alt="Compare"
-                            width={15}
-                            height={15}
-                            className="h-5 w-5"
-                        />          </button>
+                            width={16}
+                            height={16}
+                        />
+                    </button>
+
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
-                            onShareClick?.({
-                                id,
-                                projectName: title,
-                                location,
-                            });
-
+                            onShareClick?.({ id, projectName: title, location });
                         }}
-                        className="rounded-full bg-white p-2 shadow"
+                        className={actionBtn}
                     >
-                        <Share2 size={16} />
+                        <Image
+                            src="/images/Share.svg"
+                            alt="Share"
+                            width={16}
+                            height={16}
+                        />
                     </button>
+
 
                 </div>
 
@@ -219,14 +216,16 @@ export default function PropertyCard({
     group-hover:pointer-events-auto
   "
                 >
-                    {[0, 1, 2, 3].map((_, index) => (
+                    {images.map((_, index) => (
                         <span
                             key={index}
-                            className="
-        h-1.5 w-1.5 rounded-full bg-white/70
-      "
+                            className={`
+      h-1.5 w-1.5 rounded-full
+      ${index === currentIndex ? "bg-white" : "bg-white/50"}
+    `}
                         />
                     ))}
+
                 </div>
 
             </div>
@@ -303,7 +302,7 @@ export default function PropertyCard({
 
                 <button
                     onClick={() => router.push(`/property-details/${id}`)}
-                    className="mt-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] py-2 text-sm font-semibold text-white">
+                    className="mt-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] py-3 text-[16px] font-semibold text-white">
                     View Details
                 </button>
             </div>

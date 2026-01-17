@@ -8,6 +8,7 @@ import {
     type GetProfileResponse,
 } from "@/lib/api/services/userDashboard.service";
 import { getCities, getCountries, getStates } from "@/lib/location";
+import Loader from "@/components/ui/loader";
 
 
 export default function ProfilePage() {
@@ -135,7 +136,7 @@ export default function ProfilePage() {
     if (loading) {
         return (
             <div className="rounded-[24px] bg-white p-10 shadow">
-                Loading profile...
+               <Loader size={38}/>
             </div>
         );
     }

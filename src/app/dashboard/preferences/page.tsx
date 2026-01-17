@@ -197,7 +197,7 @@ function PreferenceCard(props: PreferenceCardProps) {
 
 
   return (
-    <div className="rounded-[24px] bg-[#F7FAFF] p-6 space-y-6">
+    <div className="rounded-[24px] bg-[#F3F6FF] p-6 space-y-6">
       <div>
         <label className="block mb-2 text-sm font-semibold">Localities</label>
         <input

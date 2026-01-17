@@ -2,6 +2,7 @@
 
 import EmptyState from "@/components/dashboard/EmptyState";
 import PropertyGrid from "@/components/dashboard/PropertyGrid";
+import Loader from "@/components/ui/loader";
 import { usePropertyActions } from "@/hooks/usePropertyActions";
 import { useApi } from "@/lib/api/hooks/useApi";
 import {

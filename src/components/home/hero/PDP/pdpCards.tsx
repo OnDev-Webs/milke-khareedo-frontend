@@ -26,24 +26,21 @@ export default function TopProperties() {
   const [favoriteLoading, setFavoriteLoading] = useState<
     Record<string, boolean>
   >({});
-  // Track join group states
+  
   const [joinGroupStates, setJoinGroupStates] = useState<
     Record<string, boolean>
   >({});
   const [joinGroupLoading, setJoinGroupLoading] = useState<
     Record<string, boolean>
   >({});
-  // Track current image index for each property
+  
   const [currentImageIndex, setCurrentImageIndex] = useState<
     Record<string, number>
   >({});
-  // Track hover state for each property card
+ 
   const [hoveredProperty, setHoveredProperty] = useState<string | null>(null);
-
-  // Fetch locations from API
   const { data: locationsData } = useApi(() => homeService.getLocations());
 
-  // Build tabs array: "All Properties" first, then locations from API
   const tabs = useMemo(() => {
     const allTabs = ["All Properties"];
     if (locationsData?.locations) {
@@ -58,12 +55,10 @@ export default function TopProperties() {
   const [hasMore, setHasMore] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  // Get location filter based on active tab
   const locationFilter = useMemo(() => {
     return activeTab === "All Properties" ? undefined : activeTab;
   }, [activeTab]);
 
-  // Initialize favorite states from API response
   useEffect(() => {
     const favoriteStates: Record<string, boolean> = {};
     const joinGroupStates: Record<string, boolean> = {};
@@ -79,13 +74,11 @@ export default function TopProperties() {
     setJoinGroupStates((prev) => ({ ...prev, ...joinGroupStates }));
   }, [properties]);
 
-  // Fetch initial properties when component mounts or tab changes
   const fetchInitialProperties = useCallback(async () => {
     setProperties([]);
     setCurrentPage(1);
     setHasMore(false);
     setIsLoadingMore(true);
-
     try {
       const response: any = await homeService.getTopProperty({
         page: 1,
@@ -109,17 +102,14 @@ export default function TopProperties() {
     fetchInitialProperties();
   }, [fetchInitialProperties]);
 
-  // Handle tab change
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
   };
 
-  // Handle load more - redirect to properties page
   const handleLoadMore = () => {
     router.push("/properties");
   };
 
-  // Handle favorite click
   const handleFavoriteClick = async (property: Property) => {
     if (!checkAuth()) {
       setPendingAction({ type: "favorite", propertyId: property.id });
@@ -127,24 +117,29 @@ export default function TopProperties() {
       return;
     }
 
-    setFavoriteLoading((prev) => ({ ...prev, [property.id]: true }));
+    setFavoriteStates((prev) => ({
+      ...prev,
+      [property.id]: !prev[property.id],
+    }));
+
     try {
-      const response = await homeService.toggleFavorite(String(property.id));
-      if (response.success && response.data?.isFavorite !== undefined) {
-        // Update local state immediately
+      const res = await homeService.toggleFavorite(String(property.id));
+      const { success, data } = res;
+
+      if (success && data && typeof data.isFavorite === "boolean") {
         setFavoriteStates((prev) => ({
           ...prev,
-          [property.id]: response.data!.isFavorite,
+          [property.id]: data.isFavorite,
         }));
       }
-    } catch (error) {
-      console.error("Failed to toggle favorite:", error);
-    } finally {
-      setFavoriteLoading((prev) => ({ ...prev, [property.id]: false }));
+    } catch (e) {
+      setFavoriteStates((prev) => ({
+        ...prev,
+        [property.id]: !prev[property.id],
+      }));
     }
   };
 
-  // Handle compare click
   const handleCompareClick = (property: Property) => {
     if (!checkAuth()) {
       setPendingAction({ type: "compare", propertyId: property.id });
@@ -169,7 +164,6 @@ export default function TopProperties() {
     router.push("/compare");
   };
 
-  // Handle share click
   const handleShareClick = async (property: Property) => {
     const shareUrl = `${window.location.origin}/property-details/${property.id}`;
     const shareText = `Check out ${property.projectName} at ${property.location}`;
@@ -182,50 +176,41 @@ export default function TopProperties() {
           url: shareUrl,
         });
       } catch (error) {
-        // User cancelled or error occurred
         console.log("Share cancelled or failed:", error);
       }
     } else {
-      // Fallback: Copy to clipboard
       try {
         await navigator.clipboard.writeText(shareUrl);
         alert("Link copied to clipboard!");
       } catch (error) {
         console.error("Failed to copy link:", error);
-        // Fallback: Show URL in prompt
         prompt("Copy this link:", shareUrl);
       }
     }
   };
 
-  // Handle join group click
   const handleJoinGroupClick = async (property: Property) => {
-    // Check authentication first
     if (!checkAuth()) {
-      setPendingAction({ type: "favorite", propertyId: property.id }); // Reuse pending action for join group
+      setPendingAction({ type: "favorite", propertyId: property.id });
       setShowAuthModal(true);
       return;
     }
 
-    // Check if already joined
     const isJoined = joinGroupStates[property.id] ?? property.isJoinGroup ?? false;
     if (isJoined) {
-      return; // Already joined, do nothing
+      return;
     }
 
-    // Set loading state
     setJoinGroupLoading((prev) => ({ ...prev, [property.id]: true }));
 
     try {
       const response = await homeService.joinGroup(property.id);
       if (response.success && response.data?.isJoinGroup) {
-        // Update local state immediately
         setJoinGroupStates((prev) => ({
           ...prev,
           [property.id]: true,
         }));
 
-        // Refresh property data to get updated state from API
         const refreshResponse: any = await homeService.getTopProperty({
           page: currentPage,
           limit: LIMIT,
@@ -233,7 +218,6 @@ export default function TopProperties() {
         });
 
         if (refreshResponse.success && refreshResponse.data) {
-          // Update properties with fresh data
           setProperties((prev) => {
             return prev.map((p) => {
               const updated = refreshResponse.data.find(
@@ -251,7 +235,6 @@ export default function TopProperties() {
     }
   };
 
-  // Handle auth success
   const handleAuthSuccess = () => {
     if (pendingAction) {
       const property = properties.find(
@@ -259,7 +242,6 @@ export default function TopProperties() {
       );
       if (property) {
         if (pendingAction.type === "favorite") {
-          // This could be favorite or join group, try join group first
           handleJoinGroupClick(property);
         } else if (pendingAction.type === "compare") {
           handleCompareClick(property);
@@ -269,7 +251,6 @@ export default function TopProperties() {
     }
   };
 
-  // Format date for "Last Day to join"
   const formatDate = (dateString: string) => {
     try {
       const date = new Date(dateString);
@@ -290,7 +271,6 @@ export default function TopProperties() {
     }
   };
 
-  // Navigate to specific image
   const goToImage = (
     propertyId: string,
     index: number,
@@ -301,7 +281,6 @@ export default function TopProperties() {
     }
   };
 
-  // Navigate to next image
   const goToNextImage = (propertyId: string, totalImages: number) => {
     setCurrentImageIndex((prev) => {
       const current = prev[propertyId] ?? 0;
@@ -310,7 +289,6 @@ export default function TopProperties() {
     });
   };
 
-  // Navigate to previous image
   const goToPreviousImage = (propertyId: string, totalImages: number) => {
     setCurrentImageIndex((prev) => {
       const current = prev[propertyId] ?? 0;
@@ -369,7 +347,7 @@ export default function TopProperties() {
         {/* Loading State */}
         {isLoadingMore && properties.length === 0 && (
           <div className="flex justify-center items-center py-20">
-            <div className="text-gray-500"><Loader size={38}/></div>
+            <div className="text-gray-500"><Loader size={38} /></div>
           </div>
         )}
 
@@ -425,7 +403,7 @@ export default function TopProperties() {
                   disabled={isLoadingMore}
                   className="px-8 py-3 rounded-full border border-[#F5F5F5] text-[#2D2D2D] bg-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isLoadingMore ? <Loader size={38}/> : "Load More"}
+                  {isLoadingMore ? <Loader size={38} /> : "Load More"}
                 </button>
               </div>
             )}

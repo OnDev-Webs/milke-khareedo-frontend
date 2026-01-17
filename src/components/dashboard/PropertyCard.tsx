@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Heart, Share2, Phone, Repeat } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { IoChevronBack, IoChevronForward, IoHeart } from "react-icons/io5";
+import { IoChevronBack, IoChevronForward, IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useState } from "react";
 import { FaPhoneAlt, FaShare } from "react-icons/fa";
 

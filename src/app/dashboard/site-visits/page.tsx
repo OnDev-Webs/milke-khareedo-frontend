@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import EmptyState from "@/components/dashboard/EmptyState";
 import PropertyGrid from "@/components/dashboard/PropertyGrid";
 import { usePropertyActions } from "@/hooks/usePropertyActions";
@@ -8,9 +9,8 @@ import {
     userDashboardService,
     PropertyApi,
 } from "@/lib/api/services/userDashboard.service";
-import { useMemo } from "react";
+import Loader from "@/components/ui/loader";
 
-type SiteVisitApi = PropertyApi;
 
 type VisitedResponse = {
     data: SiteVisitApi[];

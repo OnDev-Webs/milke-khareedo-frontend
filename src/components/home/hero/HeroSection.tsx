@@ -102,9 +102,11 @@ export default function Hero() {
           </p>
 
           <div className="mt-6">
-            <button className="rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-8 py-3 text-sm font-medium text-white shadow">
-              Want to see how it works?
-            </button>
+            <a href="#about">
+              <button className="rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-8 py-3 text-sm font-medium text-white shadow">
+                Want to see how it works?
+              </button>
+            </a>
           </div>
 
           <div className="my-6 inline-flex items-center gap-3 rounded-full bg-white px-5 py-3">

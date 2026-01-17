@@ -8,7 +8,7 @@ import AuthModal from "@/components/auth/AuthModal";
 import { useRouter } from "next/navigation";
 import PropertyCard from "@/components/cards/PropertyCard";
 import getPropertyImages from "@/utils/getPropertyImages";
-import Loader from "@/components/ui/loader";
+import Loader, { PropertyCardSkeleton } from "@/components/ui/loader";
 
 export default function TopProperties() {
   const LIMIT = 6;
@@ -26,18 +26,18 @@ export default function TopProperties() {
   const [favoriteLoading, setFavoriteLoading] = useState<
     Record<string, boolean>
   >({});
-  
+
   const [joinGroupStates, setJoinGroupStates] = useState<
     Record<string, boolean>
   >({});
   const [joinGroupLoading, setJoinGroupLoading] = useState<
     Record<string, boolean>
   >({});
-  
+
   const [currentImageIndex, setCurrentImageIndex] = useState<
     Record<string, number>
   >({});
- 
+
   const [hoveredProperty, setHoveredProperty] = useState<string | null>(null);
   const { data: locationsData } = useApi(() => homeService.getLocations());
 
@@ -346,8 +346,10 @@ export default function TopProperties() {
 
         {/* Loading State */}
         {isLoadingMore && properties.length === 0 && (
-          <div className="flex justify-center items-center py-20">
-            <div className="text-gray-500"><Loader size={38} /></div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <PropertyCardSkeleton key={i} />
+            ))}
           </div>
         )}
 

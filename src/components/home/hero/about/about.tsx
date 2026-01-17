@@ -45,7 +45,7 @@ export default function AboutSection() {
   }, []);
 
   return (
-    <section className="relative w-full bg-[#F2F5F9] overflow-hidden">
+    <section id="about" className="relative w-full bg-[#F2F5F9] overflow-hidden">
       <svg
         className="absolute inset-0 w-full h-full pointer-events-none"
         xmlns="http://www.w3.org/2000/svg"

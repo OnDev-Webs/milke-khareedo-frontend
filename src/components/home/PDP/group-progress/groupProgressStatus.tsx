@@ -133,7 +133,6 @@ export default function PDPGroupProgressStatus({
                     return (
                       <div
                         key={member.userId}
-                        style={{ zIndex: 50 - index }}
                         className="relative shrink-0 w-[80px] rounded-2xl border border-[#F3F3F3] bg-white px-3 py-3 flex flex-col items-center text-center shadow-[2px_0px_10px_0px_#0000000D]"
                       >
                         {/* Avatar */}

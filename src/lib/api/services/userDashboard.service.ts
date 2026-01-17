@@ -4,15 +4,15 @@ import type { ApiResponse } from "../types";
 
 
 type PaginationMeta = {
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
 };
 
 type PaginatedData<T> = {
-  data: T[];
-  pagination: PaginationMeta;
+    data: T[];
+    pagination: PaginationMeta;
 };
 
 
@@ -75,40 +75,54 @@ export type SavePreferencesPayload = PreferencesApi;
 
 
 export type GetProfileResponse = {
-  user: {
+    user: {
+        firstName: string;
+        lastName: string;
+        email: string;
+        phoneNumber: string;
+        countryCode: string;
+        address?: string | null;
+        pincode?: string | null;
+        country?: string | null;
+        state?: string | null;
+        city?: string | null;
+        isPhoneVerified: boolean;
+    };
+};
+
+
+export type UpdateProfilePayload = {
     firstName: string;
     lastName: string;
     email: string;
     phoneNumber: string;
     countryCode: string;
-    address?: string | null;
-    pincode?: string | null;
-    country?: string | null;
-    state?: string | null;
-    city?: string | null;
-    isPhoneVerified: boolean;
-  };
+    address: string;
+    pincode: string;
+    city: string;
+    state: string;
+    country: string;
 };
 
 
-export type UpdateProfilePayload = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  countryCode: string;
-  address: string;
-  pincode: string;
-  city: string;
-  state: string;
-  country: string;
+export type VisitedPropertyItem = {
+    property: PropertyApi;
+    lastViewedAt?: string;
 };
 
+export type VisitedPropertiesResponse = {
+    upcoming: VisitedPropertyItem[];
+    completed: VisitedPropertyItem[];
+};
 
 
 export const userDashboardService = {
-   getVisitedProperties: (): Promise<ApiResponse<PaginatedData<PropertyApi>>> =>
-  apiClient.get(API_ENDPOINTS.USER_DASHBOARD.VISITED_PROPERTIES),
+    //    getVisitedProperties: (): Promise<ApiResponse<PaginatedData<PropertyApi>>> =>
+    //   apiClient.get(API_ENDPOINTS.USER_DASHBOARD.VISITED_PROPERTIES),
+
+
+    getVisitedProperties: (): Promise<ApiResponse<VisitedPropertiesResponse>> =>
+        apiClient.get(API_ENDPOINTS.USER_DASHBOARD.VISITED_PROPERTIES),
 
 
     getViewedProperties: (): Promise<ApiResponse<PropertyApi[]>> =>
@@ -144,5 +158,5 @@ export const userDashboardService = {
     updateUserProfile: (data: UpdateProfilePayload) =>
         apiClient.put(API_ENDPOINTS.USER_DASHBOARD.UPDATE_PROFILE, data),
 
-   
+
 };

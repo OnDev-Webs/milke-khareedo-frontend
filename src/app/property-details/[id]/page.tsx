@@ -17,7 +17,7 @@ import { homeService, type PropertyDetail, type SimilarProject } from "@/lib/api
 import { useCompare } from "@/contexts/CompareContext";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Loader from "@/components/ui/loader";
+import { PDPDetailSkeleton } from "@/components/ui/loader";
 
 export default function PropertyDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { clearAndAddToCompare } = useCompare();
@@ -55,11 +55,7 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
   }, [propertyId]);
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-lg text-gray-600"><Loader size={38}/></div>
-      </div>
-    );
+    return <PDPDetailSkeleton />;
   }
 
   if (!property) {
@@ -102,7 +98,7 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
       image: property.image,
       developer: property.developer?.name || "",
     });
-    router.push("/compare"); 
+    router.push("/compare");
   };
 
   const handleShareClick = () => {

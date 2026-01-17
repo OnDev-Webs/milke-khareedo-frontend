@@ -129,9 +129,13 @@ export default function Header() {
                     <Image
                       src={user.profileImage}
                       alt={user.name || "Profile"}
-                      fill
-                      className="object-cover"
+                      width={44}
+                      height={44}
+                      unoptimized
+                      className="rounded-full object-cover"
                     />
+
+
                   ) : (
                     <LucideCircleUserRound className="h-5 w-5" />
                   )}
@@ -153,10 +157,14 @@ export default function Header() {
                           {user?.profileImage ? (
                             <Image
                               src={user.profileImage}
-                              alt={user.name || "User"}
-                              fill
-                              className="object-cover"
+                              alt={user.name || "Profile"}
+                              width={40}
+                              height={40}
+                              unoptimized
+                              className="rounded-full object-cover"
                             />
+
+
                           ) : (
                             <LucideCircleUserRound className="h-full w-full p-2 text-gray-500" />
                           )}

@@ -1,8 +1,9 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { homeService, type Property } from "@/lib/api/services/home.service";
 import { useAuthContext } from "@/contexts/AuthContext";
+import { userDashboardService } from "@/lib/api";
 
 type PendingAction =
     | { type: "favorite"; propertyId: string }
@@ -15,44 +16,50 @@ export function usePropertyActions() {
     const [pendingAction, setPendingAction] =
         useState<PendingAction>(null);
 
-    const [favoriteStates, setFavoriteStates] = useState<Record<string, boolean>>(
-        {}
+    const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set());
+    const favoriteStates = Object.fromEntries(
+        Array.from(favoriteIds).map(id => [id, true])
     );
+
 
     const [favoriteLoading, setFavoriteLoading] = useState<Record<string, boolean>>(
         {}
     );
+    useEffect(() => {
+        if (!checkAuth()) return;
 
-    const initFavorites = useCallback(
-        (properties: { id: string; isFavorite?: boolean }[]) => {
-            const map: Record<string, boolean> = {};
-            properties.forEach((p) => {
-                if (p.isFavorite) map[p.id] = true;
-            });
-            setFavoriteStates(map);
-        },
-        []
-    );
+        userDashboardService.getFavoriteProperties().then((res) => {
+            if (!res.success || !res.data) return;
+
+            const ids = res.data.map((p) => p.id);
+            setFavoriteIds(new Set(ids));
+        });
+    }, [checkAuth]);
+
+
 
     const handleFavoriteClick = async (property: Property) => {
         if (!checkAuth()) return;
 
-        setFavoriteLoading((prev) => ({ ...prev, [property.id]: true }));
+        if (favoriteLoading[property.id]) return;
+
+        setFavoriteLoading(prev => ({ ...prev, [property.id]: true }));
 
         try {
-            const response = await homeService.toggleFavorite(property.id);
+            await homeService.toggleFavorite(property.id);
 
-            if (response?.success && response.data) {
-                const favoriteData = response.data;
-                setFavoriteStates((prev) => ({
-                    ...prev,
-                    [property.id]: favoriteData.isFavorite,
-                }));
-            }
+            setFavoriteIds(prev => {
+                const next = new Set(prev);
+                next.has(property.id)
+                    ? next.delete(property.id)
+                    : next.add(property.id);
+                return next;
+            });
         } finally {
-            setFavoriteLoading((prev) => ({ ...prev, [property.id]: false }));
+            setFavoriteLoading(prev => ({ ...prev, [property.id]: false }));
         }
     };
+
 
     const handleShareClick = async (property: Property) => {
         const shareUrl = `${window.location.origin}/property-details/${property.id}`;
@@ -95,8 +102,6 @@ export function usePropertyActions() {
         favoriteStates,
         favoriteLoading,
         showAuthModal,
-        initFavorites,
-        setFavoriteStates,
         handleFavoriteClick,
         handleShareClick,
         handleAuthSuccess,

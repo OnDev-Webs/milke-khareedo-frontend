@@ -86,7 +86,7 @@ export default function Hero() {
 
   return (
     <section className="relative w-full py-10">
-      <div className="relative mx-auto w-full max-w-[1380px] h-auto md:h-[450px] overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-6 shadow-md">
+      <div className="max-w-6xl mx-auto relative w-full h-auto md:h-[450px] overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-6 shadow-md">
         <div className="relative z-10 w-full md:w-[60%] pt-10 md:pt-10 ps-4 md:ps-6">
           <p className="font-medium text-[#585981] mb-2">
             Buying a home is a big decision.
@@ -151,11 +151,11 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="absolute -bottom-5 left-1/2 w-[95%] md:w-[1250px] -translate-x-1/2 z-0">
-        <div className="flex flex-col md:flex-row items-stretch rounded-2xl bg-white/70 backdrop-blur-md p-0 overflow-visible shadow-[0_12px_40px_rgba(0,0,0,0.10)]">
+      <div className="absolute -bottom-5 left-1/2 w-[95%] md:w-[1250px] max-w-5xl -translate-x-1/2 z-0">
+        <div className="flex flex-col md:flex-row items-stretch py-2 md:py-3 rounded-2xl bg-white/70 backdrop-blur-md p-0 overflow-visible shadow-[0_12px_40px_rgba(0,0,0,0.10)]">
 
           {/* CITY SELECT SECTION */}
-          <div className="relative flex flex-col justify-center ps-6 pe-4 py-4 min-w-[130px]">
+          <div className="relative flex flex-col justify-center ps-6 pe-4 py-4 min-w-[130px] border-b border-[#DCDCEB] md:border-b-0">
             <label className="text-sm font-bold text-gray-800 mb-2.5">
               City
             </label>
@@ -168,8 +168,7 @@ export default function Hero() {
               />
             </div>
             <span
-              className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2
-                   h-10 w-0.5 bg-[#DCDCEB]"
+              className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 h-10 w-0.5 bg-[#DCDCEB]"
             />
           </div>
 
@@ -196,7 +195,7 @@ export default function Hero() {
               <div
                 className={`absolute left-0 top-full mt-1.5 flex items-center gap-1.5 text-xs text-gray-500 pointer-events-none transition-opacity duration-300 ${searchQuery || isSearchFocused ? "opacity-0" : "opacity-100"}`}
               >
-                <MapPin className="text-gray-500 text-xs w-4 h-14px shrink-0" />
+                <MapPin className="text-gray-500 text-xs w-4 h-[14px] shrink-0" />
                 <span>Search for Developers, Location, Projects</span>
               </div>
             </div>
@@ -207,7 +206,7 @@ export default function Hero() {
             <button
               onClick={handleSearch}
               disabled={isSearching}
-              className="h-12 w-full md:w-auto md:min-w-[140px] rounded-full bg-[#1C4692] text-white flex items-center justify-center gap-2 font-medium shadow-md hover:bg-[#1C4692] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="h-12 w-full md:w-auto mt-4 md:mt-0 md:min-w-[140px] rounded-full bg-[#1C4692] text-white flex items-center justify-center gap-2 font-medium shadow-md hover:bg-[#1C4692] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Search className="text-white text-sm h-5 w-5" />
               <span className="text-lg">

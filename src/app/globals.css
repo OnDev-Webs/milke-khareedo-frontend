@@ -1,9 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
 :root {
-  --font-figtree-sans: 'Figtree', sans-serif;
+  --font-figtree-sans: "Figtree", sans-serif;
 }
 
 html,
@@ -208,6 +207,33 @@ html {
   background-image: url("../assets/not-found-vector-right.png");
 }
 
+@media (max-width: 768px) {
+  .not-found::before,
+  .not-found::after {
+    width: 160px;
+    height: 260px;
+    bottom: -40px;
+    opacity: 0.7;
+  }
+
+  .not-found::before {
+    left: -40px;
+  }
+
+  .not-found::after {
+    right: -40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .not-found::before,
+  .not-found::after {
+    width: 120px;
+    height: 200px;
+    opacity: 0.5;
+  }
+}
+
 .custom-swiper-scrollbar {
   width: 100% x !important;
   height: 4px;
@@ -375,7 +401,7 @@ button {
 }
 
 .blog-content a {
-  color: #1C4692;
+  color: #1c4692;
   text-decoration: underline;
 }
 
@@ -391,7 +417,7 @@ button {
 }
 
 .blog-content blockquote {
-  border-left: 4px solid #1C4692;
+  border-left: 4px solid #1c4692;
   padding-left: 1rem;
   margin: 1.5rem 0;
   font-style: italic;

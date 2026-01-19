@@ -2,23 +2,22 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Logo from "@/assets/logo.svg";
 import Image from "next/image";
-import CompareIcon from "./CompareIcon";
 import { useAuthContext } from "@/contexts/AuthContext";
 import AuthModal from "@/components/auth/AuthModal";
 import { IoPerson, IoChevronDown } from "react-icons/io5";
 import { HiOutlineMenu } from "react-icons/hi";
-import { Building2, CircleUserRound, GitCompare, Globe, HeartIcon, LucideCircleUserRound, Search, SlidersHorizontal } from "lucide-react";
+import { Building2, Globe, HeartIcon, LucideCircleUserRound, Search, SlidersHorizontal } from "lucide-react";
 import CompareOverlay from "../home/compare/CompareOverlay";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
   { label: "Properties", href: "/properties" },
-  { label: "Contact Us", href: "/contact" },
   { label: "Blogs", href: "/blogs" },
+  { label: "About Us", href: "/about" },
+  { label: "Contact Us", href: "/contact" },
 ];
 
 export default function Header() {
@@ -31,9 +30,24 @@ export default function Header() {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showCompare, setShowCompare] = useState(false);
 
-
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname?.startsWith(href);
+
+  const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleOpenCompare = () => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+    setShowCompare(true);
+  };
+
+  const handleCloseCompare = () => {
+    closeTimerRef.current = setTimeout(() => {
+      setShowCompare(false);
+    }, 200);
+  };
 
   return (
     <header className="w-full bg-white relative z-20">
@@ -74,16 +88,14 @@ export default function Header() {
           {/* Right Side Icons */}
           <div className="flex items-center gap-3">
             {!isDashboard && (
-              <div
-                className="relative"
-                onMouseEnter={() => setShowCompare(true)}
-                onMouseLeave={() => setShowCompare(false)}
-              >
+              <div className="relative">
                 <button
                   type="button"
                   aria-label="Compare"
+                  onMouseEnter={handleOpenCompare}
+                  onMouseLeave={handleCloseCompare}
                   onClick={() => setShowCompare((v) => !v)}
-                  className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-gray-100 bg-[#F3F6FF] transition"
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-[#F3F6FF] hover:bg-gray-100 transition"
                 >
                   <Image
                     src="/images/convertshape.svg"
@@ -94,7 +106,11 @@ export default function Header() {
                   />
                 </button>
                 {showCompare && (
-                  <div className="absolute right-0 top-14 z-50">
+                  <div
+                    className="absolute right-0 top-14 z-50"
+                    onMouseEnter={handleOpenCompare}
+                    onMouseLeave={handleCloseCompare}
+                  >
                     <CompareOverlay />
                   </div>
                 )}
@@ -113,9 +129,13 @@ export default function Header() {
                     <Image
                       src={user.profileImage}
                       alt={user.name || "Profile"}
-                      fill
-                      className="object-cover"
+                      width={44}
+                      height={44}
+                      unoptimized
+                      className="rounded-full object-cover"
                     />
+
+
                   ) : (
                     <LucideCircleUserRound className="h-5 w-5" />
                   )}
@@ -137,10 +157,14 @@ export default function Header() {
                           {user?.profileImage ? (
                             <Image
                               src={user.profileImage}
-                              alt={user.name || "User"}
-                              fill
-                              className="object-cover"
+                              alt={user.name || "Profile"}
+                              width={40}
+                              height={40}
+                              unoptimized
+                              className="rounded-full object-cover"
                             />
+
+
                           ) : (
                             <LucideCircleUserRound className="h-full w-full p-2 text-gray-500" />
                           )}
@@ -226,7 +250,6 @@ export default function Header() {
                         })}
                       </div>
 
-
                       {/* Logout */}
                       <div className="px-4 pb-4">
                         <button
@@ -241,7 +264,6 @@ export default function Header() {
                         </button>
                       </div>
                     </div>
-
                   </>
                 )}
               </div>

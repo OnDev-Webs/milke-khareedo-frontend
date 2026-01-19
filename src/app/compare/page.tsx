@@ -11,6 +11,7 @@ import {
   type Property,
   type CompareProperty,
 } from "@/lib/api/services/home.service";
+import Loader from "@/components/ui/loader";
 
 export default function ComparePage() {
   const { compareItems, removeFromCompare, addToCompare, isInCompare } =
@@ -294,7 +295,7 @@ export default function ComparePage() {
               <div className="text-center">
                 <div className="mb-4 inline-block h-8 w-8 animate-spin rounded-full border-4 border-[#1C4692] border-t-transparent"></div>
                 <p className="text-sm text-gray-600">
-                  Loading comparison data...
+                  <Loader size={38}/>
                 </p>
               </div>
             </div>

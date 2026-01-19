@@ -9,8 +9,13 @@ import {
   FaLinkedinIn,
   FaInstagram,
 } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 export default function FooterSection() {
+  const router = useRouter();
+  const { isAuthenticated } = useAuthContext();
+
   return (
     <footer className="w-full bg-[#F5F5F5] px-10">
       <div className="mx-auto max-w-[1300px] py-12 lg:py-16">
@@ -91,7 +96,7 @@ export default function FooterSection() {
                 </li>
                 <li>
                   <Link
-                    href="/group-buying"
+                    href="/blogs"
                     className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     Our Approach
@@ -99,7 +104,7 @@ export default function FooterSection() {
                 </li>
                 <li>
                   <Link
-                    href="/how-it-works"
+                    href="/#how-it-works"
                     className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     How it Works
@@ -107,7 +112,7 @@ export default function FooterSection() {
                 </li>
                 <li>
                   <Link
-                    href="/case-studies"
+                    href="/blogs"
                     className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     Case Studies
@@ -132,7 +137,7 @@ export default function FooterSection() {
               <ul className="space-y-3">
                 <li>
                   <Link
-                    href="/first-time-buyers"
+                    href="/"
                     className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     First-Time Buyers
@@ -156,7 +161,7 @@ export default function FooterSection() {
                 </li>
                 <li>
                   <Link
-                    href="/faqs"
+                    href="/#FAQS"
                     className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     FAQ's

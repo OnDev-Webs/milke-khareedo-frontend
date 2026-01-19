@@ -336,6 +336,12 @@ export default function PropertyCard({
 
   const formatPercentage = (value: string) => value.replace(/\.00%$/, "%");
 
+  const hasValidDiscount = (value?: string) => {
+    if (!value) return false;
+    const num = Number(value.replace("%", ""));
+    return num > 0;
+  };
+
   return (
     <div
       className="relative flex flex-col bg-white rounded-3xl p-4 shadow-lg overflow-hidden group cursor-pointer"

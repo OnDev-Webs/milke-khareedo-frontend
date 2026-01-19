@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { homeService } from "@/lib/api/services/home.service";
 import type { Blog } from "@/lib/api/services/home.service";
 import Link from "next/link";
+import Loader from "../ui/loader";
 
 interface RecentBlogProps {
   excludeBlogId?: string;
@@ -57,7 +58,7 @@ const RecentBlog = ({ excludeBlogId, excludeSlug }: RecentBlogProps) => {
       <section className="py-[30px] md:py-[50px]">
         <div className="container mx-auto px-4 md:px-0">
           <div className="flex justify-center items-center py-10">
-            <div className="text-gray-500">Loading recent blogs...</div>
+            <div className="text-gray-500"><Loader size={38}/></div>
           </div>
         </div>
       </section>
@@ -72,12 +73,12 @@ const RecentBlog = ({ excludeBlogId, excludeSlug }: RecentBlogProps) => {
     <>
       <section className="py-[30px] md:py-[50px]">
         <div className="container mx-auto">
-          <div className="mb-[34px] flex justify-between items-start gap-4">
-            <Heading className="text-black">Recent Blogs</Heading>
+          <div className="flex justify-between items-start gap-4">
+            <Heading className="text-black mb-6">Recent Blogs</Heading>
             <Link href="/blogs">
               <Button
                 variant={"ghost"}
-                className="rounded-[110px] text-base border border-[#F5F5F5] md:text-base"
+                className="rounded-[110px] mt-4 text-[16px] text-[#2D2D2D] font-semibold border border-[#F5F5F5] py-4 px-6"
               >
                 View All
               </Button>
@@ -85,15 +86,23 @@ const RecentBlog = ({ excludeBlogId, excludeSlug }: RecentBlogProps) => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 mt-4">
             {visibleBlogs.map((blog) => (
-              <BlogCard
+              <Link
                 key={blog._id}
-                image={blog.bannerImage}
-                date={blog.date}
-                title={blog.title}
-                description={blog.subtitle}
-                buttonText="Read More"
                 href={`/blogs/${blog.slug}`}
-              />
+                className="block"
+              >
+                <BlogCard
+                  key={blog._id}
+                  image={blog.bannerImage}
+                  date={blog.date}
+                  title={blog.title}
+                  description={blog.subtitle}
+                  content={blog.content}
+                  category={blog.category}
+                  buttonText="Read More"
+                  href={`/blogs/${blog.slug}`}
+                />
+              </Link>
             ))}
           </div>
           {hasMore && (

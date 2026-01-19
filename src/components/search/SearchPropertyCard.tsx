@@ -3,33 +3,66 @@
 import Image from "next/image";
 import { useState } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
-import { IoChevronBack, IoChevronForward } from "react-icons/io5";
+import { IoHeart, IoHeartOutline, IoShareSocialOutline } from "react-icons/io5";
 import { Property } from "@/lib/api/services/home.service";
+import Link from "next/link";
+import upPrice from "@/assets/upPrice.svg";
 
 interface SearchPropertyCardProps {
   property: Property;
   images: string[];
+  isFavorite: boolean;
+  isFavoriteLoading?: boolean;
+  isJoinGroup: boolean;
+  isJoinGroupLoading?: boolean;
+  onFavoriteClick: (property: Property) => void;
+  onCompareClick: (property: Property) => void;
+  onShareClick: (property: Property) => void;
+  onJoinGroupClick: (property: Property) => void;
 }
 
 export default function SearchPropertyCard({
   property,
   images,
+  isFavorite,
+  isFavoriteLoading,
+  isJoinGroup,
+  isJoinGroupLoading,
+  onFavoriteClick,
+  onCompareClick,
+  onShareClick,
+  onJoinGroupClick,
 }: SearchPropertyCardProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isFavorite, setIsFavorite] = useState(property.isFavorite ?? false);
   const currentImage = images[currentIndex] || null;
   const hasMultipleImages = images.length > 1;
+  const [isHovered, setIsHovered] = useState(false);
 
-  const goToNextImage = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
+  const formatTwoDigits = (value: number) => {
+    return value.toString().padStart(2, "0");
   };
 
-  const goToPreviousImage = () => {
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  const formatPercentage = (value: string) => {
+    return value.replace(/\.00%$/, "%");
+  };
+
+  const hasValidDiscount = (value?: string) => {
+    if (!value) return false;
+    const num = Number(value.replace("%", ""));
+    return num > 0;
   };
 
   return (
-    <div className="flex flex-col rounded-3xl bg-white shadow-lg overflow-hidden group">
+    <div
+      className="relative flex flex-col rounded-3xl bg-white shadow-lg overflow-hidden group cursor-pointer"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <Link
+        href={`/property-details/${property.id}`}
+        className="absolute inset-0 z-10"
+      />
+
       {/* Image Section */}
       <div className="relative h-52 w-full bg-gray-100 flex items-center justify-center overflow-hidden">
         {currentImage ? (
@@ -39,32 +72,70 @@ export default function SearchPropertyCard({
             alt={`${property.projectName} - Image ${currentIndex + 1}`}
             className="object-cover transition-opacity duration-300"
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
           <div className="text-gray-400 text-sm">No Image</div>
         )}
 
-        {/* Navigation Arrows - Only show if multiple images */}
-        {hasMultipleImages && (
-          <>
+        {/* LAST DAY TO JOIN */}
+        {property.lastDayToJoin && (
+          <div className="absolute top-3 left-3 bg-white/80 backdrop-blur px-3 py-1 rounded-md text-xs shadow z-20">
+            {property.lastDayToJoin}
+          </div>
+        )}
+
+        {/* RIGHT SIDE ICONS */}
+        <div
+          className={`absolute top-3 right-3 flex flex-col gap-2 z-20 transition-all duration-300 ${isHovered
+            ? "opacity-100 visible translate-y-0"
+            : "opacity-0 invisible -translate-y-2 pointer-events-none"
+            }`}
+        >
+          <div
+            className={`absolute top-3 right-3 flex flex-col gap-2 z-20 transition-all duration-300 ${isHovered
+              ? "opacity-100 visible translate-y-0"
+              : "opacity-0 invisible -translate-y-2 pointer-events-none"
+              }`}
+          >
+            {/* Heart Icon (Favorite) */}
             <button
-              onClick={goToPreviousImage}
-              className="absolute left-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 hover:bg-white shadow-lg transition-all duration-300 z-10 border border-gray-200 backdrop-blur-sm opacity-100 visible scale-100"
-              aria-label="Previous image"
+              onClick={(e) => {
+                e.stopPropagation();
+                onFavoriteClick(property);
+              }}
+              disabled={isFavoriteLoading}
+              className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all border-white bg-white/90`}
             >
-              <IoChevronBack className="h-5 w-5" />
+              {isFavorite ? (
+                <IoHeart className="h-5 w-5 text-red-500" />
+              ) : (
+                <IoHeartOutline className="h-5 w-5 text-gray-700" />
+              )}
             </button>
 
+            {/* Compare Icon */}
             <button
-              onClick={goToNextImage}
-              className="absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 hover:bg-white shadow-lg transition-all duration-300 z-10 border border-gray-200 backdrop-blur-sm opacity-100 visible scale-100"
-              aria-label="Next image"
+              onClick={(e) => {
+                e.stopPropagation();
+                onCompareClick(property);
+              }}
+              className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-white/90"
             >
-              <IoChevronForward className="h-5 w-5" />
+              <Image src="/images/convert.svg" alt="Compare" width={20} height={20} />
             </button>
-          </>
-        )}
+
+            {/* Share Icon */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onShareClick(property);
+              }}
+              className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-white/90"
+            >
+              <IoShareSocialOutline className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
 
         {/* Image Navigation Dots */}
         {hasMultipleImages && (
@@ -73,11 +144,10 @@ export default function SearchPropertyCard({
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`transition-all ${
-                  index === currentIndex
-                    ? "h-1.5 w-6 rounded-full bg-[#1C4692]"
-                    : "h-1.5 w-1.5 rounded-full bg-white hover:bg-white/80"
-                }`}
+                className={`transition-all ${index === currentIndex
+                  ? "h-1.5 w-6 rounded-full bg-[#1C4692]"
+                  : "h-1.5 w-1.5 rounded-full bg-white hover:bg-white/80"
+                  }`}
                 aria-label={`Go to image ${index + 1}`}
               />
             ))}
@@ -88,16 +158,16 @@ export default function SearchPropertyCard({
       {/* Content Section */}
       <div className="p-4">
         {/* Title + Location + Call button */}
-        <div className="flex justify-between items-start mb-3">
+        <div className="flex justify-between items-start mb-4">
           <div className="flex-1 min-w-0">
             <h3 className="text-[20px] font-semibold text-black truncate">
               {property.projectName}
             </h3>
-            <p className="text-[15px] text-[#828282] mt-1 truncate">
+            <p className="text-[15px] text-[#828282] truncate">
               {property.location}
             </p>
           </div>
-          <button className="bg-[#66AE39] text-white px-3 py-2 rounded-full flex items-center gap-1 text-xs shrink-0 ml-2 hover:bg-[#5a9a32] transition-colors">
+          <button className="relative z-20 bg-[#66AE39] text-white px-3 py-2 rounded-full flex items-center gap-1 text-xs shrink-0 ml-2 hover:bg-[#5a9a32] transition-colors">
             <FaPhoneAlt /> Call
           </button>
         </div>
@@ -105,53 +175,83 @@ export default function SearchPropertyCard({
         {/* Group Size + Opening */}
         <div className="flex justify-between mt-2 mb-2 gap-2">
           <div className="flex flex-col items-center bg-[#EEF4FF] px-4 py-2 rounded-lg text-center flex-1">
-            <span className="text-[14px] text-black font-semibold">
+            <span className="text-[16px] text-[#000000] font-semibold">
               Group Size
             </span>
-            <span className="text-base font-bold text-[#1C4692] mt-1">
-              {property.groupSizeFormatted}
+            <span className="text-[20px] font-bold text-[#1C4692]">
+              {formatTwoDigits(property.groupSize)}{" "}
+              <span className="text-[14px] text-[#525252] font-normal">
+                Members
+              </span>
             </span>
-            {/* <span className="text-xs text-black mt-0.5">Members</span> */}
           </div>
           <div className="flex flex-col items-center bg-[#EEF4FF] px-4 py-2 rounded-lg text-center flex-1">
-            <span className="text-[14px] text-black font-semibold">
+            <span className="text-[16px] text-[#000000] font-semibold">
               Opening
             </span>
-            <span className="text-base font-bold text-[#1C4692] mt-1">
-              {property.openingFormatted}
+            <span className="text-[20px] font-bold text-[#1C4692]">
+              {formatTwoDigits(property.openingLeft)}{" "}
+              <span className="text-[14px] text-[#525252] font-normal">
+                Left
+              </span>
             </span>
-            {/* <span className="text-xs text-black mt-0.5">Left</span> */}
           </div>
         </div>
 
         {/* Target Price + Developer Price */}
-        <div className="flex justify-between items-start mt-3">
+        <div className="flex justify-between items-start mt-3 bg-[#EEF4FF] px-3 py-2 rounded-[15px]">
           <div>
-            <span className="text-xs text-gray-500">Target Price</span>
-            <div className="text-base font-bold text-gray-800">
+            <span className="text-[14px] text-[#000000] font-normal">Target Price</span>
+            <div className="text-[19px] font-bold text-[#000000]">
               {property.targetPrice?.formatted}
             </div>
             {property.discount && (
-              <span className="mt-1 inline-block bg-[#FFFFFF] border border-[#F6F6F6] rounded-xl pe-10 ps-1 py-0.5 text-xs font-semibold text-[#66AE39]">
+              <span className="mt-2 inline-flex items-center w-[252px] h-[26px] gap-1.5 bg-white border border-[#F6F6F6] rounded-xl px-2 py-0.5 text-xs font-semibold text-[#66AE39]">
+                <Image
+                  src={upPrice}
+                  alt="Offer"
+                  width={14}
+                  height={14}
+                  className="object-contain"
+                />
                 {property.discount.displayText}
               </span>
             )}
           </div>
 
           <div className="text-right">
-            <span className="text-xs text-gray-500">Developer price</span>
-            <div className="text-sm font-semibold text-gray-400 line-through">
-              {property.developerPrice?.formatted}
+            <span className="text-[14px] text-[#000000] font-normal">Developer price</span>
+            <div className="text-[16px] font-semibold text-[#4B4B4B] line-through">
+              {property.developerPrice.formatted}
             </div>
-            <span className="mt-1 inline-block rounded-full bg-white border border-[#F6F6F6] px-2 py-0.5 text-xs font-semibold text-[#FF3232]">
-              {property.discountPercentage}
-            </span>
+            <div className="mt-3 h-[26px]">
+              {hasValidDiscount(property.discountPercentage) && (
+                <span className="inline-block rounded-full w-[94px] h-[26px] bg-white border border-[#F6F6F6] px-2 py-1 text-xs font-semibold text-[#FF3232]">
+                  {formatPercentage(property.discountPercentage)} Off*
+                </span>
+              )}
+            </div>
           </div>
         </div>
 
         {/* Join Group Button */}
-        <button className="mt-4 w-full bg-[#1C4692] hover:bg-[#1c4692e6] text-white py-3 rounded-3xl font-semibold  transition-colors">
-          Join Group
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onJoinGroupClick(property);
+          }}
+          disabled={isJoinGroup || isJoinGroupLoading}
+          className={`mt-4 w-full py-3 rounded-3xl font-semibold
+          ${isJoinGroup
+              ? "bg-white border-2 border-[#1C4692] text-[#1C4692]"
+              : "bg-[#1C4692] text-white"}
+          `}
+        >
+          {isJoinGroup
+            ? "Joined"
+            : isJoinGroupLoading
+              ? "Joining..."
+              : "Join Group"}
         </button>
       </div>
     </div>

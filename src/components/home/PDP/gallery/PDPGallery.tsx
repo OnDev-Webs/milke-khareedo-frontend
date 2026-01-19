@@ -27,8 +27,6 @@ export default function PDPGallery({
   images,
   mainImage,
   imageDetails,
-  reraQrImage,
-  reraDetailsLink,
 }: PDPGalleryProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,7 +47,7 @@ export default function PDPGallery({
   };
 
   return (
-    <section className="w-full bg-white py-10">
+    <section className="w-full bg-white py-10 px-10">
       <div className="mx-auto container max-md:px-4">
         <Breadcrumb className="mb-[30px]">
           <BreadcrumbList>

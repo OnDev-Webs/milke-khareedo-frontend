@@ -19,9 +19,10 @@ type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 interface ContactFormProps {
   className?: string;
+  nameMode?: "split" | "full";
 }
 
-export default function ContactForm({ className }: ContactFormProps) {
+export default function ContactForm({ className, nameMode = "split" }: ContactFormProps) {
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -33,8 +34,28 @@ export default function ContactForm({ className }: ContactFormProps) {
     },
   });
 
+  const isSingleColumn = nameMode === "full";
+
+
   function handleFormSubmit(values: ContactFormValues) {
-    console.log("values", values);
+    let firstName = values.firstName;
+    let lastName = values.lastName || "";
+
+    if (!values.lastName) {
+      const nameParts = values.firstName.trim().split(/\s+/);
+
+      firstName = nameParts[0] || "";
+      lastName = nameParts.slice(1).join(" ") || "";
+    }
+
+    const payload = {
+      ...values,
+      firstName,
+      lastName,
+    };
+
+    console.log("FINAL PAYLOAD 👉", payload);
+
   }
 
   return (
@@ -68,7 +89,7 @@ export default function ContactForm({ className }: ContactFormProps) {
                   Last Name <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter here" {...field} className="h-12 border border-[#262626] placeholder:text-[#BABABA] placeholder:text-[16px]" />
+                  <Input {...field} placeholder="Enter full name" className="h-12 border border-[#262626]" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

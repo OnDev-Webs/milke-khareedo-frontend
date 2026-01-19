@@ -5,6 +5,7 @@ import { FreeMode, Scrollbar } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/scrollbar";
+import { useEffect, useRef, useState } from "react";
 
 const steps = [
   {
@@ -60,8 +61,52 @@ const steps = [
 ];
 
 export default function HowItWorks() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const swiperRef = useRef<any>(null);
+  const [isLocked, setIsLocked] = useState(false);
+
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (!sectionRef.current || !swiperRef.current) return;
+      if (window.innerWidth < 1024) return;
+
+      const rect = sectionRef.current.getBoundingClientRect();
+      const swiper = swiperRef.current;
+
+      const sectionInView =
+        rect.top <= 0 && rect.bottom >= window.innerHeight * 0.5;
+
+      if (!sectionInView) return;
+
+      const isAtEnd = swiper.isEnd;
+      const isAtStart = swiper.isBeginning;
+      const scrollingDown = e.deltaY > 0;
+      const scrollingUp = e.deltaY < 0;
+
+      if (
+        (scrollingDown && !isAtEnd) ||
+        (scrollingUp && !isAtStart)
+      ) {
+        e.preventDefault();
+        setIsLocked(true);
+
+        swiper.setTranslate(
+          swiper.getTranslate() - e.deltaY * 0.8 
+        );
+        swiper.updateProgress();
+        swiper.updateActiveIndex();
+      } else {
+        setIsLocked(false);
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, []);
+
+
   return (
-    <section className="w-full bg-white py-14 px-4 md:px-16">
+    <section id="how-it-works" className="w-full bg-white py-14 px-4 md:px-16" ref={sectionRef}>
       <div className="mx-auto max-w-7xl">
         {/* Heading */}
         <h2 className="text-[24px] md:text-[30px] font-semibold text-[#000000] mb-2">
@@ -93,6 +138,7 @@ export default function HowItWorks() {
 
         <div className="relative">
           <Swiper
+            onSwiper={(swiper) => (swiperRef.current = swiper)}
             slidesPerView={1}
             spaceBetween={16}
             breakpoints={{

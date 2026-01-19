@@ -31,7 +31,7 @@ export default function CompanyOverview() {
       <div className="max-w-6xl mx-auto">
         {/* Title */}
         <div className="flex items-center justify-center mb-12 md:mb-20 w-fit mx-auto">
-          <Title text={"Company"} drawLineText={"Overview"} isDrawLine />
+          <Title text="Company" drawLineText="Overview" isDrawLine />
         </div>
 
         {/* Content */}
@@ -50,21 +50,21 @@ export default function CompanyOverview() {
             {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-2 place-items-start"> */}
             <div className="grid grid-cols-1 gap-5 place-items-center md:grid-cols-2 md:place-items-start">
 
+            {/* FEATURES */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 max-w-[620px]">
               {features.map((item, idx) => (
                 <div
                   key={idx}
                   className="flex items-center gap-4 rounded-2xl bg-[#EEF4FF] px-5 py-4 shadow-[0_10px_20px_rgba(0,0,0,0.04)] h-[144px] min-h-[144px] max-h-[144px] box-border">
                   {/* ICON BOX – SAME AS MISSION / VISION */}
                   <div className="relative flex h-[80px] w-[80px] items-center justify-center rounded-xl overflow-hidden shrink-0">
-                    {/* Background */}
                     <Image
                       src="/images/LightGradient.svg"
                       alt="LightGradient"
                       width={80}
                       height={80}
-                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                      className="absolute inset-0"
                     />
-                    {/* Icon */}
                     <Image
                       src={item.icon}
                       alt={item.title}
@@ -73,13 +73,12 @@ export default function CompanyOverview() {
                       className="relative z-10 object-contain"
                     />
                   </div>
-
-                  {/* CONTENT */}
-                  <div className="flex flex-col justify-center">
+                  {/* TEXT */}
+                  <div>
                     <h5 className="font-bold text-[18px] text-black leading-tight">
                       {item.title}
                     </h5>
-                    <p className="text-[16px] pt-1 text-[#9795B5] leading-snug">
+                    <p className="text-[15px] pt-1 text-[#9795B5] leading-snug">
                       {item.desc}
                     </p>
                   </div>

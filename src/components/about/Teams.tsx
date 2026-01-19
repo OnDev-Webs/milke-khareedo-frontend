@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, PlayCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight} from "lucide-react";
 import Title from "../typography/title";
 import Image from "next/image";
 import { useRef, useState } from "react";
@@ -60,9 +60,6 @@ export default function Teams() {
   };
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showVideo, setShowVideo] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const prevSlide = () => {
     setCurrentIndex((prev) =>
@@ -77,7 +74,7 @@ export default function Teams() {
   };
 
   return (
-    <section className="w-full bg-white py-16 relative overflow-visible mb-[100px]">
+    <section className="w-full bg-white py-16 relative overflow-visible mb-[100px] px-6">
       <svg
         className="absolute inset-0 w-full h-full opacity-20 pointer-events-none"
         xmlns="http://www.w3.org/2000/svg"
@@ -145,39 +142,6 @@ export default function Teams() {
                     ))}
                   </div>
                 </div>
-                {isLast && showVideo && (
-                  <div className="absolute top-40 right-6 w-[230px] h-[330px] rounded-3xl overflow-hidden shadow-lg z-30 bg-black hidden md:block">
-                    <video
-                      ref={videoRef}
-                      src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/185341-875417497.mp4"
-                      className="w-full h-full object-cover"
-                      controls={isPlaying}
-                      preload="metadata"
-                    />
-
-                    {!isPlaying && (
-                      <button
-                        onClick={() => {
-                          videoRef.current?.play();
-                          setIsPlaying(true);
-                        }}
-                        className="absolute bottom-2 left-2 z-30 h-10 w-10 bg-white rounded-full flex items-center justify-center shadow">
-                        <PlayCircle size={20} className="text-black" />
-                      </button>
-                    )}
-
-                    <button
-                      onClick={() => {
-                        videoRef.current?.pause();
-                        videoRef.current!.currentTime = 0;
-                        setIsPlaying(false);
-                        setShowVideo(false);
-                      }}
-                      className="absolute top-2 right-2 z-30 h-10 w-10 bg-white rounded-full flex items-center justify-center shadow">
-                      <IoCloseCircle size={20} className="text-black" />
-                    </button>
-                  </div>
-                )}
               </div>
             );
           })}

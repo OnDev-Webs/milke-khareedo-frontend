@@ -17,6 +17,15 @@ import React from "react";
 import { homeService } from "@/lib/api/services/home.service";
 import type { BlogDetail, Blog } from "@/lib/api/services/home.service";
 import Link from "next/link";
+import Loader from "@/components/ui/loader";
+
+const getCategoryName = (
+  category?: string | { name: string }
+) => {
+  if (!category) return "";
+  return typeof category === "string" ? category : category.name;
+};
+
 
 const Page = ({ params }: { params: Promise<{ id: string }> }) => {
   const unwrappedParams = React.use(params);
@@ -85,7 +94,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
       <section className="py-[30px]">
         <div className="container mx-auto">
           <div className="flex justify-center items-center py-20">
-            <div className="text-gray-500">Loading blog...</div>
+            <div className="text-gray-500"><Loader size={38}/></div>
           </div>
         </div>
       </section>
@@ -140,6 +149,34 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-4">
             {/* Main Content - Left Side (2 columns) */}
             <div className="lg:col-span-2">
+
+              <div className="flex flex-wrap items-center gap-3 mb-4 justify-between px-2">
+                {/* Category */}
+                {getCategoryName(blog.category) && (
+                  <span className="px-4 py-1.5 text-[14px] font-semibold bg-[#1C4692]/10 text-[#1C4692] border border-[#1C4692]/20 rounded-full">
+                    {getCategoryName(blog.category)}
+                  </span>
+                )}
+
+                {/* Tags */}
+                {blog.tags?.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {blog.tags.slice(0, 5).map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className="px-3 py-1.5 text-[14px] font-semibold bg-gray-100 text-gray-700 border border-gray-200 rounded-full">
+                        #{tag}
+                      </span>
+                    ))}
+
+                    {blog.tags.length > 5 && (
+                      <span className="px-3 py-1.5 text-[14px] font-semibold text-gray-500">
+                        +{blog.tags.length - 5} more
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
               <div className="w-full inline-flex flex-col justify-start items-start gap-10">
                 {/* Banner Image */}
                 <div className="relative w-full h-80 rounded-[30px] overflow-hidden">
@@ -172,9 +209,13 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
 
                 <div className="self-stretch flex flex-col justify-start items-start gap-7">
                   <div className="self-stretch flex flex-col justify-start items-start gap-3.5">
-                    {/* Date */}
-                    <p className="text-black text-xl font-medium">
-                      {blog.date}
+                    <p className="text-[16px] text-[#6B7280]">
+                      <span className="font-semibold text-[#111827]">
+                        {blog.updatedAt ? "Updated on" : "Published on"}
+                      </span>
+                      <span className="ml-1 font-medium">
+                        {blog.date}
+                      </span>
                     </p>
 
                     <div className="self-stretch h-0 outline-1 outline-offset-[-0.50px] outline-neutral-200"></div>
@@ -193,19 +234,18 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
 
             {/* Sidebar - Right Side (1 column) */}
             <div className="lg:col-span-1">
-              <div className="flex flex-col gap-5">
-                {/* Get in Touch Form */}
-                <div className="border border-[#F3F3F3] rounded-[30px] p-5 bg-white">
+              <div className="sticky top-10">
+                <div className="border border-[#F3F3F3] rounded-[30px] py-5 px-10 bg-white">
                   <h6 className="text-[26px] font-bold text-black mb-[5px]">
                     Get in Touch
                   </h6>
                   <p className="text-black text-base font-medium mb-[25px]">
                     Let our experts help you answer your questions
                   </p>
-                  <ContactForm />
+                  <ContactForm nameMode="full" />
                 </div>
-
               </div>
+
             </div>
           </div>
 

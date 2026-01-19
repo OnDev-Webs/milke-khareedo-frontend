@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
 import { type SimilarProject } from "@/lib/api/services/home.service";
 import PropertyCard from "@/components/cards/PropertyCard";
 import { type Property } from "@/lib/api/services/home.service";
@@ -10,6 +10,7 @@ import { homeService } from "@/lib/api/services/home.service";
 import AuthModal from "@/components/auth/AuthModal";
 import getPropertyImages from "@/utils/getPropertyImages";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface PDPSimilarProjectsProps {
   similarProjects: SimilarProject[];
@@ -17,6 +18,7 @@ interface PDPSimilarProjectsProps {
 
 export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjectsProps) {
   const { clearAndAddToCompare } = useCompare();
+  const router = useRouter();
   const { isAuthenticated, checkAuth } = useAuthContext();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [favoriteStates, setFavoriteStates] = useState<Record<string, boolean>>({});
@@ -37,7 +39,7 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
       longitude: sp.longitude,
       image: sp.imageUrl || (sp.images && sp.images.length > 0 ? sp.images[0] : null),
       images: sp.images || [],
-      lastDayToJoin: "",
+      lastDayToJoin: sp.lastDayToJoin ?? "",
       groupSize: sp.groupSize,
       groupSizeFormatted: `${sp.groupSize} Members`,
       openingLeft: 0,
@@ -70,35 +72,62 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
     }
   }, []);
 
-  const handleFavoriteClick = useCallback(async (property: Property) => {
-    if (!checkAuth()) {
-      setShowAuthModal(true);
-      return;
-    }
-
-    setFavoriteLoading((prev) => ({ ...prev, [property.id]: true }));
-    try {
-      const response = await homeService.toggleFavorite(property.id);
-      if (response.success && response.data) {
-        const favoriteData = response.data;
-        setFavoriteStates((prev) => ({ ...prev, [property.id]: favoriteData.isFavorite }));
+  const handleFavoriteClick = useCallback(
+    async (property: Property) => {
+      if (!checkAuth()) {
+        setShowAuthModal(true);
+        return;
       }
-    } catch (error) {
-      console.error("Error toggling favorite:", error);
-    } finally {
-      setFavoriteLoading((prev) => ({ ...prev, [property.id]: false }));
-    }
-  }, [checkAuth]);
+
+      const currentFav = favoriteStates[property.id] ?? false;
+
+      // optimistic UI
+      setFavoriteStates((prev) => ({
+        ...prev,
+        [property.id]: !currentFav,
+      }));
+
+      setFavoriteLoading((prev) => ({
+        ...prev,
+        [property.id]: true,
+      }));
+
+      try {
+        const { success, data } = await homeService.toggleFavorite(property.id);
+
+        if (success && data && typeof data.isFavorite === "boolean") {
+          setFavoriteStates((prev) => ({
+            ...prev,
+            [property.id]: data.isFavorite,
+          }));
+        }
+      } catch {
+        // revert on error
+        setFavoriteStates((prev) => ({
+          ...prev,
+          [property.id]: currentFav,
+        }));
+      } finally {
+        setFavoriteLoading((prev) => ({
+          ...prev,
+          [property.id]: false,
+        }));
+      }
+    },
+    [checkAuth, favoriteStates]
+  );
 
   const handleCompareClick = useCallback((property: Property) => {
+    if (!property) return;
     clearAndAddToCompare({
       id: property.id,
       title: property.projectName,
       price: property.targetPrice?.formatted || "",
       location: property.location,
-      image: property.image ?? undefined,
+      image: property.image || property.images?.[0],
       developer: property.developer || "",
     });
+    router.push("/compare");
   }, [clearAndAddToCompare]);
 
   const handleShareClick = useCallback((property: Property) => {
@@ -139,13 +168,16 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
 
   return (
     <>
-      <section className="w-full bg-white py-10">
+      <section className="w-full bg-white py-10 px-10">
         <div className="mx-auto container">
-          <div className="flex justify-between px-2">
-            <h3 className="mb-6 font-bold text-[35px] text-[#000000]">Similar Projects</h3>
+          <div className="flex items-center justify-between px-4 md:px-2 gap-3">
+            <h3 className="font-bold text-[18px] md:text-[35px] text-[#000000] whitespace-nowrap">
+              Similar Projects
+            </h3>
             <Link href="/properties">
               <button
-                className="px-10 h-[44px] border border-[#F5F5F5] rounded-full text-[#2D2D2D] font-semibold text-[16px] bg-white hover:bg-[#F5F7FA] transition">
+                className="px-4 md:px-10 h-[36px] md:h-[44px] border border-[#F5F5F5] rounded-full text-[#2D2D2D] font-semibold text-[14px] md:text-[16px] bg-white hover:bg-[#F5F7FA] transition whitespace-nowrap"
+              >
                 View All
               </button>
             </Link>

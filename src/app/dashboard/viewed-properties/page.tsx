@@ -2,14 +2,16 @@
 
 import EmptyState from "@/components/dashboard/EmptyState";
 import PropertyGrid from "@/components/dashboard/PropertyGrid";
+import Loader from "@/components/ui/loader";
 import { usePropertyActions } from "@/hooks/usePropertyActions";
 import { useApi } from "@/lib/api/hooks/useApi";
-import { PropertyApi, userDashboardService } from "@/lib/api/services/userDashboard.service";
-import { useEffect } from "react";
+import {
+    PropertyApi,
+    userDashboardService,
+} from "@/lib/api/services/userDashboard.service";
+import { useMemo } from "react";
 
 type ViewedPropertyApi = PropertyApi;
-
-
 
 export default function ViewedPropertiesPage() {
     const { data, loading } = useApi<ViewedPropertyApi[]>(() =>
@@ -18,7 +20,6 @@ export default function ViewedPropertiesPage() {
 
     const properties = data ?? [];
 
-
     const {
         handleFavoriteClick,
         handleShareClick,
@@ -26,10 +27,35 @@ export default function ViewedPropertiesPage() {
         favoriteLoading,
     } = usePropertyActions();
 
+    const mappedProperties = useMemo(() => {
+        return properties.map((p) => {
 
+            return {
+                id: p.id,
+                images: p.images?.length ? p.images : ["/images/empty_property.png"],
+                title: p.projectName,
+                location: p.location,
+                openingLeft: p.openingLeft ?? 0,
+                groupSize: p.minGroupMembers ?? 0,
+                targetPrice: p.offerPrice?.formatted ?? "—",
+                developerPrice: p.developerPrice?.formatted ?? "—",
+                discountPercentage: p.discount?.percentageFormatted,
+                showDiscount: !!p.discount,
+                lastDayToJoin: p.lastDayToJoin,
+                lastViewedAt: undefined,
+            };
+        });
+    }, [properties]);
 
+    if (loading) {
+        return (
+            <div className="rounded-[24px] bg-white px-6 py-10 shadow sm:px-10">
+                Loading viewed properties...
+            </div>
+        );
+    }
 
-    if (loading || !properties.length) {
+    if (!mappedProperties.length) {
         return (
             <div className="rounded-[24px] bg-white px-6 py-10 shadow sm:px-10">
                 <EmptyState
@@ -40,34 +66,6 @@ export default function ViewedPropertiesPage() {
             </div>
         );
     }
-
-    const mappedProperties = properties.map((p) => {
-        const coverImage =
-            p.images?.[0] ?? "/images/empty_property.png";
-
-        return {
-            id: p.id,
-
-            image: coverImage,
-            title: p.projectName,
-            location: p.location,
-
-            openingLeft: p.openingLeft ?? 0,
-            groupSize: p.minGroupMembers ?? 0,
-
-            targetPrice: p.offerPrice?.formatted ?? "—",
-            developerPrice: p.developerPrice?.formatted ?? "—",
-
-            discountPercentage: p.discount?.percentageFormatted,
-            showDiscount: !!p.discount,
-
-            lastDayToJoin: p.lastDayToJoin,
-            lastViewedAt: undefined,
-
-
-        };
-    });
-
 
     return (
         <>

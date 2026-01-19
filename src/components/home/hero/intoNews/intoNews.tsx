@@ -5,6 +5,7 @@ import NewsCard from "./newsCard";
 import NewsCardBanner from "./newsCardBanner";
 import { homeService } from "@/lib/api/services/home.service";
 import type { Blog } from "@/lib/api/services/home.service";
+import Loader from "@/components/ui/loader";
 
 export default function IntoNews() {
   const [featuredBlog, setFeaturedBlog] = useState<Blog | null>(null);
@@ -36,7 +37,7 @@ export default function IntoNews() {
   if (loading) {
     return (
       <section className="py-16 text-center text-gray-500">
-        Loading blogs...
+        <Loader size={38}/>
       </section>
     );
   }

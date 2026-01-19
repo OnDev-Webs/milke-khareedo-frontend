@@ -12,23 +12,15 @@ const contactMethods = [
     title: "What We Help With",
     desc: "Help with apartments, villas, and plots — from shortlisting to better group pricing.",
   },
-
   {
     type: "contact",
     icon: "/images/Frame2.png",
     title: "How to Reach Us",
     details: [
-      {
-        icon: <Phone size={20} />,
-        value: "+91 XXXXXXXXXX",
-      },
-      {
-        icon: <Mail size={20} />,
-        value: "support@milkekhereedo.com",
-      },
+      { icon: <Phone size={20} />, value: "+91 XXXXXXXXXX" },
+      { icon: <Mail size={20} />, value: "support@milkekhereedo.com" },
     ],
   },
-
   {
     type: "normal",
     icon: "/images/Frame3.png",
@@ -45,93 +37,92 @@ export default function ConnectWithUs() {
         badgeText="Contact Us"
         title="Talk to us. Buy smarter."
         highlightText="Save more."
-        description="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        description="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
         headingVariant="h3"
       />
-      <section className="w-full bg-white py-16 px-4 md:px-24">
-        <div className="mx-auto container px-0">
-          {/* Title */}
-          <div className="flex justify-center mb-6 md:mb-20">
+
+      <section className="w-full bg-white py-16 px-4">
+        <div className="mx-auto max-w-7xl">
+          {/* TITLE */}
+          <div className="flex justify-center mb-10 md:mb-20">
             <Title text="Company" isDrawLine drawLineText="Overview" />
           </div>
 
-          {/* Top cards */}
-          <div className="flex flex-col items-center md:flex-row md:items-stretch justify-center gap-6 mb-16">
+          {/* CONTACT CARDS */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             {contactMethods.map((item, index) => (
               <div
                 key={index}
-                className="bg-[#EEF4FF] p-7 rounded-2xl w-full max-w-[386px] h-[312px]">
-                <div className="relative flex h-[70px] w-[70px] items-center justify-center rounded-xl overflow-hidden">
-                  <Image
-                    src="/images/LightGradient.svg"
-                    alt="LightGradient"
-                    width={80}
-                    height={80}
-                    className="absolute inset-0 object-contain"
-                  />
-                  <Image
-                    src={item.icon}
-                    alt={item.title}
-                    width={35}
-                    height={35}
-                    className="relative z-10 object-contain"
-                  />
-                </div>
-
-                <p className="font-bold text-black text-[24px] mt-2">
-                  {item.title}
-                </p>
-
-                {item.type === "normal" && (
-                  <p className="text-[#514F6F] mt-2 text-[19px]">
-                    {item.desc}
-                  </p>
-                )}
-
-                {item.type === "contact" && (
-                  <div className="mt-2">
-                    {item.details?.map((d, i) => (
-                      <div
-                        key={i}
-                        className="flex items-center gap-1 text-[19px] text-[#514F6F]"
-                      >
-                        <div className="h-8 w-8 rounded-full flex items-center justify-center">
-                          {d.icon}
-                        </div>
-                        <span>{d.value}</span>
-                      </div>
-                    ))}
+                className="bg-[#EEF4FF] rounded-2xl p-7 flex flex-col justify-between min-h-[260px]"
+              >
+                <div>
+                  <div className="relative flex h-[70px] w-[70px] items-center justify-center rounded-xl overflow-hidden mb-4">
+                    <Image
+                      src="/images/LightGradient.svg"
+                      alt="LightGradient"
+                      width={80}
+                      height={80}
+                      className="absolute inset-0"
+                    />
+                    <Image
+                      src={item.icon}
+                      alt={item.title}
+                      width={35}
+                      height={35}
+                      className="relative z-10"
+                    />
                   </div>
-                )}
+
+                  <p className="font-bold text-black text-[22px] mb-2">
+                    {item.title}
+                  </p>
+
+                  {item.type === "normal" && (
+                    <p className="text-[#514F6F] text-[17px] leading-relaxed">
+                      {item.desc}
+                    </p>
+                  )}
+
+                  {item.type === "contact" && (
+                    <div className="space-y-3">
+                      {item.details?.map((d, i) => (
+                        <div key={i} className="flex items-center gap-3 text-[17px] text-[#514F6F]">
+                          <div className="h-8 w-8 rounded-full flex items-center justify-center">
+                            {d.icon}
+                          </div>
+                          <span className="break-all">{d.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
           </div>
 
-          {/* Form + Image */}
-          <div className="flex flex-col-reverse md:flex-row gap-8 items-stretch">
-            {/* LEFT – FORM */}
-            <div className="md:w-1/2 flex">
-              <div className="w-full bg-white md:p-6 p-4 rounded-[30px] border border-[#DDDDDD] flex flex-col justify-center md:px-8">
-                <h3 className="font-bold text-black text-[30px] mb-1 text-left px-1">
+          {/* FORM + IMAGE */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+            {/* FORM */}
+            <div className="flex">
+              <div className="w-full bg-white border border-[#DDDDDD] rounded-[30px] p-6 md:p-8 flex flex-col justify-center">
+                <h3 className="font-bold text-black text-[28px] mb-2">
                   Let’s find the right deal for you
                 </h3>
-                <p className="text-[#373737] font-medium text-[18px] mb-6 text-left px-1">
+                <p className="text-[#373737] font-medium text-[17px] mb-6">
                   Fill out the form, and we’ll reach out within 24 hours.
                 </p>
-
                 <ContactForm />
               </div>
             </div>
-            {/* RIGHT – IMAGE */}
-            <div className="md:w-1/2 flex items-center justify-center">
-              <div className="relative w-full h-[260px] sm:h-80 md:h-full rounded-2xl overflow-hidden">
-                <Image
-                  src="/images/contact.jpg"
-                  alt="Contact"
-                  fill
-                  className="object-cover"
-                />
-              </div>
+
+            {/* IMAGE */}
+            <div className="relative min-h-[320px] md:min-h-full rounded-2xl overflow-hidden">
+              <Image
+                src="/images/contact.jpg"
+                alt="Contact"
+                fill
+                className="object-cover"
+              />
             </div>
           </div>
         </div>

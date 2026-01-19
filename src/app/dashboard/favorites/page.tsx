@@ -2,14 +2,16 @@
 
 import EmptyState from "@/components/dashboard/EmptyState";
 import PropertyGrid from "@/components/dashboard/PropertyGrid";
+import Loader from "@/components/ui/loader";
 import { usePropertyActions } from "@/hooks/usePropertyActions";
 import { useApi } from "@/lib/api/hooks/useApi";
-import { PropertyApi, userDashboardService } from "@/lib/api/services/userDashboard.service";
-import { useEffect } from "react";
-
+import {
+    PropertyApi,
+    userDashboardService,
+} from "@/lib/api/services/userDashboard.service";
+import { useEffect, useMemo } from "react";
 
 type FavoritePropertyApi = PropertyApi;
-
 
 export default function MyFavoritePage() {
     const { data, loading } = useApi<FavoritePropertyApi[]>(() =>
@@ -27,15 +29,45 @@ export default function MyFavoritePage() {
     } = usePropertyActions();
 
     useEffect(() => {
+        if (!favorites.length) return;
+
         const map: Record<string, boolean> = {};
         favorites.forEach((p) => {
             map[p.id] = true;
         });
+
         setFavoriteStates(map);
     }, [favorites, setFavoriteStates]);
 
+    const mappedProperties = useMemo(() => {
+        return favorites.map((p) => {
 
-    if (loading || !favorites.length) {
+            return {
+                id: p.id,
+                images: p.images?.length ? p.images : ["/images/empty_property.png"],
+                title: p.projectName,
+                location: p.location,
+                groupSize: p.minGroupMembers ?? 0,
+                openingLeft: p.openingLeft ?? 0,
+                targetPrice: p.offerPrice?.formatted ?? "—",
+                developerPrice: p.developerPrice?.formatted ?? "—",
+                discountPercentage: p.discount?.percentageFormatted,
+                showDiscount: !!p.discount,
+                lastDayToJoin: p.lastDayToJoin,
+                lastViewedAt: undefined,
+            };
+        });
+    }, [favorites]);
+
+    if (loading) {
+        return (
+            <div className="rounded-[24px] bg-white px-6 py-10 shadow sm:px-10">
+                Loading favorites...
+            </div>
+        );
+    }
+
+    if (!mappedProperties.length) {
         return (
             <div className="rounded-[24px] bg-white px-6 py-10 shadow sm:px-10">
                 <EmptyState
@@ -47,32 +79,6 @@ export default function MyFavoritePage() {
         );
     }
 
-    const mappedProperties = favorites.map((p) => {
-        const coverImage =
-            p.images?.[0] ?? "/images/empty_favorite.png";
-
-        return {
-            id: p.id,
-
-            image: coverImage,
-            title: p.projectName,
-            location: p.location,
-
-            groupSize: p.minGroupMembers ?? 0,
-            openingLeft: p.openingLeft ?? 0,
-
-            targetPrice: p.offerPrice?.formatted ?? "—",
-            developerPrice: p.developerPrice?.formatted ?? "—",
-
-            discountPercentage: p.discount?.percentageFormatted,
-            showDiscount: !!p.discount,
-            lastDayToJoin: p.lastDayToJoin,
-
-            lastViewedAt: undefined,
-        };
-    });
-
-
     return (
         <>
             <div className="block sm:hidden">
@@ -82,7 +88,8 @@ export default function MyFavoritePage() {
                     onShareClick={handleShareClick}
                     favoriteStates={favoriteStates}
                     favoriteLoading={favoriteLoading}
-                />            </div>
+                />
+            </div>
 
             <div className="hidden sm:block rounded-[24px] bg-[#f8fbff] px-10 py-10 shadow">
                 <PropertyGrid
@@ -91,7 +98,8 @@ export default function MyFavoritePage() {
                     onShareClick={handleShareClick}
                     favoriteStates={favoriteStates}
                     favoriteLoading={favoriteLoading}
-                />            </div>
+                />
+            </div>
         </>
     );
 }

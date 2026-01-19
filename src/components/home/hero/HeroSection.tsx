@@ -14,7 +14,8 @@ export default function Hero() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  console.log("searchQuery", searchQuery);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
 
   const handleCityChange = (cityValue: string) => {
     setSelectedCity(cityValue);
@@ -101,9 +102,11 @@ export default function Hero() {
           </p>
 
           <div className="mt-6">
-            <button className="rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-8 py-3 text-sm font-medium text-white shadow">
-              Want to see how it works?
-            </button>
+            <a href="#about">
+              <button className="rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-8 py-3 text-sm font-medium text-white shadow">
+                Want to see how it works?
+              </button>
+            </a>
           </div>
 
           <div className="my-6 inline-flex items-center gap-3 rounded-full bg-white px-5 py-3">
@@ -170,9 +173,10 @@ export default function Hero() {
           </div>
 
           {/* SEARCH INPUT SECTION */}
-          <div className="relative flex-1 flex flex-col justify-start ps-4 pe-6 py-4">
+          <div className="relative flex-1 flex flex-col justify-start ps-4 pe-6 py-4" onClick={() => searchInputRef.current?.focus()}>
             <div className="relative">
               <input
+                ref={searchInputRef}
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}

@@ -16,7 +16,6 @@ export default function SiteVisitsPage() {
   userDashboardService.getVisitedProperties()
 );
 
-  // ✅ backend se actual array yahi hai
   const visits = data?.completed ?? [];
 
   const {
@@ -26,7 +25,6 @@ export default function SiteVisitsPage() {
     favoriteLoading,
   } = usePropertyActions();
 
-  /* ================= MAPPING ================= */
 
  const mappedProperties = useMemo(() => {
   return visits.map((item) => {
@@ -51,7 +49,6 @@ export default function SiteVisitsPage() {
 }, [visits]);
 
 
-  /* ================= STATES ================= */
 
   if (loading) {
     return (
@@ -73,7 +70,6 @@ export default function SiteVisitsPage() {
     );
   }
 
-  /* ================= UI ================= */
 
   return (
     <>

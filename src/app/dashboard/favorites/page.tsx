@@ -18,26 +18,18 @@ export default function MyFavoritePage() {
         userDashboardService.getFavoriteProperties()
     );
 
-    const favorites = data ?? [];
 
     const {
         handleFavoriteClick,
         handleShareClick,
         favoriteStates,
         favoriteLoading,
-        setFavoriteStates,
     } = usePropertyActions();
 
-    useEffect(() => {
-        if (!favorites.length) return;
+   const favorites = (data ?? []).filter(
+    (p) => favoriteStates[p.id] === true
+);
 
-        const map: Record<string, boolean> = {};
-        favorites.forEach((p) => {
-            map[p.id] = true;
-        });
-
-        setFavoriteStates(map);
-    }, [favorites, setFavoriteStates]);
 
     const mappedProperties = useMemo(() => {
         return favorites.map((p) => {

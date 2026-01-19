@@ -74,12 +74,8 @@ export default function Header() {
                   className={`relative pb-1 text-sm font-normal transition-colors xl:text-base ${isActive(link.href)
                     ? "font-semibold text-[#1C4692]"
                     : "hover:text-[#1C4692]"
-                    }`}
-                >
+                    }`}>
                   {link.label}
-                  {/* {isActive(link.href) && (
-                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#1C4692]" />
-                  )} */}
                 </Link>
               ))}
             </nav>
@@ -146,7 +142,7 @@ export default function Header() {
                       className="fixed inset-0 z-40"
                       onClick={() => setProfileDropdownOpen(false)}
                     />
-                    <div className="absolute right-0 top-14 z-50 w-[280px] rounded-2xl bg-white shadow-xl ring-1 ring-black/5">
+                    <div className="absolute right-0 top-14 z-[200] w-[280px] rounded-2xl bg-white shadow-xl ring-1 ring-black/5">
                       {/* Profile Header */}
                       <div className="flex items-center gap-3 px-4 py-4 border-b border-gray-100">
                         <div className="h-10 w-10 rounded-full bg-gray-200 overflow-hidden">
@@ -212,15 +208,7 @@ export default function Header() {
                               key={item.label}
                               href={item.href}
                               onClick={() => setProfileDropdownOpen(false)}
-                              className="
-          flex items-center gap-3
-          rounded-xl
-          px-3 py-3
-          text-sm font-medium text-gray-800
-          bg-[#f6faffb4]
-          transition
-        "
-                            >
+                              className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-gray-800 bg-[#f6faffb4] transition">
                               {/* Icon container */}
                               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white ">
                                 {item.icon === "compare" ? (
@@ -234,8 +222,6 @@ export default function Header() {
                                   <Icon className="h-4 w-4 text-gray-700" />
                                 )}
                               </div>
-
-
                               {item.label}
                             </Link>
                           );
@@ -250,8 +236,7 @@ export default function Header() {
                             setProfileDropdownOpen(false);
                             router.push("/");
                           }}
-                          className="w-full rounded-xl bg-red-500 py-2.5 text-sm font-semibold text-white hover:bg-red-600"
-                        >
+                          className="w-full rounded-xl bg-red-500 py-2.5 text-sm font-semibold text-white hover:bg-red-600">
                           Log out
                         </button>
                       </div>
@@ -263,8 +248,7 @@ export default function Header() {
               !isDashboard && (
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="rounded-full bg-[#1C4692] px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#1c4692e6] lg:px-7.5 lg:py-2.5 lg:text-base"
-                >
+                  className="rounded-full bg-[#1C4692] px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#1c4692e6] lg:px-7.5 lg:py-2.5 lg:text-base">
                   Sign In
                 </button>
               )
@@ -275,8 +259,7 @@ export default function Header() {
               type="button"
               aria-label="Toggle navigation"
               onClick={() => setOpen((o) => !o)}
-              className="inline-flex items-center justify-center rounded-md p-2 text-gray-600 lg:hidden"
-            >
+              className="inline-flex items-center justify-center rounded-md p-2 text-gray-600 lg:hidden">
               <HiOutlineMenu className="h-6 w-6" />
             </button>
           </div>
@@ -291,9 +274,7 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`py-2.5 text-sm ${isActive(link.href) ? "font-semibold text-[#1C4692]" : ""
-                    }`}
-                >
+                  className={`py-2.5 text-sm ${isActive(link.href) ? "font-semibold text-[#1C4692]" : ""}`}>
                   {link.label}
                 </Link>
               ))}
@@ -313,8 +294,7 @@ export default function Header() {
                   <Link
                     href="/dashboard/profile"
                     onClick={() => setOpen(false)}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-4 py-2.5 text-sm font-semibold text-white"
-                  >
+                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-4 py-2.5 text-sm font-semibold text-white">
                     <IoPerson className="h-5 w-5" />
                     Profile
                   </Link>
@@ -324,8 +304,7 @@ export default function Header() {
                       setOpen(false);
                       setShowAuthModal(true);
                     }}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-4 py-2.5 text-sm font-semibold text-white"
-                  >
+                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-4 py-2.5 text-sm font-semibold text-white">
                     <IoPerson className="h-5 w-5" />
                     Sign In
                   </button>

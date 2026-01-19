@@ -149,7 +149,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="absolute -bottom-5 left-1/2 w-[95%] md:w-[1250px] -translate-x-1/2 z-0">
+      <div className="absolute -bottom-5 left-1/2 w-[95%] md:w-[1250px] -translate-x-1/2 z-10">
         <div className="flex flex-col md:flex-row items-stretch rounded-2xl bg-white/70 backdrop-blur-md p-0 overflow-visible shadow-[0_12px_40px_rgba(0,0,0,0.10)]">
 
           {/* CITY SELECT SECTION */}
@@ -157,11 +157,11 @@ export default function Hero() {
             <label className="text-sm font-bold text-gray-800 mb-2.5">
               City
             </label>
-            <div className="relative" style={{ zIndex: 1000 }}>
+            <div className="relative z-30">
               <CitySelector
                 value={selectedCity}
                 onChange={handleCityChange}
-                className="h-auto "
+                className="h-auto"
                 showLabel={false}
               />
             </div>

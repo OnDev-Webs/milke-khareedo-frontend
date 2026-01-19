@@ -1,4 +1,5 @@
 "use client";
+import { Skeleton } from "@/components/ui/loader";
 import { useEffect, useRef, useState } from "react";
 import { IoPause, IoPlay, IoVolumeHigh, IoVolumeMute } from "react-icons/io5";
 import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
@@ -29,6 +30,7 @@ export default function AboutSection() {
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [videoLoading, setVideoLoading] = useState(true);
   const [muted, setMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -115,48 +117,51 @@ export default function AboutSection() {
 
           {/* RIGHT SIDE */}
           <div className="flex justify-center h-[350px] md:h-[500px]">
-            <div ref={containerRef} className="relative w-full max-w-[360px] h-[520px] rounded-3xl overflow-hidden shadow-xl"
+            <div
+              ref={containerRef}
+              className="relative w-full max-w-[360px] h-[520px] rounded-3xl overflow-hidden shadow-xl"
               onMouseEnter={() => setShowControls(true)}
-              onMouseLeave={() => setShowControls(false)}>
+              onMouseLeave={() => setShowControls(false)}
+            >
+              {/* Skeleton Loader */}
+              {videoLoading && (
+                <Skeleton className="absolute inset-0 z-20 rounded-3xl" />
+              )}
+
+              {/* Video */}
               <video
                 ref={videoRef}
                 src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/185341-875417497.mp4"
-                className="absolute inset-0 w-full h-full object-cover scale-[1.15]"
+                className={`absolute inset-0 w-full h-full object-cover scale-[1.15] transition-opacity duration-500 ${videoLoading ? "opacity-0" : "opacity-100"}`}
                 muted={muted}
                 autoPlay
                 loop
                 playsInline
                 preload="metadata"
+                onLoadedData={() => setVideoLoading(false)}
+                onCanPlay={() => setVideoLoading(false)}
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
               />
 
-              <div
-                className={`absolute inset-0 mt-118 ms-4 flex justify-start z-30 transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0"
-                  }`}
-              >
-                <button
-                  onClick={() => {
-                    if (!videoRef.current) return;
-                    if (isPlaying) {
-                      videoRef.current.pause();
-                    } else {
-                      videoRef.current.play();
-                    }
-                  }}
-                  className="h-10 w-10 rounded-full bg-white/90 flex items-center justify-center shadow-lg"
-                >
-                  {isPlaying ? <IoPause size={20} /> : <IoPlay size={20} />}
-                </button>
-              </div>
+              {!videoLoading && (
+                <div className={`absolute inset-0 mt-118 ms-4 flex justify-start z-30 transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0"}`}>
+                  <button
+                    onClick={() => {
+                      if (!videoRef.current) return;
+                      isPlaying ? videoRef.current.pause() : videoRef.current.play();
+                    }}
+                    className="h-10 w-10 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+                    {isPlaying ? <IoPause size={20} /> : <IoPlay size={20} />}
+                  </button>
+                </div>
+              )}
 
-              {/* Top Left */}
-              <div className="absolute top-2 md:top-2 left-2 md:left-2 z-20 flex items-center gap-2 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-semibold text-white">
+              <div className="absolute top-2 left-2 z-30 flex items-center gap-2 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-semibold text-white">
                 <svg
                   className="h-7 w-7 md:h-9 md:w-9 bg-white/90 rounded-full p-[3px]"
                   viewBox="0 0 24 24"
-                  fill="#000"
-                >
+                  fill="#000">
                   <circle cx="8" cy="8" r="2" />
                   <circle cx="16" cy="8" r="2" />
                   <circle cx="8" cy="16" r="2" />
@@ -165,40 +170,38 @@ export default function AboutSection() {
                 Milke Khareedo
               </div>
 
-              {/* Top Right */}
-              <div className="absolute top-2 right-2 z-40 flex gap-2">
-                <button
-                  onClick={() => {
-                    if (!videoRef.current) return;
-                    const nextMuted = !muted;
-                    videoRef.current.muted = nextMuted;
-                    setMuted(nextMuted);
-                    if (!nextMuted) {
-                      videoRef.current.play().catch(() => { });
-                    }
-                  }}
-                  className="h-9 w-9 bg-white rounded-full flex items-center justify-center shadow">
-                  {muted ? <IoVolumeMute size={18} /> : <IoVolumeHigh size={18} />}
-                </button>
-                
-                <button
-                  onClick={() => {
-                    if (!containerRef.current) return;
-                    if (!document.fullscreenElement) {
-                      containerRef.current.requestFullscreen().catch(() => { });
-                    } else {
-                      document.exitFullscreen().catch(() => { });
-                    }
-                  }}
-                  className="h-9 w-9 bg-white rounded-full flex items-center justify-center shadow"
-                >
-                  {isFullscreen ? (
-                    <MdFullscreenExit size={18} />
-                  ) : (
-                    <MdFullscreen size={18} />
-                  )}
-                </button>
-              </div>
+              {!videoLoading && (
+                <div className="absolute top-2 right-2 z-40 flex gap-2">
+                  <button
+                    onClick={() => {
+                      if (!videoRef.current) return;
+                      const nextMuted = !muted;
+                      videoRef.current.muted = nextMuted;
+                      setMuted(nextMuted);
+                      if (!nextMuted) videoRef.current.play().catch(() => { });
+                    }}
+                    className="h-9 w-9 bg-white rounded-full flex items-center justify-center shadow">
+                    {muted ? <IoVolumeMute size={18} /> : <IoVolumeHigh size={18} />}
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      if (!containerRef.current) return;
+                      if (!document.fullscreenElement) {
+                        containerRef.current.requestFullscreen().catch(() => { });
+                      } else {
+                        document.exitFullscreen().catch(() => { });
+                      }
+                    }}
+                    className="h-9 w-9 bg-white rounded-full flex items-center justify-center shadow">
+                    {isFullscreen ? (
+                      <MdFullscreenExit size={18} />
+                    ) : (
+                      <MdFullscreen size={18} />
+                    )}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

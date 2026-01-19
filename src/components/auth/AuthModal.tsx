@@ -8,6 +8,7 @@ import Image from "next/image";
 import CountryCodeSelector from "./CountryCodeSelector";
 import Link from "next/link";
 import Logo from "@/assets/logo.svg";
+import { createPortal } from "react-dom";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -221,16 +222,16 @@ export default function AuthModal({
 
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm"
+        className="fixed inset-0 z-[10000] bg-black/80 backdrop-blur-sm"
         onClick={handleClose}
       />
 
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+      <div className="fixed inset-0 z-[10001] flex items-center justify-center p-4 overflow-y-auto">
         <div
           className="
     relative w-full
@@ -450,6 +451,7 @@ export default function AuthModal({
           </div>
         </div>
       </div>
-    </>
+    </>,
+    document.body
   );
 }

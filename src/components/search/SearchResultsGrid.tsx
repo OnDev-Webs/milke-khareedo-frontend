@@ -10,7 +10,6 @@ import { homeService, PaginationInfo, type Property } from "@/lib/api/services/h
 import { useRouter, useSearchParams } from "next/navigation";
 import SearchPropertyCard from "./SearchPropertyCard";
 import { getPropertyImages } from "@/lib/utils/getPropertyImages";
-import AuthModal from "@/components/auth/AuthModal";
 import { useCompare } from "@/contexts/CompareContext";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { Slider } from "../ui/slider";
@@ -24,8 +23,7 @@ export default function SearchResultsGrid() {
   const [selectedBhk, setSelectedBhk] = useState("2.5 BHK");
   const [selectedPossession, setSelectedPossession] = useState("Ready to Move");
   const [results, setResults] = useState<Property[]>([]);
-  const [paginationData, setPaginationData] = useState<PaginationInfo | null>(
-    null,);
+  const [paginationData, setPaginationData] = useState<PaginationInfo | null>(null);
   const searchParams = useSearchParams();
   const { clearAndAddToCompare } = useCompare();
   const { checkAuth } = useAuthContext();
@@ -44,7 +42,6 @@ export default function SearchResultsGrid() {
   const [bhkOpen, setBhkOpen] = useState(false);
   const [areaOpen, setAreaOpen] = useState(false);
   const [possessionOpen, setPossessionOpen] = useState(false);
-
 
   const [priceRange, setPriceRange] = useState<[number, number]>([30, 100]);
   const [areaRange, setAreaRange] = useState<[number, number]>([400, 5000]);

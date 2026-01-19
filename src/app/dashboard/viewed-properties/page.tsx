@@ -22,35 +22,35 @@ export default function ViewedPropertiesPage() {
 
     const {
         handleFavoriteClick,
+        handleCompareClick,
         handleShareClick,
         favoriteStates,
         favoriteLoading,
     } = usePropertyActions();
 
     const mappedProperties = useMemo(() => {
-        return properties.map((p) => {
+        return properties.map((p) => ({
+            id: p.id,
+            images: p.images?.length ? p.images : ["/images/empty_property.png"],
+            title: p.projectName,
+            location: p.location,
+            openingLeft: p.openingLeft ?? 0,
+            groupSize: p.minGroupMembers ?? 0,
+            targetPrice: p.offerPrice?.formatted ?? "—",
+            developerPrice: p.developerPrice?.formatted ?? "—",
+            discountPercentage: p.discount?.percentageFormatted,
+            showDiscount: !!p.discount,
+            lastDayToJoin: p.lastDayToJoin,
+            lastViewedAt: undefined,
+            isFavorite: !!favoriteStates[String(p.id)],
+        }));
+    }, [properties, favoriteStates]);
 
-            return {
-                id: p.id,
-                images: p.images?.length ? p.images : ["/images/empty_property.png"],
-                title: p.projectName,
-                location: p.location,
-                openingLeft: p.openingLeft ?? 0,
-                groupSize: p.minGroupMembers ?? 0,
-                targetPrice: p.offerPrice?.formatted ?? "—",
-                developerPrice: p.developerPrice?.formatted ?? "—",
-                discountPercentage: p.discount?.percentageFormatted,
-                showDiscount: !!p.discount,
-                lastDayToJoin: p.lastDayToJoin,
-                lastViewedAt: undefined,
-            };
-        });
-    }, [properties]);
 
     if (loading) {
         return (
             <div className="rounded-[24px] bg-white px-6 py-10 shadow sm:px-10">
-                Loading viewed properties...
+                <Loader size={38} />
             </div>
         );
     }
@@ -73,6 +73,7 @@ export default function ViewedPropertiesPage() {
                 <PropertyGrid
                     properties={mappedProperties}
                     onFavoriteClick={handleFavoriteClick}
+                    onCompareClick={handleCompareClick}
                     onShareClick={handleShareClick}
                     favoriteStates={favoriteStates}
                     favoriteLoading={favoriteLoading}
@@ -83,6 +84,7 @@ export default function ViewedPropertiesPage() {
                 <PropertyGrid
                     properties={mappedProperties}
                     onFavoriteClick={handleFavoriteClick}
+                    onCompareClick={handleCompareClick}
                     onShareClick={handleShareClick}
                     favoriteStates={favoriteStates}
                     favoriteLoading={favoriteLoading}

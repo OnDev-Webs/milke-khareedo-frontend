@@ -4,7 +4,7 @@ import Heading from "@/components/typography/heading";
 export default function MissionVision() {
   return (
     <section>
-      <div className="container mx-auto flex flex-col gap-6 md:flex-row md:gap-7 sm:px-0 px-4">
+      <div className="max-w-6xl mx-auto flex flex-col gap-6 md:flex-row md:gap-7 px-4">
         {/* MISSION CARD */}
         <div className="flex-1 p-6 md:p-10 bg-white rounded-4xl shadow-[0px_0px_50px_0px_rgba(0,0,0,0.10)] flex flex-col gap-7">
           <div className="relative flex h-24 w-24 items-center justify-center rounded-[18px] overflow-hidden">

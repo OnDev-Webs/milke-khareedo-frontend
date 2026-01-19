@@ -107,7 +107,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <>
       <section className="py-[30px]">
-        <div className="container mx-auto px-4 sm:px-0">
+        <div className="max-w-6xl mx-auto container px-4 sm:px-6">
           <Breadcrumb className="mb-[25px]">
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -133,7 +133,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
             </BreadcrumbList>
           </Breadcrumb>
 
-          <Heading variant={"h4"} className="font-medium mb-4">
+          <Heading variant={"h4"} className="font-medium text-[18px] md:text-[30px] mb-4">
             {blog.title}
           </Heading>
 

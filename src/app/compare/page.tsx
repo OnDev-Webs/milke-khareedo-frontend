@@ -20,7 +20,6 @@ export default function ComparePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch comparison data when compareItems change
   useEffect(() => {
     const fetchComparison = async () => {
       if (compareItems.length === 0) {
@@ -45,9 +44,7 @@ export default function ComparePage() {
         }
       } catch (err) {
         setError(
-          err instanceof Error
-            ? err.message
-            : "Failed to fetch comparison data",
+          err instanceof Error ? err.message : "Failed to fetch comparison data"
         );
         setComparisonData([]);
       } finally {
@@ -72,7 +69,7 @@ export default function ComparePage() {
       .map((compareItem, index) => {
         // Find the property in comparisonData that matches this compareItem
         const prop = comparisonData.find(
-          (p) => String(p.id) === String(compareItem.id),
+          (p) => String(p.id) === String(compareItem.id)
         );
 
         // If property not found in comparisonData yet (still loading), skip for now
@@ -80,7 +77,7 @@ export default function ComparePage() {
         if (!prop) {
           // Log for debugging - property might still be loading
           console.warn(
-            `Property ${compareItem.id} not found in comparisonData yet`,
+            `Property ${compareItem.id} not found in comparisonData yet`
           );
           return null;
         }
@@ -99,7 +96,7 @@ export default function ComparePage() {
         if (!hasValidCoords) {
           // Log for debugging - property doesn't have valid coordinates
           console.warn(
-            `Property ${compareItem.id} (${prop.projectName || compareItem.title}) does not have valid coordinates`,
+            `Property ${compareItem.id} (${prop.projectName || compareItem.title}) does not have valid coordinates`
           );
           return null;
         }
@@ -116,19 +113,19 @@ export default function ComparePage() {
         };
       })
       .filter(
-        (marker): marker is NonNullable<typeof marker> => marker !== null,
+        (marker): marker is NonNullable<typeof marker> => marker !== null
       );
 
     // Debug log to verify all markers are created
     if (markers.length !== compareItems.length) {
       console.warn(
         `Expected ${compareItems.length} markers but created ${markers.length}. ` +
-          `Some properties may not have valid coordinates or are still loading.`,
+          `Some properties may not have valid coordinates or are still loading.`
       );
     } else {
       console.log(
         `✅ Successfully created ${markers.length} markers using pinLabel from API:`,
-        markers.map((m) => `${m.label} (${m.title})`).join(", "),
+        markers.map((m) => `${m.label} (${m.title})`).join(", ")
       );
     }
 
@@ -183,7 +180,7 @@ export default function ComparePage() {
 
   const getPropertyForCard = (compareItem: (typeof compareItems)[0]) => {
     const apiProperty = comparisonData.find(
-      (p) => p.id === String(compareItem.id),
+      (p) => p.id === String(compareItem.id)
     );
 
     if (apiProperty) {
@@ -307,7 +304,7 @@ export default function ComparePage() {
               {compareItems.map((item, index) => {
                 // Find the property in comparisonData to get pinLabel from API
                 const apiProperty = comparisonData.find(
-                  (p) => String(p.id) === String(item.id),
+                  (p) => String(p.id) === String(item.id)
                 );
                 // Use pinLabel from API response, fallback to generated label if not provided
                 const label =

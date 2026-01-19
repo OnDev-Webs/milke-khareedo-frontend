@@ -22,7 +22,7 @@ export default function PropertyArchive() {
     propertyId: string;
   } | null>(null);
   const [favoriteStates, setFavoriteStates] = useState<Record<string, boolean>>(
-    {},
+    {}
   );
   const [favoriteLoading, setFavoriteLoading] = useState<
     Record<string, boolean>
@@ -234,7 +234,8 @@ export default function PropertyArchive() {
     }
 
     // Check if already joined
-    const isJoined = joinGroupStates[property.id] ?? property.isJoinGroup ?? false;
+    const isJoined =
+      joinGroupStates[property.id] ?? property.isJoinGroup ?? false;
     if (isJoined) {
       return; // Already joined, do nothing
     }
@@ -263,7 +264,7 @@ export default function PropertyArchive() {
           setProperties((prev) => {
             return prev.map((p) => {
               const updated = refreshResponse.data.find(
-                (refreshed: Property) => refreshed.id === p.id,
+                (refreshed: Property) => refreshed.id === p.id
               );
               return updated || p;
             });
@@ -281,7 +282,7 @@ export default function PropertyArchive() {
   const handleAuthSuccess = () => {
     if (pendingAction) {
       const property = properties.find(
-        (p) => p.id === pendingAction.propertyId,
+        (p) => p.id === pendingAction.propertyId
       );
       if (property) {
         if (pendingAction.type === "favorite") {
@@ -320,7 +321,7 @@ export default function PropertyArchive() {
   const goToImage = (
     propertyId: string,
     index: number,
-    totalImages: number,
+    totalImages: number
   ) => {
     if (index >= 0 && index < totalImages) {
       setCurrentImageIndex((prev) => ({ ...prev, [propertyId]: index }));
@@ -347,7 +348,7 @@ export default function PropertyArchive() {
 
   return (
     <section className="w-full py-8 bg-white px-4 md:px-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <div className="mb-10">
           <Title text="All" isDrawLine drawLineText="Properties" />
@@ -362,7 +363,8 @@ export default function PropertyArchive() {
             style={{
               scrollbarWidth: "none",
               msOverflowStyle: "none",
-            }}>
+            }}
+          >
             {tabs.map((tab, idx) => {
               const isActive = activeTab === tab;
               return (
@@ -370,7 +372,8 @@ export default function PropertyArchive() {
                   key={idx}
                   onClick={() => handleTabChange(tab)}
                   className={`relative px-1 pb-2 text-sm md:text-base font-medium whitespace-nowrap shrink-0 transition-colors
-                  ${isActive ? "text-[#1C4692]" : "text-[#818181]"}`}>
+                  ${isActive ? "text-[#1C4692]" : "text-[#818181]"}`}
+                >
                   {tab}
                   {isActive && (
                     <span className="absolute left-0 right-0 -bottom-[8px] h-[2px] bg-[#1C4692] z-20" />

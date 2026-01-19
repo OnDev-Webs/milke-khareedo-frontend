@@ -43,7 +43,7 @@ export default function ContactForm({ className }: ContactFormProps) {
         className={className ?? "space-y-4"}
         onSubmit={form.handleSubmit(handleFormSubmit)}
       >
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col md:flex-col gap-4">
           <FormField
             control={form.control}
             name="firstName"
@@ -59,7 +59,7 @@ export default function ContactForm({ className }: ContactFormProps) {
               </FormItem>
             )}
           />
-          <FormField
+          {/* <FormField
             control={form.control}
             name="lastName"
             render={({ field }) => (
@@ -73,10 +73,10 @@ export default function ContactForm({ className }: ContactFormProps) {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
         </div>
 
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col md:flex-col gap-4">
           <FormField
             control={form.control}
             name="phone"

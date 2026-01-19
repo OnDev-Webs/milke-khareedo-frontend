@@ -41,7 +41,7 @@ export default function BlogCard({
 
       {/* Content */}
       <div className="flex flex-col flex-1 self-stretch p-3.5 bg-white rounded-bl-4xl rounded-br-4xl shadow-[0px_4px_50px_0px_rgba(0,0,0,0.10)]">
-        
+
         {/* TEXT CONTENT */}
         <div className="flex flex-col flex-1 gap-2.5">
           <span className="text-[#ACACAC] text-[14px] font-medium">

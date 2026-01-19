@@ -28,7 +28,7 @@ export default function CompanyOverview() {
 
   return (
     <section className="w-full bg-white py-16 px-4 md:px-12">
-      <div className="mx-auto container">
+      <div className="max-w-6xl mx-auto">
         {/* Title */}
         <div className="flex items-center justify-center mb-12 md:mb-20 w-fit mx-auto">
           <Title text={"Company"} drawLineText={"Overview"} isDrawLine />
@@ -38,7 +38,7 @@ export default function CompanyOverview() {
         <div className="flex flex-col md:flex-row md:items-stretch gap-12">
           {/* LEFT SIDE */}
           <div className="flex flex-col gap-4 w-full md:w-1/2 h-full">
-            <h3 className="text-[40px] font-bold text-[#000000]">
+            <h3 className="text-[24px] md:text-[40px] font-bold text-[#000000]">
               Built to help buyers save more — together.
             </h3>
 
@@ -48,12 +48,12 @@ export default function CompanyOverview() {
             </p>
 
             {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-2 place-items-start"> */}
-            <div className="grid grid-cols-1 gap-4 place-items-center md:grid-cols-2 md:place-items-start">
+            <div className="grid grid-cols-1 gap-5 place-items-center md:grid-cols-2 md:place-items-start">
 
               {features.map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-4 rounded-2xl bg-[#EEF4FF] px-5 py-4 shadow-[0_10px_20px_rgba(0,0,0,0.04)] w-[280px] min-w-[280px] max-w-[280px] h-[144px] min-h-[144px] max-h-[144px] box-border">
+                  className="flex items-center gap-4 rounded-2xl bg-[#EEF4FF] px-5 py-4 shadow-[0_10px_20px_rgba(0,0,0,0.04)] h-[144px] min-h-[144px] max-h-[144px] box-border">
                   {/* ICON BOX – SAME AS MISSION / VISION */}
                   <div className="relative flex h-[80px] w-[80px] items-center justify-center rounded-xl overflow-hidden shrink-0">
                     {/* Background */}
@@ -88,7 +88,6 @@ export default function CompanyOverview() {
             </div>
           </div>
 
-          {/* RIGHT SIDE */}
           <div className="relative w-full md:w-1/2 h-[400px] md:h-auto">
             <Image
               src={CompanyOverviewImg}

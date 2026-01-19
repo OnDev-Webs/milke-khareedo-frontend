@@ -97,7 +97,7 @@ export default function Teams() {
         <rect width="100%" height="100%" fill="url(#rhombusPattern)" />
       </svg>
 
-      <div className="mx-auto container sm:px-0 px-4 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 relative z-10">
         <Title
           text={"Rest of the"}
           isDrawLine

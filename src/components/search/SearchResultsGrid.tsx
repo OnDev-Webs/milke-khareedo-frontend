@@ -19,7 +19,8 @@ export default function SearchResultsGrid() {
   const [selectedCity, setSelectedCity] = useState("India, Delhi");
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [sortBy, setSortBy] = useState("New Added");
+  const [sortBy, setSortBy] = useState("newAdded");
+
   const [selectedBhk, setSelectedBhk] = useState("2.5 BHK");
   const [selectedPossession, setSelectedPossession] = useState("Ready to Move");
   const [results, setResults] = useState<Property[]>([]);
@@ -212,6 +213,13 @@ export default function SearchResultsGrid() {
 
   const filterBtnClass = `flex items-center justify-between gap-2 bg-[#EEF4FF] text-[#7B7B7B] rounded-[15px] px-3 py-[17px] text-[14px] font-medium`;
 
+  const sortLabelMap: Record<string, string> = {
+    newAdded: "New Added",
+    oldest: "Oldest",
+    priceLow: "Price: Low to High",
+    priceHigh: "Price: High to Low",
+  };
+
   return (
     <>
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-[#F3F3F3] mb-5 px-4">
@@ -382,19 +390,19 @@ export default function SearchResultsGrid() {
 
             <DropdownMenu>
               <DropdownMenuTrigger className="bg-[#F2F6FF] rounded-[10px] py-2.5 px-[15px]">
-                <span className="text-[#000000] text-[16px] font-medium">Sort by:</span> <span className="text-[#555555] text-[16px] font-medium">{sortBy}</span>
+                <span className="text-[#000000] text-[16px] font-medium">Sort by:</span> <span className="text-[#555555] text-[16px] font-medium"> {sortLabelMap[sortBy]}</span>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => setSortBy("New Added")}>
+                <DropdownMenuItem onClick={() => setSortBy("newAdded")}>
                   New Added
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortBy("Oldest")}>
+                <DropdownMenuItem onClick={() => setSortBy("oldest")}>
                   Oldest
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortBy("Price: Low to High")}>
+                <DropdownMenuItem onClick={() => setSortBy("priceLow")}>
                   Price: Low to High
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortBy("Price: High to Low")}>
+                <DropdownMenuItem onClick={() => setSortBy("priceHigh")}>
                   Price: High to Low
                 </DropdownMenuItem>
               </DropdownMenuContent>

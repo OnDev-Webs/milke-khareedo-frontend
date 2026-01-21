@@ -196,7 +196,7 @@ function PreferenceCard(props: PreferenceCardProps) {
           value={localityInput}
           onChange={(e) => setLocalityInput(e.target.value)}
           placeholder="Search Localities"
-          className="h-11 w-full rounded-lg border px-4 text-sm"
+          className="h-11 w-full rounded-lg border border-black px-4 text-sm"
         />
 
         <div className="mt-3 flex flex-wrap gap-2">

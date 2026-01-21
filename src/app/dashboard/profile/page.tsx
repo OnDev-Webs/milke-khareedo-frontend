@@ -63,7 +63,7 @@ export default function ProfilePage() {
             email: user.email || undefined,
             phoneNumber: user.phoneNumber || undefined,
             countryCode: user.countryCode || "+91",
-            address: user.address || undefined,
+            // address: user.address || undefined,
             pincode: user.pincode || undefined,
             country: countryCode || undefined,
             state: stateCode || undefined,
@@ -93,6 +93,16 @@ export default function ProfilePage() {
         state: form.state ?? "",
         country: form.country ?? "",
     });
+
+    const derivedAddress = useMemo(() => {
+        const parts = [
+            form.city,
+            states.find(s => s.isoCode === form.state)?.name,
+            countries.find(c => c.isoCode === form.country)?.name,
+        ].filter(Boolean);
+
+        return parts.join(", ");
+    }, [form.city, form.state, form.country, states, countries]);
 
 
     const handleSave = async () => {
@@ -136,7 +146,7 @@ export default function ProfilePage() {
     if (loading) {
         return (
             <div className="rounded-[24px] bg-white p-10 shadow">
-               <Loader size={38}/>
+                <Loader size={38} />
             </div>
         );
     }
@@ -158,14 +168,24 @@ export default function ProfilePage() {
                 }
                     placeholder="Enter mobile number" />
 
-                <FieldInput
+                {/* <FieldInput
                     label="Full Address *"
                     name="address"
                     value={form.address ?? ""}
                     onChange={handleChange}
                     placeholder="Enter full address"
                     className="md:col-span-2"
-                />
+                /> */}
+
+                {derivedAddress && (
+                    <FieldInput
+                        label="Full Address"
+                        value={derivedAddress}
+                        disabled
+                        className="md:col-span-2 hidden sm:block"
+                    />
+                )}
+
 
                 <FieldInput
                     label="Pin code *"
@@ -257,35 +277,35 @@ function FieldInput({
 
 
 function VerifiedInput({ label, value }: any) {
-  const isFilled = Boolean(value);
+    const isFilled = Boolean(value);
 
-  return (
-    <div className="relative">
-      <span
-        className={`
+    return (
+        <div className="relative">
+            <span
+                className={`
           absolute left-4 top-[-9px] bg-white px-2 text-xs
           ${isFilled ? "text-black" : "text-gray-400"}
         `}
-      >
-        {label}
-      </span>
+            >
+                {label}
+            </span>
 
-      <input
-        value={value}
-        disabled
-        className={`
+            <input
+                value={value}
+                disabled
+                className={`
           h-14 w-full rounded-[10px] px-4 pr-12 text-sm bg-gray-100
           ${isFilled ? "border border-black text-black" : "border border-gray-300 text-gray-400"}
         `}
-      />
+            />
 
-      <span className="absolute right-4 top-1/2 -translate-y-1/2 flex h-6 w-6 items-center justify-center rounded-full bg-[#1C4692]">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
-          <polyline points="20 6 9 17 4 12" />
-        </svg>
-      </span>
-    </div>
-  );
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 flex h-6 w-6 items-center justify-center rounded-full bg-[#1C4692]">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
+                    <polyline points="20 6 9 17 4 12" />
+                </svg>
+            </span>
+        </div>
+    );
 }
 
 

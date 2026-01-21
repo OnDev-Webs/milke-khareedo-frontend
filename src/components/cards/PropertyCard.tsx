@@ -69,6 +69,21 @@ export default function PropertyCard({
     return num > 0;
   };
 
+ const formatLocationForUI = (fullLocation?: string) => {
+  if (!fullLocation) return "";
+  const parts = fullLocation
+    .split(",")
+    .map(p => p.trim())
+    .filter(Boolean);
+  if (parts.length < 2) return parts[0] || "";
+  const ignore = ["india", "telangana", "maharashtra", "gujarat", "karnataka"];
+  const filtered = parts.filter(p => !ignore.includes(p.toLowerCase()));
+  if (filtered.length < 2) return filtered[0];
+  const city = filtered[filtered.length - 1];
+  const area = filtered[filtered.length - 2];
+  return `${area} , | ${city}`;
+};
+
   return (
     <div
       className="flex flex-col rounded-3xl p-4 bg-white shadow-lg overflow-hidden group relative cursor-pointer"
@@ -172,7 +187,7 @@ export default function PropertyCard({
               {property.projectName}
             </h3>
             <p className="text-[15px] text-[#828282] truncate">
-              {property.location}
+              {formatLocationForUI(property.location)}
             </p>
           </div>
           <button className="relative z-20 bg-[#66AE39] text-white px-3 py-2 rounded-full flex items-center gap-1 text-xs shrink-0 ml-2 hover:bg-[#5a9a32] transition-colors">

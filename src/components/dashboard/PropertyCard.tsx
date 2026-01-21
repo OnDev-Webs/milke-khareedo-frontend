@@ -59,7 +59,6 @@ export default function PropertyCard({
     isFavorite = false,
     isFavoriteLoading = false,
 }: PropertyCardProps) {
-
     const router = useRouter();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [localFavorite, setLocalFavorite] = useState(isFavorite);
@@ -69,6 +68,40 @@ export default function PropertyCard({
     useEffect(() => {
         setLocalFavorite(isFavorite);
     }, [isFavorite])
+
+    function formatLocationAreaCity(fullLocation?: string) {
+        if (!fullLocation || typeof fullLocation !== "string") return "";
+        const parts = fullLocation
+            .split(",")
+            .map(p => p.trim())
+            .filter(Boolean);
+        if (parts.length === 0) return "";
+        if (parts[parts.length - 1].toLowerCase() === "india") {
+            parts.pop();
+        }
+        let area = "";
+        let city = "";
+        if (parts.length >= 2) {
+            city = parts[parts.length - 2];
+        } else {
+            city = parts[parts.length - 1];
+        }
+        const roadKeywords = ["road", "rd", "street", "st", "lane", "ln"];
+        for (let part of parts) {
+            const lower = part.toLowerCase();
+            const isRoad = roadKeywords.some(k => lower.includes(k));
+            const isNumber = /^\d+/.test(part);
+            if (!isRoad && !isNumber) {
+                area = part;
+                break;
+            }
+        }
+        if (!area) area = parts[0];
+        if (area.toLowerCase() === city.toLowerCase()) {
+            return area;
+        }
+        return `${area} , | ${city}`;
+    }
 
     return (
         <div onClick={() => router.push(`/property-details/${id}`)} className="group flex flex-col rounded-4xl bg-white p-4 shadow-sm cursor-pointer">
@@ -184,9 +217,9 @@ export default function PropertyCard({
             <div className="mt-4 flex flex-col gap-3">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h3 className="text-2xl font-semibold text-[#000000]">{title}</h3>
+                        <h3 className="text-2xl font-semibold text-[#000000]  line-clamp-1 min-h-[30px] leading-tight">{title}</h3>
                         <p className="text-[15px] text-[#828282] truncate max-w-[220px]" title={location}>
-                            {location}
+                            {formatLocationAreaCity(location)}
                         </p>
                     </div>
 
@@ -234,17 +267,19 @@ export default function PropertyCard({
                         <span>Up to {discountPercentage} off</span>
                     </div>
 
-                    {showDiscount ? (
-                        <p className="mt-1 text-[14px] text-[#FF3232]">
-                            Get up to {discountPercentage} discount on this property
-                        </p>
-                    ) : (
-                        lastViewedAt && (
-                            <p className="mt-3 text-xs text-red-500">
+                    <div className="mt-1 min-h-[20px]">
+                        {showDiscount ? (
+                            <p className="text-[14px] text-[#FF3232]">
+                                Get up to {discountPercentage} discount on this property
+                            </p>
+                        ) : lastViewedAt ? (
+                            <p className="text-xs text-red-500">
                                 Last viewed on {new Date(lastViewedAt).toLocaleString()}
                             </p>
-                        )
-                    )}
+                        ) : (
+                            <span className="invisible text-xs">placeholder</span>
+                        )}
+                    </div>
                 </div>
 
                 <button
@@ -265,15 +300,11 @@ type StatBoxProps = {
 
 function StatBox({ label, value, className = "bg-[#F2F6FF]" }: StatBoxProps) {
     const [rawNumber, text] = value.split(" ");
-
-    const formattedNumber =
-        rawNumber.length === 1 ? rawNumber.padStart(2, "0") : rawNumber;
-
+    const formattedNumber = rawNumber.length === 1 ? rawNumber.padStart(2, "0") : rawNumber;
 
     return (
         <div className={`rounded-xl px-4 py-3 text-center ${className}`}>
             <p className="text-[18px] font-semibold text-[#000000]">{label}</p>
-
             <p className="mt-1 text-sm">
                 <span className="font-bold text-xl text-[#1C4692]">{formattedNumber}</span>{" "}
                 <span className="text-[#525252] text-[14px]">{text}</span>

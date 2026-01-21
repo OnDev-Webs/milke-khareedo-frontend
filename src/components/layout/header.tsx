@@ -9,7 +9,7 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import AuthModal from "@/components/auth/AuthModal";
 import { IoPerson, IoChevronDown } from "react-icons/io5";
 import { HiOutlineMenu } from "react-icons/hi";
-import { Building2, Globe, HeartIcon, LucideCircleUserRound, Search, SlidersHorizontal } from "lucide-react";
+import { LucideCircleUserRound } from "lucide-react";
 import CompareOverlay from "../home/compare/CompareOverlay";
 
 const navLinks = [
@@ -20,6 +20,54 @@ const navLinks = [
   { label: "Contact Us", href: "/contact" },
 ];
 
+const profileMenuItems: {
+  key: MenuIconKey;
+  label: string;
+  href: string;
+}[] = [
+  {
+    key: "properties",
+    label: "My Properties",
+    href: "/dashboard/viewed-properties",
+  },
+  {
+    key: "favorite",
+    label: "My Favorite",
+    href: "/dashboard/favorites",
+  },
+  {
+    key: "visits",
+    label: "Site visits",
+    href: "/dashboard/site-visits",
+  },
+  {
+    key: "compare",
+    label: "Compare",
+    href: "/compare",
+  },
+  {
+    key: "searches",
+    label: "My Searches",
+    href: "/dashboard/searches",
+  },
+  {
+    key: "preference",
+    label: "My Preference",
+    href: "/dashboard/preferences",
+  },
+];
+
+const menuIcons = {
+  properties: "/images/properties.svg",
+  favorite: "/images/fav.svg",
+  visits: "/images/siteVisit.svg",
+  compare: "/images/convert.svg",
+  searches: "/images/mySearch.svg",
+  preference: "/images/myPreference.svg",
+} as const ;
+
+type MenuIconKey = keyof typeof menuIcons;
+
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
@@ -29,10 +77,7 @@ export default function Header() {
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showCompare, setShowCompare] = useState(false);
-
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname?.startsWith(href);
-
+  const isActive = (href: string) => href === "/" ? pathname === "/" : pathname?.startsWith(href);
   const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleOpenCompare = () => {
@@ -144,7 +189,7 @@ export default function Header() {
                     />
                     <div className="absolute right-0 top-14 z-[200] w-[280px] rounded-2xl bg-white shadow-xl ring-1 ring-black/5">
                       {/* Profile Header */}
-                      <div className="flex items-center gap-3 px-4 py-4 border-b border-gray-100">
+                      <div className="flex items-center gap-3 px-4 py-4 border-b border-[#E3E3E3]">
                         <div className="h-10 w-10 rounded-full bg-gray-200 overflow-hidden">
                           {user?.profileImage ? (
                             <Image
@@ -157,70 +202,33 @@ export default function Header() {
                             <LucideCircleUserRound className="h-full w-full p-2 text-gray-500" />
                           )}
                         </div>
-
                         <div>
-                          <p className="text-sm font-semibold text-gray-900">
+                          <p className="text-[16px] font-bold text-[#141414]">
                             {user?.name || "User"}
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-[12px] font-medium text-[#828282]">
                             {user?.countryCode} {user?.phoneNumber}
                           </p>
                         </div>
                       </div>
 
                       {/* Menu Items */}
-                      <div className="px-3 py-3 space-y-2">
-                        {[
-                          {
-                            label: "My Properties",
-                            href: "/dashboard/viewed-properties",
-                            icon: Building2,
-                          },
-                          {
-                            label: "My Favorite",
-                            href: "/dashboard/favorites",
-                            icon: HeartIcon,
-                          },
-                          {
-                            label: "Site visits",
-                            href: "/dashboard/site-visits",
-                            icon: Globe,
-                          },
-                          {
-                            label: "Compare",
-                            href: "/compare",
-                            icon: "compare",
-                          },
-                          {
-                            label: "My Searches",
-                            href: "/dashboard/searches",
-                            icon: Search,
-                          },
-                          {
-                            label: "My Preference",
-                            href: "/dashboard/preferences",
-                            icon: SlidersHorizontal,
-                          },
-                        ].map((item) => {
-                          const Icon = item.icon;
+                      <div className="px-3 py-2 space-y-2">
+                       {profileMenuItems.map((item) => {
                           return (
                             <Link
                               key={item.label}
                               href={item.href}
                               onClick={() => setProfileDropdownOpen(false)}
-                              className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-gray-800 bg-[#f6faffb4] transition">
+                              className="flex items-center gap-3 rounded-xl px-3 py-2 text-[14px] font-semibold text-[#141414] bg-[#F8FBFF] transition">
                               {/* Icon container */}
                               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white ">
-                                {item.icon === "compare" ? (
-                                  <Image
-                                    src="/images/convert.svg"
-                                    alt="Compare"
-                                    width={16}
-                                    height={16}
-                                  />
-                                ) : (
-                                  <Icon className="h-4 w-4 text-gray-700" />
-                                )}
+                                <Image
+                                  src={menuIcons[item.key]}
+                                  alt={item.label}
+                                  width={20}
+                                  height={20}
+                                />
                               </div>
                               {item.label}
                             </Link>
@@ -229,14 +237,14 @@ export default function Header() {
                       </div>
 
                       {/* Logout */}
-                      <div className="px-4 pb-4">
+                      <div className="px-3 pb-4">
                         <button
                           onClick={() => {
                             logout();
                             setProfileDropdownOpen(false);
                             router.push("/");
                           }}
-                          className="w-full rounded-xl bg-red-500 py-2.5 text-sm font-semibold text-white hover:bg-red-600">
+                          className="w-full rounded-[10px] bg-[#F00004] py-2.5 text-[14px] font-medium text-[#FFFFFF] shadow-[0px_0px_16px_0px_#B3C0E752]">
                           Log out
                         </button>
                       </div>

@@ -52,6 +52,28 @@ export default function SearchPropertyCard({
     return num > 0;
   };
 
+  const formatLocationForCard = (fullLocation?: string) => {
+    if (!fullLocation) return "";
+
+    const parts = fullLocation
+      .split(",")
+      .map(p => p.trim())
+      .filter(Boolean);
+
+    // remove country
+    const filtered = parts.filter(p => p.toLowerCase() !== "india");
+
+    if (filtered.length >= 2) {
+      const city = filtered[filtered.length - 2];
+      const area = filtered[filtered.length - 3] || filtered[0];
+
+      return `${area} , | ${city}`;
+    }
+
+    return filtered.join(", ");
+  };
+
+
   return (
     <div
       className="relative flex flex-col rounded-3xl bg-white shadow-lg overflow-hidden group cursor-pointer"
@@ -164,7 +186,7 @@ export default function SearchPropertyCard({
               {property.projectName}
             </h3>
             <p className="text-[15px] text-[#828282] truncate">
-              {property.location}
+              {formatLocationForCard(property.location)}
             </p>
           </div>
           <button className="relative z-20 bg-[#66AE39] text-white px-3 py-2 rounded-full flex items-center gap-1 text-xs shrink-0 ml-2 hover:bg-[#5a9a32] transition-colors">

@@ -12,23 +12,23 @@ export default function CompareOverlay() {
   return (
     <div className="w-[340px] rounded-2xl bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)]">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-gray-200 px-5 py-4">
+      <div className="flex items-center justify-between border-b border-[#B3B3B3] px-5 py-4">
         <div className="flex items-center gap-2">
-          <h3 className="text-lg font-semibold text-gray-800">Compare</h3>
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#1C4692] text-xs font-semibold text-white">
+          <h3 className="text-[18px] font-semibold text-gray-800">Compare</h3>
+          <span className="flex h-5 w-7 items-center justify-center rounded-[50px] bg-[#1C4692] text-xs font-semibold text-white">
             {compareCount}
           </span>
         </div>
         <button
           onClick={clearCompare}
-          className="text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors"
+          className="text-[14px] font-medium text-[#2388FF]"
         >
           Clear
         </button>
       </div>
 
       {/* Property List */}
-      <div className="max-h-[400px] overflow-y-auto px-5 py-4">
+      <div className="max-h-[400px] overflow-y-auto px-3 py-4">
         {compareItems.length === 0 ? (
           <p className="py-4 text-center text-sm text-gray-500">
             No properties to compare
@@ -38,7 +38,7 @@ export default function CompareOverlay() {
             {compareItems.map((property) => (
               <div
                 key={property.id}
-                className="flex items-start gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3 hover:bg-gray-100 transition-colors">
+                className="flex items-start gap-3 rounded-lg bg-[#F8FBFF] p-3">
                 {/* ✅ PROPERTY IMAGE */}
                 <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full bg-gray-200">
                   {property.image ? (
@@ -83,7 +83,7 @@ export default function CompareOverlay() {
 
       {/* Compare Button */}
       {compareItems.length > 0 && (
-        <div className="border-t border-gray-200 px-5 py-4">
+        <div className="px-3 py-4">
           <Link
             href="/compare"
             className="block w-full rounded-full bg-[#1C4692] px-6 py-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#1c4692e6] transition-colors"

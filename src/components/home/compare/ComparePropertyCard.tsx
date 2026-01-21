@@ -161,6 +161,30 @@ export default function ComparePropertyCard({
     setPendingAction(null);
   };
 
+  function getAreaName(fullLocation?: string) {
+    if (!fullLocation || typeof fullLocation !== "string") return "";
+    const parts = fullLocation
+      .split(",")
+      .map(p => p.trim())
+      .filter(Boolean);
+
+    if (parts.length === 0) return "";
+    const roadKeywords = ["road","rd","street","st","lane","ln","highway","hwy"];
+    if (parts[parts.length - 1].toLowerCase() === "india") {
+      parts.pop();
+    }
+
+    for (let part of parts) {
+      const lower = part.toLowerCase();
+      const isRoad = roadKeywords.some(k => lower.includes(k));
+      const isNumber = /^\d+/.test(part);
+      if (!isRoad && !isNumber) {
+        return part; 
+      }
+    }
+    return parts[0];
+  }
+
   return (
     <div className="relative flex flex-col rounded-lg bg-white p-2.5 shadow-[0_2px_8px_rgba(0,0,0,0.06)] sm:rounded-xl sm:shadow-[0_4px_12px_rgba(0,0,0,0.08)] sm:p-3 md:rounded-2xl md:shadow-[0_8px_24px_rgba(0,0,0,0.08)] md:p-4">
       {/* Remove Component Button */}
@@ -211,8 +235,8 @@ export default function ComparePropertyCard({
             onClick={handleFavoriteClick}
             disabled={favoriteLoading}
             className={`flex h-6 w-6 items-center justify-center rounded-full border transition-colors sm:h-7 sm:w-7 md:h-8 md:w-8 ${isFavorite
-                ? "border-[#1C4692] bg-[#1C4692] text-white hover:bg-[#1c4692e6]"
-                : "border-gray-300 bg-[#EEF4FF] text-gray-600 hover:bg-gray-50"
+              ? "border-[#1C4692] bg-[#1C4692] text-white hover:bg-[#1c4692e6]"
+              : "border-gray-300 bg-[#EEF4FF] text-gray-600 hover:bg-gray-50"
               } disabled:opacity-50 disabled:cursor-not-allowed`}
             aria-label={
               isFavorite ? "Remove from favorites" : "Add to favorites"
@@ -284,7 +308,7 @@ export default function ComparePropertyCard({
             Location
           </span>
           <span className="text-xs font-semibold text-gray-800 break-words sm:text-xs md:text-sm">
-            {property.location}
+            {getAreaName(property.location)}
           </span>
         </div>
         <div className="flex flex-col gap-1 pb-2 border-b border-gray-200">
@@ -379,8 +403,8 @@ export default function ComparePropertyCard({
                   key={index}
                   onClick={() => scrollToPlan(index)}
                   className={`transition-all ${index === currentFloorPlanIndex
-                      ? "h-1.5 w-6 rounded-full bg-gray-600 sm:h-2 sm:w-8"
-                      : "h-1 w-1 rounded-full bg-gray-300 hover:bg-gray-400 sm:h-1.5 sm:w-1.5"
+                    ? "h-1.5 w-6 rounded-full bg-gray-600 sm:h-2 sm:w-8"
+                    : "h-1 w-1 rounded-full bg-gray-300 hover:bg-gray-400 sm:h-1.5 sm:w-1.5"
                     }`}
                   aria-label={`Go to floor plan ${index + 1}`}
                 />

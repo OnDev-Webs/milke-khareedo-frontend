@@ -83,16 +83,11 @@ export default function HowItWorks() {
       const scrollingDown = e.deltaY > 0;
       const scrollingUp = e.deltaY < 0;
 
-      if (
-        (scrollingDown && !isAtEnd) ||
-        (scrollingUp && !isAtStart)
-      ) {
+      if ((scrollingDown && !isAtEnd) || (scrollingUp && !isAtStart)) {
         e.preventDefault();
         setIsLocked(true);
 
-        swiper.setTranslate(
-          swiper.getTranslate() - e.deltaY * 0.8 
-        );
+        swiper.setTranslate(swiper.getTranslate() - e.deltaY * 0.8);
         swiper.updateProgress();
         swiper.updateActiveIndex();
       } else {
@@ -104,34 +99,34 @@ export default function HowItWorks() {
     return () => window.removeEventListener("wheel", handleWheel);
   }, []);
 
-
   return (
-    <section id="how-it-works" className="w-full bg-white py-14 px-4 md:px-16" ref={sectionRef}>
-      <div className="mx-auto max-w-7xl">
+    <section
+      id="how-it-works"
+      ref={sectionRef}
+      className="w-full bg-white py-14 px-4 md:px-10 lg:px-16"
+    >
+      <div className="mx-auto max-w-6xl">
         {/* Heading */}
-        <h2 className="text-[24px] md:text-[30px] font-semibold text-[#000000] mb-2">
+        <h2 className="text-[22px] sm:text-[26px] md:text-[30px] font-semibold text-black mb-2">
           How People Like You Bought
           <span className="relative inline-block text-[#1C4692] ps-2">
             Smarter
             <svg
-              className="absolute left-0 -bottom-2"
-              width="150"
-              height="11"
+              className="absolute left-0 -bottom-2 w-[120px] md:w-[150px]"
               viewBox="0 0 228 11"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 d="M2 8.5C60 1.5 170 5.5 226 8.5"
                 stroke="#1C4692"
                 strokeWidth="5"
                 strokeLinecap="round"
-                fill="none"
               />
             </svg>
           </span>
         </h2>
-        <p className="pt-2 pb-10 font-medium text-[#110229]">
+
+        <p className="pt-2 pb-8 text-sm sm:text-base font-medium text-[#110229]">
           Real buying <span className="text-[#1C4692]">journeys</span>,
           explained simply.
         </p>
@@ -139,34 +134,36 @@ export default function HowItWorks() {
         <div className="relative">
           <Swiper
             onSwiper={(swiper) => (swiperRef.current = swiper)}
-            slidesPerView={1}
-            spaceBetween={16}
+            slidesPerView={1.1}
+            spaceBetween={14}
             breakpoints={{
-              1024: { slidesPerView: 3.5, spaceBetween: 18 },
+              640: { slidesPerView: 1.8, spaceBetween: 16 },
+              768: { slidesPerView: 2.4, spaceBetween: 18 },
+              1024: { slidesPerView: 3.5, spaceBetween: 20 },
             }}
-            freeMode={true}
+            freeMode
             scrollbar={{
               draggable: true,
               el: ".custom-swiper-scrollbar",
             }}
             modules={[FreeMode, Scrollbar]}
-            className="pb-8"
+            className="pb-6"
           >
             {steps.map((step, i) => (
               <SwiperSlide key={i}>
-                <div className="flex flex-col bg-white rounded-xl mb-2 p-5 shadow-md min-h-[230px] max-h-[230px] max-w-[340px] overflow-hidden">
+                <div className="flex flex-col bg-white rounded-2xl p-5 mb-2 shadow-md min-h-[240px] max-w-[340px]">
                   <div className="relative mb-4 h-12 w-12 flex items-center justify-center">
                     <img
                       src="/images/LightGradient.svg"
                       alt=""
-                      className="absolute inset-0 w-full h-full object-contain opacity-90"
+                      className="absolute inset-0 w-full h-full object-contain"
                     />
-                    <div className="relative z-10 text-white font-bold text-[24px]">
+                    <span className="relative z-10 text-white font-bold text-[22px]">
                       {step.number}
-                    </div>
+                    </span>
                   </div>
 
-                  <h3 className="text-[#000000] font-bold text-[17px] mb-2 leading-snug">
+                  <h3 className="text-black font-bold text-[16px] sm:text-[17px] mb-2 leading-snug">
                     {step.title}
                   </h3>
 
@@ -178,7 +175,7 @@ export default function HowItWorks() {
             ))}
           </Swiper>
 
-          <div className="custom-swiper-scrollbar mt-6 mx-0"></div>
+          <div className="custom-swiper-scrollbar mt-4"></div>
         </div>
       </div>
     </section>

@@ -299,7 +299,7 @@ export default function TopProperties() {
 
   return (
     <section className="w-full py-16 bg-gray-50 px-6">
-      <div className="max-w-[1350px] mx-auto px-6">
+      <div className="max-w-6xl mx-auto sm:px-6 lg:px-5">
         {/* Heading */}
         <h2 className="text-3xl font-bold text-black mb-6">
           Top{" "}
@@ -355,7 +355,7 @@ export default function TopProperties() {
 
         {/* Cards Grid */}
         {!isLoadingMore || properties.length > 0 ? (
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
             {properties.map((prop) => {
               const isFavorite = favoriteStates[prop.id] ?? prop.isFavorite ?? false;
               const isLoading = favoriteLoading[prop.id] ?? false;

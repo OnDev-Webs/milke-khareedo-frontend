@@ -19,7 +19,7 @@ export default function NewsCard({ blogs }: { blogs: Blog[] }) {
           >
             <div className="shadow-[0_0_10px_rgba(0,0,0,0.08)] p-6 rounded-4xl h-full cursor-pointer hover:shadow-md transition">
               <div className="flex flex-col h-full gap-4">
-                <div className="relative w-[140px] h-[80px] md:w-full md:h-[320px] rounded-4xl overflow-hidden">
+                <div className="relative w-full h-full md:w-full md:h-[320px] rounded-4xl overflow-hidden">
                   <Image
                     src={item.bannerImage}
                     alt={item.title}

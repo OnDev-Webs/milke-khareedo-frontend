@@ -23,12 +23,14 @@ const partnerLogos = [
 export default function CalculateSave() {
   const router = useRouter();
 
-  const [loanAmount, setLoanAmount] = useState(36000000); 
+  const [loanAmount, setLoanAmount] = useState(36000000);
   const [rateOfInterest, setRateOfInterest] = useState(8.9);
-  const [loanTenure, setLoanTenure] = useState(60); 
+  const [loanTenure, setLoanTenure] = useState(60);
   const [currency, setCurrency] = useState("INR");
   const [activeIndex, setActiveIndex] = useState(0);
-  const visibleIndex = ((activeIndex % partnerLogos.length) + partnerLogos.length) % partnerLogos.length;
+  const visibleIndex =
+    ((activeIndex % partnerLogos.length) + partnerLogos.length) %
+    partnerLogos.length;
   const ITEM_WIDTH = 44;
   const extendedLogos = [...partnerLogos, ...partnerLogos, ...partnerLogos];
   const baseOffset = partnerLogos.length * ITEM_WIDTH;
@@ -44,13 +46,19 @@ export default function CalculateSave() {
   const [emiData, setEmiData] = useState<EMICalculatorResponse | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
 
-  const loanAmountRange = { min: 3000000, max: 500000000 }; 
+  const loanAmountRange = { min: 3000000, max: 500000000 };
   const rateRange = { min: 7, max: 11 };
   const tenureRange = { min: 12, max: 60 };
 
-  const loanAmountPercent = ((loanAmount - loanAmountRange.min) / (loanAmountRange.max - loanAmountRange.min)) * 100;
-  const ratePercent = ((rateOfInterest - rateRange.min) / (rateRange.max - rateRange.min)) * 100;
-  const tenurePercent = ((loanTenure - tenureRange.min) / (tenureRange.max - tenureRange.min)) * 100;
+  const loanAmountPercent =
+    ((loanAmount - loanAmountRange.min) /
+      (loanAmountRange.max - loanAmountRange.min)) *
+    100;
+  const ratePercent =
+    ((rateOfInterest - rateRange.min) / (rateRange.max - rateRange.min)) * 100;
+  const tenurePercent =
+    ((loanTenure - tenureRange.min) / (tenureRange.max - tenureRange.min)) *
+    100;
 
   // Format loan amount for display
   const formatLoanAmount = (amount: number) => {
@@ -124,14 +132,14 @@ export default function CalculateSave() {
     router.push("/contact");
   };
 
-  const principalPercentage = emiData?.emiBreakdown?.principalPercentage || 80.5;
+  const principalPercentage =
+    emiData?.emiBreakdown?.principalPercentage || 80.5;
 
   const formatCurrencyShort = (amount?: number | string) => {
     if (!amount) return "₹ 0";
 
-    const value = typeof amount === "string"
-      ? Number(amount.replace(/,/g, ""))
-      : amount;
+    const value =
+      typeof amount === "string" ? Number(amount.replace(/,/g, "")) : amount;
 
     if (value >= 1e7) {
       return `₹ ${(value / 1e7).toFixed(2)} Cr`;
@@ -147,7 +155,6 @@ export default function CalculateSave() {
     return `₹ ${value}`;
   };
 
-
   return (
     <section
       className="relative w-full py-16 overflow-hidden"
@@ -161,11 +168,11 @@ export default function CalculateSave() {
     >
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="rounded-[32px] bg-white p-2 sm:p-6 shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
-          <div className="grid gap-8 md:grid-cols-2 p-2">
+          <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 p-2">
             {/* ================= LEFT SIDE ================= */}
             <div className="flex flex-col gap-4">
               {/* Circular Chart and EMI Result */}
-              <div className="flex flex-col md:flex-row p-4 sm:px-3 sm:py-6 rounded-[20px] md:rounded-md bg-[#EEF4FF] md:items-center gap-4 w-full max-w-[58%] md:max-w-full overflow-hidden box-border">
+              <div className="flex flex-col md:flex-row p-4 sm:px-3 sm:py-6 rounded-[20px] md:rounded-md bg-[#EEF4FF] md:items-center gap-4 md:max-w-full overflow-hidden box-border">
                 {/* Circular Pie Chart */}
                 <div className="relative flex-shrink-0 h-36 w-36 sm:h-44 sm:w-44 md:h-48 md:w-48">
                   <div
@@ -221,7 +228,9 @@ export default function CalculateSave() {
                         Total Amount
                       </p>
                       <p className="text-[14px] font-semibold text-black">
-                        {formatCurrencyShort(emiData?.totalAmountPayable?.value)}
+                        {formatCurrencyShort(
+                          emiData?.totalAmountPayable?.value,
+                        )}
                       </p>
                     </div>
                   </div>
@@ -255,8 +264,9 @@ export default function CalculateSave() {
                   <div
                     className="flex gap-4 transition-transform duration-300 ease-in-out"
                     style={{
-                      transform: `translateX(-${baseOffset + visibleIndex * ITEM_WIDTH
-                        }px)`,
+                      transform: `translateX(-${
+                        baseOffset + visibleIndex * ITEM_WIDTH
+                      }px)`,
                     }}
                   >
                     {extendedLogos.map((partner, idx) => {
@@ -266,10 +276,11 @@ export default function CalculateSave() {
                       return (
                         <div
                           key={idx}
-                          className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 transition-all ${isActive
+                          className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 transition-all ${
+                            isActive
                               ? "scale-110 border-blue-400"
                               : "bg-gray-100 border-gray-200"
-                            }`}
+                          }`}
                         >
                           <img
                             src={partner.logo}
@@ -285,8 +296,6 @@ export default function CalculateSave() {
                     })}
                   </div>
                 </div>
-
-
               </div>
             </div>
 
@@ -434,26 +443,30 @@ export default function CalculateSave() {
       </div>
 
       <style jsx>{`
-            .slider::-webkit-slider-thumb {
-            appearance: none;
-            width: 34px;
-            height: 18px;
-            border-radius: 999px;
-            background: #1C4692;          
-            border: 3px solid #313131;    
-            cursor: pointer;
-            box-shadow:0 0 0 1px #ffffff,0 2px 6px rgba(0,0,0,0.25);
-          }
-          .slider::-moz-range-thumb {
-            width: 34px;
-            height: 18px;
-            border-radius: 999px;
-            background: #1C4692;
-            border: 3px solid #313131;
-            cursor: pointer;
-            box-shadow:0 0 0 1px #ffffff,0 2px 6px rgba(0,0,0,0.25);
-          }
-        `}</style>
+        .slider::-webkit-slider-thumb {
+          appearance: none;
+          width: 34px;
+          height: 18px;
+          border-radius: 999px;
+          background: #1c4692;
+          border: 3px solid #313131;
+          cursor: pointer;
+          box-shadow:
+            0 0 0 1px #ffffff,
+            0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+        .slider::-moz-range-thumb {
+          width: 34px;
+          height: 18px;
+          border-radius: 999px;
+          background: #1c4692;
+          border: 3px solid #313131;
+          cursor: pointer;
+          box-shadow:
+            0 0 0 1px #ffffff,
+            0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+      `}</style>
     </section>
   );
 }

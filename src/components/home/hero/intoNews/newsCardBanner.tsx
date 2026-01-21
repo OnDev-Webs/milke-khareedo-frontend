@@ -17,7 +17,7 @@ export default function NewsCardBanner({ blog }: { blog: Blog }) {
           
           {/* Image */}
           <div className="w-full md:w-1/2 h-48 md:h-auto bg-[#F9F9FF] flex items-center justify-center rounded-4xl overflow-hidden">
-            <div className="relative w-[140px] h-[80px] md:w-full md:h-[320px] rounded-xl">
+            <div className="relative w-full h-full md:w-full md:h-[320px] rounded-xl">
               <Image
                 src={blog.bannerImage}
                 alt={blog.title}

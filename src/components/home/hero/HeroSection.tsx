@@ -16,7 +16,6 @@ export default function Hero() {
   const [isSearching, setIsSearching] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-
   const handleCityChange = (cityValue: string) => {
     setSelectedCity(cityValue);
     setSearchQuery(cityValue);
@@ -93,7 +92,10 @@ export default function Hero() {
           </p>
 
           <h1 className="text-3xl md:text-4xl font-bold text-[#151516] md:pe-68 ">
-            <span className="text-[#1C4692] mb-8"> Milke Khereedo <br /> </span>
+            <span className="text-[#1C4692] mb-8">
+              {" "}
+              Milke Khereedo <br />{" "}
+            </span>
             Makes it easier.
           </h1>
 
@@ -151,9 +153,8 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="absolute -bottom-5 left-1/2 w-[95%] md:w-[1250px] max-w-5xl -translate-x-1/2 z-0">
+      <div className="absolute -bottom-5 left-1/2 w-[95%] md:w-[1250px] max-w-5xl -translate-x-1/2 z-20">
         <div className="flex flex-col md:flex-row items-stretch py-2 md:py-3 rounded-2xl bg-white/70 backdrop-blur-md p-0 overflow-visible shadow-[0_12px_40px_rgba(0,0,0,0.10)]">
-
           {/* CITY SELECT SECTION */}
           <div className="relative flex flex-col justify-center ps-6 pe-4 py-4 min-w-[130px] border-b border-[#DCDCEB] md:border-b-0">
             <label className="text-sm font-bold text-gray-800 mb-2.5">
@@ -167,13 +168,14 @@ export default function Hero() {
                 showLabel={false}
               />
             </div>
-            <span
-              className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 h-10 w-0.5 bg-[#DCDCEB]"
-            />
+            <span className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 h-10 w-0.5 bg-[#DCDCEB]" />
           </div>
 
           {/* SEARCH INPUT SECTION */}
-          <div className="relative flex-1 flex flex-col justify-start ps-4 pe-6 py-4" onClick={() => searchInputRef.current?.focus()}>
+          <div
+            className="relative flex-1 flex flex-col justify-start ps-4 pe-6 py-4"
+            onClick={() => searchInputRef.current?.focus()}
+          >
             <div className="relative">
               <input
                 ref={searchInputRef}
@@ -185,9 +187,10 @@ export default function Hero() {
                 onBlur={() => setIsSearchFocused(false)}
                 placeholder="Find your Dream Home"
                 className={`w-full bg-transparent outline-none border-none focus:ring-0 transition-all duration-300
-                  ${searchQuery || isSearchFocused
-                    ? "text-[26px] font-semibold text-gray-900 text-left mt-1"
-                    : "text-base font-bold text-gray-800"
+                  ${
+                    searchQuery || isSearchFocused
+                      ? "text-[26px] font-semibold text-gray-900 text-left mt-1"
+                      : "text-base font-bold text-gray-800"
                   }
                   placeholder:text-base placeholder:font-bold placeholder:text-gray-800 min-h-7
                 `}

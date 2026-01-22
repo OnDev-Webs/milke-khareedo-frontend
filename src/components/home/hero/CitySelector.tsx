@@ -240,7 +240,7 @@ export default function CitySelector({
             const target = e.currentTarget;
             const scrollBottom = target.scrollHeight - target.scrollTop - target.clientHeight;
             if (scrollBottom < 100 && visibleRange.end < filteredCities.length) {
-                const increment = debouncedSearchQuery.trim() ? 50 : 10; 
+                const increment = debouncedSearchQuery.trim() ? 50 : 10;
                 setVisibleRange((prev) => ({
                     start: prev.start,
                     end: Math.min(prev.end + increment, filteredCities.length),
@@ -290,15 +290,9 @@ export default function CitySelector({
         return (
             <div className={`relative ${className}`}>
                 <div className="h-5 w-28 rounded-md bg-gray-200 animate-pulse" />
-                <div className="w-full bg-transparent flex items-center">
-                    <span className="text-base font-medium text-[#1C4692]">
-                        <Loader size={28} />
-                    </span>
-                </div>
             </div>
         );
     }
-
 
     return (
         <div className={`relative ${className}`} ref={dropdownRef}>
@@ -377,10 +371,11 @@ export default function CitySelector({
                                             className="mx-4 my-2 h-4 rounded-md bg-gray-200 animate-pulse"
                                         />
                                     ))}
-                                <div className="px-4 py-12 text-center">
-                                    <div className="inline-flex items-center gap-2 text-sm text-gray-500">
-                                        <div className="h-4 w-4 border-2 border-[#1C4692] border-t-transparent rounded-full animate-spin"></div>
-                                        <div><Loader size={38} /></div>
+                                    <div className="px-4 py-12 text-center">
+                                        <div className="inline-flex items-center gap-2 text-sm text-gray-500">
+                                            <div className="h-4 w-4 border-2 border-[#1C4692] border-t-transparent rounded-full animate-spin"></div>
+                                            <div><Loader size={38} /></div>
+                                        </div>
                                     </div>
                                 </div>
                             ) : filteredCities.length === 0 ? (

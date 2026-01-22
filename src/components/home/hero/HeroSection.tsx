@@ -151,8 +151,8 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="absolute -bottom-5 left-1/2 w-[95%] md:w-[1250px] max-w-5xl -translate-x-1/2 z-0">
-        <div className="flex flex-col md:flex-row items-stretch py-2 md:py-3 rounded-2xl bg-white/70 backdrop-blur-md p-0 overflow-visible shadow-[0_12px_40px_rgba(0,0,0,0.10)]">
+      <div className="absolute -bottom-2 left-1/2 w-[95%] md:w-[1250px] max-w-5xl -translate-x-1/2 z-0">
+        <div className="flex flex-col md:flex-row items-stretch py-1 md:py-1 rounded-2xl bg-white/70 backdrop-blur-md p-0 overflow-visible shadow-[0_12px_40px_rgba(0,0,0,0.10)]">
 
           {/* CITY SELECT SECTION */}
           <div className="relative flex flex-col justify-center ps-6 pe-4 py-4 min-w-[130px] border-b border-[#DCDCEB] md:border-b-0">

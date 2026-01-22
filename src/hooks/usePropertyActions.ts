@@ -16,6 +16,7 @@ export function usePropertyActions() {
     const [pendingAction, setPendingAction] = useState<PendingAction>(null);
     const [favoriteStates, setFavoriteStates] = useState<Record<string, boolean>>({});
     const [favoriteLoading, setFavoriteLoading] = useState<Record<string, boolean>>({});
+    
 
     const initFavorites = useCallback(
         (properties: { id: string; isFavorite?: boolean }[]) => {
@@ -108,6 +109,7 @@ export function usePropertyActions() {
         handleShareClick,
         handleAuthSuccess,
         setShowAuthModal,
+        initFavorites
     };
 
 }

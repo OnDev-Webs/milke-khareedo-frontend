@@ -103,6 +103,8 @@ export default function PropertyCard({
         return `${area} , | ${city}`;
     }
 
+    const hasDiscount = showDiscount && discountPercentage && discountPercentage !== "0%" && discountPercentage !== "0.00%";
+
     return (
         <div onClick={() => router.push(`/property-details/${id}`)} className="group flex flex-col rounded-4xl bg-white p-4 shadow-sm cursor-pointer">
             <div className="relative aspect-[5/3.5] w-full overflow-hidden rounded-3xl">
@@ -118,13 +120,10 @@ export default function PropertyCard({
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                setCurrentIndex(
-                                    (prev) => (prev - 1 + images.length) % images.length
-                                );
+                                setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
                             }}
                             className="absolute left-4 bottom-6 h-9 w-9 flex items-center justify-center rounded-full bg-white/95 text-gray-700 shadow-lg border border-gray-200 transition-all duration-300 opacity-0 scale-90 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto"
-                            aria-label="Previous image"
-                        >
+                            aria-label="Previous image">
                             <IoChevronBack className="h-5 w-5" />
                         </button>
 
@@ -132,13 +131,10 @@ export default function PropertyCard({
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                setCurrentIndex(
-                                    (prev) => (prev + 1) % images.length
-                                );
+                                setCurrentIndex((prev) => (prev + 1) % images.length);
                             }}
                             className="absolute right-4 bottom-6 h-9 w-9 flex items-center justify-center rounded-full bg-white/95 text-gray-700 shadow-lg border border-gray-200 transition-all duration-300 opacity-0 scale-90 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto"
-                            aria-label="Next image"
-                        >
+                            aria-label="Next image">
                             <IoChevronForward className="h-5 w-5" />
                         </button>
                     </>
@@ -178,8 +174,7 @@ export default function PropertyCard({
                             });
                         }}
                         className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-white/90 text-gray-700 hover:bg-white shadow-md transition-colors"
-                        aria-label="Add to compare"
-                    >
+                        aria-label="Add to compare">
                         <Image
                             src="/images/convert.svg"
                             alt="Compare"
@@ -243,32 +238,30 @@ export default function PropertyCard({
                     <div className="flex items-start justify-between">
                         <div>
                             <p className="text-[14px] text-[#000000]">Target Price</p>
-                            <p className="text-[20px] font-extrabold text-[#000000]">
-                                {targetPrice}
-                            </p>
+                            <p className="text-[20px] font-extrabold text-[#000000]">{targetPrice}</p>
                         </div>
 
                         <div className="text-right">
                             <p className="text-[14px] text-[#000000]">Developer price</p>
-                            <p className="text-[17px] text-[#4B4B4B] line-through">
-                                {developerPrice}
-                            </p>
+                            <p className="text-[17px] text-[#4B4B4B] line-through">{developerPrice}</p>
                         </div>
                     </div>
 
-                    <div className="mt-2 flex items-center gap-2 rounded-2xl bg-white py-2 text-sm text-[#66AE39]">
-                        <Image
-                            src="/images/Frame.svg"
-                            alt="Compare"
-                            width={12}
-                            height={12}
-                            className="h-4.5 w-5"
-                        />
-                        <span>Up to {discountPercentage} off</span>
-                    </div>
+                    {hasDiscount && (
+                        <div className="mt-2 flex items-center gap-2 rounded-2xl bg-white py-2 text-sm text-[#66AE39]">
+                            <Image
+                                src="/images/Frame.svg"
+                                alt="Discount"
+                                width={12}
+                                height={12}
+                                className="h-4.5 w-5"
+                            />
+                            <span>Up to {discountPercentage} off</span>
+                        </div>
+                    )}
 
                     <div className="mt-1 min-h-[20px]">
-                        {showDiscount ? (
+                        {hasDiscount ? (
                             <p className="text-[14px] text-[#FF3232]">
                                 Get up to {discountPercentage} discount on this property
                             </p>
@@ -276,9 +269,7 @@ export default function PropertyCard({
                             <p className="text-xs text-red-500">
                                 Last viewed on {new Date(lastViewedAt).toLocaleString()}
                             </p>
-                        ) : (
-                            <span className="invisible text-xs">placeholder</span>
-                        )}
+                        ) : null}
                     </div>
                 </div>
 

@@ -27,9 +27,15 @@ export default function MyFavoritePage() {
         favoriteLoading,
     } = usePropertyActions();
 
-   const favorites = (data ?? []).filter(
-    (p) => favoriteStates[p.id] === true
-);
+    const favorites = data ?? [];
+    useEffect(() => {
+        if (data && data.length) {
+            data.forEach((p) => {
+                favoriteStates[p.id] = true;
+            });
+        }
+    }, [data]);
+
 
 
     const mappedProperties = useMemo(() => {

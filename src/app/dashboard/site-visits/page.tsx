@@ -20,11 +20,7 @@ export default function SiteVisitsPage() {
   );
 
   const [activeTab, setActiveTab] = useState<TabType>("completed");
-
-  const visits =
-    activeTab === "completed"
-      ? data?.completed ?? []
-      : data?.upcoming ?? [];
+  const visits = activeTab === "completed" ? data?.completed ?? [] : data?.upcoming ?? [];
 
   const {
     handleShareClick,
@@ -40,17 +36,15 @@ export default function SiteVisitsPage() {
 
       return {
         id: p.id,
-        images: p.images?.length
-          ? p.images
-          : ["/images/empty_property.png"],
+        images: p.images?.length ? p.images : ["/images/empty_property.png"],
         title: p.projectName,
         location: p.location,
         openingLeft: p.openingLeft ?? 0,
         groupSize: p.minGroupMembers ?? 0,
         targetPrice: p.offerPrice?.formatted ?? "—",
         developerPrice: p.developerPrice?.formatted ?? "—",
-        showDiscount: false,
-        discountPercentage: undefined,
+        showDiscount: p.discount,
+        discountPercentage: p.discount?.percentageFormatted,
         lastViewedAt: item.lastViewedAt,
       };
     });
@@ -74,8 +68,8 @@ export default function SiteVisitsPage() {
             className={clsx(
               "px-4 py-2 text-sm font-semibold rounded-t-lg",
               activeTab === tab
-                ? "bg-[#f8fbff] text-primary border-b-2 border-primary"
-                : "text-gray-500 hover:text-black"
+                ? "bg-[#f8fbff] text-[#1C4692] border-b-2 border-[#1C4692]"
+                : "text-gray-500 hover:text-[#1C4692]"
             )}
           >
             {tab === "upcoming" ? "Upcoming Visits" : "Completed Visits"}

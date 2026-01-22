@@ -5,11 +5,8 @@ import PropertyGrid from "@/components/dashboard/PropertyGrid";
 import Loader from "@/components/ui/loader";
 import { usePropertyActions } from "@/hooks/usePropertyActions";
 import { useApi } from "@/lib/api/hooks/useApi";
-import {
-    PropertyApi,
-    userDashboardService,
-} from "@/lib/api/services/userDashboard.service";
-import { useMemo } from "react";
+import { PropertyApi,userDashboardService} from "@/lib/api/services/userDashboard.service";
+import { useEffect, useMemo } from "react";
 
 type ViewedPropertyApi = PropertyApi;
 
@@ -18,15 +15,21 @@ export default function ViewedPropertiesPage() {
         userDashboardService.getViewedProperties()
     );
 
+    const { data: favoriteData } = useApi<PropertyApi[]>(() =>
+        userDashboardService.getFavoriteProperties()
+    );
+
     const properties = data ?? [];
 
-    const {
-        handleFavoriteClick,
-        handleCompareClick,
-        handleShareClick,
-        favoriteStates,
-        favoriteLoading,
-    } = usePropertyActions();
+    const { handleFavoriteClick, handleCompareClick, handleShareClick, favoriteStates, favoriteLoading} = usePropertyActions();
+
+    useEffect(() => {
+        if (favoriteData && favoriteData.length) {
+            favoriteData.forEach((p) => {
+                favoriteStates[String(p.id)] = true;
+            });
+        }
+    }, [favoriteData]);
 
     const mappedProperties = useMemo(() => {
         return properties.map((p) => ({

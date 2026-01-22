@@ -21,7 +21,7 @@ export default function FAQSCard({ data }: Props) {
         onClick={() => setOpen(!open)}
       >
         <p
-          className="text-[#000] font-semibold text-[20px] md:text-[26px] leading-[100%]"
+          className="text-[#000] font-semibold text-[20px] md:text-[22px] leading-[100%]"
           style={{ fontWeight: "600" }}
         >
           {data?.title}

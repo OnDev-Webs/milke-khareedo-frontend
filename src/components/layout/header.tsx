@@ -9,7 +9,14 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import AuthModal from "@/components/auth/AuthModal";
 import { IoPerson, IoChevronDown } from "react-icons/io5";
 import { HiOutlineMenu } from "react-icons/hi";
-import { Building2, Globe, HeartIcon, LucideCircleUserRound, Search, SlidersHorizontal } from "lucide-react";
+import {
+  Building2,
+  Globe,
+  HeartIcon,
+  LucideCircleUserRound,
+  Search,
+  SlidersHorizontal,
+} from "lucide-react";
 import CompareOverlay from "../home/compare/CompareOverlay";
 
 const navLinks = [
@@ -51,7 +58,7 @@ export default function Header() {
 
   return (
     <header className="w-full bg-white relative z-20">
-      <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 xl:px-10">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 xl:px-10">
         <div className="flex items-center justify-between py-4 lg:py-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
@@ -71,10 +78,11 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative pb-1 text-sm font-normal transition-colors xl:text-base ${isActive(link.href)
-                    ? "font-semibold text-[#1C4692]"
-                    : "hover:text-[#1C4692]"
-                    }`}
+                  className={`relative pb-1 text-sm font-normal transition-colors xl:text-base ${
+                    isActive(link.href)
+                      ? "font-semibold text-[#1C4692]"
+                      : "hover:text-[#1C4692]"
+                  }`}
                 >
                   {link.label}
                   {/* {isActive(link.href) && (
@@ -134,8 +142,6 @@ export default function Header() {
                       unoptimized
                       className="rounded-full object-cover"
                     />
-
-
                   ) : (
                     <LucideCircleUserRound className="h-5 w-5" />
                   )}
@@ -163,8 +169,6 @@ export default function Header() {
                               unoptimized
                               className="rounded-full object-cover"
                             />
-
-
                           ) : (
                             <LucideCircleUserRound className="h-full w-full p-2 text-gray-500" />
                           )}
@@ -243,7 +247,6 @@ export default function Header() {
                                 )}
                               </div>
 
-
                               {item.label}
                             </Link>
                           );
@@ -299,8 +302,9 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`py-2.5 text-sm ${isActive(link.href) ? "font-semibold text-[#1C4692]" : ""
-                    }`}
+                  className={`py-2.5 text-sm ${
+                    isActive(link.href) ? "font-semibold text-[#1C4692]" : ""
+                  }`}
                 >
                   {link.label}
                 </Link>

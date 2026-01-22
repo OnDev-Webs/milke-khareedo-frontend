@@ -3,16 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 import { useApi } from "@/lib/api/hooks/useApi";
 import { userDashboardService } from "@/lib/api/services/userDashboard.service";
-import type { PreferencesApi, SavePreferencesPayload } from "@/lib/api/services/userDashboard.service";
+import type {
+  PreferencesApi,
+  SavePreferencesPayload,
+} from "@/lib/api/services/userDashboard.service";
 import { X } from "lucide-react";
-
 
 type PreferredLocation = {
   name: string;
   latitude: number;
   longitude: number;
 };
-
 
 const BUDGET_MAP: Record<string, { min: number | null; max: number | null }> = {
   "50 L - 1 Cr": { min: 50, max: 100 },
@@ -39,7 +40,6 @@ const FLOOR_MAP: Record<string, { min: number; max: number | null }> = {
 
 const budgets = Object.keys(BUDGET_MAP);
 const floors = Object.keys(FLOOR_MAP);
-
 
 export default function MyPreferencePage() {
   const [localities, setLocalities] = useState<PreferredLocation[]>([]);
@@ -82,7 +82,6 @@ export default function MyPreferencePage() {
         longitude: place.geometry.location.lng(),
       };
 
-
       setLocalities((prev) =>
         prev.some((l) => l.name === location.name) ? prev : [...prev, location]
       );
@@ -105,7 +104,6 @@ export default function MyPreferencePage() {
     );
   }, [data]);
 
-
   const handleSave = async () => {
     const budget = selectedBudget
       ? BUDGET_MAP[selectedBudget]
@@ -126,7 +124,6 @@ export default function MyPreferencePage() {
     await userDashboardService.savePreferences(payload);
   };
 
-
   return (
     <div className="rounded-[24px] bg-white px-4 py-4 shadow">
       <h2 className="mb-4 text-lg font-bold">My Preferences</h2>
@@ -145,11 +142,9 @@ export default function MyPreferencePage() {
         setSelectedFloor={setSelectedFloor}
         onSave={handleSave}
       />
-
     </div>
   );
 }
-
 
 type PreferenceCardProps = {
   localities: PreferredLocation[];
@@ -168,16 +163,13 @@ type PreferenceCardProps = {
 
 function extractCity(place: google.maps.places.PlaceResult): string {
   const city =
-    place.address_components?.find((c) =>
-      c.types.includes("locality")
-    ) ||
+    place.address_components?.find((c) => c.types.includes("locality")) ||
     place.address_components?.find((c) =>
       c.types.includes("administrative_area_level_2")
     );
 
   return city?.long_name || place.name || "";
 }
-
 
 function PreferenceCard(props: PreferenceCardProps) {
   const {
@@ -195,7 +187,6 @@ function PreferenceCard(props: PreferenceCardProps) {
     onSave,
   } = props;
 
-
   return (
     <div className="rounded-[24px] bg-[#F3F6FF] p-6 space-y-6">
       <div>
@@ -205,12 +196,15 @@ function PreferenceCard(props: PreferenceCardProps) {
           value={localityInput}
           onChange={(e) => setLocalityInput(e.target.value)}
           placeholder="Search Localities"
-          className="h-11 w-full rounded-lg border px-4 text-sm"
+          className="h-11 w-full rounded-lg border border-black px-4 text-sm"
         />
 
         <div className="mt-3 flex flex-wrap gap-2">
           {localities.map((l, i) => (
-            <span key={i} className="bg-white px-3 py-1 rounded shadow text-xs flex items-center max-w-[220px]">
+            <span
+              key={i}
+              className="bg-white px-3 py-1 rounded shadow text-xs flex items-center max-w-[220px]"
+            >
               <span className="truncate">{l.name}</span>
               <button
                 onClick={() =>
@@ -226,7 +220,6 @@ function PreferenceCard(props: PreferenceCardProps) {
               >
                 <X className="h-3 w-3" />
               </button>
-
             </span>
           ))}
         </div>
@@ -241,8 +234,6 @@ function PreferenceCard(props: PreferenceCardProps) {
         onSelect={setSelectedBudget}
       />
 
-
-
       <div className="h-px w-full bg-[#E6ECF5]" />
       <SingleSelectSection
         title="Floor Preference"
@@ -250,7 +241,6 @@ function PreferenceCard(props: PreferenceCardProps) {
         selected={selectedFloor}
         onSelect={(v) => setSelectedFloor(v)}
       />
-
 
       <button
         onClick={onSave}
@@ -262,14 +252,9 @@ function PreferenceCard(props: PreferenceCardProps) {
   );
 }
 
-
 function deriveSingleSelection<
-  T extends Record<string, { min: number | null; max: number | null }>
->(
-  map: T,
-  min: number | null,
-  max: number | null
-): string | null {
+  T extends Record<string, { min: number | null; max: number | null }>,
+>(map: T, min: number | null, max: number | null): string | null {
   if (min == null && max == null) return null;
 
   return (
@@ -278,9 +263,6 @@ function deriveSingleSelection<
     })?.[0] ?? null
   );
 }
-
-
-
 
 function ordinal(n: number) {
   if (n % 100 >= 11 && n % 100 <= 13) return `${n}th`;
@@ -326,9 +308,10 @@ function SingleSelectSection({
               key={i}
               onClick={() => onSelect(i)}
               className={`rounded-full px-4 py-2 text-xs transition
-                ${selected === i
-                  ? "bg-[#1C4692] text-white"
-                  : "bg-white text-[#2b2b2b]"
+                ${
+                  selected === i
+                    ? "bg-[#1C4692] text-white"
+                    : "bg-white text-[#2b2b2b]"
                 }`}
             >
               {label}
@@ -339,5 +322,3 @@ function SingleSelectSection({
     </div>
   );
 }
-
-

@@ -289,6 +289,7 @@ export default function CitySelector({
     if (!selectedCity) {
         return (
             <div className={`relative ${className}`}>
+                <div className="h-5 w-28 rounded-md bg-gray-200 animate-pulse" />
                 <div className="w-full bg-transparent flex items-center">
                     <span className="text-base font-medium text-[#1C4692]">
                         <Loader size={28} />
@@ -297,6 +298,7 @@ export default function CitySelector({
             </div>
         );
     }
+
 
     return (
         <div className={`relative ${className}`} ref={dropdownRef}>
@@ -325,7 +327,7 @@ export default function CitySelector({
             {isOpen && (
                 <>
                     <div
-                        className="fixed inset-0 z-[9998] bg-transparent"
+                        className="fixed inset-0 z-9998 bg-transparent"
                         onClick={() => {
                             setIsOpen(false);
                             setSearchQuery("");
@@ -333,7 +335,7 @@ export default function CitySelector({
                     />
                     <div
                         ref={dropdownContainerRef}
-                        className="absolute left-0 top-full z-[9999] mt-1 rounded-xl bg-white shadow-2xl border-2 border-gray-100 max-h-[280px] overflow-hidden"
+                        className="absolute left-0 top-full z-9999 mt-1 rounded-xl bg-white shadow-2xl border-2 border-gray-100 max-h-[280px] overflow-hidden"
                         onClick={(e) => e.stopPropagation()}
                         style={{
                             maxHeight: "212px",
@@ -368,6 +370,13 @@ export default function CitySelector({
                             style={{ maxHeight: "200px" }}
                         >
                             {loading ? (
+                                <div className="py-2">
+                                    {Array.from({ length: 6 }).map((_, i) => (
+                                        <div
+                                            key={i}
+                                            className="mx-4 my-2 h-4 rounded-md bg-gray-200 animate-pulse"
+                                        />
+                                    ))}
                                 <div className="px-4 py-12 text-center">
                                     <div className="inline-flex items-center gap-2 text-sm text-gray-500">
                                         <div className="h-4 w-4 border-2 border-[#1C4692] border-t-transparent rounded-full animate-spin"></div>
@@ -375,6 +384,7 @@ export default function CitySelector({
                                     </div>
                                 </div>
                             ) : filteredCities.length === 0 ? (
+
                                 <div className="px-4 py-12 text-center">
                                     <p className="text-sm text-gray-500">
                                         {cities.length === 0

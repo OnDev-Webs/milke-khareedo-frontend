@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { homeService, type Property } from "@/lib/api/services/home.service";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { useCompare } from "@/contexts/CompareContext";
@@ -103,8 +103,6 @@ export function usePropertyActions() {
         favoriteStates,
         favoriteLoading,
         showAuthModal,
-        initFavorites,
-        setFavoriteStates,
         handleFavoriteClick,
         handleCompareClick,
         handleShareClick,

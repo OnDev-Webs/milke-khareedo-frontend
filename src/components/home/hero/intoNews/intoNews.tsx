@@ -43,8 +43,8 @@ export default function IntoNews() {
   }
 
   return (
-    <section className="py-16 px-4 md:px-16 lg:px-30">
-      <div className="max-w-7xl mx-auto text-center">
+    <section className="py-16 px-4 md:px-16">
+      <div className="max-w-6xl mx-auto text-center">
         {/* Heading */}
         <h2 className="text-[24px] md:text-[30px] font-semibold text-[#000000] mb-2">
           Understand Before You{" "}

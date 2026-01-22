@@ -60,48 +60,33 @@ export default function ContactForm({ className, nameMode = "split" }: ContactFo
 
   return (
     <Form {...form}>
-      <form className={className ?? "space-y-4"} onSubmit={form.handleSubmit(handleFormSubmit)}>
-        {nameMode === "split" ? (
-          <div className="flex flex-col md:flex-row gap-4">
-            <FormField
-              control={form.control}
-              name="firstName"
-              render={({ field }) => (
-                <FormItem className="w-full relative">
-                  <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 text-[13px]">
-                    First Name <span className="text-red-500">*</span>
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="Enter first name" className="h-12 border border-[#262626]" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="lastName"
-              render={({ field }) => (
-                <FormItem className="w-full relative">
-                  <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 text-[13px]">
-                    Last Name <span className="text-red-500">*</span>
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="Enter last name" className="h-12 border border-[#262626]" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        ) : (
+      <form
+        className={className ?? "space-y-4"}
+        onSubmit={form.handleSubmit(handleFormSubmit)}
+      >
+        <div className="flex flex-col md:flex-col gap-4">
           <FormField
             control={form.control}
             name="firstName"
             render={({ field }) => (
               <FormItem className="w-full relative">
-                <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 text-[13px]">
-                  Full Name <span className="text-red-500">*</span>
+                <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 font-normal text-black text-[13px]">
+                  First Name <span className="text-red-500">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter here" {...field} className="h-12 border border-[#262626] placeholder:text-[#BABABA] placeholder:text-[16px]" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem className="w-full relative">
+                <FormLabel className="absolute left-3 -top-2.5 bg-white px-1 font-normal text-black text-[13px]">
+                  Last Name <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
                   <Input {...field} placeholder="Enter full name" className="h-12 border border-[#262626]" />
@@ -109,13 +94,10 @@ export default function ContactForm({ className, nameMode = "split" }: ContactFo
                 <FormMessage />
               </FormItem>
             )}
-          />
-        )}
+          /> */}
+        </div>
 
-        <div
-          className={`flex flex-col gap-4 ${isSingleColumn ? "" : "md:flex-row"
-            }`}
-        >
+        <div className="flex flex-col md:flex-col gap-4">
           <FormField
             control={form.control}
             name="phone"

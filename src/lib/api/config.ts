@@ -39,6 +39,8 @@ export const API_ENDPOINTS = {
     POST_JOIN_GROUP: "/home/join-group",
     GET_BLOGS: "/home/blogs",
     GET_BLOG_BY_ID: "/home/blog",
+    BLOG_COMMENTS: (blogId: string) => `/home/blog/${blogId}/comments`,
+    BLOG_COMMENT_LIKE: (commentId: string) => `/home/blog/comments/${commentId}/like`,
   },
   // Auth endpoints
   AUTH: {

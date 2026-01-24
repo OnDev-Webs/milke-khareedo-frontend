@@ -289,7 +289,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="absolute -bottom-5 left-1/2 w-[95%] max-w-5xl -translate-x-1/2 z-20">
+      <div className="absolute -bottom-5 left-1/2 w-[95%] max-w-6xl -translate-x-1/2 z-20">
         <div className="flex flex-col md:flex-row items-stretch py-2 md:py-3 rounded-2xl bg-white/70 backdrop-blur-md p-0 overflow-visible shadow-[0_12px_40px_rgba(0,0,0,0.10)]">
           <div className="relative flex flex-col justify-center ps-6 pe-4 py-4 min-w-[130px] border-b border-[#DCDCEB] md:border-b-0">
             <label className="text-sm font-bold text-gray-800 mb-2.5">

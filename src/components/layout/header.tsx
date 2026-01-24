@@ -57,7 +57,7 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full bg-white relative z-20">
+    <header className="w-full bg-white relative z-55">
       <div className="mx-auto max-w-6xl px-4 sm:px-0">
         <div className="flex items-center justify-between py-4 lg:py-6">
           {/* Logo */}

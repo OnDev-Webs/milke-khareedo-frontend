@@ -57,8 +57,8 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full bg-white relative z-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-0">
+    <header className="w-full bg-white relative z-25">
+      <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 xl:px-10">
         <div className="flex items-center justify-between py-4 lg:py-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
@@ -156,9 +156,9 @@ export default function Header() {
                       className="fixed inset-0 z-40"
                       onClick={() => setProfileDropdownOpen(false)}
                     />
-                    <div className="absolute right-0 top-14 z-50 w-[280px] rounded-2xl bg-white shadow-xl ring-1 ring-black/5">
+                    <div className="absolute right-0 top-14 max-sm:fixed max-sm:inset-x-3 max-sm:top-16 z-50 w-[280px] max-sm:w-auto rounded-[24px] bg-white shadow-[0_20px_40px_rgba(28,70,146,0.15)]">
                       {/* Profile Header */}
-                      <div className="flex items-center gap-3 px-4 py-4 border-b border-gray-100">
+                      <div className="flex items-center gap-4 px-5 py-5 border-b border-gray-100">
                         <div className="h-10 w-10 rounded-full bg-gray-200 overflow-hidden">
                           {user?.profileImage ? (
                             <Image
@@ -185,22 +185,22 @@ export default function Header() {
                       </div>
 
                       {/* Menu Items */}
-                      <div className="px-3 py-3 space-y-2">
+                      <div className="px-3 py-4 space-y-3 max-sm:px-4">
                         {[
                           {
                             label: "My Properties",
                             href: "/dashboard/viewed-properties",
-                            icon: Building2,
+                            icon: "/images/building.svg",
                           },
                           {
                             label: "My Favorite",
                             href: "/dashboard/favorites",
-                            icon: HeartIcon,
+                            icon: "/images/heart.svg",
                           },
                           {
                             label: "Site visits",
                             href: "/dashboard/site-visits",
-                            icon: Globe,
+                            icon: "/images/global.svg",
                           },
                           {
                             label: "Compare",
@@ -210,31 +210,22 @@ export default function Header() {
                           {
                             label: "My Searches",
                             href: "/dashboard/searches",
-                            icon: Search,
+                            icon: "/images/global-search.svg",
                           },
                           {
                             label: "My Preference",
                             href: "/dashboard/preferences",
-                            icon: SlidersHorizontal,
+                            icon: "/images/pet.svg",
                           },
                         ].map((item) => {
-                          const Icon = item.icon;
                           return (
                             <Link
                               key={item.label}
                               href={item.href}
                               onClick={() => setProfileDropdownOpen(false)}
-                              className="
-          flex items-center gap-3
-          rounded-xl
-          px-3 py-3
-          text-sm font-medium text-gray-800
-          bg-[#f6faffb4]
-          transition
-        "
+                              className=" flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-gray-800 bg-[#f6faffb4] transition"
                             >
-                              {/* Icon container */}
-                              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white ">
+                              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F1F5FF]">
                                 {item.icon === "compare" ? (
                                   <Image
                                     src="/images/convert.svg"
@@ -243,7 +234,12 @@ export default function Header() {
                                     height={16}
                                   />
                                 ) : (
-                                  <Icon className="h-4 w-4 text-gray-700" />
+                                  <Image
+                                    src={item.icon}
+                                    alt={item.label}
+                                    width={18}
+                                    height={18}
+                                  />
                                 )}
                               </div>
 
@@ -282,19 +278,19 @@ export default function Header() {
             )}
 
             {/* Mobile Menu */}
-            <button
+            {/* <button
               type="button"
               aria-label="Toggle navigation"
               onClick={() => setOpen((o) => !o)}
               className="inline-flex items-center justify-center rounded-md p-2 text-gray-600 lg:hidden"
             >
               <HiOutlineMenu className="h-6 w-6" />
-            </button>
+            </button> */}
           </div>
         </div>
 
         {/* Mobile Menu */}
-        {open && !isDashboard && (
+        {/* {open && !isDashboard && (
           <div className="border-t border-gray-100 bg-white pb-4 lg:hidden">
             <nav className="flex flex-col px-4 pt-3 text-gray-700">
               {navLinks.map((link) => (
@@ -345,7 +341,7 @@ export default function Header() {
               </div>
             </nav>
           </div>
-        )}
+        )} */}
       </div>
 
       {/* Auth Modal */}

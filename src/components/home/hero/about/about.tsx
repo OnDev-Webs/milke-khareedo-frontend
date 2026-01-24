@@ -301,17 +301,17 @@ export default function AboutSection() {
               Makes Buying Easier
             </h3>
 
-            <div className="space-y-6">
+            <div className="space-y-8">
               {points.map((item, i) => (
-                <div key={i} className="flex gap-4 items-start">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1C4692] text-white font-bold text-sm">
+                <div key={i} className="flex gap-5 items-start">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1C4692] text-white font-bold text-base">
                     {i + 1}
                   </div>
                   <div>
-                    <h5 className="text-[15px] sm:text-[17px] font-semibold text-black">
+                    <h5 className="text-[18px] sm:text-[20px] font-semibold text-black">
                       {item.title}
                     </h5>
-                    <p className="text-[13px] sm:text-[14px] text-[#373737] mt-1 leading-relaxed">
+                    <p className="text-[15px] sm:text-[16px] text-[#373737] mt-2 leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
@@ -320,8 +320,7 @@ export default function AboutSection() {
             </div>
           </div>
 
-          {/* RIGHT VIDEO CARD */}
-          <div className="w-full lg:w-1/2 flex-shrink-0 flex justify-center">
+          <div className="w-full lg:w-[40%] h-full flex justify-center">
             <div
               ref={containerRef}
               className="relative w-3/5 h-[480px] sm:h-[520px] rounded-3xl overflow-hidden shadow-xl"
@@ -331,7 +330,7 @@ export default function AboutSection() {
               <video
                 ref={videoRef}
                 src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/185341-875417497.mp4"
-                className="absolute inset-0 w-full h-full object-cover scale-[1.15]"
+                className="absolute inset-0 w-full h-full object-cover"
                 muted={muted}
                 autoPlay
                 loop
@@ -341,7 +340,6 @@ export default function AboutSection() {
                 onPause={() => setIsPlaying(false)}
               />
 
-              {/* Play / Pause */}
               <div
                 className={`absolute bottom-6 left-4 z-30 transition-opacity duration-300 ${
                   showControls ? "opacity-100" : "opacity-0"
@@ -360,18 +358,10 @@ export default function AboutSection() {
                 </button>
               </div>
 
-              {/* Branding */}
               <div className="absolute top-3 left-3 z-20 flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 text-xs font-semibold">
-                <svg className="h-6 w-6" viewBox="0 0 24 24" fill="#000">
-                  <circle cx="8" cy="8" r="2" />
-                  <circle cx="16" cy="8" r="2" />
-                  <circle cx="8" cy="16" r="2" />
-                  <circle cx="16" cy="16" r="2" />
-                </svg>
                 Milke Khareedo
               </div>
 
-              {/* Controls */}
               <div className="absolute top-3 right-3 z-30 flex gap-2">
                 <button
                   onClick={() => {

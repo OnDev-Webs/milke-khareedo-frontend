@@ -78,12 +78,12 @@ export default function RERAStickyWidget({
       >
         <button
           onClick={handleToggle}
-          className="bg-white text-black rounded-l-2xl px-4 py-4 shadow-2xl transition-all duration-200 flex flex-col items-center justify-center gap-0.5 min-w-[140px]"
+          className="hidden md:flex bg-white text-black rounded-l-2xl px-4 py-4 shadow-2xl transition-all duration-200 flex flex-col items-center justify-center gap-0.5 min-w-[140px]"
           aria-label="View RERA Details">
-          <span className="text-[20px] leading-tight text-center font-semibold">
+          <span className="text-[18px] leading-tight text-center font-semibold">
             Click here For
           </span>
-          <span className="text-[20px] font-semibold text-center mt-0.5">
+          <span className="text-[18px] font-semibold text-center mt-0.5">
             RERA Details
           </span>
         </button>

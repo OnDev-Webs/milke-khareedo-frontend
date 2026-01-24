@@ -9,7 +9,14 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import AuthModal from "@/components/auth/AuthModal";
 import { IoPerson, IoChevronDown } from "react-icons/io5";
 import { HiOutlineMenu } from "react-icons/hi";
-import { Building2, Globe, HeartIcon, LucideCircleUserRound, Search, SlidersHorizontal } from "lucide-react";
+import {
+  Building2,
+  Globe,
+  HeartIcon,
+  LucideCircleUserRound,
+  Search,
+  SlidersHorizontal,
+} from "lucide-react";
 import CompareOverlay from "../home/compare/CompareOverlay";
 
 const navLinks = [
@@ -50,8 +57,8 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full bg-white relative z-25">
-      <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 xl:px-10">
+    <header className="w-full bg-white relative z-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-0">
         <div className="flex items-center justify-between py-4 lg:py-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
@@ -71,10 +78,11 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative pb-1 text-sm font-normal transition-colors xl:text-base ${isActive(link.href)
-                    ? "font-semibold text-[#1C4692]"
-                    : "hover:text-[#1C4692]"
-                    }`}
+                  className={`relative pb-1 text-sm font-normal transition-colors xl:text-base ${
+                    isActive(link.href)
+                      ? "font-semibold text-[#1C4692]"
+                      : "hover:text-[#1C4692]"
+                  }`}
                 >
                   {link.label}
                   {/* {isActive(link.href) && (
@@ -134,8 +142,6 @@ export default function Header() {
                       unoptimized
                       className="rounded-full object-cover"
                     />
-
-
                   ) : (
                     <LucideCircleUserRound className="h-5 w-5" />
                   )}
@@ -150,16 +156,7 @@ export default function Header() {
                       className="fixed inset-0 z-40"
                       onClick={() => setProfileDropdownOpen(false)}
                     />
-                    <div className="
-  absolute right-0 top-14
-  max-sm:fixed max-sm:inset-x-3 max-sm:top-16
-  z-50
-  w-[280px] max-sm:w-auto
-  rounded-[24px]
-  bg-white
-  shadow-[0_20px_40px_rgba(28,70,146,0.15)]
-">
-
+                    <div className="absolute right-0 top-14 max-sm:fixed max-sm:inset-x-3 max-sm:top-16 z-50 w-[280px] max-sm:w-auto rounded-[24px] bg-white shadow-[0_20px_40px_rgba(28,70,146,0.15)]">
                       {/* Profile Header */}
                       <div className="flex items-center gap-4 px-5 py-5 border-b border-gray-100">
                         <div className="h-10 w-10 rounded-full bg-gray-200 overflow-hidden">
@@ -172,8 +169,6 @@ export default function Header() {
                               unoptimized
                               className="rounded-full object-cover"
                             />
-
-
                           ) : (
                             <LucideCircleUserRound className="h-full w-full p-2 text-gray-500" />
                           )}
@@ -191,79 +186,67 @@ export default function Header() {
 
                       {/* Menu Items */}
                       <div className="px-3 py-4 space-y-3 max-sm:px-4">
-                        {
-                          [
-                            {
-                              label: "My Properties",
-                              href: "/dashboard/viewed-properties",
-                              icon: "/images/building.svg",
-                            },
-                            {
-                              label: "My Favorite",
-                              href: "/dashboard/favorites",
-                              icon: "/images/heart.svg",
-                            },
-                            {
-                              label: "Site visits",
-                              href: "/dashboard/site-visits",
-                              icon: "/images/global.svg",
-                            },
-                            {
-                              label: "Compare",
-                              href: "/compare",
-                              icon: "compare",
-                            },
-                            {
-                              label: "My Searches",
-                              href: "/dashboard/searches",
-                              icon: "/images/global-search.svg",
-                            },
-                            {
-                              label: "My Preference",
-                              href: "/dashboard/preferences",
-                              icon: "/images/pet.svg",
-                            },
-                          ]
-                            .map((item) => {
-                              return (
-                                <Link
-                                  key={item.label}
-                                  href={item.href}
-                                  onClick={() => setProfileDropdownOpen(false)}
-                                  className="
-          flex items-center gap-3
-          rounded-xl
-          px-3 py-3
-          text-sm font-medium text-gray-800
-          bg-[#f6faffb4]
-          transition
-        "
-                                >
-                                  {/* Icon container */}
-                                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F1F5FF]">
-  {item.icon === "compare" ? (
-    <Image
-      src="/images/convert.svg"
-      alt="Compare"
-      width={16}
-      height={16}
-    />
-  ) : (
-    <Image
-      src={item.icon}
-      alt={item.label}
-      width={18}
-      height={18}
-    />
-  )}
-</div>
+                        {[
+                          {
+                            label: "My Properties",
+                            href: "/dashboard/viewed-properties",
+                            icon: "/images/building.svg",
+                          },
+                          {
+                            label: "My Favorite",
+                            href: "/dashboard/favorites",
+                            icon: "/images/heart.svg",
+                          },
+                          {
+                            label: "Site visits",
+                            href: "/dashboard/site-visits",
+                            icon: "/images/global.svg",
+                          },
+                          {
+                            label: "Compare",
+                            href: "/compare",
+                            icon: "compare",
+                          },
+                          {
+                            label: "My Searches",
+                            href: "/dashboard/searches",
+                            icon: "/images/global-search.svg",
+                          },
+                          {
+                            label: "My Preference",
+                            href: "/dashboard/preferences",
+                            icon: "/images/pet.svg",
+                          },
+                        ].map((item) => {
+                          return (
+                            <Link
+                              key={item.label}
+                              href={item.href}
+                              onClick={() => setProfileDropdownOpen(false)}
+                              className=" flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-gray-800 bg-[#f6faffb4] transition"
+                            >
+                              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F1F5FF]">
+                                {item.icon === "compare" ? (
+                                  <Image
+                                    src="/images/convert.svg"
+                                    alt="Compare"
+                                    width={16}
+                                    height={16}
+                                  />
+                                ) : (
+                                  <Image
+                                    src={item.icon}
+                                    alt={item.label}
+                                    width={18}
+                                    height={18}
+                                  />
+                                )}
+                              </div>
 
-
-
-                                  {item.label}
-                                </Link>
-                              );
-                            })}
+                              {item.label}
+                            </Link>
+                          );
+                        })}
                       </div>
 
                       {/* Logout */}
@@ -315,8 +298,9 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`py-2.5 text-sm ${isActive(link.href) ? "font-semibold text-[#1C4692]" : ""
-                    }`}
+                  className={`py-2.5 text-sm ${
+                    isActive(link.href) ? "font-semibold text-[#1C4692]" : ""
+                  }`}
                 >
                   {link.label}
                 </Link>

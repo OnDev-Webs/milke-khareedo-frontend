@@ -1,14 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+import { Breadcrumb,BreadcrumbItem,BreadcrumbLink,BreadcrumbList,BreadcrumbPage,BreadcrumbSeparator} from "@/components/ui/breadcrumb";
 import Heading from "@/components/typography/heading";
 import Image from "next/image";
 import ContactForm from "@/components/home/contact-us/ContactForm";
@@ -18,7 +11,7 @@ import { homeService } from "@/lib/api/services/home.service";
 import type { BlogDetail, Blog } from "@/lib/api/services/home.service";
 import Link from "next/link";
 import Loader from "@/components/ui/loader";
-import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { IoChatbubbleOutline,IoThumbsUp, IoThumbsUpOutline } from "react-icons/io5";
 
 const getCategoryName = (category?: string | { name: string }) => {
   if (!category) return "";
@@ -29,13 +22,11 @@ type CommentType = {
   _id: string;
   content: string;
   createdAt: string;
-
   author: {
     id: string;
     name: string;
     profileImage?: string;
   };
-
   likedBy: string[];
   replies: CommentType[];
 };
@@ -122,11 +113,7 @@ export default function Page({
       try {
         const res = await homeService.getBlogs({ page: 1, limit: 5 });
         if (res.success && Array.isArray(res.data)) {
-          setRecentBlogs(
-            res.data.filter(
-              (b) => b._id !== blog?._id && b.slug !== unwrappedParams.id
-            ).slice(0, 3)
-          );
+          setRecentBlogs(res.data.filter((b) => b._id !== blog?._id && b.slug !== unwrappedParams.id).slice(0, 3));
         }
       } finally {
         setIsLoadingRecent(false);
@@ -140,21 +127,13 @@ export default function Page({
     if (!text.trim() || !blog?._id) return;
     try {
       setIsCommentLoading(true);
-      const payload: any = {
-        content: text,
-      };
-      if (replyTo) {
-        payload.parentComment = replyTo;
-      }
+      const payload: any = { content: text,};
+      if (replyTo) { payload.parentComment = replyTo; }
       const res = await homeService.addBlogComment(blog._id, payload);
       if (res.success && res.data) {
         const newComment = normalizeComment(res.data);
         if (replyTo) {
-          setComments(prev =>
-            prev.map(c =>
-              c._id === replyTo ? { ...c, replies: [...c.replies, newComment] } : c
-            )
-          );
+          setComments(prev => prev.map(c => c._id === replyTo ? { ...c, replies: [...c.replies, newComment] } : c ));
           setReplyTo(null);
           setReplyText("");
         } else {
@@ -173,11 +152,7 @@ export default function Page({
       const res = await homeService.toggleCommentLike(commentId);
       if (!res.success || !res.data) return;
       const { likedBy } = res.data;
-      setComments((prev) =>
-        prev.map((c) =>
-          c._id === commentId ? { ...c, likedBy, } : c
-        )
-      );
+      setComments((prev) => prev.map((c) => c._id === commentId ? { ...c, likedBy, } : c));
     } catch (err) {
       console.error("Like toggle failed", err);
     }
@@ -318,8 +293,8 @@ export default function Page({
         </div>
 
         {/* COMMENTS */}
-        <div className="mt-14 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-          <h3 className="text-2xl font-semibold mb-4">Comments</h3>
+        <div className="mt-10 bg-white border border-[#1C4692]/20 rounded-xl p-4 shadow-sm">
+          <h3 className="text-2xl font-semibold mb-2">Comments</h3>
           {!isLoggedIn && (
             <p className="text-sm text-red-500">
               Please <Link href="/login">login</Link> to comment.
@@ -327,18 +302,18 @@ export default function Page({
           )}
 
           {isLoggedIn && (
-            <div className="mb-8 bg-gray-50 border border-gray-200 rounded-xl p-4">
+            <div className="mb-4 bg-[#1C4692]/5 border border-[#1C4692]/30 rounded-lg p-3">
               <textarea
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
-                className="w-full bg-white p-4 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1C4692]"
+                className="w-full bg-white p-2 border border-[#1C4692]/20 rounded-md text-sm"
                 placeholder="Share your thoughts..."
               />
               <div className="flex justify-end mt-3">
                 <button
                   onClick={submitComment}
                   disabled={isCommentLoading}
-                  className="px-6 py-2 bg-[#1C4692] text-white rounded-full text-sm hover:opacity-90">
+                  className="px-5 py-1.5 bg-[#1C4692] text-white rounded-full text-sm">
                   {isCommentLoading ? "Posting..." : "Post Comment"}
                 </button>
               </div>
@@ -350,36 +325,38 @@ export default function Page({
           )}
 
           {comments.map((c) => (
-            <div className="bg-white border border-gray-200 rounded-xl p-6   mb-4 hover:shadow-sm transition">
+            <div className="bg-white border border-gray-200 rounded-lg p-4 mb-3 hover:border-[#1C4692]/40 transition">
               <div className="flex items-center gap-2">
                 <p className="font-semibold text-[18px]">{c.author.name}</p>
                 <span className="text-[14px] font-medium text-gray-400">
                   {new Date(c.createdAt).toLocaleString()}
                 </span>
               </div>
-              <p className="mt-2">{c.content}</p>
-              
-              {isLoggedIn && (
-                <button onClick={() => toggleLike(c._id)} className="mt-2 flex items-center gap-1">
-                  {isCommentLiked(c.likedBy) ? (
-                    <IoHeart size={18} className="text-red-500" />
-                  ) : (
-                    <IoHeartOutline size={18} className="text-gray-600" />
-                  )}
-                  <span className="text-sm text-gray-600">
-                    {c.likedBy?.length ?? 0}
-                  </span>
-                </button>
-              )}
+              <p>{c.content}</p>
 
               {isLoggedIn && (
-                <button onClick={() => setReplyTo(c._id)} className="mt-2 mb-4 text-xs text-gray-500 hover:text-blue-600 transition">
-                  Reply
-                </button>
+                <div className="flex items-center gap-2 text-sm">
+                  {/* Like */}
+                  <button onClick={() => toggleLike(c._id)} className="mt-1 flex items-center gap-1">
+                    {isCommentLiked(c.likedBy) ? (
+                      <IoThumbsUp size={17} className="text-[#1C4692]" />
+                    ) : (
+                      <IoThumbsUpOutline size={17} />
+                    )}
+                    <span className="text-sm text-gray-600 mt-1">
+                      {c.likedBy?.length ?? 0}
+                    </span>
+                  </button>
+                  <button
+                    onClick={() => setReplyTo(c._id)}
+                    className="text-xs text-gray-500 hover:text-[#1C4692] transition mt-1">
+                    <IoChatbubbleOutline size={17} />
+                  </button>
+                </div>
               )}
 
               {replyTo === c._id && (
-                <div className="mt-2 ml-6 border-l-2 border-[#1C4692] pl-4">
+                <div className="mt-1 ml-6 border-l-2 border-[#1C4692] pl-4">
                   <textarea
                     value={replyText}
                     onChange={(e) => setReplyText(e.target.value)}
@@ -395,7 +372,7 @@ export default function Page({
                         setReplyTo(null);
                         setReplyText("");
                       }}
-                      className="px-3 py-1.5 text-sm text-gray-500 hover:text-gray-700">
+                      className="px-3 py-1.5 text-sm text-[#000] border rounded-md border-[#1C4692]">
                       Cancel
                     </button>
                   </div>
@@ -403,7 +380,7 @@ export default function Page({
               )}
 
               {c.replies.length > 0 && (
-                <div className="ml-6 mt-4 space-y-4 border-l-2 border-gray-200 pl-4">
+                <div className="ml-6 mt-3 space-y-4 border-l-2 border-gray-200 pl-4">
                   {c.replies.map((r) => (
                     <div key={r._id} className="bg-gray-50 rounded-lg p-3">
                       <div className="flex items-center gap-2">
@@ -412,7 +389,7 @@ export default function Page({
                           {new Date(r.createdAt).toLocaleString()}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-700 mt-1">
+                      <p className="text-sm text-gray-700">
                         {r.content}
                       </p>
                     </div>

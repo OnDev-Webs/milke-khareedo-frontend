@@ -85,7 +85,7 @@ export default function Hero() {
 
   return (
     <section className="relative w-full py-10">
-      <div className="max-w-6xl mx-auto relative w-full h-auto md:h-[450px] overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-6 shadow-md">
+      <div className="max-w-[1320px] mx-auto relative w-full h-auto md:h-[450px] overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-6 shadow-md">
         <div className="relative z-10 w-full md:w-[60%] pt-10 md:pt-10 ps-4 md:ps-6">
           <p className="font-medium text-[#585981] mb-2">
             Buying a home is a big decision.

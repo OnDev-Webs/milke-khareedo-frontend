@@ -95,7 +95,7 @@ const reviews = [
 export default function Testimonials() {
   return (
     <section className="w-full bg-white pb-16 px-6 md:px-10">
-      <div className="mx-auto max-w-[1200px]">
+      <div className="mx-auto max-w-[1300px]">
         {/* Heading */}
         <div className="flex items-center justify-between mb-10">
           <h2 className="text-3xl font-bold text-gray-700">

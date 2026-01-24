@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Heading() {
   return (
     <div className="py-16 px-6 md:px-10">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-[1300px]">
         <div className="relative h-[280px] md:h-[330px] overflow-hidden rounded-3xl">
           <Image
             src="/images/stayBanner.png"

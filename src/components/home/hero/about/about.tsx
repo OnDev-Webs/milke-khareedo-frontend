@@ -276,7 +276,7 @@ export default function AboutSection() {
         <rect width="100%" height="100%" fill="url(#dotPattern)" />
       </svg>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-12 py-16 sm:py-20">
+      <div className="relative z-10 mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-12 py-16 sm:py-20">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
           {/* LEFT CONTENT */}
           <div className="w-full lg:w-1/2">
@@ -324,7 +324,7 @@ export default function AboutSection() {
           <div className="w-full lg:w-1/2 flex-shrink-0 flex justify-center">
             <div
               ref={containerRef}
-              className="relative w-full h-[480px] sm:h-[520px] rounded-3xl overflow-hidden shadow-xl"
+              className="relative w-3/5 h-[480px] sm:h-[520px] rounded-3xl overflow-hidden shadow-xl"
               onMouseEnter={() => setShowControls(true)}
               onMouseLeave={() => setShowControls(false)}
             >

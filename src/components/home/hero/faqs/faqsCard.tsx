@@ -22,7 +22,7 @@ export default function FAQSCard({ data }: Props) {
       >
         <p
           className="text-[#000] font-semibold text-[16px] md:text-[18px] leading-[100%]"
-          style={{ fontWeight: "600", lineHeight: "22px" }}
+          style={{ fontWeight: "600" }}
         >
           {data?.title}
         </p>

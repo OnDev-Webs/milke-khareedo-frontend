@@ -276,10 +276,11 @@ export default function AboutSection() {
         <rect width="100%" height="100%" fill="url(#dotPattern)" />
       </svg>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 py-20">
-        <div className="flex flex-col lg:flex-row gap-14 lg:gap-20 items-center">
-          <div className="w-full lg:w-[60%]">
-            <h3 className="text-[26px] sm:text-[32px] lg:text-[36px] font-semibold text-black mb-10 leading-snug">
+      <div className="relative z-10 mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-12 py-16 sm:py-20">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
+          {/* LEFT CONTENT */}
+          <div className="w-full lg:w-1/2">
+            <h3 className="text-[22px] sm:text-[26px] lg:text-[30px] font-semibold text-black mb-8 leading-snug">
               How
               <span className="relative inline-block mx-2 text-[#1C4692]">
                 Milke Khareedo
@@ -322,7 +323,7 @@ export default function AboutSection() {
           <div className="w-full lg:w-[40%] h-full flex justify-center">
             <div
               ref={containerRef}
-              className="relative w-full h-[360px] sm:h-[600px] rounded-3xl overflow-hidden shadow-xl"
+              className="relative w-3/5 h-[480px] sm:h-[520px] rounded-3xl overflow-hidden shadow-xl"
               onMouseEnter={() => setShowControls(true)}
               onMouseLeave={() => setShowControls(false)}
             >

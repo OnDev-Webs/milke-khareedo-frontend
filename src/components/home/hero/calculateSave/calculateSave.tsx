@@ -166,7 +166,7 @@ export default function CalculateSave() {
         backgroundPosition: "center",
       }}
     >
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-0">
+      <div className="relative z-10 mx-auto max-w-[1340px] px-4 sm:px-6 lg:px-8">
         <div className="rounded-[32px] bg-white p-2 sm:p-6 shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
           <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 p-2">
             {/* ================= LEFT SIDE ================= */}

@@ -105,7 +105,7 @@ export default function HowItWorks() {
       ref={sectionRef}
       className="w-full bg-white py-14 px-4 md:px-10 lg:px-16"
     >
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-[1300px]">
         {/* Heading */}
         <h2 className="text-[22px] sm:text-[26px] md:text-[30px] font-semibold text-black mb-2">
           How People Like You Bought

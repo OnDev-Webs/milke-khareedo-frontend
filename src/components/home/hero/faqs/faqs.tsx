@@ -45,7 +45,7 @@ export default function FAQS() {
       id="FAQS"
       className="bg-[#F0F8FF] py-14 sm:py-16 md:py-20 px-4 sm:px-6 md:px-10"
     >
-      <div className="mx-auto max-w-5xl flex flex-col items-center gap-10">
+      <div className="mx-auto max-w-[1300px] flex flex-col items-center gap-10">
         {/* Heading */}
         <h2 className="text-[22px] sm:text-[26px] md:text-[30px] font-semibold text-black text-center">
           <span className="relative inline-block text-[#1C4692] pe-2">

@@ -48,7 +48,7 @@ export default function PDPGallery({
 
   return (
     <section className="w-full bg-white py-10 px-10">
-      <div className="mx-auto container max-md:px-4">
+      <div className="max-w-6xl mx-auto container max-md:px-4">
         <Breadcrumb className="mb-[30px]">
           <BreadcrumbList>
             <BreadcrumbItem>

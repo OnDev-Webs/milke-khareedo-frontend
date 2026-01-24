@@ -19,7 +19,7 @@ export default function FooterSection() {
   return (
     <footer className="w-full bg-[#F5F5F5] px-10">
       <div className="mx-auto max-w-[1300px] py-12 lg:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-10 lg:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-1 gap-y-10 lg:gap-12">
           {/* Left Column - Company Info */}
           <div className="lg:col-span-4">
             <Link href="/" className="mb-4 flex items-center gap-2">

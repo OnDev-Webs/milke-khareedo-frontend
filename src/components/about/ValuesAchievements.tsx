@@ -66,7 +66,6 @@ export default function ValuesAchievements() {
               key={item.id}
               className="flex flex-col md:flex-row items-start md:items-stretch rounded-3xl bg-white p-4 shadow-[0_12px_30px_rgba(0,0,0,0.06)] gap-5"
             >
-              {/* Image container with fixed size */}
               <div className="relative w-32 h-32 md:w-40 md:h-40 flex-shrink-0 rounded-2xl overflow-hidden">
                 <Image
                   src={item.img}
@@ -80,11 +79,11 @@ export default function ValuesAchievements() {
               <div className="flex flex-col justify-center w-full">
                 <Heading
                   variant={"h6"}
-                  className="text-black font-bold text-[16px] md:text-[20px]"
+                  className="text-black font-semibold text-[16px] md:text-[18px]"
                 >
                   {item.title}
                 </Heading>
-                <p className="mt-2 text-[16px] md:text-[16px] font-normal text-[#373737] leading-relaxed text-left">
+                <p className="mt-2 text-[14px] md:text-[15px] font-normal text-[#373737] leading-relaxed text-left">
                   {item.desc}
                 </p>
               </div>

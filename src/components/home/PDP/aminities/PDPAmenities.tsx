@@ -25,7 +25,7 @@ export default function PDPAmenities({ amenities }: PDPAmenitiesProps) {
 
   return (
     <section className="w-full py-4 px-6">
-      <div className="mx-auto container">
+      <div className="max-w-6xl mx-auto container">
         <div className="rounded-2xl bg-white shadow-sm">
           <div className="rounded-t-[20px] bg-[#EEF4FF] px-6 py-4">
             <h3 className="font-semibold text-[#000000] text-[25px]">Amenities</h3>
@@ -42,7 +42,7 @@ export default function PDPAmenities({ amenities }: PDPAmenitiesProps) {
                     </p>
                   ))}
               </div>
-              <div className="flex flex-col px-0 md:px-6 border-b border-[#BEBEBE] md:border-b-0 md:border-l md:border-[#BEBEBE]">
+              <div className="flex flex-col px-0 md:px-6 mt-4 md:mt-0 border-b border-[#BEBEBE] md:border-b-0 md:border-l md:border-[#BEBEBE]">
                 {paginatedAmenities[page]
                   ?.filter((_, idx) => idx % 3 === 1)
                   .map((amenity, idx) => (
@@ -51,7 +51,7 @@ export default function PDPAmenities({ amenities }: PDPAmenitiesProps) {
                     </p>
                   ))}
               </div>
-              <div className="flex flex-col px-0 md:px-6 md:border-l md:border-[#BEBEBE]">
+              <div className="flex flex-col px-0 md:px-6 mt-4 md:mt-0 md:border-l md:border-[#BEBEBE]">
                 {paginatedAmenities[page]
                   ?.filter((_, idx) => idx % 3 === 2)
                   .map((amenity, idx) => (

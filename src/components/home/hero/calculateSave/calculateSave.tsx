@@ -166,7 +166,7 @@ export default function CalculateSave() {
         backgroundPosition: "center",
       }}
     >
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-0">
         <div className="rounded-[32px] bg-white p-2 sm:p-6 shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
           <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 p-2">
             {/* ================= LEFT SIDE ================= */}
@@ -237,7 +237,7 @@ export default function CalculateSave() {
                 </div>
               </div>
 
-              <div className="bg-[#EEF4FF] px-6 py-10 rounded-md max-w-[58%] md:max-w-full flex flex-col gap-6">
+              <div className="bg-[#EEF4FF] px-6 py-10 rounded-md max-w-[100%] md:max-w-full flex flex-col gap-6">
                 <div className="relative flex items-center justify-center mb-4">
                   <button
                     onClick={handlePrev}
@@ -302,7 +302,7 @@ export default function CalculateSave() {
             {/* ================= RIGHT SIDE ================= */}
             <div className="space-y-6 sm:space-y-8">
               {/* Loan Amount Slider */}
-              <div className="w-[310px] md:w-full">
+              <div className="md:w-full">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-6 mb-2">
                   <h4 className="font-semibold text-black text-sm sm:text-base">
                     Loan Amount
@@ -342,7 +342,7 @@ export default function CalculateSave() {
               </div>
 
               {/* Rate of Interest Slider */}
-              <div className="w-[310px] md:w-full">
+              <div className="md:w-full">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-6 mb-2">
                   <h4 className="font-semibold text-black text-sm sm:text-base">
                     Rate of Interest <span className="text-[10px]">(%P.A)</span>
@@ -377,7 +377,7 @@ export default function CalculateSave() {
               </div>
 
               {/* Loan Tenure Slider */}
-              <div className="w-[310px] md:w-full">
+              <div className="md:w-full">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-6 mb-2">
                   <h4 className="font-semibold text-black text-sm sm:text-base">
                     Loan Tenure
@@ -421,7 +421,7 @@ export default function CalculateSave() {
               </div>
 
               {/* Buttons */}
-              <div className="flex flex-row gap-3 sm:gap-4">
+              <div className="flex flex-row items-center justify-center gap-3 sm:gap-4">
                 <button
                   onClick={handleReset}
                   className="w-[150px] sm:w-1/2 rounded-full border-2 border-[#F3F3F3] bg-[#F3F3F3] px-6 py-3 text-[16px] font-bold text-black"

@@ -145,8 +145,8 @@ export default function CompanyOverview() {
         <div className="flex flex-col lg:flex-row items-center lg:items-stretch gap-14">
           {/* LEFT CONTENT */}
           <div className="w-full lg:w-1/2 flex flex-col">
-            <h3 className="text-[26px] md:text-[40px] font-bold text-black leading-tight">
-              Built to help buyers save more — together.
+            <h3 className="text-[26px] md:text-[34px] font-semibold text-black leading-tight">
+              Built to help buyers save more together.
             </h3>
 
             <p className="mt-4 text-[16px] md:text-[18px] text-[#373737] leading-relaxed">

@@ -76,17 +76,16 @@ export default function PDPHeader({
   return (
     <>
       <section className="py-6 lg:py-8">
-        <div className="container mx-auto p-5 md:p-6 lg:p-7 bg-white rounded-[30px] shadow-[0_0_50px_rgba(0,0,0,0.05)] outline outline-1 outline-zinc-100 flex flex-col gap-3">
+        <div className="container max-w-6xl mx-auto p-5 md:p-6 lg:p-7 bg-white rounded-[30px] shadow-[0_0_50px_rgba(0,0,0,0.05)] outline outline-1 outline-zinc-100 flex flex-col gap-3">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-4 lg:gap-6">
 
-            {/* LEFT */}
             <div className="w-full max-w-[600px] flex flex-col gap-1.5">
               <h1 className="text-[#1C4692] font-bold font-['Figtree']
-                text-[30px] md:text-[34px] lg:text-[45px] leading-tight">
+                text-[28px] md:text-[32px] lg:text-[40px] leading-tight">
                 {projectName}
               </h1>
               <p className="text-[#000000] font-normal font-['Figtree']
-                text-[16px] md:text-[18px] lg:text-[22px]">
+                text-[16px] md:text-[18px] lg:text-[20px]">
                 {location}
               </p>
             </div>
@@ -98,7 +97,7 @@ export default function PDPHeader({
                   <span className="text-[14px] md:text-[15px] font-medium">
                     Starting Price
                   </span>
-                  <span className="text-[24px] md:text-[28px] lg:text-[35px] font-bold leading-none whitespace-nowrap">
+                  <span className="text-[24px] md:text-[28px] lg:text-[30px] font-semibold leading-none whitespace-nowrap">
                     {formatPrice(startingPrice.value)}
                   </span>
                 </div>

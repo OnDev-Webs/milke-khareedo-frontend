@@ -2,7 +2,6 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
-import { FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import CitySelector from "./CitySelector";
 import { homeService } from "@/lib/api/services/home.service";
@@ -50,7 +49,7 @@ export default function Hero() {
             pagination: response.pagination,
           }),
         );
-        router.push(`/search-results?city=${encodeURIComponent(cityName)}&search=${encodeURIComponent(query)}`, );
+        router.push(`/search-results?city=${encodeURIComponent(cityName)}&search=${encodeURIComponent(query)}`,);
       } else {
         alert("No properties found");
       }
@@ -78,7 +77,7 @@ export default function Hero() {
 
   return (
     <section className="relative w-full py-10">
-      <div className="max-w-6xl mx-auto relative w-full h-auto md:h-[450px] overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-6 shadow-md">
+      <div className="mx-auto relative overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-6 shadow-md h-auto md:h-[420px] xl:h-[450px] w-[92%] md:w-[96%] xl:w-[1150px]">
         <div className="relative z-10 w-full md:w-[60%] pt-10 md:pt-10 ps-4 md:ps-6">
           <p className="font-medium text-[#585981] mb-2">
             Buying a home is a big decision.
@@ -119,15 +118,15 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="hidden md:block absolute top-[-32px] left-[530px]">
-          <div className="relative w-[600px] h-[480px] overflow-hidden">
+        <div className="hidden md:block absolute top-[-112px] right-[36px]">
+          <div className="relative  overflow-hidden w-[480px] h-[440px] lg:w-[520px] lg:h-[480px] xl:w-[580px] xl:h-[520px]">
             <Image
               src="/images/banner1.png"
               alt="Hero Image"
               fill
               priority
               className="object-cover object-[50%_80%]"
-              style={{ transform: "scale(1.4)" }}
+              style={{ transform: "scale(1.2)" }}
             />
           </div>
         </div>
@@ -143,7 +142,8 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="absolute -bottom-5 left-1/2 w-[95%] md:w-[1250px] max-w-5xl -translate-x-1/2 z-20">
+
+      <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 z-20 w-[90%] md:w-[90%] xl:w-[1050px]">
         <div className="flex flex-col md:flex-row items-stretch py-2 md:py-3 rounded-2xl bg-white/70 backdrop-blur-md p-0 overflow-visible shadow-[0_12px_40px_rgba(0,0,0,0.10)]">
           {/* CITY SELECT SECTION */}
           <div className="relative flex flex-col justify-center ps-6 pe-4 py-4 min-w-[130px] border-b border-[#DCDCEB] md:border-b-0">
@@ -174,10 +174,9 @@ export default function Hero() {
                 onBlur={() => setIsSearchFocused(false)}
                 placeholder="Find your Dream Home"
                 className={`w-full bg-transparent outline-none border-none focus:ring-0 transition-all duration-300
-                  ${
-                    searchQuery || isSearchFocused
-                      ? "text-[26px] font-semibold text-gray-900 text-left mt-1"
-                      : "text-base font-bold text-gray-800"
+                  ${searchQuery || isSearchFocused
+                    ? "text-[26px] font-semibold text-gray-900 text-left mt-1"
+                    : "text-base font-bold text-gray-800"
                   }
                   placeholder:text-base placeholder:font-bold placeholder:text-gray-800 min-h-7
                 `}

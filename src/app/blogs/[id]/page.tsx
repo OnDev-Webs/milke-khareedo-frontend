@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Breadcrumb,BreadcrumbItem,BreadcrumbLink,BreadcrumbList,BreadcrumbPage,BreadcrumbSeparator} from "@/components/ui/breadcrumb";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import Heading from "@/components/typography/heading";
 import Image from "next/image";
 import ContactForm from "@/components/home/contact-us/ContactForm";
@@ -9,27 +9,13 @@ import RecentBlog from "@/components/sections/RecentBlog";
 import React from "react";
 import { homeService } from "@/lib/api/services/home.service";
 import type { BlogDetail, Blog } from "@/lib/api/services/home.service";
-import Link from "next/link";
 import Loader from "@/components/ui/loader";
-import { IoChatbubbleOutline,IoThumbsUp, IoThumbsUpOutline } from "react-icons/io5";
 
 const getCategoryName = (category?: string | { name: string }) => {
   if (!category) return "";
   return typeof category === "string" ? category : category.name;
 };
 
-type CommentType = {
-  _id: string;
-  content: string;
-  createdAt: string;
-  author: {
-    id: string;
-    name: string;
-    profileImage?: string;
-  };
-  likedBy: string[];
-  replies: CommentType[];
-};
 
 export default function Page({
   params,
@@ -42,36 +28,6 @@ export default function Page({
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingRecent, setIsLoadingRecent] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [comments, setComments] = useState<CommentType[]>([]);
-  const [commentText, setCommentText] = useState("");
-  const [isCommentLoading, setIsCommentLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
-  const [replyTo, setReplyTo] = useState<string | null>(null);
-  const [replyText, setReplyText] = useState("");
-
-  const normalizeComment = (c: any): CommentType => ({
-    ...c,
-    likedBy: c.likedBy ?? [],
-    replies: (c.replies ?? []).map(normalizeComment),
-  });
-
-  useEffect(() => {
-    const user = localStorage.getItem("auth_user");
-    if (user) {
-      setCurrentUserId(JSON.parse(user).id);
-    }
-  }, []);
-
-  useEffect(() => {
-    const checkAuth = () => {
-      const token = localStorage.getItem("wealthcon_auth_token");
-      setIsLoggedIn(!!token);
-    };
-    checkAuth();
-    window.addEventListener("storage", checkAuth);
-    return () => window.removeEventListener("storage", checkAuth);
-  }, []);
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -94,20 +50,6 @@ export default function Page({
   }, [unwrappedParams.id]);
 
   useEffect(() => {
-    if (!blog?._id) return;
-    homeService
-      .getBlogComments(blog._id)
-      .then((res) => {
-        if (res.success && Array.isArray(res.data)) {
-          setComments(res.data.map(normalizeComment));
-        } else {
-          setComments([]);
-        }
-      })
-      .catch(() => setComments([]));
-  }, [blog?._id]);
-
-  useEffect(() => {
     const fetchRecentBlogs = async () => {
       setIsLoadingRecent(true);
       try {
@@ -121,47 +63,6 @@ export default function Page({
     };
     fetchRecentBlogs();
   }, [blog?._id, unwrappedParams.id]);
-
-  const submitComment = async () => {
-    const text = replyTo ? replyText : commentText;
-    if (!text.trim() || !blog?._id) return;
-    try {
-      setIsCommentLoading(true);
-      const payload: any = { content: text,};
-      if (replyTo) { payload.parentComment = replyTo; }
-      const res = await homeService.addBlogComment(blog._id, payload);
-      if (res.success && res.data) {
-        const newComment = normalizeComment(res.data);
-        if (replyTo) {
-          setComments(prev => prev.map(c => c._id === replyTo ? { ...c, replies: [...c.replies, newComment] } : c ));
-          setReplyTo(null);
-          setReplyText("");
-        } else {
-          setComments(prev => [newComment, ...prev]);
-          setCommentText("");
-        }
-      }
-    } finally {
-      setIsCommentLoading(false);
-    }
-  };
-
-  const toggleLike = async (commentId: string) => {
-    if (!isLoggedIn || !currentUserId) return;
-    try {
-      const res = await homeService.toggleCommentLike(commentId);
-      if (!res.success || !res.data) return;
-      const { likedBy } = res.data;
-      setComments((prev) => prev.map((c) => c._id === commentId ? { ...c, likedBy, } : c));
-    } catch (err) {
-      console.error("Like toggle failed", err);
-    }
-  };
-
-  const isCommentLiked = (likedBy: string[] | undefined) => {
-    if (!currentUserId) return false;
-    return (likedBy ?? []).includes(currentUserId);
-  };
 
   if (isLoading) {
     return (
@@ -290,114 +191,6 @@ export default function Page({
               </div>
             </div>
           </div>
-        </div>
-
-        {/* COMMENTS */}
-        <div className="mt-10 bg-white border border-[#1C4692]/20 rounded-xl p-4 shadow-sm">
-          <h3 className="text-2xl font-semibold mb-2">Comments</h3>
-          {!isLoggedIn && (
-            <p className="text-sm text-red-500">
-              Please <Link href="/login">login</Link> to comment.
-            </p>
-          )}
-
-          {isLoggedIn && (
-            <div className="mb-4 bg-[#1C4692]/5 border border-[#1C4692]/30 rounded-lg p-3">
-              <textarea
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
-                className="w-full bg-white p-2 border border-[#1C4692]/20 rounded-md text-sm"
-                placeholder="Share your thoughts..."
-              />
-              <div className="flex justify-end mt-3">
-                <button
-                  onClick={submitComment}
-                  disabled={isCommentLoading}
-                  className="px-5 py-1.5 bg-[#1C4692] text-white rounded-full text-sm">
-                  {isCommentLoading ? "Posting..." : "Post Comment"}
-                </button>
-              </div>
-            </div>
-          )}
-
-          {comments.length === 0 && (
-            <p className="text-gray-500">No comments yet.</p>
-          )}
-
-          {comments.map((c) => (
-            <div className="bg-white border border-gray-200 rounded-lg p-4 mb-3 hover:border-[#1C4692]/40 transition">
-              <div className="flex items-center gap-2">
-                <p className="font-semibold text-[18px]">{c.author.name}</p>
-                <span className="text-[14px] font-medium text-gray-400">
-                  {new Date(c.createdAt).toLocaleString()}
-                </span>
-              </div>
-              <p>{c.content}</p>
-
-              {isLoggedIn && (
-                <div className="flex items-center gap-2 text-sm">
-                  {/* Like */}
-                  <button onClick={() => toggleLike(c._id)} className="mt-1 flex items-center gap-1">
-                    {isCommentLiked(c.likedBy) ? (
-                      <IoThumbsUp size={17} className="text-[#1C4692]" />
-                    ) : (
-                      <IoThumbsUpOutline size={17} />
-                    )}
-                    <span className="text-sm text-gray-600 mt-1">
-                      {c.likedBy?.length ?? 0}
-                    </span>
-                  </button>
-                  <button
-                    onClick={() => setReplyTo(c._id)}
-                    className="text-xs text-gray-500 hover:text-[#1C4692] transition mt-1">
-                    <IoChatbubbleOutline size={17} />
-                  </button>
-                </div>
-              )}
-
-              {replyTo === c._id && (
-                <div className="mt-1 ml-6 border-l-2 border-[#1C4692] pl-4">
-                  <textarea
-                    value={replyText}
-                    onChange={(e) => setReplyText(e.target.value)}
-                    className="w-full p-3 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-[#1C4692]"
-                    placeholder={`Reply to ${c.author.name}...`}
-                  />
-                  <div className="flex gap-2 mt-2">
-                    <button onClick={submitComment} className="px-4 py-1.5 text-sm bg-[#1C4692] text-white rounded-md">
-                      Reply
-                    </button>
-                    <button
-                      onClick={() => {
-                        setReplyTo(null);
-                        setReplyText("");
-                      }}
-                      className="px-3 py-1.5 text-sm text-[#000] border rounded-md border-[#1C4692]">
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {c.replies.length > 0 && (
-                <div className="ml-6 mt-3 space-y-4 border-l-2 border-gray-200 pl-4">
-                  {c.replies.map((r) => (
-                    <div key={r._id} className="bg-gray-50 rounded-lg p-3">
-                      <div className="flex items-center gap-2">
-                        <p className="font-medium text-sm">{r.author.name}</p>
-                        <span className="text-xs text-gray-400">
-                          {new Date(r.createdAt).toLocaleString()}
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-700">
-                        {r.content}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
         </div>
         <RecentBlog excludeBlogId={blog._id} excludeSlug={blog.slug} />
       </div>

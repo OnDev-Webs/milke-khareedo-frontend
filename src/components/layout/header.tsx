@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Logo from "@/assets/logo.svg";
 import Image from "next/image";
 import { useAuthContext } from "@/contexts/AuthContext";
@@ -25,37 +25,37 @@ const profileMenuItems: {
   label: string;
   href: string;
 }[] = [
-    {
-      key: "properties",
-      label: "My Properties",
-      href: "/dashboard/viewed-properties",
-    },
-    {
-      key: "favorite",
-      label: "My Favorite",
-      href: "/dashboard/favorites",
-    },
-    {
-      key: "visits",
-      label: "Site visits",
-      href: "/dashboard/site-visits",
-    },
-    {
-      key: "compare",
-      label: "Compare",
-      href: "/compare",
-    },
-    {
-      key: "searches",
-      label: "My Searches",
-      href: "/dashboard/searches",
-    },
-    {
-      key: "preference",
-      label: "My Preference",
-      href: "/dashboard/preferences",
-    },
-  ];
+  {
+    key: "properties",
+    label: "My Properties",
+    href: "/dashboard/viewed-properties",
+  },
+  {
+    key: "favorite",
+    label: "My Favorite",
+    href: "/dashboard/favorites",
+  },
+  {
+    key: "visits",
+    label: "Site visits",
+    href: "/dashboard/site-visits",
+  },
+  {
+    key: "compare",
+    label: "Compare",
+    href: "/compare",
+  },
+  {
+    key: "searches",
+    label: "My Searches",
+    href: "/dashboard/searches",
+  },
+  {
+    key: "preference",
+    label: "My Preference",
+    href: "/dashboard/preferences",
+  },
+];
 
 const menuIcons = {
   properties: "/images/properties.svg",
@@ -64,7 +64,7 @@ const menuIcons = {
   compare: "/images/convert.svg",
   searches: "/images/mySearch.svg",
   preference: "/images/myPreference.svg",
-} as const;
+} as const ;
 
 type MenuIconKey = keyof typeof menuIcons;
 
@@ -93,14 +93,6 @@ export default function Header() {
       setShowCompare(false);
     }, 200);
   };
-
-  useEffect(() => {
-    const openAuth = () => setShowAuthModal(true);
-
-    window.addEventListener("open-auth-modal", openAuth);
-    return () => window.removeEventListener("open-auth-modal", openAuth);
-  }, []);
-
 
   return (
     <header className="w-full bg-white relative z-55">
@@ -226,7 +218,7 @@ export default function Header() {
 
                       {/* Menu Items */}
                       <div className="px-3 py-2 space-y-2">
-                        {profileMenuItems.map((item) => {
+                       {profileMenuItems.map((item) => {
                           return (
                             <Link
                               key={item.label}

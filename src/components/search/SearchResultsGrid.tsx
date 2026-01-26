@@ -20,7 +20,6 @@ export default function SearchResultsGrid() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [sortBy, setSortBy] = useState("newAdded");
-
   const [selectedBhk, setSelectedBhk] = useState("2.5 BHK");
   const [selectedPossession, setSelectedPossession] = useState("Ready to Move");
   const [results, setResults] = useState<Property[]>([]);
@@ -43,6 +42,8 @@ export default function SearchResultsGrid() {
   const [bhkOpen, setBhkOpen] = useState(false);
   const [areaOpen, setAreaOpen] = useState(false);
   const [possessionOpen, setPossessionOpen] = useState(false);
+  const cityParam = searchParams.get("city");
+  const searchParam = searchParams.get("search");
 
   const [priceRange, setPriceRange] = useState<[number, number]>([30, 100]);
   const [areaRange, setAreaRange] = useState<[number, number]>([400, 5000]);
@@ -72,7 +73,7 @@ export default function SearchResultsGrid() {
       const resp = await homeService.searchProperties({
         ...params,
         page: 1,
-        limit: 10,
+        limit: 1000,
       });
 
       if (resp.success && Array.isArray(resp.data)) {
@@ -85,6 +86,29 @@ export default function SearchResultsGrid() {
       console.error(err);
       setResults([]);
     }
+  };
+
+  const normalizeCityValue = (city: string) => {
+    if (!city) return "India, Delhi";
+    if (city.includes(",")) return city;
+    return `India, ${city}`;
+  };
+
+  useEffect(() => {
+    if (cityParam) {
+      setSelectedCity(normalizeCityValue(cityParam));
+    }
+    if (searchParam) {
+      setSearchQuery(searchParam);
+    }
+  }, [cityParam, searchParam]);
+
+
+  const getDisplayCity = (city: string) => {
+    if (!city) return "";
+    return city.includes(",")
+      ? city.split(",").pop()?.trim()
+      : city;
   };
 
   useEffect(() => {
@@ -247,7 +271,7 @@ export default function SearchResultsGrid() {
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
                 placeholder="Find your Dream Home"
-                className="w-full bg-transparent text-base font-bold text-gray-800 outline-none border-none focus:ring-0 placeholder:text-base placeholder:font-bold placeholder:text-gray-800"
+                className="w-full bg-transparent text-[26px] font-semibold text-gray-900 text-left mt-1 outline-none border-none focus:ring-0 placeholder:text-base placeholder:font-bold placeholder:text-gray-800"
               />
               <div className={`absolute left-0 top-full mt-1.5 flex items-center gap-1.5 text-xs text-gray-500 pointer-events-none transition-opacity ${searchQuery || isSearchFocused ? "opacity-0" : "opacity-100"}`}>
                 <FaMapMarkerAlt className="text-xs" />
@@ -384,7 +408,9 @@ export default function SearchResultsGrid() {
         <div className="flex-1 px-4 order-2 md:order-1">
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-2xl font-semibold text-black">
-              Projects in Mumbai Central, Mumbai
+              {searchQuery
+                ? `Results for "${searchQuery}" in ${getDisplayCity(selectedCity)}`
+                : `Projects in ${getDisplayCity(selectedCity)}`}
             </h2>
 
             <DropdownMenu>

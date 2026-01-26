@@ -27,8 +27,7 @@ export default function PropertySelectionModal({
   const [totalPages, setTotalPages] = useState(1);
   const [userLocation, setUserLocation] = useState<{
     latitude: number;
-    longitude: number;
-  } | null>(null);
+    longitude: number;} | null>(null);
   // Store full property objects, not just IDs, so selections persist across pages
   const [selectedProperties, setSelectedProperties] = useState<
     Map<string, Property>
@@ -47,43 +46,36 @@ export default function PropertySelectionModal({
           });
         },
         () => {
-          // Default to Delhi if geolocation fails
-          setUserLocation({
-            latitude: 28.4089,
-            longitude: 77.0418,
-          });
+          setUserLocation(null);
         },
       );
-    } else {
-      // Default to Delhi if geolocation not available
-      setUserLocation({
-        latitude: 28.4089,
-        longitude: 77.0418,
-      });
     }
   }, []);
 
   // Fetch properties
   const fetchProperties = useCallback(
     async (page: number = 1, search?: string) => {
-      if (!userLocation) return;
-
       setLoading(true);
       setError(null);
 
       try {
         const params: {
-          latitude: number;
-          longitude: number;
+          latitude?: number;
+          longitude?: number;
           page: number;
           limit: number;
           search?: string;
         } = {
-          latitude: userLocation.latitude,
-          longitude: userLocation.longitude,
           page,
           limit,
         };
+
+        const baseProperty = Array.from(selectedProperties.values())[0];
+
+        if (baseProperty?.latitude && baseProperty?.longitude) {
+          params.latitude = baseProperty.latitude;
+          params.longitude = baseProperty.longitude;
+        }
 
         if (search && search.trim()) {
           params.search = search.trim();
@@ -107,7 +99,7 @@ export default function PropertySelectionModal({
         setLoading(false);
       }
     },
-    [userLocation, limit],
+    [limit],
   );
 
   // Fetch properties when modal opens or user location is available
@@ -200,6 +192,7 @@ export default function PropertySelectionModal({
     }
     return property.offerPrice?.formatted || "Price on request";
   };
+  
 
   if (!isOpen) return null;
 
@@ -295,20 +288,18 @@ export default function PropertySelectionModal({
                   return (
                     <div
                       key={property.id}
-                      className={`group relative cursor-pointer rounded-lg border-2 bg-white p-3 transition-all sm:rounded-xl sm:p-4 ${
-                        isSelected
-                          ? "border-[#1C4692] bg-[#1C4692]/5 shadow-lg"
-                          : "border-gray-200 hover:border-[#1C4692] hover:shadow-lg"
-                      } ${alreadyInCompare ? "cursor-default" : "cursor-pointer"}`}
+                      className={`group relative cursor-pointer rounded-lg border-2 bg-white p-3 transition-all sm:rounded-xl sm:p-4 ${isSelected
+                        ? "border-[#1C4692] bg-[#1C4692]/5 shadow-lg"
+                        : "border-gray-200 hover:border-[#1C4692] hover:shadow-lg"
+                        } ${alreadyInCompare ? "cursor-default" : "cursor-pointer"}`}
                       onClick={() => handlePropertyToggle(property)}
                     >
                       {/* Selection Indicator - Show for both newly selected and already in compare */}
                       <div
-                        className={`absolute right-2 top-2 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold transition-colors shadow-sm ${
-                          isSelected
-                            ? "bg-[#1C4692] text-white"
-                            : "border-2 border-gray-300 bg-white text-gray-600"
-                        }`}
+                        className={`absolute right-2 top-2 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold transition-colors shadow-sm ${isSelected
+                          ? "bg-[#1C4692] text-white"
+                          : "border-2 border-gray-300 bg-white text-gray-600"
+                          }`}
                       >
                         {isSelected && (
                           <svg
@@ -396,11 +387,10 @@ export default function PropertySelectionModal({
                           key={pageNum}
                           onClick={() => fetchProperties(pageNum, searchQuery)}
                           disabled={loading}
-                          className={`h-8 w-8 rounded-lg text-sm font-medium transition-colors ${
-                            currentPage === pageNum
-                              ? "bg-[#1C4692] text-white"
-                              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                          } disabled:cursor-not-allowed disabled:opacity-50`}
+                          className={`h-8 w-8 rounded-lg text-sm font-medium transition-colors ${currentPage === pageNum
+                            ? "bg-[#1C4692] text-white"
+                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                            } disabled:cursor-not-allowed disabled:opacity-50`}
                         >
                           {pageNum}
                         </button>

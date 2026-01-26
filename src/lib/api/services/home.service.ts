@@ -722,40 +722,4 @@ export const homeService = {
     );
   },
 
-  // comment 
-
-  getBlogComments: async (
-    blogId: string
-  ): Promise<ApiResponse<BlogComment[]>> => {
-    return apiClient.get<BlogComment[]>(
-      API_ENDPOINTS.HOME.BLOG_COMMENTS(blogId)
-    );
-  },
-
-  addBlogComment: async (
-    blogId: string,
-    data: { content: string; parentComment?: string }
-  ): Promise<ApiResponse<BlogComment>> => {
-    return apiClient.post<BlogComment>(
-      API_ENDPOINTS.HOME.BLOG_COMMENTS(blogId),
-      data
-    );
-  },
-
-  toggleCommentLike: async (
-    commentId: string
-  ): Promise<
-    ApiResponse<{
-      liked: boolean;
-      likedBy: string[];
-      totalLikes: number;
-    }>
-  > => {
-    return apiClient.post<{
-      liked: boolean;
-      likedBy: string[];
-      totalLikes: number;
-    }>(API_ENDPOINTS.HOME.BLOG_COMMENT_LIKE(commentId));
-  },
-
 };

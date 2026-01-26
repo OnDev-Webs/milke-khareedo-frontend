@@ -95,7 +95,7 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full bg-white relative z-55">
+    <header className="w-full bg-white relative z-55 overflow-x-clip">
       <div className="mx-auto max-w-6xl px-4 sm:px-0">
         <div className="flex items-center justify-between py-4 lg:py-6">
           {/* Logo */}
@@ -268,8 +268,6 @@ export default function Header() {
 
           </div>
         </div>
-
-    
       </div>
 
       {/* Auth Modal */}

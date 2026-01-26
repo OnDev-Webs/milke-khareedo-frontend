@@ -65,40 +65,48 @@ export default function HowItWorks() {
   const swiperRef = useRef<any>(null);
 
   useEffect(() => {
-    const onScroll = () => {
-      if (!wrapperRef.current || !swiperRef.current) return;
+    const swiper = swiperRef.current;
+    if (!swiper) return;
+
+    const onWheel = (e: WheelEvent) => {
       if (window.innerWidth < 1024) return;
-  
-      const wrapper = wrapperRef.current;
-      const swiper = swiperRef.current;
-  
-      const rect = wrapper.getBoundingClientRect();
-      const totalScroll = rect.height - window.innerHeight;
-  
-      if (rect.top > 0 || Math.abs(rect.top) > totalScroll) return;
-  
-      const progress = Math.min(
-        Math.max(Math.abs(rect.top) / totalScroll, 0),
-        1
-      );
-  
-      swiper.setProgress(progress, 0);
-      swiper.updateActiveIndex();
-      swiper.updateSlidesClasses();
+
+      const isAtStart = swiper.isBeginning;
+      const isAtEnd = swiper.isEnd;
+
+      // Scroll DOWN
+      if (e.deltaY > 0) {
+        if (!isAtEnd) {
+          e.preventDefault();
+          swiper.slideNext();
+        }
+      }
+
+      // Scroll UP
+      if (e.deltaY < 0) {
+        if (!isAtStart) {
+          e.preventDefault();
+          swiper.slidePrev();
+        }
+      }
     };
-  
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    const container = wrapperRef.current;
+    container?.addEventListener("wheel", onWheel, { passive: false });
+
+    return () => {
+      container?.removeEventListener("wheel", onWheel);
+    };
   }, []);
-  
+
   return (
     <section
       ref={wrapperRef}
       id="how-it-works"
-      className="relative h-[220vh] bg-white"
+      className="bg-white py-16"
     >
       {/* STICKY CONTENT */}
-      <div className="sticky top-0 flex h-screen items-center">
+      <div className="flex items-center">
         <div className="w-full px-4 md:px-10 lg:px-16">
           <div className="mx-auto max-w-[1300px]">
             {/* Heading */}
@@ -140,7 +148,7 @@ export default function HowItWorks() {
               scrollbar={{
                 draggable: true,
                 el: ".custom-swiper-scrollbar",
-              }}  
+              }}
               modules={[FreeMode, Scrollbar]}
               className="pb-6"
             >

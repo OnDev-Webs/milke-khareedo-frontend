@@ -105,7 +105,6 @@ export default function SearchResultsGrid() {
 
   const handleCityChange = (cityValue: string) => {
     setSelectedCity(cityValue);
-    console.log("Selected city:", cityValue);
   };
 
   const handleSearch = () => {

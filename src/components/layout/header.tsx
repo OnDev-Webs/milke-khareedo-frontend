@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Logo from "@/assets/logo.svg";
 import Image from "next/image";
 import { useAuthContext } from "@/contexts/AuthContext";
@@ -25,37 +25,37 @@ const profileMenuItems: {
   label: string;
   href: string;
 }[] = [
-  {
-    key: "properties",
-    label: "My Properties",
-    href: "/dashboard/viewed-properties",
-  },
-  {
-    key: "favorite",
-    label: "My Favorite",
-    href: "/dashboard/favorites",
-  },
-  {
-    key: "visits",
-    label: "Site visits",
-    href: "/dashboard/site-visits",
-  },
-  {
-    key: "compare",
-    label: "Compare",
-    href: "/compare",
-  },
-  {
-    key: "searches",
-    label: "My Searches",
-    href: "/dashboard/searches",
-  },
-  {
-    key: "preference",
-    label: "My Preference",
-    href: "/dashboard/preferences",
-  },
-];
+    {
+      key: "properties",
+      label: "My Properties",
+      href: "/dashboard/viewed-properties",
+    },
+    {
+      key: "favorite",
+      label: "My Favorite",
+      href: "/dashboard/favorites",
+    },
+    {
+      key: "visits",
+      label: "Site visits",
+      href: "/dashboard/site-visits",
+    },
+    {
+      key: "compare",
+      label: "Compare",
+      href: "/compare",
+    },
+    {
+      key: "searches",
+      label: "My Searches",
+      href: "/dashboard/searches",
+    },
+    {
+      key: "preference",
+      label: "My Preference",
+      href: "/dashboard/preferences",
+    },
+  ];
 
 const menuIcons = {
   properties: "/images/properties.svg",
@@ -64,7 +64,7 @@ const menuIcons = {
   compare: "/images/convert.svg",
   searches: "/images/mySearch.svg",
   preference: "/images/myPreference.svg",
-} as const ;
+} as const;
 
 type MenuIconKey = keyof typeof menuIcons;
 
@@ -93,6 +93,14 @@ export default function Header() {
       setShowCompare(false);
     }, 200);
   };
+
+  useEffect(() => {
+    const openAuth = () => setShowAuthModal(true);
+
+    window.addEventListener("open-auth-modal", openAuth);
+    return () => window.removeEventListener("open-auth-modal", openAuth);
+  }, []);
+
 
   return (
     <header className="w-full bg-white relative z-55">
@@ -218,7 +226,7 @@ export default function Header() {
 
                       {/* Menu Items */}
                       <div className="px-3 py-2 space-y-2">
-                       {profileMenuItems.map((item) => {
+                        {profileMenuItems.map((item) => {
                           return (
                             <Link
                               key={item.label}
@@ -267,18 +275,18 @@ export default function Header() {
             )}
 
             {/* Mobile Menu */}
-            {/* <button
+            <button
               type="button"
               aria-label="Toggle navigation"
               onClick={() => setOpen((o) => !o)}
               className="inline-flex items-center justify-center rounded-md p-2 text-gray-600 lg:hidden">
               <HiOutlineMenu className="h-6 w-6" />
-            </button> */}
+            </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
-        {/* {open && !isDashboard && (
+        {open && !isDashboard && (
           <div className="border-t border-gray-100 bg-white pb-4 lg:hidden">
             <nav className="flex flex-col px-4 pt-3 text-gray-700">
               {navLinks.map((link) => (
@@ -292,16 +300,6 @@ export default function Header() {
               ))}
 
               <div className="mt-4 flex items-center gap-3 border-t border-gray-100 pt-4">
-                {!isDashboard && (
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
-                    <Image
-                      src="/images/convertshape.svg"
-                      alt="Compare"
-                      width={18}
-                      height={18}
-                    />
-                  </div>
-                )}
                 {isAuthenticated ? (
                   <Link
                     href="/dashboard/profile"
@@ -324,7 +322,7 @@ export default function Header() {
               </div>
             </nav>
           </div>
-        )} */}
+        )}
       </div>
 
       {/* Auth Modal */}

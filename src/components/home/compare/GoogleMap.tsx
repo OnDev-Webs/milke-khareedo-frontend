@@ -45,10 +45,6 @@ export default function GoogleMapComponent({
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           });
-          console.log("User location:", {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
         },
         (error) => {
           console.error("Error getting user location:", error);
@@ -119,8 +115,6 @@ export default function GoogleMapComponent({
       const bounds = new googleMaps.LatLngBounds();
       let hasValidMarkers = false;
 
-      console.log(`🗺️ Updating map bounds for ${markers.length} markers`);
-
       markers.forEach((marker) => {
         if (
           marker.lat &&
@@ -132,9 +126,6 @@ export default function GoogleMapComponent({
         ) {
           bounds.extend(new googleMaps.LatLng(marker.lat, marker.lng));
           hasValidMarkers = true;
-          console.log(
-            `  ✓ Added marker ${marker.label || "?"} at (${marker.lat}, ${marker.lng})`,
-          );
         } else {
           console.warn(`  ✗ Skipped invalid marker:`, marker);
         }
@@ -151,14 +142,10 @@ export default function GoogleMapComponent({
         if (markers.length > 1) {
           // Add padding to bounds
           map.fitBounds(bounds, { top: 50, right: 50, bottom: 50, left: 50 });
-          console.log(`✅ Map bounds fitted for ${markers.length} markers`);
         } else if (markers.length === 1) {
           // Center on single marker with appropriate zoom
           map.setCenter(new googleMaps.LatLng(markers[0].lat, markers[0].lng));
           map.setZoom(14);
-          console.log(
-            `✅ Map centered on single marker ${markers[0].label || "?"}`,
-          );
         }
       }, 100);
     }

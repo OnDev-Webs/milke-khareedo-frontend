@@ -90,7 +90,6 @@ export default function PropertySelectionModal({
         }
 
         const response: any = await homeService.getProperties(params);
-        console.log("response", response);
         if (response.success && response.data) {
           setProperties(response.data || []);
           setTotalPages(response.pagination?.totalPages || 1);

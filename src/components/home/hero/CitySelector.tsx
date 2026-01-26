@@ -140,23 +140,17 @@ export default function CitySelector({
         const loadCities = async () => {
             try {
                 setLoading(true);
-
-                // Use setTimeout to defer heavy computation and prevent UI blocking
                 setTimeout(async () => {
                     const fetchedCities = await fetchAllCities();
-
-                    // Use requestAnimationFrame to update state without blocking
                     requestAnimationFrame(() => {
                         setCities(fetchedCities);
 
-                        // Set initial selected city
                         if (fetchedCities.length > 0) {
                             if (value) {
                                 const found = fetchedCities.find((c) => c.value === value);
                                 if (found) {
                                     setSelectedCity(found);
                                 } else {
-                                    // Default to Delhi if available, otherwise first city
                                     const delhi = fetchedCities.find(
                                         (c) =>
                                             c.city.toLowerCase() === "delhi" &&
@@ -165,7 +159,6 @@ export default function CitySelector({
                                     setSelectedCity(delhi || fetchedCities[0]);
                                 }
                             } else {
-                                // Default to Delhi if available, otherwise first city
                                 const delhi = fetchedCities.find(
                                     (c) =>
                                         c.city.toLowerCase() === "delhi" &&
@@ -196,7 +189,6 @@ export default function CitySelector({
         }
     }, [value, cities]);
 
-    // Debounced search query for better performance
     const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
 
     useEffect(() => {
@@ -215,14 +207,11 @@ export default function CitySelector({
         };
     }, [searchQuery]);
 
-    // Memoized filtered cities for performance
     const filteredCities = useMemo(() => {
         if (cities.length === 0) return [];
-
         if (!debouncedSearchQuery.trim()) {
             return cities;
         }
-
         const query = debouncedSearchQuery.toLowerCase();
         return cities.filter((city) => {
             return (
@@ -236,29 +225,22 @@ export default function CitySelector({
     // Reset visible range when search changes
     useEffect(() => {
         if (debouncedSearchQuery.trim()) {
-            // Show more results when searching
             setVisibleRange({ start: 0, end: 50 });
         } else {
-            // Show only 5 cities initially when no search
             setVisibleRange({ start: 0, end: 5 });
         }
     }, [debouncedSearchQuery]);
 
-    // Visible cities for rendering (windowing for performance)
     const visibleCities = useMemo(() => {
         return filteredCities.slice(visibleRange.start, visibleRange.end);
     }, [filteredCities, visibleRange]);
 
-    // Handle scroll to load more cities
     const handleScroll = useCallback(
         (e: React.UIEvent<HTMLDivElement>) => {
             const target = e.currentTarget;
-            const scrollBottom =
-                target.scrollHeight - target.scrollTop - target.clientHeight;
-
-            // Load more when near bottom (within 100px)
+            const scrollBottom = target.scrollHeight - target.scrollTop - target.clientHeight;
             if (scrollBottom < 100 && visibleRange.end < filteredCities.length) {
-                const increment = debouncedSearchQuery.trim() ? 50 : 10; // Load more when searching
+                const increment = debouncedSearchQuery.trim() ? 50 : 10;
                 setVisibleRange((prev) => ({
                     start: prev.start,
                     end: Math.min(prev.end + increment, filteredCities.length),
@@ -271,16 +253,11 @@ export default function CitySelector({
     // Focus search input when dropdown opens and reset visible range
     useEffect(() => {
         if (isOpen) {
-            // Reset visible range when opening - show only 5 cities initially
             setVisibleRange({ start: 0, end: 5 });
-
-            // Update dropdown width to match parent container
             if (dropdownRef.current && dropdownContainerRef.current) {
                 const parentWidth = dropdownRef.current.offsetWidth;
                 dropdownContainerRef.current.style.width = `${parentWidth}px`;
             }
-
-            // Focus search input after dropdown is rendered
             requestAnimationFrame(() => {
                 setTimeout(() => {
                     searchInputRef.current?.focus();
@@ -309,7 +286,6 @@ export default function CitySelector({
         }
     };
 
-    // Show loading state only if no city is selected yet
     if (!selectedCity) {
         return (
             <div className={`relative ${className}`}>
@@ -317,7 +293,6 @@ export default function CitySelector({
             </div>
         );
     }
-
 
     return (
         <div className={`relative ${className}`} ref={dropdownRef}>
@@ -327,7 +302,6 @@ export default function CitySelector({
                 onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    // Open instantly without blocking
                     requestAnimationFrame(() => {
                         setIsOpen(!isOpen);
                     });
@@ -346,7 +320,6 @@ export default function CitySelector({
             {/* Dropdown */}
             {isOpen && (
                 <>
-                    {/* Backdrop to prevent clicks behind */}
                     <div
                         className="fixed inset-0 z-9998 bg-transparent"
                         onClick={() => {
@@ -359,7 +332,7 @@ export default function CitySelector({
                         className="absolute left-0 top-full z-9999 mt-1 rounded-xl bg-white shadow-2xl border-2 border-gray-100 max-h-[280px] overflow-hidden"
                         onClick={(e) => e.stopPropagation()}
                         style={{
-                            maxHeight: "280px",
+                            maxHeight: "212px",
                             width: dropdownRef.current?.offsetWidth || "200px",
                             minWidth: "200px",
                             transform: "translateY(0)",
@@ -398,6 +371,12 @@ export default function CitySelector({
                                             className="mx-4 my-2 h-4 rounded-md bg-gray-200 animate-pulse"
                                         />
                                     ))}
+                                    <div className="px-4 py-12 text-center">
+                                        <div className="inline-flex items-center gap-2 text-sm text-gray-500">
+                                            <div className="h-4 w-4 border-2 border-[#1C4692] border-t-transparent rounded-full animate-spin"></div>
+                                            <div><Loader size={38} /></div>
+                                        </div>
+                                    </div>
                                 </div>
                             ) : filteredCities.length === 0 ? (
 

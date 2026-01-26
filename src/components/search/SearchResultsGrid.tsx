@@ -10,7 +10,6 @@ import { homeService, PaginationInfo, type Property } from "@/lib/api/services/h
 import { useRouter, useSearchParams } from "next/navigation";
 import SearchPropertyCard from "./SearchPropertyCard";
 import { getPropertyImages } from "@/lib/utils/getPropertyImages";
-import AuthModal from "@/components/auth/AuthModal";
 import { useCompare } from "@/contexts/CompareContext";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { Slider } from "../ui/slider";
@@ -20,12 +19,12 @@ export default function SearchResultsGrid() {
   const [selectedCity, setSelectedCity] = useState("India, Delhi");
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [sortBy, setSortBy] = useState("New Added");
+  const [sortBy, setSortBy] = useState("newAdded");
+
   const [selectedBhk, setSelectedBhk] = useState("2.5 BHK");
   const [selectedPossession, setSelectedPossession] = useState("Ready to Move");
   const [results, setResults] = useState<Property[]>([]);
-  const [paginationData, setPaginationData] = useState<PaginationInfo | null>(
-    null,);
+  const [paginationData, setPaginationData] = useState<PaginationInfo | null>(null);
   const searchParams = useSearchParams();
   const { clearAndAddToCompare } = useCompare();
   const { checkAuth } = useAuthContext();
@@ -44,7 +43,6 @@ export default function SearchResultsGrid() {
   const [bhkOpen, setBhkOpen] = useState(false);
   const [areaOpen, setAreaOpen] = useState(false);
   const [possessionOpen, setPossessionOpen] = useState(false);
-
 
   const [priceRange, setPriceRange] = useState<[number, number]>([30, 100]);
   const [areaRange, setAreaRange] = useState<[number, number]>([400, 5000]);
@@ -107,7 +105,6 @@ export default function SearchResultsGrid() {
 
   const handleCityChange = (cityValue: string) => {
     setSelectedCity(cityValue);
-    console.log("Selected city:", cityValue);
   };
 
   const handleSearch = () => {
@@ -214,6 +211,13 @@ export default function SearchResultsGrid() {
   };
 
   const filterBtnClass = `flex items-center justify-between gap-2 bg-[#EEF4FF] text-[#7B7B7B] rounded-[15px] px-3 py-[17px] text-[14px] font-medium`;
+
+  const sortLabelMap: Record<string, string> = {
+    newAdded: "New Added",
+    oldest: "Oldest",
+    priceLow: "Price: Low to High",
+    priceHigh: "Price: High to Low",
+  };
 
   return (
     <>
@@ -385,19 +389,19 @@ export default function SearchResultsGrid() {
 
             <DropdownMenu>
               <DropdownMenuTrigger className="bg-[#F2F6FF] rounded-[10px] py-2.5 px-[15px]">
-                <span className="text-[#000000] text-[16px] font-medium">Sort by:</span> <span className="text-[#555555] text-[16px] font-medium">{sortBy}</span>
+                <span className="text-[#000000] text-[16px] font-medium">Sort by:</span> <span className="text-[#555555] text-[16px] font-medium"> {sortLabelMap[sortBy]}</span>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => setSortBy("New Added")}>
+                <DropdownMenuItem onClick={() => setSortBy("newAdded")}>
                   New Added
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortBy("Oldest")}>
+                <DropdownMenuItem onClick={() => setSortBy("oldest")}>
                   Oldest
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortBy("Price: Low to High")}>
+                <DropdownMenuItem onClick={() => setSortBy("priceLow")}>
                   Price: Low to High
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortBy("Price: High to Low")}>
+                <DropdownMenuItem onClick={() => setSortBy("priceHigh")}>
                   Price: High to Low
                 </DropdownMenuItem>
               </DropdownMenuContent>

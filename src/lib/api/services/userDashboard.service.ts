@@ -2,7 +2,6 @@ import { apiClient } from "../client";
 import { API_ENDPOINTS } from "../config";
 import type { ApiResponse } from "../types";
 
-
 type PaginationMeta = {
     total: number;
     page: number;
@@ -15,33 +14,26 @@ type PaginatedData<T> = {
     pagination: PaginationMeta;
 };
 
-
 export type PropertyApi = {
     id: string;
     projectName: string;
     location: string;
-
     images?: string[];
-
     openingLeft?: number;
     minGroupMembers?: number;
-
     developerPrice?: {
         formatted: string;
     };
-
     offerPrice?: {
         formatted: string;
     } | null;
-
     discount?: {
         percentageFormatted: string;
     } | null;
-
     lastDayToJoin?: string;
     lastViewedAt?: string;
-
     relationshipManagerPhone?: string;
+    isFavorite?: boolean;
 };
 
 export type SearchHistoryItem = {
@@ -72,8 +64,6 @@ export type PreferencesApi = {
 
 export type SavePreferencesPayload = PreferencesApi;
 
-
-
 export type GetProfileResponse = {
     user: {
         firstName: string;
@@ -90,7 +80,6 @@ export type GetProfileResponse = {
     };
 };
 
-
 export type UpdateProfilePayload = {
     firstName: string;
     lastName: string;
@@ -104,7 +93,6 @@ export type UpdateProfilePayload = {
     country: string;
 };
 
-
 export type VisitedPropertyItem = {
     property: PropertyApi;
     lastViewedAt?: string;
@@ -115,28 +103,19 @@ export type VisitedPropertiesResponse = {
     completed: VisitedPropertyItem[];
 };
 
-
 export const userDashboardService = {
-    //    getVisitedProperties: (): Promise<ApiResponse<PaginatedData<PropertyApi>>> =>
-    //   apiClient.get(API_ENDPOINTS.USER_DASHBOARD.VISITED_PROPERTIES),
-
-
     getVisitedProperties: (): Promise<ApiResponse<VisitedPropertiesResponse>> =>
         apiClient.get(API_ENDPOINTS.USER_DASHBOARD.VISITED_PROPERTIES),
-
 
     getViewedProperties: (): Promise<ApiResponse<PropertyApi[]>> =>
         apiClient.get<PropertyApi[]>(
             API_ENDPOINTS.USER_DASHBOARD.VIEWED_PROPERTIES
         ),
 
-
     getFavoriteProperties: (): Promise<ApiResponse<PropertyApi[]>> =>
         apiClient.get<PropertyApi[]>(
             API_ENDPOINTS.USER_DASHBOARD.FAVORITE_PROPERTIES
         ),
-
-
 
     getDashboard: (): Promise<ApiResponse<any>> => {
         return apiClient.get(API_ENDPOINTS.USER_DASHBOARD.DASHBOARD);
@@ -144,7 +123,6 @@ export const userDashboardService = {
 
     getSearchHistory: (): Promise<ApiResponse<SearchHistoryGroup[]>> =>
         apiClient.get(API_ENDPOINTS.USER_DASHBOARD.SEARCH_HISTORY),
-
 
     getPreferences: (): Promise<ApiResponse<PreferencesApi>> =>
         apiClient.get(API_ENDPOINTS.USER_DASHBOARD.GET_PREFERENCES),
@@ -157,6 +135,5 @@ export const userDashboardService = {
 
     updateUserProfile: (data: UpdateProfilePayload) =>
         apiClient.put(API_ENDPOINTS.USER_DASHBOARD.UPDATE_PROFILE, data),
-
 
 };

@@ -30,7 +30,6 @@ export default function Page() {
         page,
         limit: LIMIT,
       });
-      console.log("response", response);
       if (response.success) {
         // The API returns data as an array directly, and pagination at the root level
         const blogsArray = Array.isArray(response.data) ? response.data : [];

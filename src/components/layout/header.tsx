@@ -2,21 +2,14 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Logo from "@/assets/logo.svg";
 import Image from "next/image";
 import { useAuthContext } from "@/contexts/AuthContext";
 import AuthModal from "@/components/auth/AuthModal";
 import { IoPerson, IoChevronDown } from "react-icons/io5";
 import { HiOutlineMenu } from "react-icons/hi";
-import {
-  Building2,
-  Globe,
-  HeartIcon,
-  LucideCircleUserRound,
-  Search,
-  SlidersHorizontal,
-} from "lucide-react";
+import { LucideCircleUserRound } from "lucide-react";
 import CompareOverlay from "../home/compare/CompareOverlay";
 
 const navLinks = [
@@ -27,6 +20,54 @@ const navLinks = [
   { label: "Contact Us", href: "/contact" },
 ];
 
+const profileMenuItems: {
+  key: MenuIconKey;
+  label: string;
+  href: string;
+}[] = [
+    {
+      key: "properties",
+      label: "My Properties",
+      href: "/dashboard/viewed-properties",
+    },
+    {
+      key: "favorite",
+      label: "My Favorite",
+      href: "/dashboard/favorites",
+    },
+    {
+      key: "visits",
+      label: "Site visits",
+      href: "/dashboard/site-visits",
+    },
+    {
+      key: "compare",
+      label: "Compare",
+      href: "/compare",
+    },
+    {
+      key: "searches",
+      label: "My Searches",
+      href: "/dashboard/searches",
+    },
+    {
+      key: "preference",
+      label: "My Preference",
+      href: "/dashboard/preferences",
+    },
+  ];
+
+const menuIcons = {
+  properties: "/images/properties.svg",
+  favorite: "/images/fav.svg",
+  visits: "/images/siteVisit.svg",
+  compare: "/images/convert.svg",
+  searches: "/images/mySearch.svg",
+  preference: "/images/myPreference.svg",
+} as const;
+
+type MenuIconKey = keyof typeof menuIcons;
+
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
@@ -36,10 +77,7 @@ export default function Header() {
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showCompare, setShowCompare] = useState(false);
-
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname?.startsWith(href);
-
+  const isActive = (href: string) => href === "/" ? pathname === "/" : pathname?.startsWith(href);
   const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleOpenCompare = () => {
@@ -55,6 +93,14 @@ export default function Header() {
       setShowCompare(false);
     }, 200);
   };
+
+  useEffect(() => {
+    const openAuth = () => setShowAuthModal(true);
+
+    window.addEventListener("open-auth-modal", openAuth);
+    return () => window.removeEventListener("open-auth-modal", openAuth);
+  }, []);
+
 
   return (
     <header className="w-full bg-white relative z-55">
@@ -78,16 +124,11 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative pb-1 text-sm font-normal transition-colors xl:text-base ${
-                    isActive(link.href)
-                      ? "font-semibold text-[#1C4692]"
-                      : "hover:text-[#1C4692]"
-                  }`}
-                >
+                  className={`relative pb-1 text-sm font-normal transition-colors xl:text-base ${isActive(link.href)
+                    ? "font-semibold text-[#1C4692]"
+                    : "hover:text-[#1C4692]"
+                    }`}>
                   {link.label}
-                  {/* {isActive(link.href) && (
-                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#1C4692]" />
-                  )} */}
                 </Link>
               ))}
             </nav>
@@ -156,9 +197,9 @@ export default function Header() {
                       className="fixed inset-0 z-40"
                       onClick={() => setProfileDropdownOpen(false)}
                     />
-                    <div className="absolute right-0 top-14 max-sm:fixed max-sm:inset-x-3 max-sm:top-16 z-50 w-[280px] max-sm:w-auto rounded-[24px] bg-white shadow-[0_20px_40px_rgba(28,70,146,0.15)]">
+                    <div className="absolute right-0 top-14 z-[200] w-[280px] rounded-2xl bg-white shadow-xl ring-1 ring-black/5">
                       {/* Profile Header */}
-                      <div className="flex items-center gap-4 px-5 py-5 border-b border-gray-100">
+                      <div className="flex items-center gap-3 px-4 py-4 border-b border-[#E3E3E3]">
                         <div className="h-10 w-10 rounded-full bg-gray-200 overflow-hidden">
                           {user?.profileImage ? (
                             <Image
@@ -173,76 +214,34 @@ export default function Header() {
                             <LucideCircleUserRound className="h-full w-full p-2 text-gray-500" />
                           )}
                         </div>
-
                         <div>
-                          <p className="text-sm font-semibold text-gray-900">
+                          <p className="text-[16px] font-bold text-[#141414]">
                             {user?.name || "User"}
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-[12px] font-medium text-[#828282]">
                             {user?.countryCode} {user?.phoneNumber}
                           </p>
                         </div>
                       </div>
 
                       {/* Menu Items */}
-                      <div className="px-3 py-4 space-y-3 max-sm:px-4">
-                        {[
-                          {
-                            label: "My Properties",
-                            href: "/dashboard/viewed-properties",
-                            icon: "/images/building.svg",
-                          },
-                          {
-                            label: "My Favorite",
-                            href: "/dashboard/favorites",
-                            icon: "/images/heart.svg",
-                          },
-                          {
-                            label: "Site visits",
-                            href: "/dashboard/site-visits",
-                            icon: "/images/global.svg",
-                          },
-                          {
-                            label: "Compare",
-                            href: "/compare",
-                            icon: "compare",
-                          },
-                          {
-                            label: "My Searches",
-                            href: "/dashboard/searches",
-                            icon: "/images/global-search.svg",
-                          },
-                          {
-                            label: "My Preference",
-                            href: "/dashboard/preferences",
-                            icon: "/images/pet.svg",
-                          },
-                        ].map((item) => {
+                      <div className="px-3 py-2 space-y-2">
+                        {profileMenuItems.map((item) => {
                           return (
                             <Link
                               key={item.label}
                               href={item.href}
                               onClick={() => setProfileDropdownOpen(false)}
-                              className=" flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-gray-800 bg-[#f6faffb4] transition"
-                            >
-                              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F1F5FF]">
-                                {item.icon === "compare" ? (
-                                  <Image
-                                    src="/images/convert.svg"
-                                    alt="Compare"
-                                    width={16}
-                                    height={16}
-                                  />
-                                ) : (
-                                  <Image
-                                    src={item.icon}
-                                    alt={item.label}
-                                    width={18}
-                                    height={18}
-                                  />
-                                )}
+                              className="flex items-center gap-3 rounded-xl px-3 py-2 text-[14px] font-semibold text-[#141414] bg-[#F8FBFF] transition">
+                              {/* Icon container */}
+                              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white ">
+                                <Image
+                                  src={menuIcons[item.key]}
+                                  alt={item.label}
+                                  width={20}
+                                  height={20}
+                                />
                               </div>
-
                               {item.label}
                             </Link>
                           );
@@ -250,15 +249,14 @@ export default function Header() {
                       </div>
 
                       {/* Logout */}
-                      <div className="px-4 pb-4">
+                      <div className="px-3 pb-4">
                         <button
                           onClick={() => {
                             logout();
                             setProfileDropdownOpen(false);
                             router.push("/");
                           }}
-                          className="w-full rounded-xl bg-red-500 py-2.5 text-sm font-semibold text-white hover:bg-red-600"
-                        >
+                          className="w-full rounded-[10px] bg-[#F00004] py-2.5 text-[14px] font-medium text-[#FFFFFF] shadow-[0px_0px_16px_0px_#B3C0E752]">
                           Log out
                         </button>
                       </div>
@@ -270,27 +268,25 @@ export default function Header() {
               !isDashboard && (
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="rounded-full bg-[#1C4692] px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#1c4692e6] lg:px-7.5 lg:py-2.5 lg:text-base"
-                >
+                  className="rounded-full bg-[#1C4692] px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#1c4692e6] lg:px-7.5 lg:py-2.5 lg:text-base">
                   Sign In
                 </button>
               )
             )}
 
             {/* Mobile Menu */}
-            {/* <button
+            <button
               type="button"
               aria-label="Toggle navigation"
               onClick={() => setOpen((o) => !o)}
-              className="inline-flex items-center justify-center rounded-md p-2 text-gray-600 lg:hidden"
-            >
+              className="inline-flex items-center justify-center rounded-md p-2 text-gray-600 lg:hidden">
               <HiOutlineMenu className="h-6 w-6" />
-            </button> */}
+            </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
-        {/* {open && !isDashboard && (
+        {open && !isDashboard && (
           <div className="border-t border-gray-100 bg-white pb-4 lg:hidden">
             <nav className="flex flex-col px-4 pt-3 text-gray-700">
               {navLinks.map((link) => (
@@ -298,31 +294,17 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`py-2.5 text-sm ${
-                    isActive(link.href) ? "font-semibold text-[#1C4692]" : ""
-                  }`}
-                >
+                  className={`py-2.5 text-sm ${isActive(link.href) ? "font-semibold text-[#1C4692]" : ""}`}>
                   {link.label}
                 </Link>
               ))}
 
               <div className="mt-4 flex items-center gap-3 border-t border-gray-100 pt-4">
-                {!isDashboard && (
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
-                    <Image
-                      src="/images/convertshape.svg"
-                      alt="Compare"
-                      width={18}
-                      height={18}
-                    />
-                  </div>
-                )}
                 {isAuthenticated ? (
                   <Link
                     href="/dashboard/profile"
                     onClick={() => setOpen(false)}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-4 py-2.5 text-sm font-semibold text-white"
-                  >
+                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-4 py-2.5 text-sm font-semibold text-white">
                     <IoPerson className="h-5 w-5" />
                     Profile
                   </Link>
@@ -332,8 +314,7 @@ export default function Header() {
                       setOpen(false);
                       setShowAuthModal(true);
                     }}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-4 py-2.5 text-sm font-semibold text-white"
-                  >
+                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-4 py-2.5 text-sm font-semibold text-white">
                     <IoPerson className="h-5 w-5" />
                     Sign In
                   </button>
@@ -341,7 +322,7 @@ export default function Header() {
               </div>
             </nav>
           </div>
-        )} */}
+        )}
       </div>
 
       {/* Auth Modal */}

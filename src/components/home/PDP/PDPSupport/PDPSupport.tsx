@@ -166,17 +166,19 @@ export default function PDPSupport({ relationshipManager, propertyId }: PDPSuppo
         <div className="ml-auto flex items-center gap-1">
           <a
             href={`tel:${relationshipManager.phone?.replace(/[^\d+]/g, "")}`}
-            onClick={(e) => e.stopPropagation()}
-            className="relative z-[100] inline-flex items-center gap-1 rounded-full bg-[#66AE39] text-white px-2.5 py-2 text-xs font-medium hover:bg-[#5a9a32] transition-colors shadow-sm"
-          >
+            onClick={(e) => {
+              e.stopPropagation();
+              handleCall()
+            }
+            }
+            className="relative z-[100] inline-flex items-center gap-1 rounded-full bg-[#66AE39] text-white px-2.5 py-2 text-xs font-medium hover:bg-[#5a9a32] transition-colors shadow-sm">
             <FaPhoneAlt className="h-3.5 w-3.5" />
             <span>Call</span>
           </a>
 
           <button
             onClick={handleEmail}
-            className="inline-flex items-center gap-1 rounded-full text-[#000000] px-2.5 py-2 text-xs font-medium  transition-colors border border-[#F3F3F3]"
-          >
+            className="inline-flex items-center gap-1 rounded-full text-[#000000] px-2.5 py-2 text-xs font-medium  transition-colors border border-[#F3F3F3]">
             <HiMail className="h-3.5 w-3.5" />
             <span>Email</span>
           </button>
@@ -190,8 +192,7 @@ export default function PDPSupport({ relationshipManager, propertyId }: PDPSuppo
             setStep("date");
           }}
           disabled={isBooking}
-          className="w-full rounded-[110px] bg-[#1C4692] text-white py-3 px-6 text-sm font-semibold hover:bg-[#1a3d7a] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
-        >
+          className="w-full rounded-[110px] bg-[#1C4692] text-white py-3 px-6 text-sm font-semibold hover:bg-[#1a3d7a] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg">
           {isBooking ? "Booking..." : "Book A Visit"}
         </button>
 
@@ -206,8 +207,7 @@ export default function PDPSupport({ relationshipManager, propertyId }: PDPSuppo
               </p>
               <button
                 onClick={() => setOpenVisit(false)}
-                className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center"
-              >
+                className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
                 ✕
               </button>
             </div>
@@ -274,8 +274,7 @@ export default function PDPSupport({ relationshipManager, propertyId }: PDPSuppo
                             : isSelected
                               ? "text-[#1C4692] border-[#1C4692] scale-[1.05]"
                               : "border-transparent text-gray-700 hover:border-[#1C4692] hover:text-[#1C4692]"
-                          }`}
-                      >
+                          }`}>
                         {day}
                       </button>
                     );

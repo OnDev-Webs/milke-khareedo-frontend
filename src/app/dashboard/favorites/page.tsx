@@ -21,14 +21,21 @@ export default function MyFavoritePage() {
 
     const {
         handleFavoriteClick,
+        handleCompareClick,
         handleShareClick,
         favoriteStates,
         favoriteLoading,
     } = usePropertyActions();
 
-   const favorites = (data ?? []).filter(
-    (p) => favoriteStates[p.id] === true
-);
+    const favorites = data ?? [];
+    useEffect(() => {
+        if (data && data.length) {
+            data.forEach((p) => {
+                favoriteStates[p.id] = true;
+            });
+        }
+    }, [data]);
+
 
 
     const mappedProperties = useMemo(() => {
@@ -54,7 +61,7 @@ export default function MyFavoritePage() {
     if (loading) {
         return (
             <div className="rounded-[24px] bg-white px-6 py-10 shadow sm:px-10">
-                Loading favorites...
+                <Loader size={38} />
             </div>
         );
     }
@@ -77,6 +84,7 @@ export default function MyFavoritePage() {
                 <PropertyGrid
                     properties={mappedProperties}
                     onFavoriteClick={handleFavoriteClick}
+                    onCompareClick={handleCompareClick}
                     onShareClick={handleShareClick}
                     favoriteStates={favoriteStates}
                     favoriteLoading={favoriteLoading}
@@ -87,6 +95,7 @@ export default function MyFavoritePage() {
                 <PropertyGrid
                     properties={mappedProperties}
                     onFavoriteClick={handleFavoriteClick}
+                    onCompareClick={handleCompareClick}
                     onShareClick={handleShareClick}
                     favoriteStates={favoriteStates}
                     favoriteLoading={favoriteLoading}

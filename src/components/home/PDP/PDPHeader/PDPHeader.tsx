@@ -56,7 +56,7 @@ export default function PDPHeader({
     }
   };
 
-  const discountAmount = bookingDeadlinePrice ? bookingDeadlinePrice.value - startingPrice.value: 0;
+  const discountAmount = bookingDeadlinePrice ? bookingDeadlinePrice.value - startingPrice.value : 0;
 
   const discountFormatted =
     discountAmount >= 10000000
@@ -73,6 +73,28 @@ export default function PDPHeader({
 
   const developerPriceNumber = typeof developerPrice === "string" ? Number(developerPrice.replace(/[₹,\sA-Za-z]/g, "")) : developerPrice;
 
+  const formatLocationForUI = (fullLocation?: string) => {
+    if (!fullLocation) return "";
+    const parts = fullLocation
+      .split(",")
+      .map(p => p.trim())
+      .filter(Boolean);
+
+    if (parts.length === 0) return "";
+
+    const withoutCountry = parts.filter(p => p.toLowerCase() !== "india");
+
+    if (withoutCountry.length >= 3) {
+      const state = withoutCountry[withoutCountry.length - 1];
+      const city = withoutCountry[withoutCountry.length - 2];
+      const area = withoutCountry[withoutCountry.length - 3];
+
+      return `${area}, ${city}, ${state}`;
+    }
+
+    return withoutCountry.join(", ");
+  };
+
   return (
     <>
       <section className="py-6 lg:py-8">
@@ -80,13 +102,11 @@ export default function PDPHeader({
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-4 lg:gap-6">
 
             <div className="w-full max-w-[600px] flex flex-col gap-1.5">
-              <h1 className="text-[#1C4692] font-bold font-['Figtree']
-                text-[28px] md:text-[32px] lg:text-[40px] leading-tight">
+              <h1 className="text-[#1C4692] font-bold font-['Figtree'] text-[30px] md:text-[34px] lg:text-[45px] leading-tight">
                 {projectName}
               </h1>
-              <p className="text-[#000000] font-normal font-['Figtree']
-                text-[16px] md:text-[18px] lg:text-[20px]">
-                {location}
+              <p className="text-[#000000] font-normal font-['Figtree'] text-[16px] md:text-[18px] lg:text-[22px]">
+                {formatLocationForUI(location)}
               </p>
             </div>
 
@@ -125,7 +145,6 @@ export default function PDPHeader({
                   Get upto {discountPercentage} discount on this property
                 </span>
               </div>
-
             </div>
           </div>
         </div>

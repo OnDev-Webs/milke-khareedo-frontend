@@ -1,11 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { Heart, Share2, Phone, Repeat } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { IoChevronBack, IoChevronForward, IoHeart, IoHeartOutline } from "react-icons/io5";
-import { useState } from "react";
-import { FaPhoneAlt, FaShare } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 type PropertyCardProps = {
     id: string;
@@ -20,11 +18,17 @@ type PropertyCardProps = {
     discountPercentage?: string;
     lastViewedAt?: string;
     lastDayToJoin?: string;
-
     onFavoriteClick?: (property: {
         id: string;
         projectName: string;
         location: string;
+    }) => void;
+
+    onCompareClick?: (property: {
+        id: string;
+        projectName: string;
+        location: string;
+        images?: string[];
     }) => void;
 
     onShareClick?: (property: {
@@ -32,12 +36,9 @@ type PropertyCardProps = {
         projectName: string;
         location: string;
     }) => void;
-
     isFavorite?: boolean;
     isFavoriteLoading?: boolean;
-
 };
-
 
 export default function PropertyCard({
     id,
@@ -53,25 +54,59 @@ export default function PropertyCard({
     lastViewedAt,
     lastDayToJoin,
     onFavoriteClick,
+    onCompareClick,
     onShareClick,
     isFavorite = false,
     isFavoriteLoading = false,
 }: PropertyCardProps) {
-
     const router = useRouter();
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [localFavorite, setLocalFavorite] = useState(isFavorite);
     const hasMultipleImages = images.length > 1;
-    const actionBtn =
-        "flex h-9 w-9 items-center font-black justify-center rounded-full bg-white shadow-md";
+    const actionBtn = "flex h-9 w-9 items-center font-black justify-center rounded-full bg-white shadow-md";
 
+    useEffect(() => {
+        setLocalFavorite(isFavorite);
+    }, [isFavorite])
+
+    function formatLocationAreaCity(fullLocation?: string) {
+        if (!fullLocation || typeof fullLocation !== "string") return "";
+        const parts = fullLocation
+            .split(",")
+            .map(p => p.trim())
+            .filter(Boolean);
+        if (parts.length === 0) return "";
+        if (parts[parts.length - 1].toLowerCase() === "india") {
+            parts.pop();
+        }
+        let area = "";
+        let city = "";
+        if (parts.length >= 2) {
+            city = parts[parts.length - 2];
+        } else {
+            city = parts[parts.length - 1];
+        }
+        const roadKeywords = ["road", "rd", "street", "st", "lane", "ln"];
+        for (let part of parts) {
+            const lower = part.toLowerCase();
+            const isRoad = roadKeywords.some(k => lower.includes(k));
+            const isNumber = /^\d+/.test(part);
+            if (!isRoad && !isNumber) {
+                area = part;
+                break;
+            }
+        }
+        if (!area) area = parts[0];
+        if (area.toLowerCase() === city.toLowerCase()) {
+            return area;
+        }
+        return `${area} , | ${city}`;
+    }
+
+    const hasDiscount = showDiscount && discountPercentage && discountPercentage !== "0%" && discountPercentage !== "0.00%";
 
     return (
-        <div
-            onClick={() => router.push(`/property-details/${id}`)}
-            className="group flex flex-col rounded-4xl bg-white p-4 shadow-sm cursor-pointer"
-        >
-
-
+        <div onClick={() => router.push(`/property-details/${id}`)} className="group flex flex-col rounded-4xl bg-white p-4 shadow-sm cursor-pointer">
             <div className="relative aspect-[5/3.5] w-full overflow-hidden rounded-3xl">
                 <Image
                     src={images[currentIndex]}
@@ -85,23 +120,10 @@ export default function PropertyCard({
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                setCurrentIndex(
-                                    (prev) => (prev - 1 + images.length) % images.length
-                                );
+                                setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
                             }}
-                            className="
-        absolute left-4 bottom-6
-        h-9 w-9 flex items-center justify-center
-        rounded-full bg-white/95 text-gray-700
-        shadow-lg border border-gray-200
-        transition-all duration-300
-        opacity-0 scale-90 pointer-events-none
-        group-hover:opacity-100
-        group-hover:scale-100
-        group-hover:pointer-events-auto
-      "
-                            aria-label="Previous image"
-                        >
+                            className="absolute left-4 bottom-6 h-9 w-9 flex items-center justify-center rounded-full bg-white/95 text-gray-700 shadow-lg border border-gray-200 transition-all duration-300 opacity-0 scale-90 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto"
+                            aria-label="Previous image">
                             <IoChevronBack className="h-5 w-5" />
                         </button>
 
@@ -109,82 +131,56 @@ export default function PropertyCard({
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                setCurrentIndex(
-                                    (prev) => (prev + 1) % images.length
-                                );
+                                setCurrentIndex((prev) => (prev + 1) % images.length);
                             }}
-                            className="
-        absolute right-4 bottom-6
-        h-9 w-9 flex items-center justify-center
-        rounded-full bg-white/95 text-gray-700
-        shadow-lg border border-gray-200
-        transition-all duration-300
-        opacity-0 scale-90 pointer-events-none
-        group-hover:opacity-100
-        group-hover:scale-100
-        group-hover:pointer-events-auto
-      "
-                            aria-label="Next image"
-                        >
+                            className="absolute right-4 bottom-6 h-9 w-9 flex items-center justify-center rounded-full bg-white/95 text-gray-700 shadow-lg border border-gray-200 transition-all duration-300 opacity-0 scale-90 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto"
+                            aria-label="Next image">
                             <IoChevronForward className="h-5 w-5" />
                         </button>
                     </>
                 )}
 
-
                 {lastDayToJoin && (
-                    <span className="
-  absolute left-3 top-3
-  rounded-lg bg-white/95
-  px-3 py-1.5
-  text-xs font-medium text-black
-  shadow-md
-">
+                    <span
+                        className="absolute left-3 top-3 rounded-lg bg-white/70 backdrop-blur-[114px] px-3 py-1.5 text-xs font-medium text-black shadow-md">
                         {lastDayToJoin}
                     </span>
-
                 )}
 
-
-
-                <div
-                    className="
-    absolute right-3 top-3 z-20
-    flex flex-col gap-2
-    opacity-0 -translate-y-1.5 pointer-events-none
-    transition-all duration-300
-    group-hover:opacity-100
-    group-hover:translate-y-0
-    group-hover:pointer-events-auto
-  "
-                >
-
-
+                <div className="absolute right-3 top-3 z-20 flex flex-col gap-2 opacity-0 -translate-y-1.5 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto">
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setLocalFavorite((prev) => !prev);
+                            onFavoriteClick?.({ id, projectName: title, location });
+                        }}
+                        disabled={isFavoriteLoading}
+                        className={actionBtn}>
+                        {localFavorite ? (
+                            <IoHeart size={18} className="text-red-500" />
+                        ) : (
+                            <IoHeartOutline size={18} className="text-black" />
+                        )}
+                    </button>
 
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
-                            onFavoriteClick?.({ id, projectName: title, location });
+                            onCompareClick?.({
+                                id,
+                                projectName: title,
+                                location,
+                                images,
+                            });
                         }}
-                        disabled={isFavoriteLoading}
-                        className={actionBtn}
-                    >
-                        <IoHeart
-                            size={16}
-                            fill={isFavorite ? "red" : "none"}
-                            stroke={isFavorite ? "red" : "black"}
-                            strokeWidth={32}
-                        />
-                    </button>
-
-
-
-                    <button className={actionBtn} aria-label="Add to compare">
+                        className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-white/90 text-gray-700 hover:bg-white shadow-md transition-colors"
+                        aria-label="Add to compare">
                         <Image
                             src="/images/convert.svg"
                             alt="Compare"
-                            width={16}
-                            height={16}
+                            width={20}
+                            height={20}
+                            className="h-5 w-5"
                         />
                     </button>
 
@@ -193,8 +189,7 @@ export default function PropertyCard({
                             e.stopPropagation();
                             onShareClick?.({ id, projectName: title, location });
                         }}
-                        className={actionBtn}
-                    >
+                        className={actionBtn}>
                         <Image
                             src="/images/Share.svg"
                             alt="Share"
@@ -202,43 +197,24 @@ export default function PropertyCard({
                             height={16}
                         />
                     </button>
-
-
                 </div>
 
-                <div
-                    className="
-    absolute bottom-3 left-1/2 -translate-x-1/2
-    flex gap-1.5 z-20
-    opacity-0 pointer-events-none
-    transition-opacity duration-300
-    group-hover:opacity-100
-    group-hover:pointer-events-auto
-  "
-                >
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20 opacity-0 pointer-events-none transition-opacity duration-300 group-hover:opacity-100 group-hover:pointer-events-auto">
                     {images.map((_, index) => (
                         <span
                             key={index}
-                            className={`
-      h-1.5 w-1.5 rounded-full
-      ${index === currentIndex ? "bg-white" : "bg-white/50"}
-    `}
+                            className={`h-1.5 w-1.5 rounded-full ${index === currentIndex ? "bg-white" : "bg-white/50"}`}
                         />
                     ))}
-
                 </div>
-
             </div>
 
             <div className="mt-4 flex flex-col gap-3">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h3 className="text-2xl font-semibold">{title}</h3>
-                        <p
-                            className="text-sm text-gray-600 truncate max-w-[220px]"
-                            title={location}
-                        >
-                            {location}
+                        <h3 className="text-2xl font-semibold text-[#000000]  line-clamp-1 min-h-[30px] leading-tight">{title}</h3>
+                        <p className="text-[15px] text-[#828282] truncate max-w-[220px]" title={location}>
+                            {formatLocationAreaCity(location)}
                         </p>
                     </div>
 
@@ -258,46 +234,43 @@ export default function PropertyCard({
                     <StatBox label="Opening" value={`${openingLeft} Left`} />
                 </div>
 
-                <div className="rounded-2xl bg-[#F7FAFF] p-4">
+                <div className="rounded-2xl bg-[#F8FBFF] p-4">
                     <div className="flex items-start justify-between">
                         <div>
-                            <p className="text-sm text-gray-900">Target Price</p>
-                            <p className="text-lg font-extrabold text-gray-900">
-                                {targetPrice}
-                            </p>
+                            <p className="text-[14px] text-[#000000]">Target Price</p>
+                            <p className="text-[20px] font-extrabold text-[#000000]">{targetPrice}</p>
                         </div>
 
                         <div className="text-right">
-                            <p className="text-sm text-gray-900">Developer price</p>
-                            <p className="text-md text-gray-700 line-through">
-                                {developerPrice}
-                            </p>
+                            <p className="text-[14px] text-[#000000]">Developer price</p>
+                            <p className="text-[17px] text-[#4B4B4B] line-through">{developerPrice}</p>
                         </div>
                     </div>
 
-                    <div className="mt-2 flex items-center gap-2 rounded-2xl bg-white px-3 py-2 text-sm text-[#66AE39]">
-                        <Image
-                            src="/images/Frame.svg"
-                            alt="Compare"
-                            width={12}
-                            height={12}
-                            className="h-4.5 w-5"
-                        />
-                        <span>Up to {discountPercentage} off</span>
-                    </div>
-
-                    {showDiscount ? (
-                        <p className="mt-1 text-sm text-red-500">
-                            Get up to {discountPercentage} discount on this property
-                        </p>
-                    ) : (
-                        lastViewedAt && (
-                            <p className="mt-3 text-xs text-red-500">
-                                Last viewed on {new Date(lastViewedAt).toLocaleString()}
-                            </p>
-                        )
+                    {hasDiscount && (
+                        <div className="mt-2 flex items-center gap-2 rounded-2xl bg-white py-2 text-sm text-[#66AE39]">
+                            <Image
+                                src="/images/Frame.svg"
+                                alt="Discount"
+                                width={12}
+                                height={12}
+                                className="h-4.5 w-5"
+                            />
+                            <span>Up to {discountPercentage} off</span>
+                        </div>
                     )}
 
+                    <div className="mt-1 min-h-[20px]">
+                        {hasDiscount ? (
+                            <p className="text-[14px] text-[#FF3232]">
+                                Get up to {discountPercentage} discount on this property
+                            </p>
+                        ) : lastViewedAt ? (
+                            <p className="text-xs text-red-500">
+                                Last viewed on {new Date(lastViewedAt).toLocaleString()}
+                            </p>
+                        ) : null}
+                    </div>
                 </div>
 
                 <button
@@ -310,31 +283,23 @@ export default function PropertyCard({
     );
 }
 
-function IconButton({ icon }: { icon: React.ReactNode }) {
-    return <button className="rounded-full bg-white p-2 shadow">{icon}</button>;
-}
-
 type StatBoxProps = {
     label: string;
     value: string;
     className?: string;
 };
 
-function StatBox({ label, value, className = "bg-[#F7FAFF]" }: StatBoxProps) {
-    const [number, text] = value.split(" ");
+function StatBox({ label, value, className = "bg-[#F2F6FF]" }: StatBoxProps) {
+    const [rawNumber, text] = value.split(" ");
+    const formattedNumber = rawNumber.length === 1 ? rawNumber.padStart(2, "0") : rawNumber;
 
     return (
         <div className={`rounded-xl px-4 py-3 text-center ${className}`}>
-            <p className="text-md font-semibold text-gray-900">{label}</p>
-
+            <p className="text-[18px] font-semibold text-[#000000]">{label}</p>
             <p className="mt-1 text-sm">
-                <span className="font-bold text-xl text-[#1C4692]">{number}</span>{" "}
-                <span className="text-gray-600 ">{text}</span>
+                <span className="font-bold text-xl text-[#1C4692]">{formattedNumber}</span>{" "}
+                <span className="text-[#525252] text-[14px]">{text}</span>
             </p>
         </div>
     );
 }
-
-
-
-

@@ -374,6 +374,21 @@ export interface BlogDetailResponse {
   data: BlogDetail;
 }
 
+export interface BlogComment {
+  _id: string;
+  content: string;
+  createdAt: string;
+  parentComment?: string | null;
+  author: {
+    id: string;
+    name: string;
+    profileImage?: string;
+  };
+  likedBy: string[];
+  replies?: BlogComment[];
+}
+
+
 /**
  * EMI Calculator API types
  */
@@ -626,35 +641,35 @@ export const homeService = {
   },
 
   searchProperties: async (params: {
-  city?: string;
-  searchText?: string;
-  priceMin?: string;
-  priceMax?: string;
-  bhk?: string;
-  projectStatus?: string;
-  sortBy?: string;
-  page?: number;
-  limit?: number;
-}): Promise<ApiResponse<SearchPropertiesResponse>> => {
-  const queryParams = new URLSearchParams();
+    city?: string;
+    searchText?: string;
+    priceMin?: string;
+    priceMax?: string;
+    bhk?: string;
+    projectStatus?: string;
+    sortBy?: string;
+    page?: number;
+    limit?: number;
+  }): Promise<ApiResponse<SearchPropertiesResponse>> => {
+    const queryParams = new URLSearchParams();
 
-  if (params.city) queryParams.append("city", params.city);
-  if (params.searchText) queryParams.append("searchText", params.searchText);
-  if (params.priceMin) queryParams.append("priceMin", params.priceMin);
-  if (params.priceMax) queryParams.append("priceMax", params.priceMax);
-  if (params.bhk) queryParams.append("bhk", params.bhk);
-  if (params.projectStatus)
-    queryParams.append("projectStatus", params.projectStatus);
-  if (params.sortBy) queryParams.append("sortBy", params.sortBy);
-  if (params.page) queryParams.append("page", params.page.toString());
-  if (params.limit) queryParams.append("limit", params.limit.toString());
+    if (params.city) queryParams.append("city", params.city);
+    if (params.searchText) queryParams.append("searchText", params.searchText);
+    if (params.priceMin) queryParams.append("priceMin", params.priceMin);
+    if (params.priceMax) queryParams.append("priceMax", params.priceMax);
+    if (params.bhk) queryParams.append("bhk", params.bhk);
+    if (params.projectStatus)
+      queryParams.append("projectStatus", params.projectStatus);
+    if (params.sortBy) queryParams.append("sortBy", params.sortBy);
+    if (params.page) queryParams.append("page", params.page.toString());
+    if (params.limit) queryParams.append("limit", params.limit.toString());
 
-  const endpoint = queryParams.toString()
-    ? `${API_ENDPOINTS.HOME.SEARCH_PROPERTIES}?${queryParams.toString()}`
-    : API_ENDPOINTS.HOME.SEARCH_PROPERTIES;
+    const endpoint = queryParams.toString()
+      ? `${API_ENDPOINTS.HOME.SEARCH_PROPERTIES}?${queryParams.toString()}`
+      : API_ENDPOINTS.HOME.SEARCH_PROPERTIES;
 
-  return apiClient.get<SearchPropertiesResponse>(endpoint);
-},
+    return apiClient.get<SearchPropertiesResponse>(endpoint);
+  },
 
   /**
    * Join group for a property
@@ -706,4 +721,41 @@ export const homeService = {
       `${API_ENDPOINTS.HOME.GET_BLOG_BY_ID}/${blogId}`,
     );
   },
+
+  // comment 
+
+  getBlogComments: async (
+    blogId: string
+  ): Promise<ApiResponse<BlogComment[]>> => {
+    return apiClient.get<BlogComment[]>(
+      API_ENDPOINTS.HOME.BLOG_COMMENTS(blogId)
+    );
+  },
+
+  addBlogComment: async (
+    blogId: string,
+    data: { content: string; parentComment?: string }
+  ): Promise<ApiResponse<BlogComment>> => {
+    return apiClient.post<BlogComment>(
+      API_ENDPOINTS.HOME.BLOG_COMMENTS(blogId),
+      data
+    );
+  },
+
+  toggleCommentLike: async (
+    commentId: string
+  ): Promise<
+    ApiResponse<{
+      liked: boolean;
+      likedBy: string[];
+      totalLikes: number;
+    }>
+  > => {
+    return apiClient.post<{
+      liked: boolean;
+      likedBy: string[];
+      totalLikes: number;
+    }>(API_ENDPOINTS.HOME.BLOG_COMMENT_LIKE(commentId));
+  },
+
 };

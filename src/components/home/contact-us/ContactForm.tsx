@@ -54,8 +54,6 @@ export default function ContactForm({ className, nameMode = "split" }: ContactFo
       lastName,
     };
 
-    console.log("FINAL PAYLOAD 👉", payload);
-
   }
 
   return (

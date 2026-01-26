@@ -11,7 +11,7 @@ export default function PDPHighLights({ highlights }: PDPHighLightsProps) {
   }
 
   return (
-    <section className="px-4">
+    <section className="px-4 pe-10 md:pe-0">
       <div className="mx-auto container">
         <div className="rounded-[20px] bg-white shadow-sm">
           <div className="rounded-t-2xl bg-[#EEF4FF] px-6 py-4">

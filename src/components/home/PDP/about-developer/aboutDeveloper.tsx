@@ -37,7 +37,7 @@ export default function PDPAboutDeveloper({ developer }: PDPAboutDeveloperProps)
 
   return (
     <section className="w-full px-6 py-6">
-      <div className="mx-auto container rounded-2xl bg-white shadow-sm">
+      <div className="max-w-6xl mx-auto container rounded-2xl bg-white shadow-sm">
         <div className="rounded-t-2xl bg-[#EEF4FF] px-6 py-3">
           <h3 className="font-semibold text-[#000000] text-[25px]">About Developer</h3>
         </div>
@@ -78,7 +78,7 @@ export default function PDPAboutDeveloper({ developer }: PDPAboutDeveloperProps)
                     {developer.yearsOfExperience}+
                   </span>
                 </div>
-                <span className="text-xl font-bold text-center">
+                <span className="text-lg font-semibold text-center">
                   Years of Experience
                 </span>
               </div>
@@ -89,7 +89,7 @@ export default function PDPAboutDeveloper({ developer }: PDPAboutDeveloperProps)
                     {developer.totalProjects}+
                   </span>
                 </div>
-                <span className="text-xl font-bold text-center">
+                <span className="text-xl font-semibold text-center">
                   Total projects
                 </span>
               </div>

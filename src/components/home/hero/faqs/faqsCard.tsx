@@ -21,7 +21,7 @@ export default function FAQSCard({ data }: Props) {
         onClick={() => setOpen(!open)}
       >
         <p
-          className="text-[#000] font-semibold text-[20px] md:text-[26px] leading-[100%]"
+          className="text-[#000] font-semibold text-[16px] md:text-[18px] leading-[100%]"
           style={{ fontWeight: "600" }}
         >
           {data?.title}
@@ -38,7 +38,7 @@ export default function FAQSCard({ data }: Props) {
 
       {open && (
         <div className="px-8 pb-6">
-          <p className="text-[#8C8C8C] font-medium text-[16px] md:text-[18px] leading-7">
+          <p className="text-[#8C8C8C] font-medium text-[14px] md:text-[16px] leading-7">
             {data?.desciption}
           </p>
         </div>

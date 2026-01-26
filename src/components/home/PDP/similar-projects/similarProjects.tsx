@@ -169,7 +169,7 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
   return (
     <>
       <section className="w-full bg-white py-10 px-10">
-        <div className="mx-auto container">
+        <div className="max-w-6xl mx-auto container">
           <div className="flex items-center justify-between px-4 md:px-2 gap-3">
             <h3 className="font-bold text-[18px] md:text-[35px] text-[#000000] whitespace-nowrap">
               Similar Projects

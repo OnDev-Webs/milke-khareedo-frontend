@@ -50,7 +50,7 @@ export default function PDPLayoutPlan({ configurations }: PDPLayoutPlanProps) {
 
   return (
     <section className="w-full px-6 py-8">
-      <div className="container mx-auto rounded-2xl bg-white shadow-sm">
+      <div className="container max-w-6xl mx-auto rounded-2xl bg-white shadow-sm">
 
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-t-2xl bg-[#EEF4FF] px-6 py-4">
           <h3 className="text-[25px] font-semibold text-black">

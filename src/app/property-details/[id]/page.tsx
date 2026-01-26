@@ -13,13 +13,21 @@ import PDPSupport from "@/components/home/PDP/PDPSupport/PDPSupport";
 import PDPPropertyDetails from "@/components/home/PDP/property-details/property-details";
 import PDPSimilarProjects from "@/components/home/PDP/similar-projects/similarProjects";
 import RERAStickyWidget from "@/components/home/PDP/rera-widget/RERAStickyWidget";
-import { homeService, type PropertyDetail, type SimilarProject } from "@/lib/api/services/home.service";
+import {
+  homeService,
+  type PropertyDetail,
+  type SimilarProject,
+} from "@/lib/api/services/home.service";
 import { useCompare } from "@/contexts/CompareContext";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PDPDetailSkeleton } from "@/components/ui/loader";
 
-export default function PropertyDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+export default function PropertyDetailsPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { clearAndAddToCompare } = useCompare();
   const router = useRouter();
 
@@ -67,7 +75,7 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
   }
 
   const handleFavoriteClick = async () => {
-    setProperty(prev => {
+    setProperty((prev) => {
       if (!prev) return prev;
       return { ...prev, isFavorite: !prev.isFavorite };
     });
@@ -75,13 +83,13 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
     try {
       const { success, data } = await homeService.toggleFavorite(propertyId);
       if (success && data) {
-        setProperty(prev => {
+        setProperty((prev) => {
           if (!prev) return prev;
           return { ...prev, isFavorite: data.isFavorite };
         });
       }
     } catch (error) {
-      setProperty(prev => {
+      setProperty((prev) => {
         if (!prev) return prev;
         return { ...prev, isFavorite: !prev.isFavorite };
       });
@@ -105,11 +113,13 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
     if (!property) return;
 
     if (navigator.share) {
-      navigator.share({
-        title: property.projectName,
-        text: `Check out ${property.projectName}`,
-        url: window.location.href,
-      }).catch(() => { });
+      navigator
+        .share({
+          title: property.projectName,
+          text: `Check out ${property.projectName}`,
+          url: window.location.href,
+        })
+        .catch(() => {});
     } else {
       navigator.clipboard.writeText(window.location.href);
     }
@@ -134,7 +144,7 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
         isFavorite={property.isFavorite}
         propertyId={property.id}
         onFavoriteChange={(isFavorite) => {
-          setProperty(prev => {
+          setProperty((prev) => {
             if (!prev) return prev;
             return { ...prev, isFavorite };
           });
@@ -150,8 +160,7 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
         isFavorite={property.isFavorite}
       />
 
-      <div className="container mx-auto py-6 flex flex-col gap-6 lg:flex-row lg:gap-5">
-
+      <div className="container max-w-6xl mx-auto py-6 flex flex-col gap-6 lg:flex-row lg:gap-5">
         {/* LEFT CONTENT */}
         <div className="flex flex-col gap-4 flex-1">
           <div id="property-details">
@@ -175,7 +184,10 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
             }}
             onRefresh={() => fetchPropertyDetails(propertyId)}
           />
-          <PDPSupport relationshipManager={property.relationshipManager} propertyId={property.id} />
+          <PDPSupport
+            relationshipManager={property.relationshipManager}
+            propertyId={property.id}
+          />
         </div>
       </div>
 

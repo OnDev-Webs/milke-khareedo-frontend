@@ -24,10 +24,13 @@ export default function MissionVision() {
             />
           </div>
           <div className="flex flex-col gap-3.5">
-            <Heading variant="h3" className="text-black">
+            <Heading
+              className="text-black font-semibold text-[24px]"
+              variant="h3"
+            >
               Mission
             </Heading>
-            <p className="text-[#373737] text-[18px] font-medium leading-7 md:leading-8">
+            <p className="text-[#373737] text-[16px] font-medium leading-7 md:leading-8">
               To simplify property buying by bringing buyers together so they
               pay less, save more money, and get better pricing than buying
               alone — without confusion or pressure.
@@ -54,10 +57,13 @@ export default function MissionVision() {
             />
           </div>
           <div className="flex flex-col gap-3.5">
-            <Heading variant="h3" className="text-black">
+            <Heading
+              className="text-black font-semibold text-[24px]"
+              variant="h3"
+            >
               Vision
             </Heading>
-            <p className="text-[#373737] text-[18px] font-medium leading-7 md:leading-8">
+            <p className="text-[#373737] text-[16px] font-medium leading-7 md:leading-8">
               To help millions of Indians buy property at better prices by
               bringing buyers together and shifting power back to them.
             </p>

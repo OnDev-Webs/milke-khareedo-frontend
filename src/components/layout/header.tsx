@@ -95,8 +95,8 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full bg-white relative z-20">
-      <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 xl:px-10">
+    <header className="w-full bg-white relative z-55">
+      <div className="mx-auto max-w-6xl px-4 sm:px-0">
         <div className="flex items-center justify-between py-4 lg:py-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
@@ -175,8 +175,6 @@ export default function Header() {
                       unoptimized
                       className="rounded-full object-cover"
                     />
-
-
                   ) : (
                     <LucideCircleUserRound className="h-5 w-5" />
                   )}
@@ -204,8 +202,6 @@ export default function Header() {
                               unoptimized
                               className="rounded-full object-cover"
                             />
-
-
                           ) : (
                             <LucideCircleUserRound className="h-full w-full p-2 text-gray-500" />
                           )}
@@ -271,18 +267,18 @@ export default function Header() {
             )}
 
             {/* Mobile Menu */}
-            <button
+            {/* <button
               type="button"
               aria-label="Toggle navigation"
               onClick={() => setOpen((o) => !o)}
               className="inline-flex items-center justify-center rounded-md p-2 text-gray-600 lg:hidden">
               <HiOutlineMenu className="h-6 w-6" />
-            </button>
+            </button> */}
           </div>
         </div>
 
         {/* Mobile Menu */}
-        {open && !isDashboard && (
+        {/* {open && !isDashboard && (
           <div className="border-t border-gray-100 bg-white pb-4 lg:hidden">
             <nav className="flex flex-col px-4 pt-3 text-gray-700">
               {navLinks.map((link) => (
@@ -328,7 +324,7 @@ export default function Header() {
               </div>
             </nav>
           </div>
-        )}
+        )} */}
       </div>
 
       {/* Auth Modal */}

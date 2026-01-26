@@ -91,7 +91,7 @@ export default function AboutSection() {
               Makes Buying Easier
             </h3>
 
-            <div className="space-y-6">
+            <div className="space-y-8">
               {points.map((item, i) => (
                 <div key={i} className="flex items-center gap-3 md:gap-4">
                   {/* Number */}
@@ -121,7 +121,7 @@ export default function AboutSection() {
               <video
                 ref={videoRef}
                 src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/185341-875417497.mp4"
-                className="absolute inset-0 w-full h-full object-cover scale-[1.15]"
+                className="absolute inset-0 w-full h-full object-cover"
                 muted={muted}
                 autoPlay
                 loop

@@ -1,80 +1,3 @@
-// import FAQSCard from "./faqsCard";
-
-// export default function FAQS() {
-//   const arr = [
-//     {
-//       id: 1,
-//       title: "Do I have to commit when I show interest?",
-//       desciption:
-//         "No. Showing interest only helps us understand which projects buyers are considering.There is no obligation or payment at this stage.",
-//     },
-//     {
-//       id: 2,
-//       title: "How is group buying different from buying alone?",
-//       desciption:
-//         "When buyers move forward together for the same project, pricing becomes more flexible. This usually leads to better value than individual buying.",
-//     },
-//     {
-//       id: 3,
-//       title: "Who negotiates with the builder?",
-//       desciption:
-//         "We take the discussion forward based on collective buyer interest. You don’t have to negotiate alone or handle uncomfortable conversations.",
-//     },
-//     {
-//       id: 4,
-//       title: "What is the private buyer group?",
-//       desciption:
-//         "No. Showing interest only helps us understand which projects buyers are considering.There is no obligation or payment at this stage.",
-//     },
-//     {
-//       id: 5,
-//       title: "Is group buying safe and legal?",
-//       desciption:
-//         "Yes. Each buyer completes their own individual purchase directly with the builder. Group buying only helps bring clarity and better pricing options.",
-//     },
-//     {
-//       id: 6,
-//       title: "What if I’m not comfortable with the final offer?",
-//       desciption:
-//         "We share the details clearly and continue supporting you. You move forward only when you feel confident about the decision.",
-//     },
-//   ];
-
-//   return (
-//     <section id="FAQS" className="py-25 px-30 bg-[#F0F8FF]">
-//       <div className="gap-12.5 flex flex-col items-center justify-center">
-//         <h2 className="text-[24px] md:text-[30px] font-semibold text-[#000000] mb-2">
-//           <span className="relative inline-block text-[#1C4692] pe-2">
-//             Questions
-//             <svg
-//               className="absolute left-0 -bottom-2"
-//               width="164"
-//               height="11"
-//               viewBox="0 0 228 11"
-//               fill="none"
-//               xmlns="http://www.w3.org/2000/svg"
-//             >
-//               <path
-//                 d="M2 8.5C60 1.5 170 5.5 226 8.5"
-//                 stroke="#1C4692"
-//                 strokeWidth="5"
-//                 strokeLinecap="round"
-//                 fill="none"
-//               />
-//             </svg>
-//           </span>
-//           Buyers Usually Ask
-//         </h2>
-//         <div className="flex gap-5 flex-col items-center">
-//           {arr?.map((i) => (
-//             <FAQSCard key={i.id} data={i} />
-//           ))}
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
-
 import FAQSCard from "./faqsCard";
 
 export default function FAQS() {
@@ -122,7 +45,7 @@ export default function FAQS() {
       id="FAQS"
       className="bg-[#F0F8FF] py-14 sm:py-16 md:py-20 px-4 sm:px-6 md:px-10"
     >
-      <div className="mx-auto max-w-5xl flex flex-col items-center gap-10">
+      <div className="mx-auto max-w-[1300px] flex flex-col items-center gap-10">
         {/* Heading */}
         <h2 className="text-[22px] sm:text-[26px] md:text-[30px] font-semibold text-black text-center">
           <span className="relative inline-block text-[#1C4692] pe-2">

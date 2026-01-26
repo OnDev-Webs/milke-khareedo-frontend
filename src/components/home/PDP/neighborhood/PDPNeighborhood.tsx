@@ -328,7 +328,7 @@ export default function PDPNeighborhood({
   }
 
   return (
-    <section className="relative w-full min-h-[600px] overflow-hidden bg-gray-100 flex flex-col md:block">
+    <section className="relative max-w-6xl mx-auto w-full min-h-[600px] overflow-hidden bg-gray-100 flex flex-col md:block">
       <div className="relative order-2 md:order-none md:absolute inset-0 z-0 pointer-events-auto h-[360px] md:h-full">
         {isLoaded && (
           <GoogleMap
@@ -397,11 +397,11 @@ export default function PDPNeighborhood({
       </div>
 
       {/* Blur Overlay and Content - Non-blocking for map interactions */}
-      <div className=" relative z-10 order-1 md:order-none mx-auto container py-6 md:py-12 pointer-events-none">
+      <div className="relative z-10 order-1 md:order-none mx-auto container py-6 md:py-12 pointer-events-none">
         <div className="flex flex-col md:flex-row gap-6 md:gap-10 md:items-start px-8">
 
           <div className="w-full md:w-1/3 order-1 md:order-none bg-white/95 backdrop-blur-lg rounded-2xl p-6 shadow-2xl border border-white/30 pointer-events-auto">
-            <h2 className="mb-6 font-semibold text-3xl text-gray-900">The Neighborhood</h2>
+            <h2 className="mb-6 font-semibold text-2xl text-gray-900">The Neighborhood</h2>
             <div className="flex gap-3 overflow-x-auto no-scrollbar md:flex-col md:overflow-visible md:gap-3">
               {categories.map((category) => {
                 const isSelected = selectedCategory === category.key;
@@ -409,7 +409,7 @@ export default function PDPNeighborhood({
                   <button
                     key={category.key}
                     onClick={() => handleCategoryClick(category.key)}
-                    className={`flex items-center gap-3 rounded-xl border-2 p-3 md:p-5 min-w-[160px] md:w-full shrink-0 transition-all duration-300
+                    className={`flex items-center gap-3 rounded-xl border-2 p-3 md:p-3 min-w-[160px] md:w-full shrink-0 transition-all duration-300
                     ${isSelected
                         ? "border-[#1C4692] bg-[#EEF4FF]"
                         : "border-gray-200 bg-white"
@@ -433,7 +433,7 @@ export default function PDPNeighborhood({
                       </span>
 
                     </div>
-                    <span className={`text-lg font-medium flex-1 text-left transition-colors duration-300 ${isSelected ? "text-[#1C4692]" : "text-gray-900"
+                    <span className={`text-[18px] font-medium flex-1 text-left transition-colors duration-300 ${isSelected ? "text-[#1C4692]" : "text-gray-900"
                       }`}>
                       {category.label}
                     </span>

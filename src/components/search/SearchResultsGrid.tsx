@@ -52,6 +52,13 @@ export default function SearchResultsGrid() {
     "3.5 BHK", "4 BHK", "4.5 BHK", "5 BHK",
     "5.5 BHK", "6 BHK", "6.5 BHK", "7 BHK",
   ];
+
+  const detectBhkFromQuery = (query: string) => {
+    const match = query.match(/(\d+(\.\d+)?)\s*bhk/i);
+    return match ? `${match[1]} BHK` : null;
+  };
+
+
   const possessionOptions = [
     "Ready to Move",
     "Under Construction",
@@ -104,6 +111,18 @@ export default function SearchResultsGrid() {
   }, [cityParam, searchParam]);
 
 
+  const bhkParam = searchParams.get("bhk");
+
+  useEffect(() => {
+    fetchProperties({
+      city: cityParam ?? undefined,
+      searchText: searchParam ?? undefined,
+      bhk: bhkParam ?? undefined,
+      sortBy,
+    });
+  }, [searchParams, sortBy]);
+
+
   const getDisplayCity = (city: string) => {
     if (!city) return "";
     return city.includes(",")
@@ -111,35 +130,24 @@ export default function SearchResultsGrid() {
       : city;
   };
 
-  useEffect(() => {
-    const city = searchParams.get("city") ?? undefined;
-    const q = searchParams.get("search") ?? undefined;
-
-    if (!city && !q) {
-      setResults([]);
-      return;
-    }
-
-    fetchProperties({
-      city,
-      searchText: q,
-      sortBy,
-    });
-  }, [searchParams, sortBy]);
 
   const handleCityChange = (cityValue: string) => {
     setSelectedCity(cityValue);
   };
 
   const handleSearch = () => {
+    const detectedBhk = detectBhkFromQuery(searchQuery);
+
+    const bhkToUse = detectedBhk ?? selectedBhk;
+
     fetchProperties({
       city: selectedCity.split(",").pop()?.trim(),
-      searchText: searchQuery.trim(),
+      searchText: detectedBhk ? "" : searchQuery.trim(),
+      bhk: bhkToUse,
       priceMin: String(priceRange[0] * 100000),
       priceMax: String(priceRange[1] * 10000000),
       areaMin: String(areaRange[0]),
       areaMax: String(areaRange[1]),
-      bhk: selectedBhk,
       projectStatus: selectedPossession,
       sortBy,
     });

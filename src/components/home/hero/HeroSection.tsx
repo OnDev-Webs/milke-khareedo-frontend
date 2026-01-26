@@ -15,51 +15,54 @@ export default function Hero() {
   const [isSearching, setIsSearching] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
+
+  const normalizeSearch = (q: string) => {
+    return q
+      .replace(/in\s+\w+/gi, "")         
+      .replace(/\d+(\.\d+)?\s*bhk/gi, "") 
+      .trim();
+  };
+  
+  const detectBhk = (q: string) => {
+    const match = q.match(/(\d+(\.\d+)?)\s*bhk/i);
+    return match ? `${match[1]} BHK` : null;
+  };
+  
+
   const handleCityChange = (cityValue: string) => {
     setSelectedCity(cityValue);
-    setSearchQuery(cityValue);
   };
 
   const handleSearch = async () => {
-    const query = String(searchQuery).trim();
+    const query = searchQuery.trim();
     if (!query) {
       alert("Please enter a search query");
       return;
     }
-
+  
+    const cityName = selectedCity.split(",").pop()?.trim() || selectedCity;
+    const detectedBhk = detectBhk(query);
+    const cleanedSearch = normalizeSearch(query);
+  
     setIsSearching(true);
     try {
-      const cityName = selectedCity.split(",").pop()?.trim() || selectedCity;
-
-      const response = await homeService.searchProperties({
+      await homeService.searchProperties({
         city: cityName,
-        searchText: query,
+        searchText: cleanedSearch || undefined,
+        bhk: detectedBhk || undefined,
         sortBy: "newAdded",
         page: 1,
         limit: 10,
       });
-
-      if (response.success && response.data) {
-        sessionStorage.setItem(
-          "searchResults",
-          JSON.stringify({
-            query,
-            city: cityName,
-            results: response.data,
-            pagination: response.pagination,
-          }),
-        );
-        router.push(`/search-results?city=${encodeURIComponent(cityName)}&search=${encodeURIComponent(query)}`,);
-      } else {
-        alert("No properties found");
-      }
-    } catch (error) {
-      console.error("Search error:", error);
-      alert("Error performing search. Please try again.");
+  
+      router.push(
+        `/search-results?city=${encodeURIComponent(cityName)}&search=${encodeURIComponent(cleanedSearch || "")}&bhk=${encodeURIComponent(detectedBhk || "")}`
+      );
     } finally {
       setIsSearching(false);
     }
   };
+  
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -74,6 +77,7 @@ export default function Hero() {
     "/images/gd2.jpg",
     "/images/gd3.jpg",
   ];
+  
 
   return (
     <section className="relative w-full py-10">

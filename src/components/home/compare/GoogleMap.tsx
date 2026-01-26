@@ -63,9 +63,17 @@ export default function GoogleMapComponent({
   // Determine the map center: use provided center, or user location, or default
   const mapCenter = useMemo(() => {
     if (center) return center;
-    if (userLocation) return userLocation;
+
+    if (markers.length > 0) {
+      return {
+        lat: markers[0].lat,
+        lng: markers[0].lng,
+      };
+    }
+
     return defaultCenter;
-  }, [center, userLocation]);
+  }, [center, markers]);
+
 
   if (!apiKey) {
     return (

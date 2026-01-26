@@ -23,13 +23,21 @@ export default function FooterSection() {
           {/* Left Column - Company Info */}
           <div className="lg:col-span-4">
             <Link href="/" className="mb-4 flex items-center gap-2">
-              <Image
-                src={Logo}
-                alt="MILKE KHEREEDO logo"
-                width={200}
-                height={50}
-                className="h-auto w-auto"
-              />
+             <Image
+  src={Logo}
+  alt="MILKE KHEREEDO logo"
+  width={200}
+  height={50}
+  className="
+    w-32      
+    sm:w-40
+    md:w-48
+    lg:w-52
+    h-auto
+  "
+  priority
+/>
+
             </Link>
             <p className="mb-6 text-sm leading-relaxed text-[#241F20] lg:text-base">
               Buying property shouldn't feel confusing or lonely. We help buyers

@@ -266,55 +266,10 @@ export default function Header() {
               )
             )}
 
-            {/* Mobile Menu */}
-            <button
-              type="button"
-              aria-label="Toggle navigation"
-              onClick={() => setOpen((o) => !o)}
-              className="inline-flex items-center justify-center rounded-md p-2 text-gray-600 lg:hidden">
-              <HiOutlineMenu className="h-6 w-6" />
-            </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        {open && !isDashboard && (
-          <div className="border-t border-gray-100 bg-white pb-4 lg:hidden">
-            <nav className="flex flex-col px-4 pt-3 text-gray-700">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className={`py-2.5 text-sm ${isActive(link.href) ? "font-semibold text-[#1C4692]" : ""}`}>
-                  {link.label}
-                </Link>
-              ))}
-
-              <div className="mt-4 flex items-center gap-3 border-t border-gray-100 pt-4">
-                {isAuthenticated ? (
-                  <Link
-                    href="/dashboard/profile"
-                    onClick={() => setOpen(false)}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-4 py-2.5 text-sm font-semibold text-white">
-                    <IoPerson className="h-5 w-5" />
-                    Profile
-                  </Link>
-                ) : (
-                  <button
-                    onClick={() => {
-                      setOpen(false);
-                      setShowAuthModal(true);
-                    }}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] px-4 py-2.5 text-sm font-semibold text-white">
-                    <IoPerson className="h-5 w-5" />
-                    Sign In
-                  </button>
-                )}
-              </div>
-            </nav>
-          </div>
-        )}
+    
       </div>
 
       {/* Auth Modal */}

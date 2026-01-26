@@ -184,7 +184,15 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
           </div>
 
           <div className="overflow-x-auto pb-4 md:overflow-visible">
-            <div className="grid gap-6 px-2 grid-cols-1 md:grid-cols-3 md:px-0">
+<div
+  className="
+    flex gap-4 px-2
+    overflow-x-auto
+    snap-x snap-mandatory
+    md:grid md:grid-cols-3 md:gap-6 md:px-0
+    md:overflow-visible
+  "
+>
               {convertedProperties.map((property) => {
                 const images = getPropertyImages(property);
                 const isJoinGroup =
@@ -194,6 +202,15 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
                 const currentImg = images[currentIdx] || property.image || null;
 
                 return (
+                  <div
+  key={property.id}
+  className="
+    min-w-[85%] 
+    sm:min-w-[70%]
+    snap-start
+    md:min-w-0
+  "
+>
                   <PropertyCard
                     key={property.id}
                     property={property}
@@ -229,6 +246,7 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
                     }}
                     formatDate={formatDate}
                   />
+                  </div>
                 );
               })}
             </div>

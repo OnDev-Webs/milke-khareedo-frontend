@@ -184,15 +184,9 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
           </div>
 
           <div className="overflow-x-auto pb-4 md:overflow-visible">
-<div
-  className="
-    flex gap-4 px-2
-    overflow-x-auto
-    snap-x snap-mandatory
-    md:grid md:grid-cols-3 md:gap-6 md:px-0
-    md:overflow-visible
-  "
->
+            <div
+              className="flex gap-4 px-2 overflow-x-auto snap-x snap-mandatory pb-4 md:grid md:grid-cols-3 md:gap-6 md:px-0 md:overflow-visible"
+            >
               {convertedProperties.map((property) => {
                 const images = getPropertyImages(property);
                 const isJoinGroup =
@@ -203,49 +197,44 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
 
                 return (
                   <div
-  key={property.id}
-  className="
-    min-w-[85%] 
-    sm:min-w-[70%]
-    snap-start
-    md:min-w-0
-  "
->
-                  <PropertyCard
                     key={property.id}
-                    property={property}
-                    isFavorite={favoriteStates[property.id] || false}
-                    isLoading={favoriteLoading[property.id] || false}
-                    isJoinGroup={isJoinGroup}
-                    isJoinGroupLoading={isJoinGroupLoading}
-                    images={images}
-                    currentIndex={currentIdx}
-                    hasMultipleImages={images.length > 1}
-                    currentImage={currentImg}
-                    isHovered={hoveredProperty === property.id}
-                    onMouseEnter={() => setHoveredProperty(property.id)}
-                    onMouseLeave={() => setHoveredProperty(null)}
-                    onFavoriteClick={handleFavoriteClick}
-                    onCompareClick={handleCompareClick}
-                    onShareClick={handleShareClick}
-                    onJoinGroupClick={handleJoinGroupClick}
-                    onGoToImage={(index) => {
-                      setCurrentImageIndex((prev) => ({ ...prev, [property.id]: index }));
-                    }}
-                    onGoToNextImage={(total) => {
-                      setCurrentImageIndex((prev) => ({
-                        ...prev,
-                        [property.id]: ((prev[property.id] || 0) + 1) % total,
-                      }));
-                    }}
-                    onGoToPreviousImage={(total) => {
-                      setCurrentImageIndex((prev) => ({
-                        ...prev,
-                        [property.id]: ((prev[property.id] || 0) - 1 + total) % total,
-                      }));
-                    }}
-                    formatDate={formatDate}
-                  />
+                    className="min-w-[85%] sm:min-w-[70%] snap-start md:min-w-0 "
+                  >
+                    <PropertyCard
+                      key={property.id}
+                      property={property}
+                      isFavorite={favoriteStates[property.id] || false}
+                      isLoading={favoriteLoading[property.id] || false}
+                      isJoinGroup={isJoinGroup}
+                      isJoinGroupLoading={isJoinGroupLoading}
+                      images={images}
+                      currentIndex={currentIdx}
+                      hasMultipleImages={images.length > 1}
+                      currentImage={currentImg}
+                      isHovered={hoveredProperty === property.id}
+                      onMouseEnter={() => setHoveredProperty(property.id)}
+                      onMouseLeave={() => setHoveredProperty(null)}
+                      onFavoriteClick={handleFavoriteClick}
+                      onCompareClick={handleCompareClick}
+                      onShareClick={handleShareClick}
+                      onJoinGroupClick={handleJoinGroupClick}
+                      onGoToImage={(index) => {
+                        setCurrentImageIndex((prev) => ({ ...prev, [property.id]: index }));
+                      }}
+                      onGoToNextImage={(total) => {
+                        setCurrentImageIndex((prev) => ({
+                          ...prev,
+                          [property.id]: ((prev[property.id] || 0) + 1) % total,
+                        }));
+                      }}
+                      onGoToPreviousImage={(total) => {
+                        setCurrentImageIndex((prev) => ({
+                          ...prev,
+                          [property.id]: ((prev[property.id] || 0) - 1 + total) % total,
+                        }));
+                      }}
+                      formatDate={formatDate}
+                    />
                   </div>
                 );
               })}

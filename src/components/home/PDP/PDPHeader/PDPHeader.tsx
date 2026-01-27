@@ -124,8 +124,10 @@ export default function PDPHeader({
                 {/* Developer Price */}
                 <div className="flex flex-col gap-1 items-end">
                   <span className="text-[14px] md:text-[15px] font-medium">
-                    Starting Developer price
+                    <span className="block md:hidden mb-1">Developer Price</span>
+                    <span className="hidden md:block">Starting Developer price</span>
                   </span>
+
                   <span className="text-[18px] md:text-[20px] lg:text-[24px] font-semibold line-through text-[#4B4B4B] leading-none whitespace-nowrap">
                     {formatPrice(developerPriceNumber)}
                   </span>

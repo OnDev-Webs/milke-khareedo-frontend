@@ -11,6 +11,7 @@ import {
 import Image from "next/image";
 import { useState } from "react";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
+import HomeIcon from "@/assets/home-2.svg";
 
 interface PDPGalleryProps {
   images: string[];
@@ -52,20 +53,45 @@ export default function PDPGallery({
         <Breadcrumb className="mb-[30px]">
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/" className="text-[18px]">Home</BreadcrumbLink>
+              <BreadcrumbLink
+                href="/"
+                className="flex items-center gap-2 text-[19px] text-[#000000]">
+                <Image
+                  src={HomeIcon}
+                  alt="Home"
+                  width={24}
+                  height={24}
+                />
+                Home
+              </BreadcrumbLink>
             </BreadcrumbItem>
-            <BreadcrumbSeparator />
+
+            <BreadcrumbSeparator>
+              <span className="text-[18px] text-[#000000]">|</span>
+            </BreadcrumbSeparator>
+
             <BreadcrumbItem>
-              <BreadcrumbPage className="text-[#1C4692] text-[18px]">Properties</BreadcrumbPage>
+              <BreadcrumbLink href="/filter" className="text-[18px] text-[#000000]">
+                Filter
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbSeparator>
+              <span className="text-[18px] text-[#000000]">|</span>
+            </BreadcrumbSeparator>
+
+            <BreadcrumbItem>
+              <BreadcrumbPage className="text-[#1C4692] font-semibold text-[18px]">
+                Properties
+              </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
 
         <div className="relative">
           <div className="grid gap-4 grid-cols-1 md:grid-cols-2 rounded-3xl">
-
             {/* Main Image */}
-            <div className="relative bg-secondary flex items-center justify-center h-[260px] md:h-80 rounded-[18px] p-4 md:p-6 shadow-[0_0_10px_rgba(0,0,0,0.08)] overflow-hidden">
+            <div className="relative bg-secondary flex items-center justify-center h-[220px] sm:h-[260px] md:h-80 rounded-[18px] p-3 md:p-6 shadow-[0_0_10px_rgba(0,0,0,0.08)] overflow-hidden">
               {displayImages[currentImageIndex] && (
                 <Image
                   src={displayImages[currentImageIndex]}
@@ -150,9 +176,7 @@ export default function PDPGallery({
                   </div>
                 );
               })}
-
             </div>
-
           </div>
         </div>
       </div>

@@ -67,12 +67,11 @@ export default function SearchPropertyCard({
       const city = filtered[filtered.length - 2];
       const area = filtered[filtered.length - 3] || filtered[0];
 
-      return `${area} , | ${city}`;
+      return `${area} ${city}`;
     }
 
     return filtered.join(", ");
   };
-
 
   return (
     <div

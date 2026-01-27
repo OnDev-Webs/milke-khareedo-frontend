@@ -35,10 +35,6 @@ export default function Hero() {
 
   const handleSearch = async () => {
     const query = searchQuery.trim();
-    if (!query) {
-      alert("Please enter a search query");
-      return;
-    }
   
     const cityName = selectedCity.split(",").pop()?.trim() || selectedCity;
     const detectedBhk = detectBhk(query);

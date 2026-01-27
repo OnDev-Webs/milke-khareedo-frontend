@@ -38,7 +38,9 @@ export default function Hero() {
   
     const cityName = selectedCity.split(",").pop()?.trim() || selectedCity;
     const detectedBhk = detectBhk(query);
-    const cleanedSearch = normalizeSearch(query);
+    const rawSearch = query.trim();
+    const cleanedSearch = normalizeSearch(rawSearch);
+    
   
     setIsSearching(true);
     try {
@@ -52,8 +54,9 @@ export default function Hero() {
       });
   
       router.push(
-        `/search-results?city=${encodeURIComponent(cityName)}&search=${encodeURIComponent(cleanedSearch || "")}&bhk=${encodeURIComponent(detectedBhk || "")}`
+        `/search-results?city=${encodeURIComponent(cityName)}&search=${encodeURIComponent(rawSearch)}&bhk=${encodeURIComponent(detectedBhk || "")}`
       );
+      
     } finally {
       setIsSearching(false);
     }

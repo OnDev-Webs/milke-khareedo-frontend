@@ -39,7 +39,7 @@ export default function PDPPropertyDetails({ property }: PDPPropertyDetailsProps
               </div>
             </div>
 
-            <div className="space-y-4 border-t md:border-t-0 md:border-l md:border-r md:border-gray-100 md:px-6">
+            <div className="space-y-2 border-t md:border-t-0 md:border-l md:border-r md:border-gray-100 md:px-6">
               <div>
                 <p className="text-[14px] text-[#7B7B7B] font-normal mt-6 md:mt-0">Configuration</p>
                 <p className="mt-1 text-[16px] font-medium text-[#000000]">

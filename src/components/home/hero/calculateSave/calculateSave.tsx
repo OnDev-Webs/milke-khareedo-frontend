@@ -221,7 +221,7 @@ export default function CalculateSave() {
                       </div>
                     </div>
 
-                    <div className="my-2 sm:my-2 h-px w-[300px] me-auto bg-gray-200" />
+                    <div className="my-2 h-px w-full max-w-[320px] sm:max-w-[380px] md:max-w-[420px] bg-gray-200" />
 
                     <div className="flex items-center justify-between px-1">
                       <p className="text-[14px] text-[#000000] font-semibold">

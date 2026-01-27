@@ -402,7 +402,7 @@ export default function PDPNeighborhood({
 
           <div className="w-full md:w-1/3 order-1 md:order-none bg-white/95 backdrop-blur-lg rounded-2xl p-6 shadow-2xl border border-white/30 pointer-events-auto">
             <h2 className="mb-6 font-semibold text-2xl text-gray-900">The Neighborhood</h2>
-            <div className="flex gap-3 overflow-x-auto no-scrollbar md:flex-col md:overflow-visible md:gap-3">
+             <div className="flex gap-3 overflow-x-auto no-scrollbar px-1 pb-2 md:flex-col md:overflow-visible md:gap-3 md:px-0 md:pb-0">
               {categories.map((category) => {
                 const isSelected = selectedCategory === category.key;
                 return (

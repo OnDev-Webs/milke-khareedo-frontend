@@ -46,12 +46,7 @@ const RecentBlog = ({ excludeBlogId, excludeSlug }: RecentBlogProps) => {
     fetchBlogs();
   }, [excludeBlogId, excludeSlug]);
 
-  const handleLoadMore = () => {
-    setVisibleCount((prev) => prev + 3);
-  };
-
   const visibleBlogs = blogs.slice(0, visibleCount);
-  const hasMore = visibleCount < blogs.length;
 
   if (isLoading) {
     return (
@@ -78,7 +73,7 @@ const RecentBlog = ({ excludeBlogId, excludeSlug }: RecentBlogProps) => {
             <Link href="/blogs">
               <Button
                 variant={"ghost"}
-                className="rounded-[110px] mt-4 text-[16px] text-[#2D2D2D] font-semibold border border-[#F5F5F5] py-4 px-6"
+                className="rounded-[110px] mt-6 text-[16px] text-[#2D2D2D] font-semibold border border-[#F5F5F5] py-4 px-6"
               >
                 View All
               </Button>
@@ -105,15 +100,6 @@ const RecentBlog = ({ excludeBlogId, excludeSlug }: RecentBlogProps) => {
               </Link>
             ))}
           </div>
-          {hasMore && (
-            <Button
-              variant={"ghost"}
-              onClick={handleLoadMore}
-              className="mt-8 text-base rounded-[110px] border border-[#F5F5F5] flex mx-auto"
-            >
-              Load More
-            </Button>
-          )}
         </div>
       </section>
     </>

@@ -51,6 +51,7 @@ export default function PropertyCard({
 }: PropertyCardProps) {
   const formatTwoDigits = (value: number) => value.toString().padStart(2, "0");
   const formatPercentage = (value: string) => value.replace(/\.00%$/, "%");
+
   const formatLocationForUI = (fullLocation?: string) => {
     if (!fullLocation) return "";
     const parts = fullLocation.split(",").map(p => p.trim()).filter(Boolean);
@@ -60,7 +61,7 @@ export default function PropertyCard({
     if (filtered.length < 2) return filtered[0];
     const city = filtered[filtered.length - 1];
     const area = filtered[filtered.length - 2];
-    return `${area} , | ${city}`;
+    return `${area} ${city}`;
   };
 
   return (

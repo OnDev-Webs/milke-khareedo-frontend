@@ -44,7 +44,8 @@ export default function SearchResultsGrid() {
   const [possessionOpen, setPossessionOpen] = useState(false);
   const cityParam = searchParams.get("city");
   const searchParam = searchParams.get("search");
-
+  const [loading, setLoading] = useState(false);
+  const [mapFallbackProps, setMapFallbackProps] = useState<Property[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([30, 100]);
   const [areaRange, setAreaRange] = useState<[number, number]>([400, 5000]);
   const bhkOptions = [
@@ -53,6 +54,53 @@ export default function SearchResultsGrid() {
     "5.5 BHK", "6 BHK", "6.5 BHK", "7 BHK",
   ];
 
+  const getLatLngFromLocation = async (location: string) => {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+        location
+      )}`
+    );
+  
+    const data = await res.json();
+  
+    if (data?.length > 0) {
+      return {
+        lat: Number(data[0].lat),
+        lng: Number(data[0].lon),
+      };
+    }
+  
+    return null;
+  };
+  
+  useEffect(() => {
+    if (results.length > 0) {
+      setMapFallbackProps(results);
+      return;
+    }
+  
+    const fetchCityCoords = async () => {
+      const cityText =
+        selectedCity || searchQuery || "";
+  
+      const coords = await getLatLngFromLocation(cityText);
+  
+      if (!coords) return;
+  
+      setMapFallbackProps([
+        {
+          id: "location-center",
+          projectName: cityText,
+          location: cityText,
+          latitude: coords.lat,
+          longitude: coords.lng,
+        } as Property,
+      ]);
+    };
+  
+    fetchCityCoords();
+  }, [results, selectedCity, searchQuery]);
+  
   const detectBhkFromQuery = (query: string) => {
     const match = query.match(/(\d+(\.\d+)?)\s*bhk/i);
     return match ? `${match[1]} BHK` : null;
@@ -77,6 +125,8 @@ export default function SearchResultsGrid() {
     sortBy?: string;
   }) => {
     try {
+      setLoading(true);
+
       const resp = await homeService.searchProperties({
         ...params,
         page: 1,
@@ -92,6 +142,8 @@ export default function SearchResultsGrid() {
     } catch (err) {
       console.error(err);
       setResults([]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -110,7 +162,6 @@ export default function SearchResultsGrid() {
     }
   }, [cityParam, searchParam]);
 
-
   const bhkParam = searchParams.get("bhk");
 
   useEffect(() => {
@@ -122,14 +173,12 @@ export default function SearchResultsGrid() {
     });
   }, [searchParams, sortBy]);
 
-
   const getDisplayCity = (city: string) => {
     if (!city) return "";
     return city.includes(",")
       ? city.split(",").pop()?.trim()
       : city;
   };
-
 
   const handleCityChange = (cityValue: string) => {
     setSelectedCity(cityValue);
@@ -408,7 +457,7 @@ export default function SearchResultsGrid() {
       <div className="flex flex-col md:flex-row gap-2">
         <div className="w-full md:w-1/3 order-1 md:order-2">
           <div className="h-[300px] md:sticky md:top-20 md:h-[calc(100vh-5rem)] overflow-hidden">
-            <PropertyMap properties={results} />
+            <PropertyMap properties={mapFallbackProps} />
           </div>
         </div>
 
@@ -447,7 +496,11 @@ export default function SearchResultsGrid() {
           </p>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {results.length > 0 ? (
+            {loading ? (
+              <div className="col-span-2 flex justify-center py-20">
+                <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#1C4692] border-t-transparent" />
+              </div>
+            ) : results.length > 0 ? (
               results.map((property) => (
                 <SearchPropertyCard
                   key={property.id}

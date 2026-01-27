@@ -124,10 +124,7 @@ export default function ComparePage() {
           `Some properties may not have valid coordinates or are still loading.`
       );
     } else {
-      console.log(
-        `✅ Successfully created ${markers.length} markers using pinLabel from API:`,
-        markers.map((m) => `${m.label} (${m.title})`).join(", ")
-      );
+     
     }
 
     return markers;

@@ -79,8 +79,26 @@ export default function Hero() {
   
 
   return (
-    <section className="relative w-full py-10">
-      <div className="mx-auto relative overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-6 shadow-md h-auto md:h-[420px] xl:h-[450px] w-[92%] md:w-[96%] xl:w-[1150px]">
+<section className="relative w-full py-2 md:py-10">
+<div
+  className="
+    relative
+    overflow-hidden
+    bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5]
+    shadow-md
+    w-full
+    rounded-none
+    md:rounded-3xl
+    md:mx-auto
+    md:w-[96%]
+    xl:w-[1150px]
+    px-6
+    pt-10
+    pb-16
+    md:h-[420px]
+    xl:h-[450px]
+  "
+>
         <div className="relative z-10 w-full md:w-[60%] pt-10 md:pt-10 ps-4 md:ps-6">
           <p className="font-medium text-[#585981] mb-2">
             Buying a home is a big decision.

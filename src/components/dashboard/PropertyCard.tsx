@@ -100,7 +100,7 @@ export default function PropertyCard({
         if (area.toLowerCase() === city.toLowerCase()) {
             return area;
         }
-        return `${area} , | ${city}`;
+        return `${area} | ${city}`;
     }
 
     const hasDiscount = showDiscount && discountPercentage && discountPercentage !== "0%" && discountPercentage !== "0.00%";

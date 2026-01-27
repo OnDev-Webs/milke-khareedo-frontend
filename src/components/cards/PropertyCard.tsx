@@ -61,7 +61,7 @@ export default function PropertyCard({
     if (filtered.length < 2) return filtered[0];
     const city = filtered[filtered.length - 1];
     const area = filtered[filtered.length - 2];
-    return `${area} ${city}`;
+    return `${area} | ${city}`;
   };
 
   return (

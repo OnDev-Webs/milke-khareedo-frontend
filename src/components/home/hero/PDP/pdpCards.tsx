@@ -324,17 +324,29 @@ export default function TopProperties() {
         </h2>
 
         {/* Tabs */}
-        <div className="flex flex-wrap gap-6 mb-8 py-2 border-b border-[#E0E0E0]">
+<div
+  className="
+    flex
+    gap-6
+    mb-6
+    py-2
+    border-b border-[#E0E0E0]
+    overflow-x-auto
+    whitespace-nowrap
+    no-scrollbar
+  "
+>
           {tabs.map((tab, idx) => {
             const isActive = activeTab === tab;
 
             return (
               <button
-                key={idx}
-                onClick={() => handleTabChange(tab)}
-                className={`relative px-1 pb-1 text-sm font-medium transition-colors
-                ${isActive ? "text-[#1C4692]" : "text-[#818181]"}`}
-              >
+  key={idx}
+  onClick={() => handleTabChange(tab)}
+  className={`relative shrink-0 px-1 pb-1 text-sm font-medium transition-colors
+    ${isActive ? "text-[#1C4692]" : "text-[#818181]"}`}
+>
+
                 {tab}
                 {isActive && (
                   <span className="absolute left-0 right-0 -bottom-[9px] h-[2px] bg-[#1C4692]" />
@@ -355,7 +367,16 @@ export default function TopProperties() {
 
         {/* Cards Grid */}
         {!isLoadingMore || properties.length > 0 ? (
-          <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
+<div
+  className="
+    flex gap-4
+    overflow-x-auto
+    snap-x snap-mandatory
+    no-scrollbar
+    md:grid md:grid-cols-3 md:gap-6
+    md:overflow-visible
+  "
+>
             {properties.map((prop) => {
               const isFavorite = favoriteStates[prop.id] ?? prop.isFavorite ?? false;
               const isLoading = favoriteLoading[prop.id] ?? false;
@@ -367,6 +388,15 @@ export default function TopProperties() {
               const currentImage = images[currentIndex] || null;
 
               return (
+                <div
+  key={prop.id}
+  className="
+    min-w-[85%]
+    sm:min-w-[70%]
+    snap-start
+    md:min-w-0
+  "
+>
                 <PropertyCard
                   key={prop.id}
                   property={prop}
@@ -394,17 +424,27 @@ export default function TopProperties() {
                   }
                   formatDate={formatDate}
                 />
+                </div>
               );
             })}
 
             {/* Load More Button */}
             {hasMore && (
-              <div className="md:col-span-3 col-span-1 flex justify-center mt-8">
-                <button
-                  onClick={handleLoadMore}
-                  disabled={isLoadingMore}
-                  className="px-8 py-3 rounded-full border border-[#F5F5F5] text-[#2D2D2D] bg-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-                >
+              <div className="flex justify-center mt-6 md:mt-8">
+    <button
+      onClick={handleLoadMore}
+      disabled={isLoadingMore}
+      className="
+        w-full max-w-[260px]
+        md:w-auto
+        px-8 py-3
+        rounded-full
+        border border-[#F5F5F5]
+        bg-white
+        font-semibold
+        text-[#2D2D2D]
+      "
+    >
                   {isLoadingMore ? <Loader size={38} /> : "Load More"}
                 </button>
               </div>

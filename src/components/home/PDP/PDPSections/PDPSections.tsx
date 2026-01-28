@@ -152,8 +152,12 @@ export default function PDPSections({
               className="h-[40px] w-[40px] md:h-[44px] md:w-[44px]
               flex items-center justify-center rounded-full bg-[#EEF4FF]"
             >
-              <IoShareSocialOutline className="h-5 w-5" />
-            </button>
+ <Image
+                src="/images/Share.svg"
+                alt="Compare"
+                width={18}
+                height={18}
+              />            </button>
           </div>
         </div>
       </div>

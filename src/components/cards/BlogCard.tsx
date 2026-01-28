@@ -41,12 +41,12 @@ export default function BlogCard({
           src={image}
           alt={title}
           fill
-          className="object-cover rounded-tl-4xl rounded-tr-4xl"
+          className="object-cover rounded-tl-3xl rounded-tr-3xl"
         />
       </div>
 
       {/* Content */}
-      <div className="flex flex-col flex-1 self-stretch p-3.5 bg-white rounded-bl-4xl rounded-br-4xl shadow-[0px_4px_50px_0px_rgba(0,0,0,0.10)]">
+      <div className="flex flex-col flex-1 self-stretch p-3.5 bg-white rounded-bl-3xl rounded-br-3xl shadow-[0px_4px_50px_0px_rgba(0,0,0,0.10)]">
 
         {/* TEXT CONTENT */}
         <div className="flex flex-col flex-1 gap-2.5">

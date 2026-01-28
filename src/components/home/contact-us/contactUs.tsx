@@ -37,7 +37,7 @@ export default function ConnectWithUs() {
         badgeText="Contact Us"
         title="Talk to us. Buy smarter."
         highlightText="Save more."
-        description="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        description="We help buyers come together and unlock better pricing than buying alone."
         headingVariant="h3"
       />
 

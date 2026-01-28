@@ -95,7 +95,7 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full bg-white relative z-55 overflow-x-clip">
+    <header className="w-full bg-white relative z-55 overflow-x-clip shadow-[0px_9px_15px_0px_#0000000D]">
       <div className="mx-auto max-w-6xl px-4 md:px-6 lg:px-0">
         <div className="flex items-center justify-between py-4 lg:py-6">
           {/* Logo */}

@@ -66,7 +66,7 @@ export default function PropertyCard({
 
   return (
     <div
-      className="relative flex flex-col bg-white rounded-3xl p-4 shadow-lg overflow-hidden group cursor-pointer"
+      className="relative flex flex-col bg-white rounded-3xl p-4 border border-[#F3F3F3] overflow-hidden group cursor-pointer shadow-[0px_0px_50px_0px_#0000000D]"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >

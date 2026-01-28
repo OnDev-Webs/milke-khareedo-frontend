@@ -25,37 +25,37 @@ const profileMenuItems: {
   label: string;
   href: string;
 }[] = [
-  {
-    key: "properties",
-    label: "My Properties",
-    href: "/dashboard/viewed-properties",
-  },
-  {
-    key: "favorite",
-    label: "My Favorite",
-    href: "/dashboard/favorites",
-  },
-  {
-    key: "visits",
-    label: "Site visits",
-    href: "/dashboard/site-visits",
-  },
-  {
-    key: "compare",
-    label: "Compare",
-    href: "/compare",
-  },
-  {
-    key: "searches",
-    label: "My Searches",
-    href: "/dashboard/searches",
-  },
-  {
-    key: "preference",
-    label: "My Preference",
-    href: "/dashboard/preferences",
-  },
-];
+    {
+      key: "properties",
+      label: "My Properties",
+      href: "/dashboard/viewed-properties",
+    },
+    {
+      key: "favorite",
+      label: "My Favorite",
+      href: "/dashboard/favorites",
+    },
+    {
+      key: "visits",
+      label: "Site visits",
+      href: "/dashboard/site-visits",
+    },
+    {
+      key: "compare",
+      label: "Compare",
+      href: "/compare",
+    },
+    {
+      key: "searches",
+      label: "My Searches",
+      href: "/dashboard/searches",
+    },
+    {
+      key: "preference",
+      label: "My Preference",
+      href: "/dashboard/preferences",
+    },
+  ];
 
 const menuIcons = {
   properties: "/images/properties.svg",
@@ -64,7 +64,7 @@ const menuIcons = {
   compare: "/images/convert.svg",
   searches: "/images/mySearch.svg",
   preference: "/images/myPreference.svg",
-} as const ;
+} as const;
 
 type MenuIconKey = keyof typeof menuIcons;
 
@@ -105,8 +105,11 @@ export default function Header() {
               alt="MILKE KHEREEDO logo"
               width={216}
               height={52}
-              className="h-8 w-auto sm:h-10 lg:h-[52px]"
-            />
+              className="
+                h-10 w-auto      
+                sm:h-11           
+                lg:h-[52px]"            
+                />
           </Link>
 
           {/* Navigation Links */}
@@ -218,7 +221,7 @@ export default function Header() {
 
                       {/* Menu Items */}
                       <div className="px-3 py-2 space-y-2">
-                       {profileMenuItems.map((item) => {
+                        {profileMenuItems.map((item) => {
                           return (
                             <Link
                               key={item.label}

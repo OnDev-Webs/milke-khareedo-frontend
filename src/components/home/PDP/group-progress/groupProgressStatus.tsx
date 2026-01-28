@@ -74,7 +74,7 @@ export default function PDPGroupProgressStatus({
 
   return (
     <>
-      <section className="">
+      <section className="md:px-6 lg:px-0">
         <div className="mx-auto container rounded-2xl bg-white p-6 border border-[#F3F3F3]">
           <div className="flex flex-col items-center gap-3">
             <div className="relative">

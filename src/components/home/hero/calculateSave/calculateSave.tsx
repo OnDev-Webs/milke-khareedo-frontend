@@ -172,9 +172,9 @@ export default function CalculateSave() {
             {/* ================= LEFT SIDE ================= */}
             <div className="flex flex-col gap-4">
               {/* Circular Chart and EMI Result */}
-              <div className="flex flex-col md:flex-row p-4 sm:px-3 sm:py-6 rounded-[20px] md:rounded-md bg-[#EEF4FF] md:items-center gap-4 md:max-w-full overflow-hidden box-border">
+              <div className="flex flex-col md:flex-row p-4 sm:px-3 sm:py-6 rounded-[20px] md:rounded-md bg-[#EEF4FF] gap-4 items-center md:items-start text-center md:text-left">
                 {/* Circular Pie Chart */}
-                <div className="relative flex-shrink-0 h-36 w-36 sm:h-44 sm:w-44 md:h-48 md:w-48">
+                <div className="relative flex-shrink-0 h-48 w-48 sm:h-44 sm:w-44 md:h-48 md:w-48 mx-auto md:mx-0">
                   <div
                     className="absolute inset-0 rounded-full"
                     style={{
@@ -193,7 +193,7 @@ export default function CalculateSave() {
                 </div>
 
                 {/* EMI Result Breakdown */}
-                <div className="flex-1 w-full md:w-auto rounded-md">
+                <div className="flex-1 w-full md:w-auto rounded-md md:mt-5">
                   <h3 className="mb-3 sm:mb-4 bg-[#EEF4FF] text-base sm:text-lg font-semibold text-black">
                     Calculated EMI Result
                   </h3>
@@ -442,31 +442,7 @@ export default function CalculateSave() {
         </div>
       </div>
 
-      <style jsx>{`
-        .slider::-webkit-slider-thumb {
-          appearance: none;
-          width: 34px;
-          height: 18px;
-          border-radius: 999px;
-          background: #1c4692;
-          border: 3px solid #313131;
-          cursor: pointer;
-          box-shadow:
-            0 0 0 1px #ffffff,
-            0 2px 6px rgba(0, 0, 0, 0.25);
-        }
-        .slider::-moz-range-thumb {
-          width: 34px;
-          height: 18px;
-          border-radius: 999px;
-          background: #1c4692;
-          border: 3px solid #313131;
-          cursor: pointer;
-          box-shadow:
-            0 0 0 1px #ffffff,
-            0 2px 6px rgba(0, 0, 0, 0.25);
-        }
-      `}</style>
+     
     </section>
   );
 }

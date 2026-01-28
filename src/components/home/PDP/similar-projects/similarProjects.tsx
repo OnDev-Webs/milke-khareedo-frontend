@@ -184,22 +184,16 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
           </div>
 
           <div className="overflow-x-auto pb-4 md:overflow-visible">
-            <div
-              className="flex gap-4 px-2 overflow-x-auto snap-x snap-mandatory pb-4 md:grid md:grid-cols-3 md:gap-6 md:px-0 md:overflow-visible"
-            >
+            <div className="flex gap-4 px-2 overflow-x-auto snap-x snap-mandatory pb-4 lg:grid lg:grid-cols-3 lg:gap-6 lg:px-0 lg:overflow-visible">
               {convertedProperties.map((property) => {
                 const images = getPropertyImages(property);
-                const isJoinGroup =
-                  joinGroupStates[property.id] ?? property.isJoinGroup ?? false;
+                const isJoinGroup = joinGroupStates[property.id] ?? property.isJoinGroup ?? false;
                 const isJoinGroupLoading = joinGroupLoading[property.id] ?? false;
                 const currentIdx = currentImageIndex[property.id] || 0;
                 const currentImg = images[currentIdx] || property.image || null;
 
                 return (
-                  <div
-                    key={property.id}
-                    className="min-w-[85%] sm:min-w-[70%] snap-start md:min-w-0 "
-                  >
+                  <div key={property.id} className="min-w-[100%] sm:min-w-[70%] md:min-w-[60%] lg:min-w-0 snap-start">
                     <PropertyCard
                       key={property.id}
                       property={property}

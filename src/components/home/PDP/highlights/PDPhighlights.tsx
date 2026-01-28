@@ -11,8 +11,8 @@ export default function PDPHighLights({ highlights }: PDPHighLightsProps) {
   }
 
   return (
-    <section className="px-4 pe-10 md:pe-0">
-      <div className="mx-auto container">
+    <section className="px-4 md:px-6 lg:px-0">
+      <div className="mx-auto max-w-6xl rounded-[20px] bg-white">
         <div className="rounded-[20px] bg-white shadow-sm">
           <div className="rounded-t-2xl bg-[#EEF4FF] px-6 py-4">
             <h3 className="font-semibold text-[25px] text-[#000000]">Highlights</h3>
@@ -27,7 +27,7 @@ export default function PDPHighLights({ highlights }: PDPHighLightsProps) {
                     <p className="leading-relaxed text-[#000000] text-[14px] font-medium">{highlight}</p>
                   </div>
                 </div>
-                ),
+              ),
               )}
             </div>
           </div>

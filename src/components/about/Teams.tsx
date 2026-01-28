@@ -3,14 +3,13 @@
 import { ArrowLeft, ArrowRight} from "lucide-react";
 import Title from "../typography/title";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import {
   FaTwitter,
   FaFacebookF,
   FaLinkedinIn,
   FaInstagram,
 } from "react-icons/fa";
-import { IoCloseCircle } from "react-icons/io5";
 
 const teams = [
   {
@@ -74,7 +73,7 @@ export default function Teams() {
   };
 
   return (
-    <section className="w-full bg-white py-16 relative overflow-visible mb-[100px] px-6">
+    <section className="w-full bg-white py-16 relative overflow-visible mb-[60px] md:px-6 px-0">
       <svg
         className="absolute inset-0 w-full h-full opacity-20 pointer-events-none"
         xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +101,7 @@ export default function Teams() {
           className="text-center mb-12 md:mb-20"
         />
 
-        <div className="hidden md:grid gap-6 md:grid-cols-2 relative">
+        <div className="hidden sm:grid gap-6 sm:grid-cols-1 lg:grid-cols-2 relative">
           {teams.map((team, i) => {
             const isLast = i === teams.length - 1;
             return (
@@ -148,10 +147,11 @@ export default function Teams() {
         </div>
 
         {/* MOBILE SLIDER */}
-        <div className="md:hidden relative">
+        <div className="sm:hidden relative">
+
           <div className="flex justify-center">
             <div className="w-full">
-              <div className="flex flex-col items-center rounded-2xl bg-white p-6 shadow-[0_18px_40px_rgba(0,0,0,0.05)]">
+              <div className="flex flex-col rounded-2xl bg-white p-6 shadow-[0_18px_40px_rgba(0,0,0,0.05)]">
                 {/* Image */}
                 <div className="mb-4 md:mb-0 md:mr-4 relative h-74 md:h-50 w-full md:w-44 shrink-0 rounded-xl overflow-hidden bg-[#f5f3ff]">
                   <Image
@@ -168,7 +168,7 @@ export default function Teams() {
                 <p className="text-[14px] font-medium text-[#373737]">
                   {teams[currentIndex].role}
                 </p>
-                <p className="text-[16px] text-[#9795B5] text-center mt-2">
+                <p className="text-[16px] text-[#9795B5] mt-2">
                   {teams[currentIndex].desc}
                 </p>
                 {/* Social Icons */}

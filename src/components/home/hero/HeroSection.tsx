@@ -15,19 +15,17 @@ export default function Hero() {
   const [isSearching, setIsSearching] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-
   const normalizeSearch = (q: string) => {
     return q
-      .replace(/in\s+\w+/gi, "")         
-      .replace(/\d+(\.\d+)?\s*bhk/gi, "") 
+      .replace(/in\s+\w+/gi, "")
+      .replace(/\d+(\.\d+)?\s*bhk/gi, "")
       .trim();
   };
-  
+
   const detectBhk = (q: string) => {
     const match = q.match(/(\d+(\.\d+)?)\s*bhk/i);
     return match ? `${match[1]} BHK` : null;
   };
-  
 
   const handleCityChange = (cityValue: string) => {
     setSelectedCity(cityValue);
@@ -35,13 +33,11 @@ export default function Hero() {
 
   const handleSearch = async () => {
     const query = searchQuery.trim();
-  
     const cityName = selectedCity.split(",").pop()?.trim() || selectedCity;
     const detectedBhk = detectBhk(query);
     const rawSearch = query.trim();
     const cleanedSearch = normalizeSearch(rawSearch);
-    
-  
+
     setIsSearching(true);
     try {
       await homeService.searchProperties({
@@ -52,16 +48,14 @@ export default function Hero() {
         page: 1,
         limit: 10,
       });
-  
       router.push(
         `/search-results?city=${encodeURIComponent(cityName)}&search=${encodeURIComponent(rawSearch)}&bhk=${encodeURIComponent(detectedBhk || "")}`
       );
-      
+
     } finally {
       setIsSearching(false);
     }
   };
-  
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -76,27 +70,29 @@ export default function Hero() {
     "/images/gd2.jpg",
     "/images/gd3.jpg",
   ];
-  
 
   return (
     <section className="relative w-full py-10">
-      <div className="mx-auto relative overflow-visible rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-6 shadow-md h-auto md:h-[420px] xl:h-[450px] w-[92%] md:w-[96%] xl:w-[1150px]">
-        <div className="relative z-10 w-full md:w-[60%] pt-10 md:pt-10 ps-4 md:ps-6">
+      <div className="mx-auto relative overflow-visible md:rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-4 md:p-6 shadow-md h-auto md:h-[420px] xl:h-[450px] w-full md:w-[96%] xl:w-[1150px]">
+        <div className="relative z-10 w-full md:w-[55%] lg:w-[60%] xl:w-[60%] pt-10 md:pt-6 lg:pt-10 ps-4 md:ps-4 lg:ps-6">
           <p className="font-medium text-[#585981] mb-2">
             Buying a home is a big decision.
           </p>
 
-          <h1 className="text-3xl md:text-4xl font-bold text-[#151516] md:pe-68 ">
-            <span className="text-[#1C4692] mb-8">
-              {" "}
-              Milke Khereedo <br />{" "}
-            </span>
-            Makes it easier.
-          </h1>
+          <div className="md:max-w-[330px] lg:max-w-none">
+            <h1 className="text-3xl md:text-[32px] lg:text-4xl font-bold text-[#151516] leading-tight md:leading-[1.15] lg:leading-tight">
+              <span className="text-[#1C4692] block lg:block md:inline md:pe-2">
+                Milke Khereedo
+              </span>
+              <span className="block lg:block md:inline">
+                Makes it easier.
+              </span>
+            </h1>
 
-          <p className="mt-3 text-[#585981] font-medium">
-            Buy together. Save more than buying alone.
-          </p>
+            <p className="mt-3 text-[#585981] font-medium">
+              Buy together. Save more than buying alone.
+            </p>
+          </div>
 
           <div className="mt-6">
             <a href="#about">
@@ -106,7 +102,7 @@ export default function Hero() {
             </a>
           </div>
 
-          <div className="my-6 inline-flex items-center gap-3 rounded-full bg-white px-5 py-3">
+          <div className="my-6 lg:my-4 inline-flex items-center gap-3 rounded-full bg-white px-5 py-3">
             <div className="flex -space-x-2">
               {group_deals.map((img, index) => (
                 <div key={index} className="relative h-8 w-8 overflow-hidden rounded-full border-2 border-white">
@@ -121,8 +117,9 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="hidden md:block absolute top-[-112px] right-[36px]">
-          <div className="relative  overflow-hidden w-[480px] h-[440px] lg:w-[520px] lg:h-[480px] xl:w-[580px] xl:h-[520px]">
+        <div className="hidden md:block absolute md:top-[-90px] lg:top-[-60px] xl:top-[-112px] md:right-[-20px] lg:right-[20px] xl:right-[36px]">
+          <div className="relative overflow-hidden md:w-[430px] md:h-[460px] lg:w-[500px] lg:h-[440px] xl:w-[580px] xl:h-[520px]">
+
             <Image
               src="/images/banner1.png"
               alt="Hero Image"
@@ -145,8 +142,7 @@ export default function Hero() {
         </div>
       </div>
 
-
-      <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 z-20 w-[90%] md:w-[90%] xl:w-[1050px]">
+      <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 z-20 w-[90%] md:w-[94%] lg:w-[94%] xl:w-[1050px] xl:w-[1050px]">
         <div className="flex flex-col md:flex-row items-stretch py-2 md:py-3 rounded-2xl bg-white/70 backdrop-blur-md p-0 overflow-visible shadow-[0_12px_40px_rgba(0,0,0,0.10)]">
           {/* CITY SELECT SECTION */}
           <div className="relative flex flex-col justify-center ps-6 pe-4 py-4 min-w-[130px] border-b border-[#DCDCEB] md:border-b-0">

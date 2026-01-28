@@ -49,7 +49,8 @@ export default function ConnectWithUs() {
           </div>
 
           {/* CONTACT CARDS */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
+
             {contactMethods.map((item, index) => (
               <div
                 key={index}
@@ -101,9 +102,20 @@ export default function ConnectWithUs() {
           </div>
 
           {/* FORM + IMAGE */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+
+            {/* IMAGE */}
+            <div className="relative w-full min-h-[280px] sm:min-h-[320px] lg:min-h-full rounded-2xl overflow-hidden">
+              <Image
+                src="/images/contact.jpg"
+                alt="Contact"
+                fill
+                className="object-cover"
+              />
+            </div>
+
             {/* FORM */}
-            <div className="flex">
+            <div className="flex order-2 lg:order-1">
               <div className="w-full bg-white border border-[#DDDDDD] rounded-[30px] p-6 md:p-8 flex flex-col justify-center">
                 <h3 className="font-bold text-black text-[28px] mb-2">
                   Let’s find the right deal for you
@@ -113,16 +125,6 @@ export default function ConnectWithUs() {
                 </p>
                 <ContactForm />
               </div>
-            </div>
-
-            {/* IMAGE */}
-            <div className="relative min-h-[320px] md:min-h-full rounded-2xl overflow-hidden">
-              <Image
-                src="/images/contact.jpg"
-                alt="Contact"
-                fill
-                className="object-cover"
-              />
             </div>
           </div>
         </div>

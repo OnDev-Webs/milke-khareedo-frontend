@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
-import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight, ArrowLeft, ArrowRight } from "lucide-react";
 
 const reviews = [
   {
@@ -123,7 +123,7 @@ export default function Testimonials() {
           </h2>
 
           {/* Navigation Buttons */}
-          <div className="hidden md:flex gap-3">
+          <div className="hidden sm:flex gap-3">
             <button className="testimonial-prev h-10 w-10 rounded-full border border-[#1C4692] text-[#1C4692] flex items-center justify-center hover:bg-[#1C4692] hover:text-white transition">
               <ChevronLeft size={18} />
             </button>
@@ -144,7 +144,7 @@ export default function Testimonials() {
           slidesPerView={3.5}
           breakpoints={{
             0: { slidesPerView: 1 },
-            640: { slidesPerView: 2.5 },
+            640: { slidesPerView: 2 },
             1024: { slidesPerView: 3.5 },
           }}
         >
@@ -193,6 +193,17 @@ export default function Testimonials() {
             </SwiperSlide>
           ))}
         </Swiper>
+
+        {/* MOBILE + TABLET NAVIGATION (BOTTOM) */}
+        <div className="flex items-center justify-between gap-6 sm:hidden">
+          <button className="testimonial-prev h-[40px] w-[54px] rounded-[110px] shadow bg-white text-[#000] border border-[#fff] flex items-center justify-center">
+            <ArrowLeft size={22} />
+          </button>
+          <button className="testimonial-next h-[40px] w-[54px] rounded-[110px] shadow bg-white text-[#000] border border-[#fff] flex items-center justify-center">
+            <ArrowRight size={22} />
+          </button>
+        </div>
+
       </div>
     </section>
   );

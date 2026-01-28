@@ -119,7 +119,7 @@ export default function PropertyDetailsPage({
           text: `Check out ${property.projectName}`,
           url: window.location.href,
         })
-        .catch(() => {});
+        .catch(() => { });
     } else {
       navigator.clipboard.writeText(window.location.href);
     }
@@ -151,16 +151,18 @@ export default function PropertyDetailsPage({
         }}
       />
 
-      <PDPSections
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-        onFavoriteClick={handleFavoriteClick}
-        onCompareClick={handleCompareClick}
-        onShareClick={handleShareClick}
-        isFavorite={property.isFavorite}
-      />
+      <div className="hidden lg:block">
+        <PDPSections
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          onFavoriteClick={handleFavoriteClick}
+          onCompareClick={handleCompareClick}
+          onShareClick={handleShareClick}
+          isFavorite={property.isFavorite}
+        />
+      </div>
 
-      <div className="container max-w-6xl mx-auto py-6 flex flex-col gap-6 lg:flex-row lg:gap-5">
+      <div className="hidden lg:flex container max-w-6xl mx-auto py-6 gap-6 lg:flex-row lg:gap-5">
         {/* LEFT CONTENT */}
         <div className="flex flex-col gap-4 flex-1">
           <div id="property-details">
@@ -189,6 +191,40 @@ export default function PropertyDetailsPage({
             propertyId={property.id}
           />
         </div>
+      </div>
+
+      {/* MOBILE + TABLET ONLY */}
+      <div className="lg:hidden container max-w-6xl mx-auto px-4 flex flex-col gap-6">
+
+        <PDPGroupProgressStatus
+          groupBuy={property.groupBuy}
+          propertyId={property.id}
+          isJoinGroup={property.isJoinGroup}
+          isAuthenticated={property.isAuthenticated}
+          onJoinGroupChange={(isJoinGroup) => {
+            setProperty({ ...property, isJoinGroup });
+          }}
+          onRefresh={() => fetchPropertyDetails(propertyId)}
+        />
+
+        <PDPSupport
+          relationshipManager={property.relationshipManager}
+          propertyId={property.id}
+        />
+
+        <PDPSections
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          onFavoriteClick={handleFavoriteClick}
+          onCompareClick={handleCompareClick}
+          onShareClick={handleShareClick}
+          isFavorite={property.isFavorite}
+        />
+
+        <PDPPropertyDetails property={property} />
+
+        <PDPHighLights highlights={property.highlights} />
+
       </div>
 
       <div id="amenities">

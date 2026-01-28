@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
+import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { Star, ChevronLeft, ChevronRight, ArrowLeft, ArrowRight } from "lucide-react";
 
 const reviews = [
@@ -135,11 +136,12 @@ export default function Testimonials() {
 
         {/* Swiper */}
         <Swiper
-          modules={[Navigation]}
+          modules={[Navigation, Pagination]}
           navigation={{
             prevEl: ".testimonial-prev",
             nextEl: ".testimonial-next",
           }}
+          pagination={{ clickable: true, el: ".testimonial-pagination" }}
           spaceBetween={24}
           slidesPerView={3.5}
           breakpoints={{
@@ -148,6 +150,7 @@ export default function Testimonials() {
             1024: { slidesPerView: 3.5 },
           }}
         >
+
           {reviews.map((review, index) => (
             <SwiperSlide key={index} className="!h-auto mb-10">
               <div className="h-full min-h-[310px] rounded-2xl bg-white p-6 shadow-[0_18px_40px_rgba(0,0,0,0.05)] flex flex-col">
@@ -193,6 +196,9 @@ export default function Testimonials() {
             </SwiperSlide>
           ))}
         </Swiper>
+
+        {/* PAGINATION DOTS */}
+        <div className="testimonial-pagination flex justify-center mt-6"></div>
 
         {/* MOBILE + TABLET NAVIGATION (BOTTOM) */}
         <div className="flex items-center justify-between gap-6 sm:hidden">

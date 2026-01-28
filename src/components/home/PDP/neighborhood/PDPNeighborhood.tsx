@@ -329,7 +329,10 @@ export default function PDPNeighborhood({
 
   return (
     <section className="relative max-w-6xl mx-auto w-full min-h-[600px] overflow-hidden bg-gray-100 flex flex-col md:block">
+      
       <div className="relative order-2 md:order-none md:absolute inset-0 z-0 pointer-events-auto h-[360px] md:h-full">
+
+        
         {isLoaded && (
           <GoogleMap
             mapContainerStyle={{ width: "100%", height: "100%" }}
@@ -395,6 +398,9 @@ export default function PDPNeighborhood({
           </GoogleMap>
         )}
       </div>
+
+      
+
 
       {/* Blur Overlay and Content - Non-blocking for map interactions */}
       <div className="relative z-10 order-1 md:order-none mx-auto container py-6 md:py-12 pointer-events-none">

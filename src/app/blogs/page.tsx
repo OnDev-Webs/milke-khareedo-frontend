@@ -79,7 +79,7 @@ export default function Page() {
 
       {/* Blogs */}
       <section className="py-[50px] md:py-[100px]">
-        <div className="max-w-6xl mx-auto container mx-auto px-4 sm:px-6">
+<div className="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8">
           {isLoading && (!blogs || blogs.length === 0) ? (
             <div className="flex justify-center items-center py-20">
               <div className="text-gray-500"><Loader size={38}/></div>
@@ -87,7 +87,7 @@ export default function Page() {
           ) : (
             <>
               {blogs && blogs.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:px-10">
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                   {blogs.map((blog) => (
                     <Link
                       key={blog._id}

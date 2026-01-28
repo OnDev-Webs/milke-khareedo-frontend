@@ -66,7 +66,7 @@ export default function AboutSection() {
       <div className="relative z-10 mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-16 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* LEFT SIDE */}
-          <div className="max-w-[640px]">
+          <div className="max-w-[640px] order-2 lg:order-1">
             <h3 className="text-[24px] md:text-[30px] font-semibold text-[#000] mb-6 md:mb-8 pe-0 md:pe-0">
               How
               <span className="relative inline-block pe-2">
@@ -114,8 +114,19 @@ export default function AboutSection() {
           </div>
 
           {/* RIGHT SIDE */}
-          <div className="flex justify-center h-[350px] md:h-[500px]">
-            <div ref={containerRef} className="relative w-full max-w-[360px] h-[520px] rounded-3xl overflow-hidden shadow-xl"
+          <div className="flex justify-center order-1 lg:order-2">
+            <div
+              ref={containerRef}
+              className="
+    relative
+    w-full
+    max-w-[360px]
+    h-[420px]
+    md:h-[520px]
+    rounded-3xl
+    overflow-hidden
+    shadow-xl
+  "
               onMouseEnter={() => setShowControls(true)}
               onMouseLeave={() => setShowControls(false)}>
               <video
@@ -180,7 +191,7 @@ export default function AboutSection() {
                   className="h-9 w-9 bg-white rounded-full flex items-center justify-center shadow">
                   {muted ? <IoVolumeMute size={18} /> : <IoVolumeHigh size={18} />}
                 </button>
-                
+
                 <button
                   onClick={() => {
                     if (!containerRef.current) return;

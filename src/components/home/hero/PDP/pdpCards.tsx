@@ -324,17 +324,29 @@ export default function TopProperties() {
         </h2>
 
         {/* Tabs */}
-        <div className="flex flex-wrap gap-6 mb-8 py-2 border-b border-[#E0E0E0]">
+<div
+  className="
+    flex
+    gap-6
+    mb-6
+    py-2
+    border-b border-[#E0E0E0]
+    overflow-x-auto
+    whitespace-nowrap
+    no-scrollbar
+  "
+>
           {tabs.map((tab, idx) => {
             const isActive = activeTab === tab;
 
             return (
               <button
-                key={idx}
-                onClick={() => handleTabChange(tab)}
-                className={`relative px-1 pb-1 text-sm font-medium transition-colors
-                ${isActive ? "text-[#1C4692]" : "text-[#818181]"}`}
-              >
+  key={idx}
+  onClick={() => handleTabChange(tab)}
+  className={`relative shrink-0 px-1 pb-1 text-sm font-medium transition-colors
+    ${isActive ? "text-[#1C4692]" : "text-[#818181]"}`}
+>
+
                 {tab}
                 {isActive && (
                   <span className="absolute left-0 right-0 -bottom-[9px] h-[2px] bg-[#1C4692]" />
@@ -368,6 +380,15 @@ export default function TopProperties() {
               const currentImage = images[currentIndex] || null;
 
               return (
+                <div
+  key={prop.id}
+  className="
+    min-w-[85%]
+    sm:min-w-[70%]
+    snap-start
+    md:min-w-0
+  "
+>
                 <PropertyCard
                   key={prop.id}
                   property={prop}
@@ -395,6 +416,7 @@ export default function TopProperties() {
                   }
                   formatDate={formatDate}
                 />
+                </div>
               );
             })}
 

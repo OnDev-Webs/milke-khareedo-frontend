@@ -168,8 +168,7 @@ export default function CalculateSave() {
     >
       <div className="relative z-10 mx-auto max-w-[1340px] px-4 sm:px-6 lg:px-8">
         <div className="rounded-[32px] bg-white p-2 sm:p-6 shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
-          <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 p-2">
-            {/* ================= LEFT SIDE ================= */}
+<div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 p-2">            {/* ================= LEFT SIDE ================= */}
             <div className="flex flex-col gap-4">
               {/* Circular Chart and EMI Result */}
               <div className="flex flex-col md:flex-row p-4 sm:px-3 sm:py-6 rounded-[20px] md:rounded-md bg-[#EEF4FF] gap-4 items-center md:items-start text-center md:text-left">
@@ -264,9 +263,8 @@ export default function CalculateSave() {
                   <div
                     className="flex gap-4 transition-transform duration-300 ease-in-out"
                     style={{
-                      transform: `translateX(-${
-                        baseOffset + visibleIndex * ITEM_WIDTH
-                      }px)`,
+                      transform: `translateX(-${baseOffset + visibleIndex * ITEM_WIDTH
+                        }px)`,
                     }}
                   >
                     {extendedLogos.map((partner, idx) => {
@@ -276,11 +274,10 @@ export default function CalculateSave() {
                       return (
                         <div
                           key={idx}
-                          className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 transition-all ${
-                            isActive
+                          className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 transition-all ${isActive
                               ? "scale-110 border-blue-400"
                               : "bg-gray-100 border-gray-200"
-                          }`}
+                            }`}
                         >
                           <img
                             src={partner.logo}

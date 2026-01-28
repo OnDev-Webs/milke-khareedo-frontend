@@ -324,8 +324,8 @@ export default function TopProperties() {
         </h2>
 
         {/* Tabs */}
-<div
-  className="
+        <div
+          className="
     flex
     gap-6
     mb-6
@@ -335,17 +335,17 @@ export default function TopProperties() {
     whitespace-nowrap
     no-scrollbar
   "
->
+        >
           {tabs.map((tab, idx) => {
             const isActive = activeTab === tab;
 
             return (
               <button
-  key={idx}
-  onClick={() => handleTabChange(tab)}
-  className={`relative shrink-0 px-1 pb-1 text-sm font-medium transition-colors
+                key={idx}
+                onClick={() => handleTabChange(tab)}
+                className={`relative shrink-0 px-1 pb-1 text-sm font-medium transition-colors
     ${isActive ? "text-[#1C4692]" : "text-[#818181]"}`}
->
+              >
 
                 {tab}
                 {isActive && (
@@ -367,8 +367,12 @@ export default function TopProperties() {
 
         {/* Cards Grid */}
         {!isLoadingMore || properties.length > 0 ? (
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-
+          <>
+          <div
+  className="
+    flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar
+    md:grid md:grid-cols-3 md:gap-6 md:overflow-visible
+  "          >
             {properties.map((prop) => {
               const isFavorite = favoriteStates[prop.id] ?? prop.isFavorite ?? false;
               const isLoading = favoriteLoading[prop.id] ?? false;
@@ -381,57 +385,70 @@ export default function TopProperties() {
 
               return (
                 <div
-  key={prop.id}
-  className="
+                  key={prop.id}
+                  className="
     min-w-[85%]
     sm:min-w-[70%]
     snap-start
     md:min-w-0
   "
->
-                <PropertyCard
-                  key={prop.id}
-                  property={prop}
-                  isFavorite={isFavorite}
-                  isLoading={isLoading}
-                  isJoinGroup={isJoinGroup}
-                  isJoinGroupLoading={isJoinGroupLoading}
-                  images={images}
-                  currentIndex={currentIndex}
-                  hasMultipleImages={hasMultipleImages}
-                  currentImage={currentImage}
-                  isHovered={hoveredProperty === prop.id}
-                  onMouseEnter={() => setHoveredProperty(prop.id)}
-                  onMouseLeave={() => setHoveredProperty(null)}
-                  onFavoriteClick={handleFavoriteClick}
-                  onCompareClick={handleCompareClick}
-                  onShareClick={handleShareClick}
-                  onJoinGroupClick={handleJoinGroupClick}
-                  onGoToImage={(index, totalImages) =>
-                    goToImage(prop.id, index, totalImages)
-                  }
-                  onGoToNextImage={() => goToNextImage(prop.id, images.length)}
-                  onGoToPreviousImage={() =>
-                    goToPreviousImage(prop.id, images.length)
-                  }
-                  formatDate={formatDate}
-                />
+                >
+                  <PropertyCard
+                    key={prop.id}
+                    property={prop}
+                    isFavorite={isFavorite}
+                    isLoading={isLoading}
+                    isJoinGroup={isJoinGroup}
+                    isJoinGroupLoading={isJoinGroupLoading}
+                    images={images}
+                    currentIndex={currentIndex}
+                    hasMultipleImages={hasMultipleImages}
+                    currentImage={currentImage}
+                    isHovered={hoveredProperty === prop.id}
+                    onMouseEnter={() => setHoveredProperty(prop.id)}
+                    onMouseLeave={() => setHoveredProperty(null)}
+                    onFavoriteClick={handleFavoriteClick}
+                    onCompareClick={handleCompareClick}
+                    onShareClick={handleShareClick}
+                    onJoinGroupClick={handleJoinGroupClick}
+                    onGoToImage={(index, totalImages) =>
+                      goToImage(prop.id, index, totalImages)
+                    }
+                    onGoToNextImage={() => goToNextImage(prop.id, images.length)}
+                    onGoToPreviousImage={() =>
+                      goToPreviousImage(prop.id, images.length)
+                    }
+                    formatDate={formatDate}
+                  />
                 </div>
               );
             })}
 
-            {/* Load More Button */}
-            {hasMore && (
-              <div className="col-span-1 sm:col-span-2 lg:col-span-3 flex justify-center mt-8">
-                <button
-                  onClick={handleLoadMore}
-                  disabled={isLoadingMore}
-                  className="px-8 py-3 rounded-full border border-[#F5F5F5] text-[#2D2D2D] bg-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isLoadingMore ? <Loader size={38} /> : "Load More"}
-                </button>
-              </div>
-            )}
+
+          </div>
+
+     {/* Load More */}
+{hasMore && (
+  <div className="mt-8 flex justify-center px-4">
+    <button
+      onClick={handleLoadMore}
+      disabled={isLoadingMore}
+      className="
+        w-full max-w-[220px]
+        rounded-full
+        border border-[#F5F5F5]
+        bg-white
+        py-2 text-sm font-semibold text-[#2D2D2D]
+        sm:py-3 sm:text-base
+        disabled:opacity-50
+      "
+    >
+      {isLoadingMore ? <Loader size={24} /> : "Load more"}
+    </button>
+  </div>
+)}
+
+
 
             {/* No Properties Message */}
             {!isLoadingMore && properties.length === 0 && (
@@ -439,7 +456,7 @@ export default function TopProperties() {
                 <div className="text-gray-500">No properties found.</div>
               </div>
             )}
-          </div>
+          </>
         ) : null}
       </div>
 

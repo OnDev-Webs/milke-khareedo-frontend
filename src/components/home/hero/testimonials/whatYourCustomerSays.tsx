@@ -5,7 +5,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Star, ChevronLeft, ChevronRight, ArrowLeft, ArrowRight } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight, ArrowLeft, ArrowRight, ArrowBigDownIcon, ArrowDownLeft, ArrowDownRight, ArrowUpRight } from "lucide-react";
 
 const reviews = [
   {
@@ -125,11 +125,11 @@ export default function Testimonials() {
 
           {/* Navigation Buttons */}
           <div className="hidden sm:flex gap-3">
-            <button className="testimonial-prev h-10 w-10 rounded-full border border-[#1C4692] text-[#1C4692] flex items-center justify-center hover:bg-[#1C4692] hover:text-white transition">
-              <ChevronLeft size={18} />
+            <button className="testimonial-prev h-10 w-10 rounded-full border border-[#fff] text-[#292D32] flex items-center justify-center">
+              <ArrowDownLeft size={18} />
             </button>
-            <button className="testimonial-next h-10 w-10 rounded-full border border-[#1C4692] text-[#1C4692] flex items-center justify-center hover:bg-[#1C4692] hover:text-white transition">
-              <ChevronRight size={18} />
+            <button className="testimonial-next h-10 w-10 rounded-full border border-[#fff] text-[#292D32] flex items-center justify-center">
+              <ArrowUpRight size={18} />
             </button>
           </div>
         </div>

@@ -143,10 +143,11 @@ export default function Hero() {
       </div>
 
       <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 z-20 w-[90%] md:w-[94%] lg:w-[94%] xl:w-[1050px] xl:w-[1050px]">
-        <div className="flex flex-col md:flex-row items-stretch py-2 md:py-3 rounded-2xl bg-white/70 backdrop-blur-md p-0 overflow-visible shadow-[0_12px_40px_rgba(0,0,0,0.10)]">
+        <div className="flex flex-col md:flex-row items-stretch py-2 md:py-3 rounded-2xl bg-white/50 backdrop-blur-[20px] p-0 overflow-visible shadow-[0px_30px_60px_-15px_#8F90BC26]">
+
           {/* CITY SELECT SECTION */}
           <div className="relative flex flex-col justify-center ps-6 pe-4 py-4 min-w-[130px] border-b border-[#DCDCEB] md:border-b-0">
-            <label className="text-sm font-bold text-gray-800 mb-2.5">
+            <label className="text-[18px] font-semibold text-[#110229] mb-1">
               City
             </label>
             <div className="relative" style={{ zIndex: 1000 }}>
@@ -177,7 +178,7 @@ export default function Hero() {
                     ? "text-[26px] font-semibold text-gray-900 text-left mt-1"
                     : "text-base font-bold text-gray-800"
                   }
-                  placeholder:text-base placeholder:font-bold placeholder:text-gray-800 min-h-7
+                  placeholder:text-[18px] placeholder:font-semibold placeholder:text-[#110229] min-h-7
                 `}
               />
               <div

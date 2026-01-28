@@ -60,33 +60,33 @@ export default function SearchResultsGrid() {
         location
       )}`
     );
-  
+
     const data = await res.json();
-  
+
     if (data?.length > 0) {
       return {
         lat: Number(data[0].lat),
         lng: Number(data[0].lon),
       };
     }
-  
+
     return null;
   };
-  
+
   useEffect(() => {
     if (results.length > 0) {
       setMapFallbackProps(results);
       return;
     }
-  
+
     const fetchCityCoords = async () => {
       const cityText =
         selectedCity || searchQuery || "";
-  
+
       const coords = await getLatLngFromLocation(cityText);
-  
+
       if (!coords) return;
-  
+
       setMapFallbackProps([
         {
           id: "location-center",
@@ -97,10 +97,10 @@ export default function SearchResultsGrid() {
         } as Property,
       ]);
     };
-  
+
     fetchCityCoords();
   }, [results, selectedCity, searchQuery]);
-  
+
   const detectBhkFromQuery = (query: string) => {
     const match = query.match(/(\d+(\.\d+)?)\s*bhk/i);
     return match ? `${match[1]} BHK` : null;
@@ -146,6 +146,35 @@ export default function SearchResultsGrid() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const detectedBhk = detectBhkFromQuery(searchQuery);
+      const bhkToUse = detectedBhk ?? selectedBhk;
+
+      fetchProperties({
+        city: selectedCity.split(",").pop()?.trim(),
+        searchText: detectedBhk ? "" : searchQuery.trim(),
+        bhk: bhkToUse,
+        priceMin: String(priceRange[0] * 100000),
+        priceMax: String(priceRange[1] * 10000000),
+        areaMin: String(areaRange[0]),
+        areaMax: String(areaRange[1]),
+        projectStatus: selectedPossession,
+        sortBy,
+      });
+    }, 500); 
+
+    return () => clearTimeout(timer);
+  }, [
+    selectedCity,
+    searchQuery,
+    selectedBhk,
+    selectedPossession,
+    priceRange,
+    areaRange,
+    sortBy,
+  ]);
 
   const normalizeCityValue = (city: string) => {
     if (!city) return "India, Delhi";
@@ -320,7 +349,7 @@ export default function SearchResultsGrid() {
             <span className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 h-10 w-0.5 bg-[#DCDCEB]" />
           </div>
           <div className="relative flex-1 flex flex-col justify-start py-4 sm:ps-4 sm:pe-6">
-            <div className="relative">
+            <div className="relative mb-8">
               <input
                 type="text"
                 value={searchQuery}
@@ -328,9 +357,9 @@ export default function SearchResultsGrid() {
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
                 placeholder="Find your Dream Home"
-                className="w-full bg-transparent text-[26px] font-semibold text-gray-900 text-left mt-1 outline-none border-none focus:ring-0 placeholder:text-base placeholder:font-bold placeholder:text-gray-800"
+                className="w-full bg-transparent text-[26px] font-semibold text-gray-900 text-left outline-none border-none focus:ring-0 placeholder:text-base placeholder:font-bold placeholder:text-gray-800"
               />
-              <div className={`absolute left-0 top-full mt-1.5 flex items-center gap-1.5 text-xs text-gray-500 pointer-events-none transition-opacity ${searchQuery || isSearchFocused ? "opacity-0" : "opacity-100"}`}>
+              <div className={`absolute left-0 top-full mt-1 flex items-center gap-1.5 text-xs text-gray-500 pointer-events-none transition-opacity ${searchQuery || isSearchFocused ? "opacity-0" : "opacity-100"}`}>
                 <FaMapMarkerAlt className="text-xs" />
                 <span>Search for Developers, Location, Projects</span>
               </div>
@@ -339,7 +368,7 @@ export default function SearchResultsGrid() {
         </div>
 
         {/* FILTERS */}
-        <div className="grid grid-cols-2 gap-2 w-full md:flex md:flex-wrap md:items-center md:w-full lg:flex lg:flex-nowrap lg:w-auto">
+        <div className="grid grid-cols-2 gap-3 w-full lg:flex lg:flex-nowrap lg:w-auto">
           <Popover open={priceOpen} onOpenChange={setPriceOpen}>
             <PopoverTrigger asChild>
               <button className={filterBtnClass}>
@@ -454,15 +483,16 @@ export default function SearchResultsGrid() {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-2">
-        <div className="w-full md:w-1/3 order-1 md:order-2">
-          <div className="h-[300px] md:sticky md:top-20 md:h-[calc(100vh-5rem)] overflow-hidden">
+      <div className="flex flex-col lg:flex-row gap-4">
+        <div className="w-full lg:w-1/3 order-1 lg:order-2">
+          <div className="h-[260px] lg:sticky lg:top-20 lg:h-[calc(100vh-5rem)] overflow-hidden">
             <PropertyMap properties={mapFallbackProps} />
           </div>
         </div>
 
         {/* PROPERTY LIST */}
-        <div className="flex-1 px-4 order-2 md:order-1">
+        <div className="flex-1 px-4 order-2 lg:order-1">
+
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-2xl font-semibold text-black">
               {searchQuery
@@ -495,7 +525,7 @@ export default function SearchResultsGrid() {
             Showing {results.length} of {paginationData?.total ?? results.length} Projects
           </p>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2">
             {loading ? (
               <div className="col-span-2 flex justify-center py-20">
                 <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#1C4692] border-t-transparent" />

@@ -298,7 +298,7 @@ export default function TopProperties() {
   };
 
   return (
-    <section className="w-full py-16 bg-gray-50 px-6">
+    <section className="w-full py-16 px-6">
       <div className="max-w-[1320px] mx-auto sm:px-6 lg:px-5">
         {/* Heading */}
         <h2 className="text-3xl font-bold text-black mb-6">
@@ -325,16 +325,7 @@ export default function TopProperties() {
 
         {/* Tabs */}
         <div
-          className="
-    flex
-    gap-6
-    mb-6
-    py-2
-    border-b border-[#E0E0E0]
-    overflow-x-auto
-    whitespace-nowrap
-    no-scrollbar
-  "
+          className="flex gap-6 mb-6 py-2 border-b border-[#E0E0E0] overflow-x-auto whitespace-nowrap no-scrollbar"
         >
           {tabs.map((tab, idx) => {
             const isActive = activeTab === tab;
@@ -344,9 +335,8 @@ export default function TopProperties() {
                 key={idx}
                 onClick={() => handleTabChange(tab)}
                 className={`relative shrink-0 px-1 pb-1 text-sm font-medium transition-colors
-    ${isActive ? "text-[#1C4692]" : "text-[#818181]"}`}
+                ${isActive ? "text-[#1C4692]" : "text-[#818181]"}`}
               >
-
                 {tab}
                 {isActive && (
                   <span className="absolute left-0 right-0 -bottom-[9px] h-[2px] bg-[#1C4692]" />
@@ -371,8 +361,7 @@ export default function TopProperties() {
           <div
   className="
     flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar
-    md:grid md:grid-cols-3 md:gap-6 md:overflow-visible
-  "          >
+    md:grid md:grid-cols-3 md:gap-6 md:overflow-visible">
             {properties.map((prop) => {
               const isFavorite = favoriteStates[prop.id] ?? prop.isFavorite ?? false;
               const isLoading = favoriteLoading[prop.id] ?? false;
@@ -386,12 +375,7 @@ export default function TopProperties() {
               return (
                 <div
                   key={prop.id}
-                  className="
-    min-w-[85%]
-    sm:min-w-[70%]
-    snap-start
-    md:min-w-0
-  "
+                  className="min-w-[85%] sm:min-w-[70%] snap-start md:min-w-0"
                 >
                   <PropertyCard
                     key={prop.id}

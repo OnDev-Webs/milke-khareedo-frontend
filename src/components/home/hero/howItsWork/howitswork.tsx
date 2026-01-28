@@ -154,7 +154,7 @@ export default function HowItWorks() {
             >
               {steps.map((step, i) => (
                 <SwiperSlide key={i}>
-                  <div className="flex flex-col bg-white rounded-2xl p-5 mb-2 shadow-md min-h-[240px] max-w-[340px]">
+                  <div className="flex flex-col bg-white rounded-2xl p-5 mb-2 min-h-[240px] max-w-[340px] shadow-[0_10px_50px_rgba(0,0,0,0.08)]">
                     <div className="relative mb-4 h-12 w-12 flex items-center justify-center">
                       <img
                         src="/images/LightGradient.svg"

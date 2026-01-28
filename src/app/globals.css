@@ -506,3 +506,21 @@ button {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
+/* NORMAL DOT */
+.testimonial-pagination .swiper-pagination-bullet {
+  width: 6px;              
+  height: 6px;
+  background-color: #E3E3E3;
+  opacity: 1;
+  border-radius: 999px;
+  margin: 0 2px !important; 
+  transition: all 0.3s ease;
+}
+
+.testimonial-pagination .swiper-pagination-bullet-active {
+  width: 20px;            
+  height: 6px;
+  background-color: #1C4692;
+  border-radius: 999px;
+}

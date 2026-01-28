@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
-import { Star, ChevronLeft, ChevronRight, ArrowLeft, ArrowRight } from "lucide-react";
+import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Star, ChevronLeft, ChevronRight, ArrowLeft, ArrowRight, ArrowBigDownIcon, ArrowDownLeft, ArrowDownRight, ArrowUpRight } from "lucide-react";
 
 const reviews = [
   {
@@ -124,22 +125,23 @@ export default function Testimonials() {
 
           {/* Navigation Buttons */}
           <div className="hidden sm:flex gap-3">
-            <button className="testimonial-prev h-10 w-10 rounded-full border border-[#1C4692] text-[#1C4692] flex items-center justify-center hover:bg-[#1C4692] hover:text-white transition">
-              <ChevronLeft size={18} />
+            <button className="testimonial-prev h-10 w-10 rounded-full border border-[#fff] text-[#292D32] flex items-center justify-center">
+              <ArrowDownLeft size={18} />
             </button>
-            <button className="testimonial-next h-10 w-10 rounded-full border border-[#1C4692] text-[#1C4692] flex items-center justify-center hover:bg-[#1C4692] hover:text-white transition">
-              <ChevronRight size={18} />
+            <button className="testimonial-next h-10 w-10 rounded-full border border-[#fff] text-[#292D32] flex items-center justify-center">
+              <ArrowUpRight size={18} />
             </button>
           </div>
         </div>
 
         {/* Swiper */}
         <Swiper
-          modules={[Navigation]}
+          modules={[Navigation, Pagination]}
           navigation={{
             prevEl: ".testimonial-prev",
             nextEl: ".testimonial-next",
           }}
+          pagination={{ clickable: true, el: ".testimonial-pagination" }}
           spaceBetween={24}
           slidesPerView={3.5}
           breakpoints={{
@@ -148,6 +150,7 @@ export default function Testimonials() {
             1024: { slidesPerView: 3.5 },
           }}
         >
+
           {reviews.map((review, index) => (
             <SwiperSlide key={index} className="!h-auto mb-10">
               <div className="h-full min-h-[310px] rounded-2xl bg-white p-6 shadow-[0_18px_40px_rgba(0,0,0,0.05)] flex flex-col">
@@ -193,6 +196,9 @@ export default function Testimonials() {
             </SwiperSlide>
           ))}
         </Swiper>
+
+        {/* PAGINATION DOTS */}
+        <div className="testimonial-pagination flex justify-center mt-6"></div>
 
         {/* MOBILE + TABLET NAVIGATION (BOTTOM) */}
         <div className="flex items-center justify-between gap-6 sm:hidden">

@@ -12,14 +12,15 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 
 // Partner logos data (placeholder - replace with actual data)
 const partnerLogos = [
-  { name: "Partner 1", logo: "/images/ins_120033.svg", score: "9.5%" },
-  { name: "Partner 2", logo: "/images/ins_120033 (1).svg", score: "8.7%" },
-  { name: "Norte", logo: "/images/ins_120033 (2).svg", score: "7.9%" },
-  { name: "iQ", logo: "/images/ins_120033 (3).svg", score: "8.3%" },
-  { name: "Partner 5", logo: "/images/ins_120033 (4).svg", score: "9.0%" },
-  { name: "Partner 6", logo: "/images/ins_120033 (5).svg", score: "7.5%" },
-  { name: "Partner 7", logo: "/images/ins_120033 (6).svg", score: "8.8%" },
+  { name: "Partner 1", logo: "/images/ins_120033.svg", score: 9.5 },
+  { name: "Partner 2", logo: "/images/ins_120033 (1).svg", score: 8.7 },
+  { name: "Norte", logo: "/images/ins_120033 (2).svg", score: 7.9 },
+  { name: "iQ", logo: "/images/ins_120033 (3).svg", score: 8.3 },
+  { name: "Partner 5", logo: "/images/ins_120033 (4).svg", score: 9.1 },
+  { name: "Partner 6", logo: "/images/ins_120033 (5).svg", score: 7.5 },
+  { name: "Partner 7", logo: "/images/ins_120033 (6).svg", score: 8.8 },
 ];
+
 
 export default function CalculateSave() {
   const router = useRouter();
@@ -60,6 +61,13 @@ export default function CalculateSave() {
   const tenurePercent =
     ((loanTenure - tenureRange.min) / (tenureRange.max - tenureRange.min)) *
     100;
+
+  useEffect(() => {
+    const selectedRate = partnerLogos[visibleIndex]?.score;
+    if (selectedRate) {
+      setRateOfInterest(selectedRate);
+    }
+  }, [visibleIndex]);
 
   // Format loan amount for display
   const formatLoanAmount = (amount: number) => {
@@ -167,7 +175,7 @@ export default function CalculateSave() {
         backgroundPosition: "center",
       }}
     >
-    
+
       <div className="relative z-10 mx-auto max-w-[1340px] px-4 sm:px-6 lg:px-8">
         <div className="rounded-[32px] bg-white p-2 sm:p-6 shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
           <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 p-2">            {/* ================= LEFT SIDE ================= */}
@@ -244,12 +252,12 @@ export default function CalculateSave() {
                     onClick={handlePrev}
                     className="absolute left-0 flex h-[38px] w-[60px] items-center justify-center rounded-full text-[#000] bg-[#FFFFFF]"
                   >
-                    <ArrowLeft size={20}/>
+                    <ArrowLeft size={20} />
                   </button>
 
                   {/* Active Score */}
                   <p className="text-lg font-semibold h-[40px] w-[64px] bg-[#FFFFFF] rounded-full text-[#AA1E2E] text-center pt-1.5">
-                    {partnerLogos[visibleIndex].score}
+                    {partnerLogos[visibleIndex].score}%
                   </p>
 
                   {/* Right Arrow */}
@@ -257,7 +265,7 @@ export default function CalculateSave() {
                     onClick={handleNext}
                     className="absolute right-0 flex h-[38px] w-[60px] items-center justify-center rounded-full text-[#000] bg-[#FFFFFF]"
                   >
-                    <ArrowRight size={20}/>
+                    <ArrowRight size={20} />
                   </button>
                 </div>
 

@@ -36,18 +36,20 @@ export default function PropertyGrid({
                 </div>
             </div>
 
-            <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-6">
-                {properties.map((property) => (
-                    <PropertyCard
-                        {...property}
-                        isFavorite={!!favoriteStates[String(property.id)]}
-                        isFavoriteLoading={favoriteLoading[String(property.id)]}
-                        onFavoriteClick={onFavoriteClick}
-                        onCompareClick={onCompareClick}
-                        onShareClick={onShareClick}
-                    />
-                ))}
-            </div>
+           <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-6">
+  {properties.map((property) => (
+    <PropertyCard
+      key={property.id}
+      {...property}
+      isFavorite={!!favoriteStates[String(property.id)]}
+      isFavoriteLoading={favoriteLoading[String(property.id)]}
+      onFavoriteClick={onFavoriteClick}
+      onCompareClick={onCompareClick}
+      onShareClick={onShareClick}
+    />
+  ))}
+</div>
+
         </>
     );
 }

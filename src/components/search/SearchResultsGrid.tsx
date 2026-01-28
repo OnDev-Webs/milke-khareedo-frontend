@@ -14,6 +14,7 @@ import { useCompare } from "@/contexts/CompareContext";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { Slider } from "../ui/slider";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import EmptySearchState from "./Search";
 
 export default function SearchResultsGrid() {
   const [selectedCity, setSelectedCity] = useState("India, Delhi");
@@ -483,77 +484,84 @@ export default function SearchResultsGrid() {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-4">
-        <div className="w-full lg:w-1/3 order-1 lg:order-2">
-          <div className="h-[260px] lg:sticky lg:top-20 lg:h-[calc(100vh-5rem)] overflow-hidden">
-            <PropertyMap properties={mapFallbackProps} />
-          </div>
-        </div>
 
-        {/* PROPERTY LIST */}
-        <div className="flex-1 px-4 order-2 lg:order-1">
+{/* EMPTY STATE */}
+{!loading && results.length === 0 && (
+  <EmptySearchState />
+)}
 
-          <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-2xl font-semibold text-black">
-              {searchQuery
-                ? `Results for "${searchQuery}" in ${getDisplayCity(selectedCity)}`
-                : `Projects in ${getDisplayCity(selectedCity)}`}
-            </h2>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger className="bg-[#F2F6FF] rounded-[10px] py-2.5 px-[15px]">
-                <span className="text-[#000000] text-[16px] font-medium">Sort by:</span> <span className="text-[#555555] text-[16px] font-medium"> {sortLabelMap[sortBy]}</span>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => setSortBy("newAdded")}>
-                  New Added
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortBy("oldest")}>
-                  Oldest
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortBy("priceLow")}>
-                  Price: Low to High
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortBy("priceHigh")}>
-                  Price: High to Low
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          <p className="mb-6 text-sm text-[#141414]">
-            Showing {results.length} of {paginationData?.total ?? results.length} Projects
-          </p>
-
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2">
-            {loading ? (
-              <div className="col-span-2 flex justify-center py-20">
-                <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#1C4692] border-t-transparent" />
-              </div>
-            ) : results.length > 0 ? (
-              results.map((property) => (
-                <SearchPropertyCard
-                  key={property.id}
-                  property={property}
-                  images={getPropertyImages(property)}
-                  isFavorite={favoriteStates[property.id]}
-                  isFavoriteLoading={favoriteLoading[property.id]}
-                  isJoinGroup={joinGroupStates[property.id]}
-                  isJoinGroupLoading={joinGroupLoading[property.id]}
-                  onFavoriteClick={handleFavoriteClick}
-                  onCompareClick={handleCompareClick}
-                  onShareClick={handleShareClick}
-                  onJoinGroupClick={handleJoinGroupClick}
-                />
-              ))
-            ) : (
-              <div className="col-span-2 text-center py-10 text-gray-500">
-                No properties found
-              </div>
-            )}
-          </div>
-        </div>
+{/* RESULTS + MAP */}
+{!loading && results.length > 0 && (
+  <div className="flex flex-col md:flex-row gap-2">
+    {/* MAP */}
+    <div className="w-full md:w-1/3 order-1 md:order-2">
+      <div className="h-[300px] md:sticky md:top-20 md:h-[calc(100vh-5rem)] overflow-hidden">
+        <PropertyMap properties={mapFallbackProps} />
       </div>
+    </div>
+
+    {/* PROPERTY LIST */}
+    <div className="flex-1 px-4 order-2 md:order-1">
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="text-2xl font-semibold text-black">
+          {searchQuery
+            ? `Results for "${searchQuery}" in ${getDisplayCity(selectedCity)}`
+            : `Projects in ${getDisplayCity(selectedCity)}`}
+        </h2>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger className="bg-[#F2F6FF] rounded-[10px] py-2.5 px-[15px]">
+            <span className="text-[#000000] text-[16px] font-medium">
+              Sort by:
+            </span>{" "}
+            <span className="text-[#555555] text-[16px] font-medium">
+              {sortLabelMap[sortBy]}
+            </span>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent>
+            <DropdownMenuItem onClick={() => setSortBy("newAdded")}>
+              New Added
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setSortBy("oldest")}>
+              Oldest
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setSortBy("priceLow")}>
+              Price: Low to High
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setSortBy("priceHigh")}>
+              Price: High to Low
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      <p className="mb-6 text-sm text-[#141414]">
+        Showing {results.length} of{" "}
+        {paginationData?.total ?? results.length} Projects
+      </p>
+
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {results.map((property) => (
+          <SearchPropertyCard
+            key={property.id}
+            property={property}
+            images={getPropertyImages(property)}
+            isFavorite={favoriteStates[property.id]}
+            isFavoriteLoading={favoriteLoading[property.id]}
+            isJoinGroup={joinGroupStates[property.id]}
+            isJoinGroupLoading={joinGroupLoading[property.id]}
+            onFavoriteClick={handleFavoriteClick}
+            onCompareClick={handleCompareClick}
+            onShareClick={handleShareClick}
+            onJoinGroupClick={handleJoinGroupClick}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+)}
+
     </>
   );
 }

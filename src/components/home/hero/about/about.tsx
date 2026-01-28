@@ -66,7 +66,7 @@ export default function AboutSection() {
       <div className="relative z-10 mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-16 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* LEFT SIDE */}
-          <div className="max-w-[640px] order-2 lg:order-1">
+          <div className="max-w-[640px] order-2 lg:order-1 pl-4 lg:pl-8 xl:pl-24">
             <h3 className="text-[24px] md:text-[30px] font-semibold text-[#000] mb-6 md:mb-8 pe-0 md:pe-0">
               How
               <span className="relative inline-block pe-2">
@@ -90,10 +90,9 @@ export default function AboutSection() {
               </span>
               Makes Buying Easier
             </h3>
-
-            <div className="space-y-8">
+            <div className="space-y-3">
               {points.map((item, i) => (
-                <div key={i} className="flex items-center gap-3 md:gap-4">
+                <div key={i} className="flex gap-3 md:gap-4">
                   {/* Number */}
                   <div className="flex h-8 w-8 md:h-8 md:w-8 shrink-0 items-center justify-center rounded-full bg-[#1C4692] text-white font-bold text-sm md:text-base leading-none">
                     {i + 1}
@@ -114,19 +113,10 @@ export default function AboutSection() {
           </div>
 
           {/* RIGHT SIDE */}
-          <div className="flex justify-center order-1 lg:order-2">
+          <div className="flex order-1 lg:order-2 xl:pl-20">
             <div
               ref={containerRef}
-              className="
-    relative
-    w-full
-    max-w-[360px]
-    h-[420px]
-    md:h-[520px]
-    rounded-3xl
-    overflow-hidden
-    shadow-xl
-  "
+              className="relative w-full max-w-[360px] h-[420px] md:h-[520px] rounded-3xl overflow-hidden shadow-xl"
               onMouseEnter={() => setShowControls(true)}
               onMouseLeave={() => setShowControls(false)}>
               <video
@@ -142,10 +132,7 @@ export default function AboutSection() {
                 onPause={() => setIsPlaying(false)}
               />
 
-              <div
-                className={`absolute inset-0 mt-118 ms-4 flex justify-start z-30 transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0"
-                  }`}
-              >
+              <div className={`absolute inset-0 mt-118 ms-4 flex justify-start z-30 transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0"}`}>
                 <button
                   onClick={() => {
                     if (!videoRef.current) return;

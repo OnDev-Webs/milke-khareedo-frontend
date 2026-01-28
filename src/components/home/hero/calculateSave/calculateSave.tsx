@@ -8,6 +8,7 @@ import {
 } from "@/lib/api/services/home.service";
 import { HiLightBulb } from "react-icons/hi";
 import { useRouter } from "next/navigation";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 // Partner logos data (placeholder - replace with actual data)
 const partnerLogos = [
@@ -166,9 +167,10 @@ export default function CalculateSave() {
         backgroundPosition: "center",
       }}
     >
+    
       <div className="relative z-10 mx-auto max-w-[1340px] px-4 sm:px-6 lg:px-8">
         <div className="rounded-[32px] bg-white p-2 sm:p-6 shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
-<div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 p-2">            {/* ================= LEFT SIDE ================= */}
+          <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 p-2">            {/* ================= LEFT SIDE ================= */}
             <div className="flex flex-col gap-4">
               {/* Circular Chart and EMI Result */}
               <div className="flex flex-col md:flex-row p-4 sm:px-3 sm:py-6 rounded-[20px] md:rounded-md bg-[#EEF4FF] gap-4 items-center md:items-start text-center md:text-left">
@@ -236,30 +238,30 @@ export default function CalculateSave() {
                 </div>
               </div>
 
-              <div className="bg-[#EEF4FF] px-6 py-10 rounded-md max-w-[100%] md:max-w-full flex flex-col gap-6">
+              <div className="bg-[#EEF4FF] px-6 py-7 rounded-md max-w-[100%] md:max-w-full flex flex-col gap-5">
                 <div className="relative flex items-center justify-center mb-4">
                   <button
                     onClick={handlePrev}
-                    className="absolute left-0 flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 text-gray-500 hover:bg-white transition"
+                    className="absolute left-0 flex h-[38px] w-[60px] items-center justify-center rounded-full text-[#000] bg-[#FFFFFF]"
                   >
-                    ←
+                    <ArrowLeft size={20}/>
                   </button>
 
                   {/* Active Score */}
-                  <p className="text-lg font-semibold text-black">
+                  <p className="text-lg font-semibold h-[40px] w-[64px] bg-[#FFFFFF] rounded-full text-[#AA1E2E] text-center pt-1.5">
                     {partnerLogos[visibleIndex].score}
                   </p>
 
                   {/* Right Arrow */}
                   <button
                     onClick={handleNext}
-                    className="absolute right-0 flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 text-gray-500 hover:bg-white transition"
+                    className="absolute right-0 flex h-[38px] w-[60px] items-center justify-center rounded-full text-[#000] bg-[#FFFFFF]"
                   >
-                    →
+                    <ArrowRight size={20}/>
                   </button>
                 </div>
 
-                <div className="overflow-hidden">
+                <div className="overflow-hidden py-2">
                   <div
                     className="flex gap-4 transition-transform duration-300 ease-in-out"
                     style={{
@@ -275,8 +277,8 @@ export default function CalculateSave() {
                         <div
                           key={idx}
                           className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 transition-all ${isActive
-                              ? "scale-110 border-blue-400"
-                              : "bg-gray-100 border-gray-200"
+                            ? "scale-110 border-blue-400"
+                            : "bg-gray-100 border-gray-200"
                             }`}
                         >
                           <img
@@ -297,7 +299,7 @@ export default function CalculateSave() {
             </div>
 
             {/* ================= RIGHT SIDE ================= */}
-            <div className="space-y-6 sm:space-y-8">
+            <div className="space-y-6 sm:space-y-7">
               {/* Loan Amount Slider */}
               <div className="md:w-full">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-6 mb-2">
@@ -439,7 +441,7 @@ export default function CalculateSave() {
         </div>
       </div>
 
-     
+
     </section>
   );
 }

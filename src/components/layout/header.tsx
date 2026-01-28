@@ -96,7 +96,7 @@ export default function Header() {
 
   return (
     <header className="w-full bg-white relative z-55 overflow-x-clip">
-      <div className="mx-auto max-w-6xl px-4 sm:px-0">
+      <div className="mx-auto max-w-6xl px-4 md:px-6 lg:px-0">
         <div className="flex items-center justify-between py-4 lg:py-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">

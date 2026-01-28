@@ -394,7 +394,7 @@ export default function PropertyArchive() {
 
         {/* Cards Grid */}
         {!isLoadingMore || properties.length > 0 ? (
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {properties.map((prop) => {
               const isFavorite =
                 favoriteStates[prop.id] ?? prop.isFavorite ?? false;
@@ -440,7 +440,7 @@ export default function PropertyArchive() {
 
             {/* Load More Button */}
             {hasMore && (
-              <div className="md:col-span-3 col-span-1 flex justify-center mt-8">
+              <div className="col-span-1 sm:col-span-2 lg:col-span-3 flex justify-center mt-8">
                 <button
                   onClick={handleLoadMore}
                   disabled={isLoadingMore}

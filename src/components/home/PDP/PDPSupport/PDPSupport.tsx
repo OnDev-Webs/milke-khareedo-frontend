@@ -92,7 +92,7 @@ export default function PDPSupport({ relationshipManager, propertyId }: PDPSuppo
 
 
   return (
-    <div className="w-full rounded-3xl bg-white border border-[#F3F3F3] py-4 text-center">
+    <div className="w-full rounded-3xl bg-white border border-[#F3F3F3] py-4 text-center md:px-6 lg:px-0">
       <div className="relative px-8">
         <p className="text-lg font-bold text-[#000000] leading-relaxed">
           Hi, I am here to Answer <br /> all your queries.

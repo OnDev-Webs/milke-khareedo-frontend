@@ -31,7 +31,7 @@ const items = [
 
 export default function ValuesAchievements() {
   return (
-    <section className="relative w-full bg-[#F5F9FF] py-16 mt-[100px] overflow-hidden px-10">
+    <section className="relative w-full bg-[#F5F9FF] py-16 mt-[100px] overflow-hidden md:px-10 px-0">
       <svg
         className="absolute inset-0 w-full h-full opacity-20 pointer-events-none"
         xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +60,7 @@ export default function ValuesAchievements() {
         />
 
         {/* Responsive Grid */}
-        <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
+        <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
           {items.map((item) => (
             <div
               key={item.id}

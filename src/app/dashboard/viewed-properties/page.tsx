@@ -45,6 +45,7 @@ export default function ViewedPropertiesPage() {
             showDiscount: !!p.discount,
             lastDayToJoin: p.lastDayToJoin,
             lastViewedAt: undefined,
+            relationshipManagerPhone: p.relationshipManagerPhone,
             isFavorite: !!favoriteStates[String(p.id)],
         }));
     }, [properties, favoriteStates]);

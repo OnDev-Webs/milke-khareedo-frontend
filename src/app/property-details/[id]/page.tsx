@@ -21,6 +21,8 @@ import {
 import { useCompare } from "@/contexts/CompareContext";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuthContext } from "@/contexts/AuthContext";
+import AuthModal from "@/components/auth/AuthModal";
 import { PDPDetailSkeleton } from "@/components/ui/loader";
 
 export default function PropertyDetailsPage({
@@ -30,6 +32,10 @@ export default function PropertyDetailsPage({
 }) {
   const { clearAndAddToCompare } = useCompare();
   const router = useRouter();
+  const { checkAuth } = useAuthContext();
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState<"favorite" | null>(null);
+
 
   const unwrappedParams = React.use(params);
   const propertyId = unwrappedParams.id;
@@ -75,6 +81,12 @@ export default function PropertyDetailsPage({
   }
 
   const handleFavoriteClick = async () => {
+    if (!checkAuth()) {
+      setPendingAction("favorite");
+      setShowAuthModal(true);
+      return;
+    }
+
     setProperty((prev) => {
       if (!prev) return prev;
       return { ...prev, isFavorite: !prev.isFavorite };
@@ -259,6 +271,22 @@ export default function PropertyDetailsPage({
         reraQrImage={property.reraQrImage}
         reraDetailsLink={property.reraDetailsLink}
       />
+
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => {
+          setShowAuthModal(false);
+          setPendingAction(null);
+        }}
+        onSuccess={() => {
+          setShowAuthModal(false);
+          if (pendingAction === "favorite") {
+            handleFavoriteClick();
+          }
+          setPendingAction(null);
+        }}
+      />
+
     </>
   );
 }

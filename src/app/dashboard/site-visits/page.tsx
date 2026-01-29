@@ -59,6 +59,7 @@ export default function SiteVisitsPage() {
         lastViewedAt: item.lastViewedAt,
         visitActivity: item.visitActivity,
         isUpcoming: activeTab === "upcoming",
+        relationshipManagerPhone: p.relationshipManagerPhone,
       };
     });
   }, [visits, activeTab]);

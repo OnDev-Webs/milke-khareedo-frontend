@@ -72,7 +72,7 @@ export default function Hero() {
   ];
 
   return (
-    <section className="relative w-full py-10">
+    <section className="relative w-full py-0 md:py-10 lg:py-10">
       <div className="mx-auto relative overflow-visible md:rounded-3xl bg-gradient-to-br from-[#C1DDEB] to-[#E3F2F5] p-4 md:p-6 shadow-md h-auto md:h-[420px] xl:h-[450px] w-full md:w-[96%] xl:w-[1150px]">
         <div className="relative z-10 w-full md:w-[55%] lg:w-[60%] xl:w-[60%] pt-10 md:pt-6 lg:pt-10 ps-4 md:ps-4 lg:ps-6">
           <p className="font-medium text-[#585981] mb-2">

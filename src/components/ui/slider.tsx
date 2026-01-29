@@ -17,8 +17,8 @@ function Slider({
       Array.isArray(value)
         ? value
         : Array.isArray(defaultValue)
-        ? defaultValue
-        : [min, max],
+          ? defaultValue
+          : [min, max],
     [value, defaultValue, min, max]
   )
 
@@ -57,13 +57,13 @@ function Slider({
           data-slot="slider-thumb"
           key={index}
           className={cn(
-            "block size-4 shrink-0 rounded-full",
-            "bg-[#1C4692]",
-            "border-2 border-[#1C4692]",
-            "shadow-sm",
-            "transition-[color,box-shadow]",
-            "hover:ring-4 hover:ring-[#1C4692]/20",
-            "focus-visible:ring-4 focus-visible:ring-[#1C4692]/30",
+            "block shrink-0 rounded-full",
+            "h-4 w-4",
+            "bg-[#1C4692]",               
+            "ring-[3px] ring-[#1C4692]",   
+            "ring-offset-[4px]",          
+            "ring-offset-white",           
+            "transition-shadow",
             "focus-visible:outline-none"
           )}
         />

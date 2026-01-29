@@ -24,8 +24,8 @@ export default function IntoNews() {
       });
 
       if (res.success && Array.isArray(res.data)) {
-        setFeaturedBlog(res.data[0] || null);   
-        setBlogs(res.data.slice(1));          
+        setFeaturedBlog(res.data[0] || null);
+        setBlogs(res.data.slice(1)); 
       }
     } catch (err) {
       console.error("Blogs fetch error", err);
@@ -37,10 +37,13 @@ export default function IntoNews() {
   if (loading) {
     return (
       <section className="py-16 text-center text-gray-500">
-        <Loader size={38}/>
+        <Loader size={38} />
       </section>
     );
   }
+
+  const desktopBlogs = blogs; 
+  const mobileBlogs = featuredBlog ? [featuredBlog, ...blogs] : blogs;
 
   return (
     <section className="py-16 px-4 md:px-16">
@@ -54,8 +57,7 @@ export default function IntoNews() {
               className="absolute left-0 -bottom-2"
               width="74"
               height="11"
-              viewBox="0 0 228 11"
-            >
+              viewBox="0 0 228 11">
               <path
                 d="M2 8.5C60 1.5 170 5.5 226 8.5"
                 stroke="#1C4692"
@@ -71,15 +73,20 @@ export default function IntoNews() {
           <span className="text-[#1C4692]">decisions.</span>
         </p>
 
-        {/* Banner Blog */}
+        {/* ===== DESKTOP ===== */}
         {featuredBlog && (
-          <div className="mb-6">
+          <div className="hidden lg:block mb-6">
             <NewsCardBanner blog={featuredBlog} />
           </div>
         )}
 
-        {/* Other Blogs */}
-        <NewsCard blogs={blogs} />
+        <div className="hidden lg:block">
+          <NewsCard blogs={desktopBlogs} />
+        </div>
+
+        <div className="lg:hidden">
+          <NewsCard blogs={mobileBlogs} />
+        </div>
       </div>
     </section>
   );

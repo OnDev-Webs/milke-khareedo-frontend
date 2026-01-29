@@ -308,6 +308,7 @@ export interface SimilarProject {
   configuration: string;
   targetPrice: PropertyPrice;
   disclaimerPrice: PropertyPrice;
+  discount: PropertyDiscount | null;
   location: string;
   latitude: number;
   longitude: number;

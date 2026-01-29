@@ -109,7 +109,6 @@ export default function SearchResultsGrid() {
     return match ? `${match[1]} BHK` : null;
   };
 
-
   const possessionOptions = [
     "Ready to Move",
     "Under Construction",
@@ -166,7 +165,7 @@ export default function SearchResultsGrid() {
         projectStatus: selectedPossession,
         sortBy,
       });
-    }, 500); 
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [
@@ -336,7 +335,7 @@ export default function SearchResultsGrid() {
     <>
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-[#F3F3F3] mb-5 px-4">
         {/* CITY + SEARCH */}
-        <div className="flex flex-col sm:flex-row w-full lg:max-w-md">
+        <div className="flex flex-col py-2 sm:flex-row w-full lg:max-w-md">
           <div className="relative flex flex-col justify-center pe-4 py-4 min-w-[130px]">
             <label className="text-sm font-bold text-gray-800 mb-2.5">
               City
@@ -352,7 +351,7 @@ export default function SearchResultsGrid() {
             <span className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 h-10 w-0.5 bg-[#DCDCEB]" />
           </div>
           <div className="relative flex-1 flex flex-col justify-start py-4 sm:ps-4 sm:pe-6">
-            <div className="relative mb-8">
+            <div className="relative">
               <input
                 type="text"
                 value={searchQuery}
@@ -360,7 +359,13 @@ export default function SearchResultsGrid() {
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
                 placeholder="Find your Dream Home"
-                className="w-full bg-transparent text-[26px] font-semibold text-gray-900 text-left outline-none border-none focus:ring-0 placeholder:text-base placeholder:font-bold placeholder:text-gray-800"
+                className={`w-full bg-transparent outline-none border-none focus:ring-0 transition-all duration-300 
+                  ${searchQuery || isSearchFocused
+                    ? "text-[26px] font-semibold text-gray-900 text-left mt-2"
+                    : "text-base font-bold text-gray-800"
+                  }
+                  placeholder:text-[18px] placeholder:font-semibold placeholder:text-[#110229] min-h-7
+                `}
               />
               <div className={`absolute left-0 top-full mt-1 flex items-center gap-1.5 text-xs text-gray-500 pointer-events-none transition-opacity ${searchQuery || isSearchFocused ? "opacity-0" : "opacity-100"}`}>
                 <FaMapMarkerAlt className="text-xs" />
@@ -491,82 +496,82 @@ export default function SearchResultsGrid() {
       </div>
 
 
-{/* EMPTY STATE */}
-{!loading && results.length === 0 && (
-  <EmptySearchState />
-)}
+      {/* EMPTY STATE */}
+      {!loading && results.length === 0 && (
+        <EmptySearchState />
+      )}
 
-{/* RESULTS + MAP */}
-{!loading && results.length > 0 && (
-  <div className="flex flex-col md:flex-row gap-2">
-    {/* MAP */}
-    <div className="w-full md:w-1/3 order-1 md:order-2">
-      <div className="h-[300px] md:sticky md:top-20 md:h-[calc(100vh-5rem)] overflow-hidden">
-        <PropertyMap properties={mapFallbackProps} />
-      </div>
-    </div>
+      {/* RESULTS + MAP */}
+      {!loading && results.length > 0 && (
+        <div className="flex flex-col md:flex-row gap-2">
+          {/* MAP */}
+          <div className="w-full md:w-1/3 order-1 md:order-2">
+            <div className="h-[300px] md:sticky md:top-20 md:h-[calc(100vh-5rem)] overflow-hidden">
+              <PropertyMap properties={mapFallbackProps} />
+            </div>
+          </div>
 
-    {/* PROPERTY LIST */}
-    <div className="flex-1 px-4 order-2 md:order-1">
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-2xl font-semibold text-black">
-          {searchQuery
-            ? `Results for "${searchQuery}" in ${getDisplayCity(selectedCity)}`
-            : `Projects in ${getDisplayCity(selectedCity)}`}
-        </h2>
+          {/* PROPERTY LIST */}
+          <div className="flex-1 px-4 order-2 md:order-1">
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-2xl font-semibold text-black">
+                {searchQuery
+                  ? `Results for "${searchQuery}" in ${getDisplayCity(selectedCity)}`
+                  : `Projects in ${getDisplayCity(selectedCity)}`}
+              </h2>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger className="bg-[#F2F6FF] rounded-[10px] py-2.5 px-[15px]">
-            <span className="text-[#000000] text-[16px] font-medium">
-              Sort by:
-            </span>{" "}
-            <span className="text-[#555555] text-[16px] font-medium">
-              {sortLabelMap[sortBy]}
-            </span>
-          </DropdownMenuTrigger>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="bg-[#F2F6FF] rounded-[10px] py-2.5 px-[15px]">
+                  <span className="text-[#000000] text-[16px] font-medium">
+                    Sort by:
+                  </span>{" "}
+                  <span className="text-[#555555] text-[16px] font-medium">
+                    {sortLabelMap[sortBy]}
+                  </span>
+                </DropdownMenuTrigger>
 
-          <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => setSortBy("newAdded")}>
-              New Added
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setSortBy("oldest")}>
-              Oldest
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setSortBy("priceLow")}>
-              Price: Low to High
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setSortBy("priceHigh")}>
-              Price: High to Low
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={() => setSortBy("newAdded")}>
+                    New Added
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setSortBy("oldest")}>
+                    Oldest
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setSortBy("priceLow")}>
+                    Price: Low to High
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setSortBy("priceHigh")}>
+                    Price: High to Low
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
 
-      <p className="mb-6 text-sm text-[#141414]">
-        Showing {results.length} of{" "}
-        {paginationData?.total ?? results.length} Projects
-      </p>
+            <p className="mb-6 text-sm text-[#141414]">
+              Showing {results.length} of{" "}
+              {paginationData?.total ?? results.length} Projects
+            </p>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        {results.map((property) => (
-          <SearchPropertyCard
-            key={property.id}
-            property={property}
-            images={getPropertyImages(property)}
-            isFavorite={favoriteStates[property.id]}
-            isFavoriteLoading={favoriteLoading[property.id]}
-            isJoinGroup={joinGroupStates[property.id]}
-            isJoinGroupLoading={joinGroupLoading[property.id]}
-            onFavoriteClick={handleFavoriteClick}
-            onCompareClick={handleCompareClick}
-            onShareClick={handleShareClick}
-            onJoinGroupClick={handleJoinGroupClick}
-          />
-        ))}
-      </div>
-    </div>
-  </div>
-)}
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {results.map((property) => (
+                <SearchPropertyCard
+                  key={property.id}
+                  property={property}
+                  images={getPropertyImages(property)}
+                  isFavorite={favoriteStates[property.id]}
+                  isFavoriteLoading={favoriteLoading[property.id]}
+                  isJoinGroup={joinGroupStates[property.id]}
+                  isJoinGroupLoading={joinGroupLoading[property.id]}
+                  onFavoriteClick={handleFavoriteClick}
+                  onCompareClick={handleCompareClick}
+                  onShareClick={handleShareClick}
+                  onJoinGroupClick={handleJoinGroupClick}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
     </>
   );

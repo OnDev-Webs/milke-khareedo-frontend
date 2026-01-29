@@ -160,7 +160,7 @@ export default function ProfilePage() {
             <div className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
                 <FieldInput label="First Name *" name="firstName" value={form.firstName ?? ""} placeholder="Enter first name" onChange={handleChange} />
                 <FieldInput label="Last Name *" name="lastName" value={form.lastName ?? ""} placeholder="Enter last name" onChange={handleChange} />
-                <FieldInput label="Email Address" value={form.email ?? ""} placeholder="Enter email address" disabled />
+                <FieldInput label="Email Address" name="email" value={form.email ?? ""} placeholder="Enter email address" onChange={handleChange} />
                 <VerifiedInput label="Mobile Number" value={
                     form.phoneNumber
                         ? `${form.countryCode ?? "+91"} ${form.phoneNumber}`

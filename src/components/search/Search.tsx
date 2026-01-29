@@ -22,5 +22,5 @@ export default function EmptySearchState() {
         Try adjusting your filters or explore nearby locations
       </p>
     </div>
-    );
+  );
 }

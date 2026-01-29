@@ -93,9 +93,25 @@ export type UpdateProfilePayload = {
     country: string;
 };
 
+export type VisitActivity = {
+    _id: string;
+    activityType: string;
+    activityDate: string;
+    visitDate: string;
+    visitTime: string;
+    description: string;
+};
+
 export type VisitedPropertyItem = {
     property: PropertyApi;
     lastViewedAt?: string;
+    visitActivity?: VisitActivity;
+    lead?: {
+        _id: string;
+        userId: string;
+        propertyId: string;
+        visitStatus: string;
+    };
 };
 
 export type VisitedPropertiesResponse = {
@@ -135,5 +151,12 @@ export const userDashboardService = {
 
     updateUserProfile: (data: UpdateProfilePayload) =>
         apiClient.put(API_ENDPOINTS.USER_DASHBOARD.UPDATE_PROFILE, data),
+
+    rescheduleVisit: (data: {
+        propertyId: string;
+        visitDate: string;
+        visitTime: string;
+    }): Promise<ApiResponse<{ message: string; isBookVisit: boolean }>> =>
+        apiClient.put(API_ENDPOINTS.USER_DASHBOARD.RESCHEDULE_VISIT, data),
 
 };

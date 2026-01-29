@@ -60,7 +60,8 @@ export const API_ENDPOINTS = {
     GET_PREFERENCES: "/user_dashboard/get_contact_preferences",
     SAVE_PREFERENCES: "/user_dashboard/contact_preferences",
     UPDATE_PROFILE: "/user_dashboard/update_profile",
-    GET_PROFILE: "/user_dashboard/get_profile"
+    GET_PROFILE: "/user_dashboard/get_profile",
+    RESCHEDULE_VISIT: "/user_dashboard/property/reschedule-visit"
   },
 
   // Add more endpoint groups as needed

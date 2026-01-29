@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import EmptyState from "@/components/dashboard/EmptyState";
 import PropertyGrid from "@/components/dashboard/PropertyGrid";
+import RescheduleModal from "@/components/dashboard/RescheduleModal";
 import { usePropertyActions } from "@/hooks/usePropertyActions";
 import { useApi } from "@/lib/api/hooks/useApi";
 import {
@@ -15,12 +16,22 @@ import clsx from "clsx";
 type TabType = "upcoming" | "completed";
 
 export default function SiteVisitsPage() {
-  const { data, loading } = useApi<VisitedPropertiesResponse>(() =>
+  const { data, loading, execute: refetchVisits } = useApi<VisitedPropertiesResponse>(() =>
     userDashboardService.getVisitedProperties()
   );
 
-  const [activeTab, setActiveTab] = useState<TabType>("completed");
+  const [activeTab, setActiveTab] = useState<TabType>("upcoming");
   const visits = activeTab === "completed" ? data?.completed ?? [] : data?.upcoming ?? [];
+  const [rescheduleModal, setRescheduleModal] = useState<{
+    isOpen: boolean;
+    propertyId: string;
+    propertyName: string;
+    currentVisitDate?: string;
+  }>({
+    isOpen: false,
+    propertyId: "",
+    propertyName: "",
+  });
 
   const {
     handleShareClick,
@@ -46,9 +57,28 @@ export default function SiteVisitsPage() {
         showDiscount: p.discount,
         discountPercentage: p.discount?.percentageFormatted,
         lastViewedAt: item.lastViewedAt,
+        visitActivity: item.visitActivity,
+        isUpcoming: activeTab === "upcoming",
       };
     });
-  }, [visits]);
+  }, [visits, activeTab]);
+
+  const handleReschedule = (propertyId: string) => {
+    const property = mappedProperties.find((p) => p.id === propertyId);
+    if (property) {
+      setRescheduleModal({
+        isOpen: true,
+        propertyId: property.id,
+        propertyName: property.title,
+        currentVisitDate: property.visitActivity?.visitDate,
+      });
+    }
+  };
+
+  const handleRescheduleSuccess = () => {
+    // Refetch data to update the UI smoothly
+    refetchVisits();
+  };
 
   if (loading) {
     return (
@@ -94,11 +124,21 @@ export default function SiteVisitsPage() {
             onFavoriteClick={handleFavoriteClick}
             onCompareClick={handleCompareClick}
             onShareClick={handleShareClick}
+            onReschedule={handleReschedule}
             favoriteStates={favoriteStates}
             favoriteLoading={favoriteLoading}
           />
         )}
       </div>
+
+      <RescheduleModal
+        isOpen={rescheduleModal.isOpen}
+        onClose={() => setRescheduleModal({ ...rescheduleModal, isOpen: false })}
+        propertyId={rescheduleModal.propertyId}
+        propertyName={rescheduleModal.propertyName}
+        currentVisitDate={rescheduleModal.currentVisitDate}
+        onSuccess={handleRescheduleSuccess}
+      />
     </div>
   );
 }

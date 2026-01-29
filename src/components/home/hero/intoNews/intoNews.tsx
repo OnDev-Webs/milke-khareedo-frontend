@@ -73,7 +73,7 @@ export default function IntoNews() {
 
         {/* Banner Blog */}
         {featuredBlog && (
-          <div className="mb-6">
+          <div className="hidden lg:block mb-6">
             <NewsCardBanner blog={featuredBlog} />
           </div>
         )}

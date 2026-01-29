@@ -205,7 +205,7 @@ export default function PropertySelectionModal({
       <div className="fixed left-1/2 top-1/2 z-50 w-[95%] max-w-4xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl bg-white shadow-2xl">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-gray-200 p-4 sm:p-4">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-3">
             <h2 className="text-lg font-bold text-gray-800 sm:text-xl md:text-2xl">
               Select Properties to Compare
             </h2>
@@ -216,7 +216,7 @@ export default function PropertySelectionModal({
                 ...Array.from(selectedProperties.keys()),
               ]).size;
               return totalSelected > 0 ? (
-                <span className="rounded-full bg-[#1C4692] px-3 py-1 text-xs font-semibold text-white">
+               <span className="rounded-full bg-[#1C4692] px-3 py-1 text-xs font-semibold text-white self-start sm:self-auto">
                   {totalSelected} selected
                 </span>
               ) : null;
@@ -370,16 +370,16 @@ export default function PropertySelectionModal({
                   </button>
 
                   <div className="flex items-center gap-2">
-                    {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
+                    {Array.from({ length: Math.min(totalPages, 8) }, (_, i) => {
                       let pageNum;
-                      if (totalPages <= 5) {
+                      if (totalPages <= 8) {
                         pageNum = i + 1;
-                      } else if (currentPage <= 3) {
+                      } else if (currentPage <= 4) {
                         pageNum = i + 1;
-                      } else if (currentPage >= totalPages - 2) {
-                        pageNum = totalPages - 4 + i;
+                      } else if (currentPage >= totalPages - 3) {
+                        pageNum = totalPages - (8 - 1) + i;
                       } else {
-                        pageNum = currentPage - 2 + i;
+                        pageNum = currentPage - 4 + i;
                       }
 
                       return (
@@ -417,9 +417,9 @@ export default function PropertySelectionModal({
         {/* Footer with Add Button */}
         {selectedProperties.size > 0 && (
           <div className="border-t border-gray-200 bg-gray-50 p-4 sm:px-6 sm:py-4">
-            <div className="flex items-center justify-between">
+           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-sm text-gray-600">
-                {selectedProperties.size} new property(ies) selected
+                {selectedProperties.size} new properties selected
                 {compareItems.length > 0 && (
                   <span className="ml-2 text-xs text-gray-500">
                     ({compareItems.length} already in compare)

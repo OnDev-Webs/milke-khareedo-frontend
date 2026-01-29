@@ -358,10 +358,7 @@ export default function TopProperties() {
         {/* Cards Grid */}
         {!isLoadingMore || properties.length > 0 ? (
           <>
-          <div
-  className="
-    flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar
-    md:grid md:grid-cols-3 md:gap-6 md:overflow-visible">
+          <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar md:grid md:grid-cols-2 md:gap-6 md:overflow-visible lg:grid-cols-3">
             {properties.map((prop) => {
               const isFavorite = favoriteStates[prop.id] ?? prop.isFavorite ?? false;
               const isLoading = favoriteLoading[prop.id] ?? false;

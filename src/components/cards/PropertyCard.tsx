@@ -175,7 +175,12 @@ export default function PropertyCard({
             </p>
           </div>
 
-          <button className="relative z-20 bg-[#66AE39] text-white px-3 py-2 rounded-full flex items-center gap-1 text-xs shrink-0 ml-2 hover:bg-[#5a9a32] transition-colors">
+          <button onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            window.location.href = `tel:${property.relationshipManager || "1234567890"}`;
+          }}
+            className="relative z-20 bg-[#66AE39] text-white px-3 py-2 rounded-full flex items-center gap-1 text-xs shrink-0 ml-2 hover:bg-[#5a9a32] transition-colors">
             <FaPhoneAlt /> <span className="hidden md:inline">Call</span>
           </button>
         </div>

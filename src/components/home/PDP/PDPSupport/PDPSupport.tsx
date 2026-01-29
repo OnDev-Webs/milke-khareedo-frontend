@@ -9,6 +9,8 @@ import Star from "@/assets/star.svg";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useAuthContext } from "@/contexts/AuthContext";
 import AuthModal from "@/components/auth/AuthModal";
+import { useAuthContext } from "@/contexts/AuthContext";
+import AuthModal from "@/components/auth/AuthModal";
 
 interface PDPSupportProps {
   relationshipManager: RelationshipManager;
@@ -131,7 +133,6 @@ export default function PDPSupport({
     }
   };
 
-
   return (
     <div className="w-full rounded-3xl bg-white border border-[#F3F3F3] py-4 text-center md:px-6 lg:px-0">
       <div className="relative px-8">
@@ -210,8 +211,7 @@ export default function PDPSupport({
             onClick={(e) => {
               e.stopPropagation();
               handleCall()
-            }
-            }
+            }}
             className="relative z-[100] inline-flex items-center gap-1 rounded-full bg-[#66AE39] text-white px-2.5 py-2 text-xs font-medium hover:bg-[#5a9a32] transition-colors shadow-sm">
             <FaPhoneAlt className="h-3.5 w-3.5" />
             <span>Call</span>
@@ -252,7 +252,6 @@ export default function PDPSupport({
               ? "Visit Booked" 
               : "Book A Visit"}
         </button>
-
       </div>
 
       {/* Auth Modal */}

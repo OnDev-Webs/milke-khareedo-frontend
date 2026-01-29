@@ -42,8 +42,8 @@ export default function PDPAboutDeveloper({ developer }: PDPAboutDeveloperProps)
           <h3 className="font-semibold text-[#000000] text-[25px]">About Developer</h3>
         </div>
 
-        <div className="flex flex-col gap-6 px-6 py-6 md:flex-row md:items-start">
-          <div className="md:flex-1 md:pr-6 md:border-r md:border-[#D9D9D9]">
+        <div className="flex flex-col gap-6 px-6 py-6 md:gap-8 lg:flex-row lg:items-start">
+         <div className="lg:flex-1 lg:pr-6 lg:border-r lg:border-[#D9D9D9]">
             {developer.logo && hasValidLogo && (
               <div className="mb-3">
                 {isConfigured ? (
@@ -70,7 +70,7 @@ export default function PDPAboutDeveloper({ developer }: PDPAboutDeveloperProps)
             </p>
           </div>
 
-          <div className="flex w-full flex-col items-center justify-center gap-4 md:w-1/4">
+          <div className="flex w-full flex-col items-center justify-center md:justify-start gap-4 md:gap-6 lg:w-1/4">
             <div className="flex gap-12 justify-center">
               <div className="flex flex-col gap-2.5 items-center justify-center w-30">
                 <div className="w-22 p-6.5 flex justify-center items-center gap-2 rounded-full bg-[#1C4692] shadow-sm">

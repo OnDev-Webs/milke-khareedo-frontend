@@ -21,6 +21,7 @@ type PropertyCardProps = {
     lastDayToJoin?: string;
     visitActivity?: VisitActivity;
     isUpcoming?: boolean;
+    relationshipManagerPhone?: string;
     onReschedule?: (propertyId: string) => void;
     onFavoriteClick?: (property: {
         id: string;
@@ -59,6 +60,7 @@ export default function PropertyCard({
     lastDayToJoin,
     visitActivity,
     isUpcoming = false,
+    relationshipManagerPhone,
     onReschedule,
     onFavoriteClick,
     onCompareClick,
@@ -225,10 +227,18 @@ export default function PropertyCard({
                         </p>
                     </div>
 
-                    <button className="flex items-center gap-1 rounded-full bg-[#66AE39] px-3 py-2  text-white">
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            if (relationshipManagerPhone) {
+                                window.location.href = `tel:${relationshipManagerPhone}`;
+                            }
+                        }}
+                        disabled={!relationshipManagerPhone}
+                        className="flex items-center gap-1 rounded-full bg-[#66AE39] px-3 py-2 text-white hover:bg-[#5a9a32] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                         <Image
                             src="/images/call.svg"
-                            alt="Compare"
+                            alt="Call"
                             width={12}
                             height={12}
                             className="h-4.5 w-5"

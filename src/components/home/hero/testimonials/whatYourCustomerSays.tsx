@@ -198,7 +198,7 @@ export default function Testimonials() {
         </Swiper>
 
         {/* PAGINATION DOTS */}
-        <div className="testimonial-pagination flex justify-center mt-6"></div>
+        <div className="hidden sm:flex testimonial-pagination flex justify-center mt-6"></div>
 
         {/* MOBILE + TABLET NAVIGATION (BOTTOM) */}
         <div className="flex items-center justify-between gap-6 sm:hidden">

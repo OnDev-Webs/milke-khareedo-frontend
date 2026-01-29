@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import Heading from "@/components/typography/heading";
 import Image from "next/image";
-import ContactForm from "@/components/home/contact-us/ContactForm";
 import RecentBlog from "@/components/sections/RecentBlog";
 import React from "react";
 import { homeService } from "@/lib/api/services/home.service";
@@ -103,8 +102,8 @@ export default function Page({
           {blog.title}
         </Heading>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-4">
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-1 gap-5 mt-4">
+          <div>
             <div className="flex flex-wrap items-center gap-3 mb-4 justify-between px-2">
               {getCategoryName(blog.category) && (
                 <span className="px-4 py-1.5 text-[14px] font-semibold bg-[#1C4692]/10 text-[#1C4692] border border-[#1C4692]/20 rounded-full">
@@ -174,20 +173,6 @@ export default function Page({
                     />
                   )}
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-1">
-            <div className="sticky top-10">
-              <div className="border border-[#F3F3F3] rounded-[30px] py-5 px-10 bg-white">
-                <h6 className="text-[26px] font-bold text-black mb-[5px]">
-                  Get in Touch
-                </h6>
-                <p className="text-black text-base font-medium mb-[25px]">
-                  Let our experts help you answer your questions
-                </p>
-                <ContactForm nameMode="full" />
               </div>
             </div>
           </div>

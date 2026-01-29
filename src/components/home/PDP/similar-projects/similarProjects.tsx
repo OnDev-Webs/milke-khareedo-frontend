@@ -168,12 +168,13 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
 
   return (
     <>
-      <section className="w-full bg-white py-10 px-10">
+      <section className="w-full bg-white py-8 md:py-10">
         <div className="max-w-6xl mx-auto container">
-          <div className="flex items-center justify-between px-4 md:px-2 gap-3">
-            <h3 className="font-bold text-[18px] md:text-[35px] text-[#000000] whitespace-nowrap">
+          <div className="flex items-center justify-between px-4 md:px-0 mb-5 md:mb-8">
+            <h3 className="font-semibold text-[22px] md:text-[35px] text-black">
               Similar Projects
             </h3>
+
             <Link href="/properties">
               <button
                 className="px-4 md:px-10 h-[36px] md:h-[44px] border border-[#F5F5F5] rounded-full text-[#2D2D2D] font-semibold text-[14px] md:text-[16px] bg-white hover:bg-[#F5F7FA] transition whitespace-nowrap"
@@ -183,8 +184,8 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
             </Link>
           </div>
 
-          <div className="overflow-x-auto pb-4 md:overflow-visible">
-            <div className="flex gap-4 px-2 overflow-x-auto snap-x snap-mandatory pb-4 lg:grid lg:grid-cols-3 lg:gap-6 lg:px-0 lg:overflow-visible">
+<div className="overflow-x-auto md:overflow-visible">
+            <div className="flex gap-4 px-4 md:px-0 snap-x snap-mandatory pb-2 lg:grid lg:grid-cols-3 lg:gap-6 lg:px-0 lg:overflow-visible">
               {convertedProperties.map((property) => {
                 const images = getPropertyImages(property);
                 const isJoinGroup = joinGroupStates[property.id] ?? property.isJoinGroup ?? false;

@@ -403,10 +403,23 @@ export default function PDPNeighborhood({
 
 
       {/* Blur Overlay and Content - Non-blocking for map interactions */}
-      <div className="relative z-10 order-1 md:order-none mx-auto container py-6 md:py-12 pointer-events-none">
-        <div className="flex flex-col md:flex-row gap-6 md:gap-10 md:items-start px-8">
+<div className="relative z-10 order-1 md:order-none mx-auto w-full max-w-6xl py-6 md:py-12 pointer-events-none px-4 md:px-0">
+<div className="flex flex-col md:flex-row gap-6 md:gap-10 md:items-start">
 
-          <div className="w-full md:w-1/3 order-1 md:order-none bg-white/95 backdrop-blur-lg rounded-2xl p-6 shadow-2xl border border-white/30 pointer-events-auto">
+<div
+className="
+  w-full md:w-1/3 md:max-w-[380px]
+  bg-white/40
+  backdrop-blur-2xl
+  rounded-3xl
+  p-5
+  shadow-[0_20px_60px_rgba(0,0,0,0.12)]
+  ring-1 ring-white/30
+  pointer-events-auto
+"
+
+>
+
             <h2 className="mb-6 font-semibold text-2xl text-gray-900">The Neighborhood</h2>
              <div className="flex gap-3 overflow-x-auto no-scrollbar px-1 pb-2 md:flex-col md:overflow-visible md:gap-3 md:px-0 md:pb-0">
               {categories.map((category) => {

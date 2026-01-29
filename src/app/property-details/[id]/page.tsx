@@ -189,6 +189,10 @@ export default function PropertyDetailsPage({
           <PDPSupport
             relationshipManager={property.relationshipManager}
             propertyId={property.id}
+            isBookVisit={property.isBookVisit}
+            onBookVisitChange={(isBookVisit) => {
+              setProperty({ ...property, isBookVisit });
+            }}
           />
         </div>
       </div>
@@ -210,6 +214,10 @@ export default function PropertyDetailsPage({
         <PDPSupport
           relationshipManager={property.relationshipManager}
           propertyId={property.id}
+          isBookVisit={property.isBookVisit}
+          onBookVisitChange={(isBookVisit) => {
+            setProperty({ ...property, isBookVisit });
+          }}
         />
 
         <PDPSections

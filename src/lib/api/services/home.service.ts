@@ -722,4 +722,21 @@ export const homeService = {
     );
   },
 
+  /**
+   * Contact Us form submission
+   * POST /api/home/contact-us
+   * Example: POST /api/home/contact-us
+   */
+  contactUs: async (data: {
+    firstName: string;
+    phoneNumber: string;
+    email: string;
+    notes: string;
+  }): Promise<ApiResponse<{ message: string }>> => {
+    return apiClient.post<{ message: string }>(
+      API_ENDPOINTS.HOME.POST_CONTACT_US,
+      data,
+    );
+  },
+
 };

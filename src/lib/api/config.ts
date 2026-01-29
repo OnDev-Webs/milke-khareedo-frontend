@@ -37,6 +37,7 @@ export const API_ENDPOINTS = {
     POST_FAVORITE: "/home/property/favorite",
     POST_VISIT: "/home/property/visit",
     POST_JOIN_GROUP: "/home/join-group",
+    POST_CONTACT_US: "/home/contact-us",
     GET_BLOGS: "/home/blogs",
     GET_BLOG_BY_ID: "/home/blog",
     BLOG_COMMENTS: (blogId: string) => `/home/blog/${blogId}/comments`,

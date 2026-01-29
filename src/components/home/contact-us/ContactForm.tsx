@@ -14,6 +14,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useMutation } from "@/lib/api/hooks/useApi";
+import { homeService } from "@/lib/api/services/home.service";
+import { useState, useEffect } from "react";
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
@@ -23,6 +26,9 @@ interface ContactFormProps {
 }
 
 export default function ContactForm({ className, nameMode = "split" }: ContactFormProps) {
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -36,31 +42,86 @@ export default function ContactForm({ className, nameMode = "split" }: ContactFo
 
   const isSingleColumn = nameMode === "full";
 
+  const {
+    mutate: submitContactForm,
+    loading: isSubmitting,
+    error: apiError,
+    success: apiSuccess,
+  } = useMutation<
+    { message: string },
+    {
+      firstName: string;
+      phoneNumber: string;
+      email: string;
+      notes: string;
+    }
+  >(async (data) => {
+    return homeService.contactUs(data);
+  });
 
-  function handleFormSubmit(values: ContactFormValues) {
-    let firstName = values.firstName;
-    let lastName = values.lastName || "";
+  useEffect(() => {
+    if (apiSuccess) {
+      setSubmitSuccess(true);
+      setSubmitError(null);
+      form.reset();
+      const timer = setTimeout(() => {
+        setSubmitSuccess(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [apiSuccess, form]);
 
-    if (!values.lastName) {
-      const nameParts = values.firstName.trim().split(/\s+/);
+  useEffect(() => {
+    if (apiError) {
+      setSubmitError(apiError);
+      setSubmitSuccess(false);
+    }
+  }, [apiError]);
 
-      firstName = nameParts[0] || "";
-      lastName = nameParts.slice(1).join(" ") || "";
+  async function handleFormSubmit(values: ContactFormValues) {
+    let firstName = values.firstName.trim();
+    let lastName = values.lastName?.trim() || "";
+
+    // If lastName is not provided, try to split from firstName
+    if (!lastName && firstName) {
+      const nameParts = firstName.split(/\s+/);
+      if (nameParts.length > 1) {
+        firstName = nameParts[0] || "";
+        lastName = nameParts.slice(1).join(" ") || "";
+      }
     }
 
     const payload = {
-      ...values,
-      firstName,
-      lastName,
+      firstName: firstName || "",
+      phoneNumber: values.phone.trim(),
+      email: values.email.trim(),
+      notes: values.description?.trim() || "",
     };
 
+    // Validate required fields
+    if (!payload.firstName || !payload.phoneNumber || !payload.email) {
+      setSubmitError("Please fill in all required fields.");
+      return;
+    }
+
+    try {
+      setSubmitError(null);
+      setSubmitSuccess(false);
+      await submitContactForm(payload);
+    } catch (error) {
+      console.error("Error submitting contact form:", error);
+      setSubmitError(error instanceof Error ? error.message : "Failed to submit form. Please try again.");
+    }
   }
 
   return (
     <Form {...form}>
       <form
         className={className ?? "space-y-4"}
-        onSubmit={form.handleSubmit(handleFormSubmit)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          form.handleSubmit(handleFormSubmit)(e);
+        }}
       >
         <div className="flex flex-col md:flex-col gap-4">
           <FormField
@@ -145,11 +206,28 @@ export default function ContactForm({ className, nameMode = "split" }: ContactFo
           )}
         />
 
+        {submitSuccess && (
+          <div className="mb-4 rounded-lg bg-green-50 border border-green-200 p-4">
+            <p className="text-sm font-medium text-green-800">
+              Thank you! We&apos;ll reach out to you within 24 hours.
+            </p>
+          </div>
+        )}
+
+        {submitError && (
+          <div className="mb-4 rounded-lg bg-red-50 border border-red-200 p-4">
+            <p className="text-sm font-medium text-red-800">
+              {submitError}
+            </p>
+          </div>
+        )}
+
         <button
           type="submit"
-          className="w-full py-[10px] rounded-full bg-[#1C4692] text-white font-semibold text-[16px] mb-4"
+          disabled={isSubmitting}
+          className="w-full py-[10px] rounded-full bg-[#1C4692] text-white font-semibold text-[16px] mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Submit
+          {isSubmitting ? "Submitting..." : "Submit"}
         </button>
       </form>
     </Form>

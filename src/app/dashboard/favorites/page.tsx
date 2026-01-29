@@ -54,6 +54,7 @@ export default function MyFavoritePage() {
                 showDiscount: !!p.discount,
                 lastDayToJoin: p.lastDayToJoin,
                 lastViewedAt: undefined,
+                relationshipManagerPhone: p.relationshipManagerPhone,
             };
         });
     }, [favorites]);

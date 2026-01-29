@@ -93,7 +93,7 @@ export default function PDPSections({
   }, [activeTab]);
 
   return (
-    <section className="sticky top-0 z-40 bg-white px-10">
+<section className="sticky top-0 z-40 bg-white px-4 md:px-10">
       <div className="container max-w-6xl mx-auto ">
         <div className="flex items-center border-b border-[#F3F3F3] h-[64px]">
           <div className="flex-1 min-w-0 overflow-x-auto scrollbar-hide flex">
@@ -104,13 +104,12 @@ export default function PDPSections({
                   key={section.id}
                   onClick={() => scrollToSection(section.id, section.title)}
                   className={`
-                    px-3 lg:px-4 h-full
-                    text-[14px] md:text-[15px] lg:text-[18px]
+                    px-5 md:px-4 h-full
+                    text-[15px] md:text-[15px] lg:text-[18px]
                     whitespace-nowrap transition
-                    ${
-                      isActive
-                        ? "text-[#1C4692] border-b-2 border-[#1C4692] bg-[linear-gradient(180deg,#FFFFFF_0%,#EEF4FF80_50%,#EEF4FFCC_80%)] font-semibold"
-                        : "text-[#6D6D6D] font-normal"
+                    ${isActive
+                      ? "text-[#1C4692] border-b-2 border-[#1C4692] bg-[linear-gradient(180deg,#FFFFFF_0%,#EEF4FF80_50%,#EEF4FFCC_80%)] font-semibold"
+                      : "text-[#6D6D6D] font-normal"
                     }
                   `}
                 >
@@ -121,7 +120,7 @@ export default function PDPSections({
           </div>
 
           {/* ICONS – ALWAYS VISIBLE */}
-          <div className="flex items-center gap-2 pl-2 shrink-0">
+          <div className="hidden md:flex items-center gap-2 pl-2 shrink-0">
             <button
               onClick={onFavoriteClick}
               className="h-[40px] w-[40px] md:h-[44px] md:w-[44px]
@@ -152,7 +151,7 @@ export default function PDPSections({
               className="h-[40px] w-[40px] md:h-[44px] md:w-[44px]
               flex items-center justify-center rounded-full bg-[#EEF4FF]"
             >
- <Image
+              <Image
                 src="/images/Share.svg"
                 alt="Compare"
                 width={18}

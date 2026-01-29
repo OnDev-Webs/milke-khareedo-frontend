@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function EmptySearchState() {
     return (
-           <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+           <div className="flex flex-col items-center justify-center min-h-[70vh] text-center px-4">
       {/* SVG */}
       <div className="mb-6 flex items-center justify-center">
         <Image

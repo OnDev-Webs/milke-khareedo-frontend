@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { IoChevronBack, IoChevronForward, IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
+import type { VisitActivity } from "@/lib/api/services/userDashboard.service";
 
 type PropertyCardProps = {
     id: string;
@@ -18,6 +19,9 @@ type PropertyCardProps = {
     discountPercentage?: string;
     lastViewedAt?: string;
     lastDayToJoin?: string;
+    visitActivity?: VisitActivity;
+    isUpcoming?: boolean;
+    onReschedule?: (propertyId: string) => void;
     onFavoriteClick?: (property: {
         id: string;
         projectName: string;
@@ -53,6 +57,9 @@ export default function PropertyCard({
     discountPercentage,
     lastViewedAt,
     lastDayToJoin,
+    visitActivity,
+    isUpcoming = false,
+    onReschedule,
     onFavoriteClick,
     onCompareClick,
     onShareClick,
@@ -273,11 +280,66 @@ export default function PropertyCard({
                     </div>
                 </div>
 
-                <button
-                    onClick={() => router.push(`/property-details/${id}`)}
-                    className="mt-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] py-3 text-[16px] font-semibold text-white">
-                    View Details
-                </button>
+                {/* Visit Date/Time Display */}
+                {visitActivity?.visitDate && (
+                    <div className="mt-3 rounded-xl bg-[#F0F8FF] border border-[#1C4692]/20 p-3">
+                        {isUpcoming ? (
+                            <div>
+                                <p className="text-xs text-gray-600 mb-1">Scheduled Visit</p>
+                                <p className="text-sm font-semibold text-[#1C4692]">
+                                    {new Date(visitActivity.visitDate).toLocaleDateString("en-IN", {
+                                        weekday: "short",
+                                        day: "numeric",
+                                        month: "short",
+                                        year: "numeric",
+                                    })}
+                                </p>
+                                {visitActivity.visitTime && (
+                                    <p className="text-xs text-gray-600 mt-0.5">
+                                        {visitActivity.visitTime}
+                                    </p>
+                                )}
+                            </div>
+                        ) : (
+                            <div>
+                                <p className="text-xs text-gray-600 mb-1">Visit Completed</p>
+                                <p className="text-sm font-semibold text-gray-800">
+                                    {new Date(visitActivity.visitDate).toLocaleDateString("en-IN", {
+                                        weekday: "short",
+                                        day: "numeric",
+                                        month: "short",
+                                        year: "numeric",
+                                    })}
+                                </p>
+                                {visitActivity.visitTime && (
+                                    <p className="text-xs text-gray-600 mt-0.5">
+                                        {visitActivity.visitTime}
+                                    </p>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {isUpcoming && onReschedule ? (
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onReschedule(id);
+                        }}
+                        className="mt-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] py-3 text-[16px] font-semibold text-white transition-all">
+                        Reschedule
+                    </button>
+                ) : (
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            router.push(`/property-details/${id}`);
+                        }}
+                        className="mt-2 rounded-full bg-[#1C4692] hover:bg-[#1c4692e6] py-3 text-[16px] font-semibold text-white">
+                        View Details
+                    </button>
+                )}
             </div>
         </div>
     );

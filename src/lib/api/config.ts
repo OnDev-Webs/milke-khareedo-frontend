@@ -37,6 +37,7 @@ export const API_ENDPOINTS = {
     POST_FAVORITE: "/home/property/favorite",
     POST_VISIT: "/home/property/visit",
     POST_JOIN_GROUP: "/home/join-group",
+    POST_CONTACT_US: "/home/contact-us",
     GET_BLOGS: "/home/blogs",
     GET_BLOG_BY_ID: "/home/blog",
     BLOG_COMMENTS: (blogId: string) => `/home/blog/${blogId}/comments`,
@@ -59,7 +60,8 @@ export const API_ENDPOINTS = {
     GET_PREFERENCES: "/user_dashboard/get_contact_preferences",
     SAVE_PREFERENCES: "/user_dashboard/contact_preferences",
     UPDATE_PROFILE: "/user_dashboard/update_profile",
-    GET_PROFILE: "/user_dashboard/get_profile"
+    GET_PROFILE: "/user_dashboard/get_profile",
+    RESCHEDULE_VISIT: "/user_dashboard/property/reschedule-visit"
   },
 
   // Add more endpoint groups as needed

@@ -47,7 +47,9 @@ export default function SearchResultsGrid() {
   const searchParam = searchParams.get("search");
   const [loading, setLoading] = useState(false);
   const [mapFallbackProps, setMapFallbackProps] = useState<Property[]>([]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([30, 100]);
+  // Price range in Lakhs: [min in Lakhs, max in Lakhs]
+  // 30 Lakh = 30, 10 Crore = 1000 Lakh
+  const [priceRange, setPriceRange] = useState<[number, number]>([30, 1000]);
   const [areaRange, setAreaRange] = useState<[number, number]>([400, 5000]);
   const bhkOptions = [
     "1 BHK", "1.5 BHK", "2 BHK", "2.5 BHK", "3 BHK",
@@ -157,8 +159,8 @@ export default function SearchResultsGrid() {
         city: selectedCity.split(",").pop()?.trim(),
         searchText: detectedBhk ? "" : searchQuery.trim(),
         bhk: bhkToUse,
-        priceMin: String(priceRange[0] * 100000),
-        priceMax: String(priceRange[1] * 10000000),
+        priceMin: String(priceRange[0] * 100000), // Convert Lakhs to rupees
+        priceMax: String(priceRange[1] * 100000), // Convert Lakhs to rupees (1000 Lakh = 10 Crore)
         areaMin: String(areaRange[0]),
         areaMax: String(areaRange[1]),
         projectStatus: selectedPossession,
@@ -223,8 +225,8 @@ export default function SearchResultsGrid() {
       city: selectedCity.split(",").pop()?.trim(),
       searchText: detectedBhk ? "" : searchQuery.trim(),
       bhk: bhkToUse,
-      priceMin: String(priceRange[0] * 100000),
-      priceMax: String(priceRange[1] * 10000000),
+      priceMin: String(priceRange[0] * 100000), // Convert Lakhs to rupees
+      priceMax: String(priceRange[1] * 100000), // Convert Lakhs to rupees (1000 Lakh = 10 Crore)
       areaMin: String(areaRange[0]),
       areaMax: String(areaRange[1]),
       projectStatus: selectedPossession,
@@ -373,7 +375,9 @@ export default function SearchResultsGrid() {
           <Popover open={priceOpen} onOpenChange={setPriceOpen}>
             <PopoverTrigger asChild>
               <button className={filterBtnClass}>
-                <span>{priceRange[0]}L – {priceRange[1]}CR</span>
+                <span>
+                  {priceRange[0]}L – {priceRange[1] >= 100 ? `${(priceRange[1] / 100).toFixed(0)}CR` : `${priceRange[1]}L`}
+                </span>
                 {priceOpen ? (
                   <ChevronUp size={16} />
                 ) : (
@@ -388,11 +392,13 @@ export default function SearchResultsGrid() {
                   setPriceRange(val as [number, number])
                 }
                 min={30}
-                max={100}
-                step={1}
+                max={1000}
+                step={10}
               />
               <div className="text-center bg-[#EEF4FF] py-2 text-[#1C4692] text-[16px] font-semibold rounded-[10px]">
-                <span>₹ {priceRange[0]} Lakh - ₹ {priceRange[1]} Crore</span>
+                <span>
+                  ₹ {priceRange[0]} Lakh - ₹ {priceRange[1] >= 100 ? `${(priceRange[1] / 100).toFixed(0)} Crore` : `${priceRange[1]} Lakh`}
+                </span>
               </div>
             </PopoverContent>
           </Popover>

@@ -160,8 +160,16 @@ export default function AuthModal({
       });
 
       if (response.success && response.data) {
+        if (!response.data.token || !response.data.user) {
+          setError("Invalid response from server. Please try again.");
+          return;
+        }
+
         // Store token and user data
         login(response.data.token, response.data.user);
+
+        await new Promise(resolve => setTimeout(resolve, 100));
+
         onSuccess?.();
         handleClose();
       } else {

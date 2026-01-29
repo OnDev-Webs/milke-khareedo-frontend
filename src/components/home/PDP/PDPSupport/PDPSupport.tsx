@@ -1,21 +1,34 @@
 "use client";
 
 import { homeService, type RelationshipManager } from "@/lib/api/services/home.service";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { FaPhoneAlt } from "react-icons/fa";
 import { HiMail } from "react-icons/hi";
 import Star from "@/assets/star.svg";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useAuthContext } from "@/contexts/AuthContext";
+import AuthModal from "@/components/auth/AuthModal";
 
 interface PDPSupportProps {
   relationshipManager: RelationshipManager;
   propertyId: string;
+  isBookVisit?: boolean;
+  onBookVisitChange?: (isBookVisit: boolean) => void;
 }
 
-export default function PDPSupport({ relationshipManager, propertyId }: PDPSupportProps) {
+export default function PDPSupport({ 
+  relationshipManager, 
+  propertyId,
+  isBookVisit = false,
+  onBookVisitChange
+}: PDPSupportProps) {
+  const { checkAuth } = useAuthContext();
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const [isBooking, setIsBooking] = useState(false);
   const [openVisit, setOpenVisit] = useState(false);
+  const [bookVisitStatus, setBookVisitStatus] = useState(isBookVisit);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [step, setStep] = useState<"date" | "time">("date");
   const [hour, setHour] = useState<number>(10);
   const [amPm, setAmPm] = useState<"AM" | "PM">("AM");
@@ -26,6 +39,11 @@ export default function PDPSupport({ relationshipManager, propertyId }: PDPSuppo
   const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
   const jsDay = new Date(calendarYear, calendarMonth, 1).getDay();
   const firstDay = (jsDay + 6) % 7;
+
+  // Sync bookVisitStatus with prop changes
+  useEffect(() => {
+    setBookVisitStatus(isBookVisit);
+  }, [isBookVisit]);
 
   const [selectedDate, setSelectedDate] = useState<{
     day: number;
@@ -76,13 +94,36 @@ export default function PDPSupport({ relationshipManager, propertyId }: PDPSuppo
 
       const visitDate = visitDateObj.toISOString().split("T")[0];
       const visitTime = `${hour}:00 ${amPm}`;
-      await homeService.bookVisit({
+      const response = await homeService.bookVisit({
         propertyId,
         visitDate,
         visitTime,
       });
 
-      setOpenVisit(false);
+      if (response.success && response.data) {
+        // Update state immediately for smooth UI update - no page reload needed
+        const newBookVisitStatus = response.data.isBookVisit;
+        
+        // Update local state first for instant UI feedback
+        setBookVisitStatus(newBookVisitStatus);
+        
+        // Update parent component state
+        onBookVisitChange?.(newBookVisitStatus);
+        
+        // Show success feedback
+        setShowSuccess(true);
+        
+        // Close modal after showing success
+        setTimeout(() => {
+          setOpenVisit(false);
+          setShowSuccess(false);
+          // Reset form
+          setSelectedDate(null);
+          setStep("date");
+          setHour(10);
+          setAmPm("AM");
+        }, 1500);
+      }
     } catch (error) {
       console.error("BOOK VISIT ERROR:", error);
     } finally {
@@ -188,15 +229,43 @@ export default function PDPSupport({ relationshipManager, propertyId }: PDPSuppo
       <div className="flex flex-col gap-3 px-4 mt-4">
         <button
           onClick={() => {
+            if (bookVisitStatus) return;
+            
+            // Check authentication before opening modal
+            if (!checkAuth()) {
+              setShowAuthModal(true);
+              return;
+            }
+            
             setOpenVisit(true);
             setStep("date");
           }}
-          disabled={isBooking}
-          className="w-full rounded-[110px] bg-[#1C4692] text-white py-3 px-6 text-sm font-semibold hover:bg-[#1a3d7a] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg">
-          {isBooking ? "Booking..." : "Book A Visit"}
+          disabled={isBooking || bookVisitStatus}
+          className={`w-full rounded-[110px] py-3 px-6 text-sm font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg ${
+            bookVisitStatus
+              ? "bg-white border-2 border-[#1C4692] text-[#1C4692] cursor-default"
+              : "bg-[#1C4692] text-white hover:bg-[#1a3d7a]"
+          }`}>
+          {isBooking 
+            ? "Booking..." 
+            : bookVisitStatus 
+              ? "Visit Booked" 
+              : "Book A Visit"}
         </button>
 
       </div>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        onSuccess={() => {
+          setShowAuthModal(false);
+          // After successful login, open visit modal
+          setOpenVisit(true);
+          setStep("date");
+        }}
+      />
       {openVisit && (
         <div className="fixed inset-0 z-[999] bg-black/40 flex items-center justify-center">
           <div className="w-[92%] max-w-[420px] bg-white rounded-3xl p-5 animate-scaleIn">
@@ -283,8 +352,25 @@ export default function PDPSupport({ relationshipManager, propertyId }: PDPSuppo
               </>
             )}
 
+            {/* ================= SUCCESS STEP ================= */}
+            {showSuccess && (
+              <div className="py-8 text-center">
+                <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+                  <svg className="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="mb-2 text-xl font-bold text-gray-900">
+                  Visit Booked Successfully!
+                </h3>
+                <p className="text-gray-600">
+                  Your visit has been scheduled. We&apos;ll contact you soon to confirm.
+                </p>
+              </div>
+            )}
+
             {/* ================= TIME STEP ================= */}
-            {step === "time" && (
+            {step === "time" && !showSuccess && (
               <>
                 <div className="flex items-center justify-between mb-3">
                   <p className="text-sm font-medium">

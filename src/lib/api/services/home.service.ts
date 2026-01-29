@@ -257,6 +257,7 @@ export interface PropertyDetail {
   longitude: number;
   isFavorite: boolean;
   isJoinGroup: boolean;
+  isBookVisit?: boolean;
   isAuthenticated: boolean;
   locationDetails: LocationDetails;
   startingPrice: PropertyPrice;
@@ -633,8 +634,8 @@ export const homeService = {
     propertyId: string;
     visitDate: string;
     visitTime: string;
-  }): Promise<ApiResponse<{ message: string }>> => {
-    return apiClient.post<{ message: string }>(
+  }): Promise<ApiResponse<{ message: string; isBookVisit: boolean }>> => {
+    return apiClient.post<{ message: string; isBookVisit: boolean }>(
       API_ENDPOINTS.HOME.POST_VISIT,
       data,
     );
@@ -719,6 +720,23 @@ export const homeService = {
   ): Promise<ApiResponse<BlogDetail>> => {
     return apiClient.get<BlogDetail>(
       `${API_ENDPOINTS.HOME.GET_BLOG_BY_ID}/${blogId}`,
+    );
+  },
+
+  /**
+   * Contact Us form submission
+   * POST /api/home/contact-us
+   * Example: POST /api/home/contact-us
+   */
+  contactUs: async (data: {
+    firstName: string;
+    phoneNumber: string;
+    email: string;
+    notes: string;
+  }): Promise<ApiResponse<{ message: string }>> => {
+    return apiClient.post<{ message: string }>(
+      API_ENDPOINTS.HOME.POST_CONTACT_US,
+      data,
     );
   },
 

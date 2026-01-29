@@ -33,6 +33,8 @@ export default function AboutSection() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showControls, setShowControls] = useState(false);
+  const [videoLoading, setVideoLoading] = useState(true);
+  const [videoError, setVideoError] = useState(false);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -43,6 +45,25 @@ export default function AboutSection() {
     return () =>
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
   }, []);
+
+  // Reset and load video on mount/refresh
+  useEffect(() => {
+    if (videoRef.current) {
+      setVideoLoading(true);
+      setVideoError(false);
+      videoRef.current.load();
+    }
+  }, []);
+
+  const handleVideoReady = () => {
+    setVideoLoading(false);
+    setVideoError(false);
+  };
+
+  const handleVideoError = () => {
+    setVideoLoading(false);
+    setVideoError(true);
+  };
 
   return (
     <section id="about" className="relative w-full bg-[#F2F5F9] overflow-hidden">
@@ -119,18 +140,38 @@ export default function AboutSection() {
               className="relative w-full max-w-[360px] h-[420px] md:h-[520px] rounded-3xl overflow-hidden shadow-xl"
               onMouseEnter={() => setShowControls(true)}
               onMouseLeave={() => setShowControls(false)}>
+              {/* Loading Skeleton */}
+              {videoLoading && (
+                <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-3xl z-10" />
+              )}
+
+              {/* Video Element */}
               <video
                 ref={videoRef}
                 src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/185341-875417497.mp4"
-                className="absolute inset-0 w-full h-full object-cover"
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
+                  videoLoading ? "opacity-0" : "opacity-100"
+                }`}
                 muted={muted}
                 autoPlay
                 loop
                 playsInline
-                preload="metadata"
+                preload="auto"
+                onLoadedData={handleVideoReady}
+                onCanPlay={handleVideoReady}
+                onError={handleVideoError}
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
               />
+
+              {/* Error State */}
+              {videoError && !videoLoading && (
+                <div className="absolute inset-0 z-20 flex items-center justify-center bg-gray-100 rounded-3xl">
+                  <div className="text-center p-4">
+                    <p className="text-sm text-gray-500">Video unavailable</p>
+                  </div>
+                </div>
+              )}
 
               <div className={`absolute inset-0 mt-118 ms-4 flex justify-start z-30 transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0"}`}>
                 <button

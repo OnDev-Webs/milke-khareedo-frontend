@@ -40,11 +40,17 @@ class ApiClient {
 
   /**
    * Get authorization token (if using auth)
-   * Override this method if you need to get token from storage
+   * Always reads fresh from localStorage to ensure latest token
    */
   private getAuthToken(): string | null {
     if (typeof window !== "undefined") {
-      return localStorage.getItem("auth_token");
+      try {
+        const token = localStorage.getItem("auth_token");
+        return token && token.trim() !== "" ? token : null;
+      } catch (error) {
+        console.error("Error reading auth token from localStorage:", error);
+        return null;
+      }
     }
     return null;
   }
@@ -58,8 +64,10 @@ class ApiClient {
     // Add auth token if available
     if (!config?.skipAuth) {
       const token = this.getAuthToken();
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
+      if (token && token.trim() !== "") {
+        headers.set("Authorization", `Bearer ${token.trim()}`);
+      } else {
+        console.warn("API call requires authentication but no token found");
       }
     }
 
@@ -106,6 +114,22 @@ class ApiClient {
 
     if (!response.ok) {
       const error = data as ApiError;
+
+      // Handle 401 Unauthorized - token might be invalid or missing
+      if (response.status === 401) {
+        // Check if token exists in storage
+        const token = this.getAuthToken();
+        if (!token) {
+          // Token doesn't exist, clear any stale data
+          if (typeof window !== "undefined") {
+            localStorage.removeItem("auth_token");
+            localStorage.removeItem("auth_user");
+            // Dispatch event to notify auth context
+            window.dispatchEvent(new Event("auth-changed"));
+          }
+        }
+      }
+
       throw new ApiClientError(
         error.message || `Request failed with status ${response.status}`,
         response.status,

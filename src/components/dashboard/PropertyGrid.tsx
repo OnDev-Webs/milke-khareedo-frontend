@@ -5,6 +5,7 @@ type PropertyGridProps = {
     onFavoriteClick: (property: any) => void;
     onCompareClick : (property: any) => void;
     onShareClick: (property: any) => void;
+    onReschedule?: (propertyId: string) => void;
     favoriteStates: Record<string, boolean>;
     favoriteLoading: Record<string, boolean>;
 };
@@ -14,6 +15,7 @@ export default function PropertyGrid({
     onFavoriteClick,
     onCompareClick,
     onShareClick,
+    onReschedule,
     favoriteStates,
     favoriteLoading,
 }: PropertyGridProps) {
@@ -30,6 +32,7 @@ export default function PropertyGrid({
                                 onFavoriteClick={onFavoriteClick}
                                 onCompareClick={onCompareClick}
                                 onShareClick={onShareClick}
+                                onReschedule={onReschedule}
                             />
                         </div>
                     ))}
@@ -46,6 +49,7 @@ export default function PropertyGrid({
       onFavoriteClick={onFavoriteClick}
       onCompareClick={onCompareClick}
       onShareClick={onShareClick}
+      onReschedule={onReschedule}
     />
   ))}
 </div>

@@ -56,15 +56,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = useCallback((newToken: string, newUser: User) => {
-    localStorage.setItem("auth_token", newToken);
-    localStorage.setItem("auth_user", JSON.stringify(newUser));
-    setToken(newToken);
-    setUser(newUser);
-    setIsAuthenticated(true);
+    if (!newToken || newToken.trim() === "") {
+      console.error("Invalid token provided to login function");
+      return;
+    }
 
-    // Dispatch custom event for other components
-    if (typeof window !== "undefined") {
-      window.dispatchEvent(new Event("auth-changed"));
+    try {
+      localStorage.setItem("auth_token", newToken);
+      localStorage.setItem("auth_user", JSON.stringify(newUser));
+
+      // Verify token was stored 
+      const storedToken = localStorage.getItem("auth_token");
+      if (storedToken !== newToken) {
+        console.error("Token storage verification failed");
+        return;
+      }
+
+      setToken(newToken);
+      setUser(newUser);
+      setIsAuthenticated(true);
+
+      if (typeof window !== "undefined") {
+        setTimeout(() => {
+          window.dispatchEvent(new Event("auth-changed"));
+        }, 0);
+      }
+    } catch (error) {
+      console.error("Error storing auth token:", error);
     }
   }, []);
 

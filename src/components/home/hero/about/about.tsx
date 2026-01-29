@@ -1,7 +1,67 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { IoPause, IoPlay, IoVolumeHigh, IoVolumeMute } from "react-icons/io5";
-import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
+import { IoPause, IoPlay } from "react-icons/io5";
+
+const VolumeIcon = ({ muted }: { muted: boolean }) => {
+  if (muted) {
+    // MUTE ICON
+    return (
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path
+          d="M1.33398 6.63998V9.35998C1.33398 10.72 2.01398 11.4 3.37398 11.4H4.34732C4.60065 11.4 4.85398 11.4733 5.06732 11.6066L7.05398 12.8466C8.77398 13.92 10.174 13.14 10.174 11.1133V4.87998C10.174 2.85331 8.76732 2.07331 7.05398 3.14664L5.06732 4.39331C4.84732 4.52665 4.60065 4.59998 4.34732 4.59998H3.37398C2.01398 4.59998 1.33398 5.27998 1.33398 6.63998Z"
+          stroke="#292D32"
+          strokeWidth="1.5"
+        />
+        <path
+          d="M12 8H14.6667"
+          stroke="#292D32"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
+
+  // SAME ICON (sound on)
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path
+        d="M1.33398 6.63998V9.35998C1.33398 10.72 2.01398 11.4 3.37398 11.4H4.34732C4.60065 11.4 4.85398 11.4733 5.06732 11.6066L7.05398 12.8466C8.77398 13.92 10.174 13.14 10.174 11.1133V4.87998C10.174 2.85331 8.76732 2.07331 7.05398 3.14664L5.06732 4.39331C4.84732 4.52665 4.60065 4.59998 4.34732 4.59998H3.37398C2.01398 4.59998 1.33398 5.27998 1.33398 6.63998Z"
+        stroke="#292D32"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+};
+
+const FullscreenIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path
+      d="M1.33398 6.00004V4.33337C1.33398 2.67337 2.67398 1.33337 4.33398 1.33337H6.00065"
+      stroke="#292D32"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M10 1.33337H11.6667C13.3267 1.33337 14.6667 2.67337 14.6667 4.33337V6.00004"
+      stroke="#292D32"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M14.666 10.6666V11.6666C14.666 13.3266 13.326 14.6666 11.666 14.6666H10.666"
+      stroke="#292D32"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M6.00065 14.6667H4.33398C2.67398 14.6667 1.33398 13.3267 1.33398 11.6667V10"
+      stroke="#292D32"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 
 export default function AboutSection() {
   const points = [
@@ -114,12 +174,10 @@ export default function AboutSection() {
             <div className="space-y-3">
               {points.map((item, i) => (
                 <div key={i} className="flex gap-3 md:gap-4">
-                  {/* Number */}
                   <div className="flex h-8 w-8 md:h-8 md:w-8 shrink-0 items-center justify-center rounded-full bg-[#1C4692] text-white font-bold text-sm md:text-base leading-none">
                     {i + 1}
                   </div>
 
-                  {/* Text */}
                   <div>
                     <h5 className="text-[16px] md:text-[18px] font-semibold text-black">
                       {item.title}
@@ -137,21 +195,18 @@ export default function AboutSection() {
           <div className="flex order-1 lg:order-2 xl:pl-20">
             <div
               ref={containerRef}
-              className="relative w-full max-w-[360px] h-[420px] md:h-[520px] rounded-3xl overflow-hidden shadow-xl"
+              className="relative w-full max-w-[360px] h-[420px] md:h-[520px] border border-[8px] border-white rounded-3xl overflow-hidden shadow-xl"
               onMouseEnter={() => setShowControls(true)}
               onMouseLeave={() => setShowControls(false)}>
-              {/* Loading Skeleton */}
               {videoLoading && (
                 <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-3xl z-10" />
               )}
 
-              {/* Video Element */}
               <video
                 ref={videoRef}
                 src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/185341-875417497.mp4"
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
-                  videoLoading ? "opacity-0" : "opacity-100"
-                }`}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${videoLoading ? "opacity-0" : "opacity-100"
+                  }`}
                 muted={muted}
                 autoPlay
                 loop
@@ -173,7 +228,7 @@ export default function AboutSection() {
                 </div>
               )}
 
-              <div className={`absolute inset-0 mt-118 ms-4 flex justify-start z-30 transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0"}`}>
+              <div className={`absolute inset-0 mt-113 ms-4 flex justify-start z-30 transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0"}`}>
                 <button
                   onClick={() => {
                     if (!videoRef.current) return;
@@ -190,22 +245,52 @@ export default function AboutSection() {
               </div>
 
               {/* Top Left */}
-              <div className="absolute top-2 md:top-2 left-2 md:left-2 z-20 flex items-center gap-2 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-semibold text-white">
-                <svg
-                  className="h-7 w-7 md:h-9 md:w-9 bg-white/90 rounded-full p-[3px]"
-                  viewBox="0 0 24 24"
-                  fill="#000"
-                >
-                  <circle cx="8" cy="8" r="2" />
-                  <circle cx="16" cy="8" r="2" />
-                  <circle cx="8" cy="16" r="2" />
-                  <circle cx="16" cy="16" r="2" />
-                </svg>
-                Milke Khareedo
+              <div className="absolute top-[16px] left-[16px] z-20 flex items-center gap-2 text-xs md:text-sm font-semibold text-white">
+                <span className="h-10 w-10 bg-white rounded-full flex items-center justify-center shadow">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none">
+                    <path
+                      d="M11.6927 5.54001C12.5985 5.54001 13.3327 4.80576 13.3327 3.90001C13.3327 2.99426 12.5985 2.26001 11.6927 2.26001C10.787 2.26001 10.0527 2.99426 10.0527 3.90001C10.0527 4.80576 10.787 5.54001 11.6927 5.54001Z"
+                      stroke="#353535"
+                      strokeWidth={1.5}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M4.30602 5.54001C5.21177 5.54001 5.94601 4.80576 5.94601 3.90001C5.94601 2.99426 5.21177 2.26001 4.30602 2.26001C3.40027 2.26001 2.66602 2.99426 2.66602 3.90001C2.66602 4.80576 3.40027 5.54001 4.30602 5.54001Z"
+                      stroke="#353535"
+                      strokeWidth={1.5}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M11.6927 13.74C12.5985 13.74 13.3327 13.0057 13.3327 12.1C13.3327 11.1942 12.5985 10.46 11.6927 10.46C10.787 10.46 10.0527 11.1942 10.0527 12.1C10.0527 13.0057 10.787 13.74 11.6927 13.74Z"
+                      stroke="#292D32"
+                      strokeWidth={1.5}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M4.30602 13.74C5.21177 13.74 5.94601 13.0057 5.94601 12.1C5.94601 11.1942 5.21177 10.46 4.30602 10.46C3.40027 10.46 2.66602 11.1942 2.66602 12.1C2.66602 13.0057 3.40027 13.74 4.30602 13.74Z"
+                      stroke="#292D32"
+                      strokeWidth={1.5}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+
+                <span className="leading-none text-white font-semibold">
+                  Milke Khareedo
+                </span>
               </div>
 
               {/* Top Right */}
-              <div className="absolute top-2 right-2 z-40 flex gap-2">
+              <div className="absolute top-[16px] right-[16px] z-40 flex gap-2">
                 <button
                   onClick={() => {
                     if (!videoRef.current) return;
@@ -216,8 +301,9 @@ export default function AboutSection() {
                       videoRef.current.play().catch(() => { });
                     }
                   }}
-                  className="h-9 w-9 bg-white rounded-full flex items-center justify-center shadow">
-                  {muted ? <IoVolumeMute size={18} /> : <IoVolumeHigh size={18} />}
+                  className="h-10 w-10 bg-white rounded-full flex items-center justify-center shadow"
+                >
+                  <VolumeIcon muted={muted} />
                 </button>
 
                 <button
@@ -229,13 +315,9 @@ export default function AboutSection() {
                       document.exitFullscreen().catch(() => { });
                     }
                   }}
-                  className="h-9 w-9 bg-white rounded-full flex items-center justify-center shadow"
+                  className="h-10 w-10 bg-white rounded-full flex items-center justify-center shadow"
                 >
-                  {isFullscreen ? (
-                    <MdFullscreenExit size={18} />
-                  ) : (
-                    <MdFullscreen size={18} />
-                  )}
+                  <FullscreenIcon />
                 </button>
               </div>
             </div>

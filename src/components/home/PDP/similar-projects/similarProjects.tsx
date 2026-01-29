@@ -46,7 +46,7 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
       openingFormatted: sp.status,
       targetPrice: sp.targetPrice,
       developerPrice: sp.disclaimerPrice,
-      discount: null,
+      discount: sp.discount ?? null,
       offerPrice: null,
       discountPercentage: sp.discountPercentage,
       configurations: [sp.configuration],

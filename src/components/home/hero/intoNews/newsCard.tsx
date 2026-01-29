@@ -4,21 +4,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import type { Blog } from "@/lib/api/services/home.service";
-
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import "swiper/css";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export default function NewsCard({ blogs }: { blogs: Blog[] }) {
   const [visibleCount, setVisibleCount] = useState(2);
   const swiperRef = useRef<any>(null);
 
-  /* ================= CARD UI (COMMON) ================= */
   const Card = ({ item }: { item: Blog }) => (
     <Link href={`/blogs/${item.slug}`} className="block h-full">
       <div className="shadow-[0_0_10px_rgba(0,0,0,0.08)] p-6 rounded-4xl h-full cursor-pointer hover:shadow-md transition">
         <div className="flex flex-col h-full gap-4">
-          {/* Image */}
           <div className="relative w-full h-[220px] md:h-[320px] rounded-4xl overflow-hidden">
             <Image
               src={item.bannerImage}
@@ -28,7 +25,6 @@ export default function NewsCard({ blogs }: { blogs: Blog[] }) {
             />
           </div>
 
-          {/* Content */}
           <div className="flex flex-col flex-1 text-left">
             <h2 className="font-bold text-[22px] text-[#000000] line-clamp-2">
               {item.title}
@@ -38,7 +34,6 @@ export default function NewsCard({ blogs }: { blogs: Blog[] }) {
               {(item.content || item.subtitle || "").replace(/<[^>]*>/g, "")}
             </p>
 
-            {/* Read More – desktop & tablet only */}
             <div className="mt-auto pt-4 hidden md:block">
               <span className="inline-block rounded-full bg-[#1C4692] px-8 py-3 text-[14px] font-semibold text-white">
                 Read More
@@ -53,13 +48,11 @@ export default function NewsCard({ blogs }: { blogs: Blog[] }) {
   return (
     <div className="w-full">
 
-      {/* ================= MOBILE VIEW ================= */}
       <div className="md:hidden">
         <Swiper
           slidesPerView={1}
           spaceBetween={16}
-          onSwiper={(swiper) => (swiperRef.current = swiper)}
-        >
+          onSwiper={(swiper) => (swiperRef.current = swiper)}>
           {blogs.map((item) => (
             <SwiperSlide key={item._id}>
               <Card item={item} />
@@ -67,20 +60,18 @@ export default function NewsCard({ blogs }: { blogs: Blog[] }) {
           ))}
         </Swiper>
 
-        {/* Left / Right arrows only */}
         <div className="flex items-center justify-between px-4 mt-4">
           <button
             onClick={() => swiperRef.current?.slidePrev()}
-            className="h-10 w-10 rounded-full border border-gray-300 flex items-center justify-center"
-          >
-            ←
+            className="h-[38px] w-[52px] rounded-full bg-[#FFFFFF] text-[#292D32] flex items-center justify-center shadow">
+            <ArrowLeft size={24}/>
           </button>
 
           <button
             onClick={() => swiperRef.current?.slideNext()}
-            className="h-10 w-10 rounded-full border border-gray-300 flex items-center justify-center"
+            className="h-[38px] w-[52px] rounded-full bg-[#FFFFFF] text-[#292D32] flex items-center justify-center shadow"
           >
-            →
+            <ArrowRight size={24}/>
           </button>
         </div>
       </div>

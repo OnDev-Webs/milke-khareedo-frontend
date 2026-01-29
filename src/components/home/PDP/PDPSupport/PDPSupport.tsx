@@ -9,8 +9,6 @@ import Star from "@/assets/star.svg";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useAuthContext } from "@/contexts/AuthContext";
 import AuthModal from "@/components/auth/AuthModal";
-import { useAuthContext } from "@/contexts/AuthContext";
-import AuthModal from "@/components/auth/AuthModal";
 
 interface PDPSupportProps {
   relationshipManager: RelationshipManager;

@@ -12,17 +12,17 @@ import {
 const founders = [
   {
     name: "Kirath Singh",
-    role: "Founder",
+    role: "Founder & CEO",
     desc: "description description description",
     items: ["twitter", "facebook", "linkedin", "instagram"],
     avatar: "/images/f1.jpg",
   },
   {
-    name: "Anush",
-    role: "Co-Founder",
+    name: "Gundapu Anush",
+    role: "Co-Founder & CMO",
     desc: "description description description",
     items: ["twitter", "facebook", "linkedin", "instagram"],
-    avatar: "/images/f2.jpg",
+    avatar: "/images/photo2.jpeg",
   },
 ];
 

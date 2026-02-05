@@ -175,6 +175,14 @@ export default function FooterSection() {
                     FAQ's
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    href="/nri"
+                    className="text-sm text-[#241F20] transition-colors  lg:text-base"
+                  >
+                    NRI Support
+                  </Link>
+                </li>
 
               </ul>
             </div>

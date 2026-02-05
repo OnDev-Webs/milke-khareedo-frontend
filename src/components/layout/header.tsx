@@ -17,6 +17,7 @@ const navLinks = [
   { label: "Properties", href: "/properties" },
   { label: "Blogs", href: "/blogs" },
   { label: "About Us", href: "/about" },
+    { label: "NRI ", href: "/nri" },
   { label: "Contact Us", href: "/contact" },
 ];
 

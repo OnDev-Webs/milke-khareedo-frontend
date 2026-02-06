@@ -204,7 +204,7 @@ export default function AboutSection() {
 
               <video
                 ref={videoRef}
-                src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/185341-875417497.mp4"
+                src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/MilkeKhareedo_02+Final.mp4"
                 className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${videoLoading ? "opacity-0" : "opacity-100"
                   }`}
                 muted={muted}

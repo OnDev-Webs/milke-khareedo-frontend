@@ -52,9 +52,9 @@ export default function NRIFAQ() {
     },
     {
       id: 9,
-      title: "How safe is it to invest through MilkeKhareedo?",
+      title: "Can NRIs buy property through MilkeKhareedo?",
       desciption:
-        "MilkeKhareedo works only with verified builders and legally approved projects. Our group-buying model also helps NRIs get better pricing, transparency and reduced risk.",
+        "Yes, absolutely. We offer tailored support for NRIs, including virtual property tours, seamless documentation help, and on-ground coordination. Think of us as your trusted eyes and ears in India—ensuring every step is transparent so you know exactly where your investment is going.",
     },
     {
       id: 10,

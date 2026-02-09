@@ -1,44 +1,69 @@
 import FAQSCard from "./faqsCard";
 
 export default function FAQS() {
-  const arr = [
-    {
-      id: 1,
-      title: "Do I have to commit when I show interest?",
-      desciption:
-        "No. Showing interest only helps us understand which projects buyers are considering. There is no obligation or payment at this stage.",
-    },
-    {
-      id: 2,
-      title: "How is group buying different from buying alone?",
-      desciption:
-        "When buyers move forward together for the same project, pricing becomes more flexible. This usually leads to better value than individual buying.",
-    },
-    {
-      id: 3,
-      title: "Who negotiates with the builder?",
-      desciption:
-        "We take the discussion forward based on collective buyer interest. You don’t have to negotiate alone or handle uncomfortable conversations.",
-    },
-    {
-      id: 4,
-      title: "What is the private buyer group?",
-      desciption:
-        "No. Showing interest only helps us understand which projects buyers are considering. There is no obligation or payment at this stage.",
-    },
-    {
-      id: 5,
-      title: "Is group buying safe and legal?",
-      desciption:
-        "Yes. Each buyer completes their own individual purchase directly with the builder. Group buying only helps bring clarity and better pricing options.",
-    },
-    {
-      id: 6,
-      title: "What if I’m not comfortable with the final offer?",
-      desciption:
-        "We share the details clearly and continue supporting you. You move forward only when you feel confident about the decision.",
-    },
-  ];
+const arr = [
+  {
+    id: 1,
+    title: "What is MilkeKhareedo?",
+    desciption:
+      "MilkeKhareedo is a group-buying real estate platform where multiple buyers come together to negotiate better prices and benefits directly with trusted developers.",
+  },
+  {
+    id: 2,
+    title: "How does group buying help me save money?",
+    desciption:
+      "When buyers purchase as a group, developers offer better pricing, additional discounts, and reduced charges compared to individual purchases.",
+  },
+  {
+    id: 3,
+    title: "Is MilkeKhareedo safe and trustworthy?",
+    desciption:
+      "Yes. We work only with verified developers and projects. Our team ensures transparency, clear documentation, and end-to-end support for buyers.",
+  },
+  {
+    id: 4,
+    title: "Do I have to buy property immediately after registering?",
+    desciption:
+      "No. Registering with MilkeKhareedo does not force you to buy. You can explore projects, understand pricing, and decide at your own pace.",
+  },
+  {
+    id: 5,
+    title: "Are there any extra charges for using MilkeKhareedo?",
+    desciption:
+      "No hidden charges. Our pricing and services are clearly explained upfront, ensuring complete transparency.",
+  },
+  {
+    id: 6,
+    title: "Can first-time homebuyers use MilkeKhareedo?",
+    desciption:
+      "Absolutely. MilkeKhareedo is ideal for first-time buyers as we guide you through every step of the property buying process.",
+  },
+  {
+    id: 7,
+    title: "Which locations do you cover in Hyderabad?",
+    desciption:
+      "We cover major residential and investment locations across Hyderabad, including IT corridors, emerging areas, and premium developments.",
+  },
+  {
+    id: 8,
+    title: "Do you help with home loans and legal support?",
+    desciption:
+      "Yes. We assist buyers with home loan support, documentation, and basic legal guidance to make the buying process smooth.",
+  },
+  {
+    id: 9,
+    title: "Can NRIs buy property through MilkeKhareedo?",
+    desciption:
+      "Yes. We provide dedicated support for NRIs, including virtual property tours, documentation assistance, and coordination from abroad.",
+  },
+  {
+    id: 10,
+    title: "How do I get started with MilkeKhareedo?",
+    desciption:
+      "Simply register on our website or contact our team. We’ll connect you with ongoing group deals and guide you through the next steps.",
+  },
+];
+
 
   return (
     <section

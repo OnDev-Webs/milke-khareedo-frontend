@@ -25,7 +25,7 @@ const contactMethods = [
     type: "normal",
     icon: "/images/Frame3.png",
     title: "Where We Are",
-    desc: "Tk Residency , Friends Colony Rd, Friends Colony, Indira Nagar Colony, Miyapur, Hyderabad, Telangana 500049",
+    desc: "Aparna Greens Homes, 4th Floor, Flat No 403, Nanakramguda, Makthakousarali, Telangana 500032",
   },
 ];
 
@@ -101,33 +101,33 @@ export default function ConnectWithUs() {
             ))}
           </div>
 
-        {/* FORM + IMAGE */}
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+          {/* FORM + IMAGE */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
 
-  {/* FORM */}
-  <div className="flex">
-    <div className="w-full bg-white border border-[#DDDDDD] rounded-[30px] p-6 md:p-8 flex flex-col justify-center">
-      <h3 className="font-bold text-black text-[28px] mb-2">
-        Let’s find the right deal for you
-      </h3>
-      <p className="text-[#373737] font-medium text-[17px] mb-6">
-        Fill out the form, and we’ll reach out within 24 hours.
-      </p>
-      <ContactForm />
-    </div>
-  </div>
+            {/* FORM */}
+            <div className="flex">
+              <div className="w-full bg-white border border-[#DDDDDD] rounded-[30px] p-6 md:p-8 flex flex-col justify-center">
+                <h3 className="font-bold text-black text-[28px] mb-2">
+                  Let's find the right deal for you
+                </h3>
+                <p className="text-[#373737] font-medium text-[17px] mb-6">
+                  Fill out the form, and we'll reach out within 24 hours.
+                </p>
+                <ContactForm />
+              </div>
+            </div>
 
-  {/* IMAGE */}
-  <div className="relative w-full min-h-[280px] sm:min-h-[320px] lg:min-h-full rounded-2xl overflow-hidden">
-    <Image
-      src="/images/contact.jpg"
-      alt="Contact"
-      fill
-      className="object-cover"
-    />
-  </div>
+            {/* IMAGE */}
+            <div className="relative w-full min-h-[280px] sm:min-h-[320px] lg:min-h-full rounded-2xl overflow-hidden">
+              <Image
+                src="/images/contact.jpg"
+                alt="Contact"
+                fill
+                className="object-cover"
+              />
+            </div>
 
-</div>
+          </div>
 
         </div>
       </section>

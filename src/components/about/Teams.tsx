@@ -93,7 +93,7 @@ export default function Teams() {
         <rect width="100%" height="100%" fill="url(#rhombusPattern)" />
       </svg>
 
-      <div className="max-w-6xl mx-auto px-4 relative z-10">
+      {/* <div className="max-w-6xl mx-auto px-4 relative z-10">
         <Title
           text={"Rest of the"}
           isDrawLine
@@ -108,7 +108,6 @@ export default function Teams() {
               <div
                 key={i}
                 className="relative flex flex-col md:flex-row items-center md:items-stretch rounded-2xl bg-white p-6 md:p-8 shadow-[0_18px_40px_rgba(0,0,0,0.05)]">
-                {/* Image */}
                 <div className="mb-4 md:mb-0 md:mr-4 relative h-74 md:h-50 w-full md:w-44 shrink-0 rounded-xl overflow-hidden bg-[#f5f3ff]">
                   <Image
                     src={team.avatar}
@@ -117,7 +116,6 @@ export default function Teams() {
                     className="object-cover"
                   />
                 </div>
-                {/* Content */}
                 <div className="flex flex-1 flex-col justify-between md:text-left">
                   <div>
                     <p className="font-bold text-[20px] md:text-[22px] text-[#000] leading-8">
@@ -146,13 +144,11 @@ export default function Teams() {
           })}
         </div>
 
-        {/* MOBILE SLIDER */}
         <div className="sm:hidden relative">
 
           <div className="flex justify-center">
             <div className="w-full">
               <div className="flex flex-col rounded-2xl bg-white p-6 shadow-[0_18px_40px_rgba(0,0,0,0.05)]">
-                {/* Image */}
                 <div className="mb-4 md:mb-0 md:mr-4 relative h-74 md:h-50 w-full md:w-44 shrink-0 rounded-xl overflow-hidden bg-[#f5f3ff]">
                   <Image
                     src={teams[currentIndex].avatar}
@@ -161,7 +157,6 @@ export default function Teams() {
                     className="object-cover"
                   />
                 </div>
-                {/* Content */}
                 <p className="font-bold text-[20px] text-black">
                   {teams[currentIndex].name}
                 </p>
@@ -171,7 +166,6 @@ export default function Teams() {
                 <p className="text-[16px] text-[#9795B5] mt-2">
                   {teams[currentIndex].desc}
                 </p>
-                {/* Social Icons */}
                 <div className="mt-4 flex gap-4">
                   {teams[currentIndex].items.map((item, i) => (
                     <div
@@ -184,7 +178,6 @@ export default function Teams() {
               </div>
             </div>
           </div>
-          {/* NAVIGATION – BELOW CARD */}
           <div className="mt-4 flex items-center justify-between gap-6">
             <button
               onClick={prevSlide}
@@ -198,7 +191,7 @@ export default function Teams() {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }

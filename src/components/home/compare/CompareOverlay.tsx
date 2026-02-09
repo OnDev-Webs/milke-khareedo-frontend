@@ -10,7 +10,7 @@ export default function CompareOverlay() {
     useCompare();
 
   return (
-    <div className="w-[340px] rounded-2xl bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)]">
+    <div className="w-[290px] md:w-[340px] rounded-2xl bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)] md:w-[320px] md:max-w-[85vw] lg:w-[340px] lg:max-w-none">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-[#B3B3B3] px-5 py-4">
         <div className="flex items-center gap-2">
@@ -39,7 +39,7 @@ export default function CompareOverlay() {
               <div
                 key={property.id}
                 className="flex items-start gap-3 rounded-lg bg-[#F8FBFF] p-3">
-                {/* ✅ PROPERTY IMAGE */}
+                {/* :white_check_mark: PROPERTY IMAGE */}
                 <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full bg-gray-200">
                   {property.image ? (
                     <Image
@@ -53,7 +53,7 @@ export default function CompareOverlay() {
                   )}
                 </div>
 
-                {/* ✅ PROPERTY INFO */}
+                {/* :white_check_mark: PROPERTY INFO */}
                 <div className="flex-1 min-w-0 mt-2">
                   <h4 className="text-sm font-semibold text-gray-800 truncate">
                     {property.title}

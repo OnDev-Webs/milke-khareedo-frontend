@@ -71,15 +71,14 @@ export default function CalculateSave() {
 
   // Format loan amount for display
   const formatLoanAmount = (amount: number) => {
-    if (amount >= 1e7) {
-      return `₹ ${(amount / 1e7).toFixed(2)} Cr`;
+    if (amount >= 10000000) {
+      return `₹ ${(amount / 10000000).toFixed(1)} Crore`;
+    } else if (amount >= 100000) {
+      return `₹ ${(amount / 100000).toFixed(1)} Lakh`;
+    } else {
+      return `₹ ${(amount / 1000).toFixed(0)}k`;
     }
-    if (amount >= 1e5) {
-      return `₹ ${(amount / 1e5).toFixed(2)} L`;
-    }
-    return `₹ ${amount.toLocaleString("en-IN")}`;
   };
-
 
   // EMI calculation mutation
   const {
@@ -339,19 +338,14 @@ export default function CalculateSave() {
                   />
                 </div>
 
-                <div className="mt-2 flex justify-between text-xs sm:text-sm text-gray-500">
-                  {[
-                    loanAmountRange.min,
-                    loanAmountRange.min + (loanAmountRange.max - loanAmountRange.min) * 0.2,
-                    loanAmountRange.min + (loanAmountRange.max - loanAmountRange.min) * 0.4,
-                    loanAmountRange.min + (loanAmountRange.max - loanAmountRange.min) * 0.6,
-                    loanAmountRange.min + (loanAmountRange.max - loanAmountRange.min) * 0.8,
-                    loanAmountRange.max,
-                  ].map((value, index) => (
-                    <span key={index}>{formatLoanAmount(value)}</span>
-                  ))}
+                <div className="mt-1 sm:mt-2 flex justify-between text-xs sm:text-sm text-gray-500">
+                  <span>₹ 30L</span>
+                  <span>₹ 10Cr</span>
+                  <span>₹ 20Cr</span>
+                  <span>₹ 30Cr</span>
+                  <span>₹ 40Cr</span>
+                  <span>₹ 50Cr</span>
                 </div>
-
               </div>
 
               {/* Rate of Interest Slider */}

@@ -41,6 +41,8 @@ export default function TopProperties() {
   const [hoveredProperty, setHoveredProperty] = useState<string | null>(null);
   const { data: locationsData } = useApi(() => homeService.getLocations());
 
+  console.log("locationsData", locationsData);
+
   const tabs = useMemo(() => {
     const allTabs = ["All Properties"];
     if (locationsData?.locations) {

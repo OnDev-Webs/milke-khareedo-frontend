@@ -293,7 +293,7 @@ export default function Hero() {
           <div className="md:max-w-[330px] lg:max-w-none">
             <h1 className="text-3xl md:text-[32px] lg:text-4xl font-bold text-[#151516] leading-tight md:leading-[1.15] lg:leading-tight">
               <span className="text-[#1C4692] block lg:block md:inline md:pe-2">
-                Milke Khereedo
+                Milke Khareedo
               </span>
               <span className="block lg:block md:inline">
                 Makes it easier.

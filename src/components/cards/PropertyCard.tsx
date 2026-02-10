@@ -61,9 +61,9 @@ export default function PropertyCard({
   const formatPercentage = (value: string) => value.replace(/\.00%$/, "%");
 
   const [hoveredAction, setHoveredAction] = useState<
-  "shortlist" | "compare" | "share" | null
->(null);
-const [shareOpen, setShareOpen] = useState(false);
+    "shortlist" | "compare" | "share" | null
+  >(null);
+  const [shareOpen, setShareOpen] = useState(false);
 
 
 
@@ -115,151 +115,150 @@ const [shareOpen, setShareOpen] = useState(false);
         )}
 
         {/* Hover Icons */}
-    <div
-  className={`absolute top-3 right-3 z-20 flex flex-col gap-2 transition-all duration-300 ${
-    isHovered
-      ? "opacity-100 translate-y-0"
-      : "opacity-0 -translate-y-2 pointer-events-none"
-  }`}
->
-  {/* Shortlist */}
-  <div
-    className="relative flex items-center justify-end"
-    onMouseEnter={() => setHoveredAction("shortlist")}
-    onMouseLeave={() => setHoveredAction(null)}
-  >
-    {hoveredAction === "shortlist" && (
-      <span className="absolute right-11 rounded-full bg-[#1C4692] px-3 py-1 text-xs font-semibold text-white whitespace-nowrap">
-        {isFavorite ? "Shortlisted" : "Shortlist"}
-      </span>
-    )}
-
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        onFavoriteClick(property);
-      }}
-      disabled={isLoading}
-      className="h-9 w-9 rounded-full bg-white border-2 border-white shadow flex items-center justify-center"
-    >
-      {isFavorite ? (
-        <IoHeart size={18} className="text-red-500" />
-      ) : (
-        <IoHeartOutline size={18} className="text-gray-700" />
-      )}
-    </button>
-  </div>
-
-  {/* Compare */}
-  <div
-    className="relative flex items-center justify-end"
-    onMouseEnter={() => setHoveredAction("compare")}
-    onMouseLeave={() => setHoveredAction(null)}
-  >
-    {hoveredAction === "compare" && (
-      <span className="absolute right-11 rounded-full bg-[#1C4692] px-3 py-1 text-xs font-semibold text-white whitespace-nowrap">
-        Compare
-      </span>
-    )}
-
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        onCompareClick(property);
-      }}
-      className="h-9 w-9 rounded-full bg-white border-2 border-white shadow flex items-center justify-center"
-    >
-      <Image src="/images/convert.svg" alt="Compare" width={18} height={18} />
-    </button>
-  </div>
-  
-{/* Share */}
-<div
-  className="relative flex items-center justify-end"
-  onMouseEnter={() => setHoveredAction("share")}
-  onMouseLeave={() => setHoveredAction(null)}
->
-  {/* Tooltip on share button hover */}
-  {hoveredAction === "share" && !shareOpen && (
-    <span className="absolute right-11 rounded-full bg-[#1C4692] px-3 py-1 text-xs font-semibold text-white whitespace-nowrap">
-      Share
-    </span>
-  )}
-
-  <button
-    onClick={(e) => {
-      e.stopPropagation();
-      setShareOpen((v) => !v);
-    }}
-    className="h-9 w-9 rounded-full bg-white border-2 border-white shadow flex items-center justify-center"
-  >
-    <IoShareSocialOutline size={18} />
-  </button>
-
-  {/* Share Menu – ICONS ONLY */}
-  {shareOpen && (
-    <>
-      {/* click outside */}
-      <div
-        className="fixed inset-0 z-30"
-        onClick={() => setShareOpen(false)}
-      />
-
-      <div className="absolute right-11 top-1/2 -translate-y-1/2 z-40 flex gap-2 rounded-2xl bg-white px-3 py-2 shadow-xl">
-        <button
-          onClick={() =>
-            window.open(
-              `https://www.facebook.com/sharer/sharer.php?u=${window.location.origin}/property-details/${property.id}`,
-              "_blank"
-            )
-          }
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1877F2] text-white"
+        <div
+          className={`absolute top-3 right-3 z-20 flex flex-col gap-2 transition-all duration-300 ${isHovered
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-2 pointer-events-none"
+            }`}
         >
-          <FaFacebookF size={14} />
-        </button>
+          {/* Shortlist */}
+          <div
+            className="relative flex items-center justify-end"
+            onMouseEnter={() => setHoveredAction("shortlist")}
+            onMouseLeave={() => setHoveredAction(null)}
+          >
+            {hoveredAction === "shortlist" && (
+              <span className="absolute right-11 rounded-full bg-[#1C4692] px-3 py-1 text-xs font-semibold text-white whitespace-nowrap">
+                {isFavorite ? "Shortlisted" : "Shortlist"}
+              </span>
+            )}
 
-        <button
-          onClick={() =>
-            window.open(
-              `https://www.linkedin.com/sharing/share-offsite/?url=${window.location.origin}/property-details/${property.id}`,
-              "_blank"
-            )
-          }
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0A66C2] text-white"
-        >
-          <FaLinkedinIn size={14} />
-        </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onFavoriteClick(property);
+              }}
+              disabled={isLoading}
+              className="h-9 w-9 rounded-full bg-white border-2 border-white shadow flex items-center justify-center"
+            >
+              {isFavorite ? (
+                <IoHeart size={18} className="text-red-500" />
+              ) : (
+                <IoHeartOutline size={18} className="text-gray-700" />
+              )}
+            </button>
+          </div>
 
-        <button
-          onClick={() =>
-            window.open(
-              `https://wa.me/?text=${window.location.origin}/property-details/${property.id}`,
-              "_blank"
-            )
-          }
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-[#25D366] text-white"
-        >
-          <FaWhatsapp size={16} />
-        </button>
+          {/* Compare */}
+          <div
+            className="relative flex items-center justify-end"
+            onMouseEnter={() => setHoveredAction("compare")}
+            onMouseLeave={() => setHoveredAction(null)}
+          >
+            {hoveredAction === "compare" && (
+              <span className="absolute right-11 rounded-full bg-[#1C4692] px-3 py-1 text-xs font-semibold text-white whitespace-nowrap">
+                Compare
+              </span>
+            )}
 
-        <button
-          onClick={() => {
-            navigator.clipboard.writeText(
-              `${window.location.origin}/property-details/${property.id}`
-            );
-            setShareOpen(false);
-          }}
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-[#6B7280] text-white"
-        >
-          <FaLink size={14} />
-        </button>
-      </div>
-    </>
-  )}
-</div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onCompareClick(property);
+              }}
+              className="h-9 w-9 rounded-full bg-white border-2 border-white shadow flex items-center justify-center"
+            >
+              <Image src="/images/convert.svg" alt="Compare" width={18} height={18} />
+            </button>
+          </div>
+
+          {/* Share */}
+          <div
+            className="relative flex items-center justify-end"
+            onMouseEnter={() => setHoveredAction("share")}
+            onMouseLeave={() => setHoveredAction(null)}
+          >
+            {/* Tooltip on share button hover */}
+            {hoveredAction === "share" && !shareOpen && (
+              <span className="absolute right-11 rounded-full bg-[#1C4692] px-3 py-1 text-xs font-semibold text-white whitespace-nowrap">
+                Share
+              </span>
+            )}
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setShareOpen((v) => !v);
+              }}
+              className="h-9 w-9 rounded-full bg-white border-2 border-white shadow flex items-center justify-center"
+            >
+              <IoShareSocialOutline size={18} />
+            </button>
+
+            {/* Share Menu – ICONS ONLY */}
+            {shareOpen && (
+              <>
+                {/* click outside */}
+                <div
+                  className="fixed inset-0 z-30"
+                  onClick={() => setShareOpen(false)}
+                />
+
+                <div className="absolute right-11 top-1/2 -translate-y-1/2 z-40 flex gap-2 rounded-2xl bg-white px-3 py-2 shadow-xl">
+                  <button
+                    onClick={() =>
+                      window.open(
+                        `https://www.facebook.com/sharer/sharer.php?u=${window.location.origin}/property-details/${property.id}`,
+                        "_blank"
+                      )
+                    }
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1877F2] text-white"
+                  >
+                    <FaFacebookF size={14} />
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      window.open(
+                        `https://www.linkedin.com/sharing/share-offsite/?url=${window.location.origin}/property-details/${property.id}`,
+                        "_blank"
+                      )
+                    }
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0A66C2] text-white"
+                  >
+                    <FaLinkedinIn size={14} />
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      window.open(
+                        `https://wa.me/?text=${window.location.origin}/property-details/${property.id}`,
+                        "_blank"
+                      )
+                    }
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-[#25D366] text-white"
+                  >
+                    <FaWhatsapp size={16} />
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        `${window.location.origin}/property-details/${property.id}`
+                      );
+                      setShareOpen(false);
+                    }}
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-[#6B7280] text-white"
+                  >
+                    <FaLink size={14} />
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
 
 
-</div>
+        </div>
 
 
 
@@ -353,7 +352,14 @@ const [shareOpen, setShareOpen] = useState(false);
         <button
           onClick={(e) => {
             e.stopPropagation();
-            if (!isJoinGroup) onJoinGroupClick(property);
+            if (!isJoinGroup) {
+              onJoinGroupClick(property);
+              setTimeout(() => {
+                if (!isJoinGroupLoading) {
+                  window.location.reload();
+                }
+              }, 2000);
+            }
           }}
           disabled={isJoinGroup || isJoinGroupLoading}
           className={`relative z-20 mt-4 w-full py-3 rounded-3xl font-semibold transition ${isJoinGroup

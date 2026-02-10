@@ -130,8 +130,8 @@ export default function NRIPage() {
         </p>
 
         <div className="mt-6 space-y-2">
-          <p>Email: nri@milkeKhareedo.com</p>
-          <p>Call / WhatsApp: +91-XXXXXXXXXX</p>
+          <p>Email: milkekhareedoventures@gmail.com</p>
+          <p>Call / WhatsApp: +91-9601233333</p>
         </div>
       </section>
 

@@ -17,8 +17,8 @@ const contactMethods = [
     icon: "/images/Frame2.png",
     title: "How to Reach Us",
     details: [
-      { icon: <Phone size={20} />, value: "+91 XXXXXXXXXX" },
-      { icon: <Mail size={20} />, value: "support@milkekhereedo.com" },
+      { icon: <Phone size={20} />, value: "+91 9601233333" },
+      { icon: <Mail size={20} />, value: "milkekhareedoventures@gmail.com" },
     ],
   },
   {

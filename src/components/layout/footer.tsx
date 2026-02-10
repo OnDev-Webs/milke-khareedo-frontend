@@ -23,26 +23,26 @@ export default function FooterSection() {
           {/* Left Column - Company Info */}
           <div className="lg:col-span-4">
             <Link href="/" className="mb-4 flex items-center gap-2">
-             <Image
-  src={Logo}
-  alt="MILKE KHEREEDO logo"
-  width={200}
-  height={50}
-  className="
+              <Image
+                src={Logo}
+                alt="MILKE KHEREEDO logo"
+                width={200}
+                height={50}
+                className="
     w-32      
     sm:w-40
     md:w-48
     lg:w-52
     h-auto
   "
-  priority
-/>
+                priority
+              />
 
             </Link>
             <p className="mb-6 text-sm leading-relaxed text-[#241F20] lg:text-base">
-              Buying property shouldn't feel confusing or lonely. We help buyers
-              come together, understand pricing clearly, and make confident
-              decisions — without pressure.
+              Buy property smarter. MilkeKhareedo helps buyers
+              join forces to unlock better prices, benefits, and
+              peace of mind.
             </p>
 
             {/* Social Media Icons */}
@@ -169,7 +169,7 @@ export default function FooterSection() {
                 </li>
                 <li>
                   <Link
-                    href="/#FAQS"
+                    href="/faqs"
                     className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     FAQ's

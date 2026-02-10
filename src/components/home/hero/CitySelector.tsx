@@ -151,20 +151,22 @@ export default function CitySelector({
                                 if (found) {
                                     setSelectedCity(found);
                                 } else {
-                                    const delhi = fetchedCities.find(
+                                    const hyderabad = fetchedCities.find(
                                         (c) =>
-                                            c.city.toLowerCase() === "delhi" &&
+                                            c.city.toLowerCase() === "hyderabad" &&
                                             c.country.toLowerCase() === "india",
                                     );
-                                    setSelectedCity(delhi || fetchedCities[0]);
+
+                                    setSelectedCity(hyderabad || fetchedCities[0]);
                                 }
                             } else {
-                                const delhi = fetchedCities.find(
+                                const hyderabad = fetchedCities.find(
                                     (c) =>
-                                        c.city.toLowerCase() === "delhi" &&
+                                        c.city.toLowerCase() === "hyderabad" &&
                                         c.country.toLowerCase() === "india",
                                 );
-                                setSelectedCity(delhi || fetchedCities[0]);
+
+                                setSelectedCity(hyderabad || fetchedCities[0]);
                             }
                         }
                         setLoading(false);
@@ -207,12 +209,13 @@ export default function CitySelector({
         };
     }, [searchQuery]);
 
-    const filteredCities = useMemo(() => {
-        if (cities.length === 0) return [];
-        if (!debouncedSearchQuery.trim()) {
-            return cities;
-        }
-        const query = debouncedSearchQuery.toLowerCase();
+const filteredCities = useMemo(() => {
+    if (cities.length === 0) return [];
+
+    const query = debouncedSearchQuery.trim().toLowerCase();
+
+    // When searching → normal behavior
+    if (query) {
         return cities.filter((city) => {
             return (
                 city.city.toLowerCase().includes(query) ||
@@ -220,7 +223,26 @@ export default function CitySelector({
                 city.value.toLowerCase().includes(query)
             );
         });
-    }, [cities, debouncedSearchQuery]);
+    }
+
+    // No search → PRIORITIZE HYDERABAD
+    const hyderabadIndex = cities.findIndex(
+        (c) =>
+            c.city.toLowerCase() === "hyderabad" &&
+            c.country.toLowerCase() === "india"
+    );
+
+    if (hyderabadIndex === -1) return cities;
+
+    const hyderabad = cities[hyderabadIndex];
+
+    return [
+        hyderabad,
+        ...cities.slice(0, hyderabadIndex),
+        ...cities.slice(hyderabadIndex + 1),
+    ];
+}, [cities, debouncedSearchQuery]);
+
 
     // Reset visible range when search changes
     useEffect(() => {

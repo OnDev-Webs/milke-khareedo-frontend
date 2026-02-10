@@ -9,7 +9,7 @@ import { MapPin, Search } from "lucide-react";
 
 export default function Hero() {
   const router = useRouter();
-  const [selectedCity, setSelectedCity] = useState("India, Delhi");
+  const [selectedCity, setSelectedCity] = useState("India, Hyderabad");
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isSearching, setIsSearching] = useState(false);

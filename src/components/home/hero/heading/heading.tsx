@@ -7,7 +7,7 @@ export default function Heading() {
   return (
     <div className="py-16 px-6 md:px-10">
       <div className="mx-auto max-w-[1300px]">
-        <div className="relative h-[280px] md:h-[330px] overflow-hidden rounded-3xl">
+        <div className="relative h-[300px] md:h-[330px] overflow-hidden rounded-3xl">
           <Image
             src="/images/stayBanner.png"
             alt="CTA Background"
@@ -16,7 +16,7 @@ export default function Heading() {
             className="object-cover"
           />
 
-          <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 md:px-12">
+          <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 md:px-12">
             <h2 className="text-[26px] md:text-[36px] font-bold text-white">
               Stay informed. Buy{" "}
               <span className="text-[#FBAD1B]">Smarter.</span>

@@ -195,7 +195,7 @@ export default function AboutSection() {
           <div className="flex order-1 lg:order-2 xl:pl-20">
             <div
               ref={containerRef}
-              className="relative w-full max-w-[360px] h-[420px] md:h-[520px] border border-[8px] border-white rounded-3xl overflow-hidden shadow-xl"
+              className="relative w-full max-w-[360px] h-[500px] md:h-[520px] rounded-3xl overflow-hidden shadow-xl"
               onMouseEnter={() => setShowControls(true)}
               onMouseLeave={() => setShowControls(false)}
             >

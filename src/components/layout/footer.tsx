@@ -48,7 +48,7 @@ export default function FooterSection() {
             {/* Social Media Icons */}
             <div className="flex gap-3">
               <a
-                href="https://twitter.com"
+                href="https://x.com/milkekhareedo"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1C4692] transition-colors hover:bg-gray-200"
@@ -57,7 +57,7 @@ export default function FooterSection() {
                 <FaTwitter className="h-5 w-5" />
               </a>
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/profile.php?id=61587664478007"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1C4692] transition-colors hover:bg-gray-200"
@@ -66,7 +66,7 @@ export default function FooterSection() {
                 <FaFacebookF className="h-5 w-5" />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/company/milkekhareedo/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1C4692] transition-colors hover:bg-gray-200"
@@ -75,7 +75,7 @@ export default function FooterSection() {
                 <FaLinkedinIn className="h-5 w-5" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/milkekhareedo/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1C4692] transition-colors hover:bg-gray-200"

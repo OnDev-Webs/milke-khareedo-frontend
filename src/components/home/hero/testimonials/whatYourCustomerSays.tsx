@@ -6,91 +6,39 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Star, ChevronLeft, ChevronRight, ArrowLeft, ArrowRight, ArrowBigDownIcon, ArrowDownLeft, ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { platform } from "os";
 
 const reviews = [
   {
     rating: 5,
     title: "Buying felt less stressful",
     text1:
-      "The entire experience was smooth and transparent from start to finish.",
-    text2:
-      "I finally felt confident making such a big decision without pressure.",
-    user: "Amit Sharma",
+      "MilkeKhareedo helped us understand the real estate process and saved us a significant amount on our villa purchase. The team was responsive and honest throughout!",
+    user: "Rahul S., Hyderabad",
     avatar: "/images/user.jpg",
-  },
-  {
-    rating: 5,
-    title: "Clear process from start to end.",
-    text1: "We always knew what was happening next.",
-    text2: "Buying together made pricing feel more transparent.",
-    user: "Rahul Mehta",
-    avatar: "/images/user1.jpg",
   },
   {
     rating: 4,
-    title: "Didn’t feel like I was negotiating alone.",
-    text1: "Normally, pricing conversations are uncomfortable",
-    text2: " Here, it felt calmer and more balanced.",
-    user: "Ankit Jain",
-    avatar: "/images/user3.jpg",
+    title: "Clear process from start to end.",
+    text1: "Great platform and service! We got better pricing through group negotiation than we expected. Communication was clear and professional.",
+    user: "Sneha M., Hyderabad",
+    avatar: "/images/user1.jpg",
   },
   {
     rating: 5,
+    title: "Didn’t feel like I was negotiating alone.",
+    text1: "I was skeptical about online real estate services, but MilkeKhareedo delivered. Excellent support and helped answer all my questions quickly.",
+    user: " Arjun P., Hyderabad",
+    avatar: "/images/user3.jpg",
+  },
+  {
+    rating: 4,
     title: "No sales pressure, which I really appreciated.",
     text1:
-      "We were given time to understand and decide.That made all the difference.",
-    text2: "Saved me a lot of time and confusion.",
-    user: "Rohit Agarwal",
+      "Very helpful platform for first - time home buyers.The team walked us through each step and made the process much less stressful.",
+    user: "Priya R., Hyderabad",
     avatar: "/images/user4.jpg",
-  },
-  {
-    rating: 5,
-    title: "Trustworthy & easy",
-    text1: "Everything was explained clearly and professionally.",
-    text2: "Saved me a lot of time and confusion.",
-    user: "Suresh Iyer",
-    avatar: "/images/user.jpg",
-  },
-  {
-    rating: 5,
-    title: "Trustworthy & easy",
-    text1: "Everything was explained clearly and professionally.",
-    text2: "Saved me a lot of time and confusion.",
-    user: "Nehal Gupta",
-    avatar: "/images/user1.jpg",
-  },
-  {
-    rating: 5,
-    title: "Trustworthy & easy",
-    text1: "Everything was explained clearly and professionally.",
-    text2: "Saved me a lot of time and confusion.",
-    user: "Kaviya Nair",
-    avatar: "/images/user3.jpg",
-  },
-  {
-    rating: 5,
-    title: "Trustworthy & easy",
-    text1: "Everything was explained clearly and professionally.",
-    text2: "Saved me a lot of time and confusion.",
-    user: "Sneh Patil",
-    avatar: "/images/user4.jpg",
-  },
-  {
-    rating: 5,
-    title: "Trustworthy & easy",
-    text1: "Everything was explained clearly and professionally.",
-    text2: "Saved me a lot of time and confusion.",
-    user: "Priyam Verma",
-    avatar: "/images/user.jpg",
-  },
-  {
-    rating: 5,
-    title: "Trustworthy & easy",
-    text1: "Everything was explained clearly and professionally.",
-    text2: "Saved me a lot of time and confusion.",
-    user: "Vishal Singh",
-    avatar: "/images/user1.jpg",
-  },
+  }
 ];
 
 export default function Testimonials() {
@@ -173,9 +121,6 @@ export default function Testimonials() {
                 {/* Text */}
                 <p className="text-[14px] font-medium text-[#373737] leading-relaxed">
                   {review.text1}
-                </p>
-                <p className="text-[14px] font-medium text-[#373737] leading-relaxed mt-2">
-                  {review.text2}
                 </p>
 
                 {/* User */}

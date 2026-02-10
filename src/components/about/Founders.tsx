@@ -79,7 +79,7 @@ export default function Founders() {
               className="flex flex-col md:flex-row md:items-stretch rounded-2xl bg-white p-6 md:p-8 shadow-[0_18px_40px_rgba(0,0,0,0.05)]"
             >
               {/* Image */}
-              <div className="mb-4 md:mb-0 md:mr-4 relative h-80 md:h-50 w-full md:w-44 shrink-0 rounded-xl overflow-hidden bg-[#f5f3ff]">
+              <div className="mb-4 md:mb-0 md:mr-4 relative h-110 md:h-60 w-full md:w-44 shrink-0 rounded-xl overflow-hidden bg-[#f5f3ff]">
                 <Image
                   src={founder.avatar}
                   alt={founder.name}

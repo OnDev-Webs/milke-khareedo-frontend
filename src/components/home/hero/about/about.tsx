@@ -379,25 +379,25 @@ const FullscreenIcon = () => (
 export default function AboutSection() {
   const points = [
     {
-      title: "Explore & Shortlist",
-      desc: "Explore and shortlist properties easily using our search, map view, and virtual site visits.",
+      title: "Discover Properties",
+      desc: "Explore, shortlist, and show interest—no obligation.",
     },
     {
-      title: "Show interest. No commitment yet.",
-      desc: "Once you shortlist a few projects, simply show interest. We add you to a buyer group — nothing is final at this stage.",
+      title: "Join a Buyer Group",
+      desc: "Buyers come together to unlock better prices.",
     },
     {
-      title: "Buyers come together",
-      desc: "You join a private buyer group on our platform to stay informed, share views, and move forward together.",
+      title: "Close the Deal",
+      desc: "Proceed only if you’re happy, confident you’re getting the best deal.",
     },
-    {
-      title: "Unlock better pricing options",
-      desc: "When buyers come together, better pricing becomes possible — helping you save much more than individual buying.",
-    },
-    {
-      title: "You decide. No pressure.",
-      desc: "Once the group deal is ready, you complete your purchase with confidence — knowing you’re getting the best value available.",
-    },
+    // {
+    //   title: "Unlock better pricing options",
+    //   desc: "When buyers come together, better pricing becomes possible — helping you save much more than individual buying.",
+    // },
+    // {
+    //   title: "You decide. No pressure.",
+    //   desc: "Once the group deal is ready, you complete your purchase with confidence — knowing you’re getting the best value available.",
+    // },
   ];
 
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -487,7 +487,7 @@ export default function AboutSection() {
               Makes Buying Easier
             </h3>
 
-            <div className="space-y-3">
+            <div className="space-y-6">
               {points.map((item, i) => (
                 <div key={i} className="flex gap-3 md:gap-4">
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1C4692] text-white font-bold text-sm">

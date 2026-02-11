@@ -121,10 +121,10 @@ export default function ComparePage() {
     if (markers.length !== compareItems.length) {
       console.warn(
         `Expected ${compareItems.length} markers but created ${markers.length}. ` +
-          `Some properties may not have valid coordinates or are still loading.`
+        `Some properties may not have valid coordinates or are still loading.`
       );
     } else {
-     
+
     }
 
     return markers;
@@ -133,8 +133,7 @@ export default function ComparePage() {
   // Calculate map center based on actual markers being displayed
   const mapCenter = useMemo(() => {
     if (mapMarkers.length === 0) {
-      // Default to Delhi if no markers
-      return { lat: 28.4089, lng: 77.0418 };
+      return { lat: 17.3850, lng: 78.4867 };
     }
 
     if (mapMarkers.length === 1) {
@@ -285,14 +284,14 @@ export default function ComparePage() {
                 >
                   Add Property
                 </button>
-              </div> 
+              </div>
             </div>
           ) : loading ? (
             <div className="flex items-center justify-center py-12">
               <div className="text-center">
                 <div className="mb-4 inline-block h-8 w-8 animate-spin rounded-full border-4 border-[#1C4692] border-t-transparent"></div>
                 <p className="text-sm text-gray-600">
-                  <Loader size={38}/>
+                  <Loader size={38} />
                 </p>
               </div>
             </div>

@@ -319,7 +319,7 @@ export default function PDPNeighborhood({
           <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
             <div className="w-full md:w-1/3 bg-white/90 backdrop-blur-md rounded-2xl p-6">
               <h2 className="mb-6 font-semibold text-3xl text-gray-900">The Neighborhood</h2>
-              <div className="text-center text-gray-600"><Loader size={38}/></div>
+              <div className="text-center text-gray-600"><Loader size={38} /></div>
             </div>
           </div>
         </div>
@@ -329,10 +329,10 @@ export default function PDPNeighborhood({
 
   return (
     <section className="relative max-w-6xl mx-auto w-full min-h-[600px] overflow-hidden bg-gray-100 flex flex-col md:block">
-      
+
       <div className="relative order-2 md:order-none md:absolute inset-0 z-0 pointer-events-auto h-[360px] md:h-full">
 
-        
+
         {isLoaded && (
           <GoogleMap
             mapContainerStyle={{ width: "100%", height: "100%" }}
@@ -347,7 +347,7 @@ export default function PDPNeighborhood({
               streetViewControl: false,
               fullscreenControl: false,
               draggable: true,
-              gestureHandling: "greedy", 
+              gestureHandling: "greedy",
               keyboardShortcuts: true,
               styles: [
                 {
@@ -399,29 +399,18 @@ export default function PDPNeighborhood({
         )}
       </div>
 
-      
+
 
 
       {/* Blur Overlay and Content - Non-blocking for map interactions */}
-<div className="relative z-10 order-1 md:order-none mx-auto w-full max-w-6xl py-6 md:py-12 pointer-events-none px-4 md:px-0">
-<div className="flex flex-col md:flex-row gap-6 md:gap-10 md:items-start">
+      <div className="relative z-10 order-1 md:order-none mx-auto w-full max-w-6xl py-6 md:py-12 pointer-events-none px-4 md:px-3">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-10 md:items-start">
 
-<div
-className="
-  w-full md:w-1/3 md:max-w-[380px]
-  bg-white/40
-  backdrop-blur-2xl
-  rounded-3xl
-  p-5
-  shadow-[0_20px_60px_rgba(0,0,0,0.12)]
-  ring-1 ring-white/30
-  pointer-events-auto
-"
-
->
+          <div
+            className="w-full md:w-1/3 md:max-w-[380px] bg-white/40 backdrop-blur-2xl rounded-3xl p-5 shadow-[0_20px_60px_rgba(0,0,0,0.12)] ring-1 ring-white/30 pointer-events-auto">
 
             <h2 className="mb-6 font-semibold text-2xl text-gray-900">The Neighborhood</h2>
-             <div className="flex gap-3 overflow-x-auto no-scrollbar px-1 pb-2 md:flex-col md:overflow-visible md:gap-3 md:px-0 md:pb-0">
+            <div className="flex gap-3 overflow-x-auto no-scrollbar px-1 pb-2 md:flex-col md:overflow-visible md:gap-3 md:px-0 md:pb-0">
               {categories.map((category) => {
                 const isSelected = selectedCategory === category.key;
                 return (

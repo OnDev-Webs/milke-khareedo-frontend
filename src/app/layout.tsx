@@ -91,7 +91,7 @@ export default function RootLayout({
         <Providers>
           <Header />
           <main>{children}</main>
-          <StickyVideo/>
+          <StickyVideo />
           <FooterWrapper />
         </Providers>
       </body>

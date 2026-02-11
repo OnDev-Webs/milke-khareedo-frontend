@@ -27,7 +27,7 @@ export default function CalculateSave() {
 
   const [loanAmount, setLoanAmount] = useState(36000000);
   const [rateOfInterest, setRateOfInterest] = useState(8.9);
-  const [loanTenure, setLoanTenure] = useState(60);
+  const [loanTenure, setLoanTenure] = useState(120);
   const [currency, setCurrency] = useState("INR");
   const [activeIndex, setActiveIndex] = useState(0);
   const visibleIndex =
@@ -50,7 +50,7 @@ export default function CalculateSave() {
 
   const loanAmountRange = { min: 3000000, max: 500000000 };
   const rateRange = { min: 7, max: 11 };
-  const tenureRange = { min: 12, max: 60 };
+  const tenureRange = { min: 120, max: 300 };
 
   const loanAmountPercent =
     ((loanAmount - loanAmountRange.min) /
@@ -132,7 +132,7 @@ export default function CalculateSave() {
   const handleReset = () => {
     setLoanAmount(36000000);
     setRateOfInterest(8.9);
-    setLoanTenure(60);
+    setLoanTenure(120);
     setCurrency("INR");
   };
 
@@ -390,7 +390,7 @@ export default function CalculateSave() {
                     Loan Tenure
                   </h4>
                   <button className="bg-[#EEF4FF] text-black font-medium px-3 py-1 rounded text-sm sm:text-base">
-                    <span className="text-[#1C4692]">{loanTenure} </span>Months
+                    <span className="text-[#1C4692]">{Math.floor(loanTenure / 12)} </span>Years
                   </button>
                 </div>
 
@@ -399,7 +399,7 @@ export default function CalculateSave() {
                     type="range"
                     min={tenureRange.min}
                     max={tenureRange.max}
-                    step={6}
+                    step={60}
                     value={loanTenure}
                     onChange={(e) => setLoanTenure(Number(e.target.value))}
                     className="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
@@ -410,11 +410,10 @@ export default function CalculateSave() {
                 </div>
 
                 <div className="mt-1 sm:mt-2 flex justify-between text-xs sm:text-sm text-gray-500">
-                  <span>12m</span>
-                  <span>24m</span>
-                  <span>36m</span>
-                  <span>48m</span>
-                  <span>60m</span>
+                  <span>10 Years</span>
+                  <span>15 Years</span>
+                  <span>20 Years</span>
+                  <span>25 Years</span>
                 </div>
               </div>
 

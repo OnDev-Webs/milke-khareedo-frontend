@@ -135,7 +135,7 @@ export default function GoogleMapComponent({
           bounds.extend(new googleMaps.LatLng(marker.lat, marker.lng));
           hasValidMarkers = true;
         } else {
-          console.warn(`  ✗ Skipped invalid marker:`, marker);
+          console.warn(`✗ Skipped invalid marker:`, marker);
         }
       });
 

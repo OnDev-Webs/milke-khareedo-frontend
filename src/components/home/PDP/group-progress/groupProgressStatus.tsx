@@ -49,6 +49,10 @@ export default function PDPGroupProgressStatus({
       if (response.success && response.data) {
         onJoinGroupChange(response.data.isJoinGroup);
         onRefresh();
+        // Add page refresh after successful join
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000); // Wait for UI to update before refresh
       }
     } catch (error) {
       console.error("Error joining group:", error);

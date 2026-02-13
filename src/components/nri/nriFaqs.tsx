@@ -60,7 +60,7 @@ export default function NRIFAQ() {
       id: 10,
       title: "How can NRIs contact the MilkeKhareedo support team?",
       desciption:
-        "NRIs can reach us via Email: nri@milkeKhareedo.com or Call/WhatsApp: +91-XXXXXXXXXX. Our dedicated NRI relationship managers will assist you personally.",
+        "NRIs can reach us via Email: milkekhareedoventures@gmail.com or Call/WhatsApp: +91-9601233333. Our dedicated NRI relationship managers will assist you personally.",
     },
   ];
 

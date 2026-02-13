@@ -100,7 +100,7 @@ export default function PDPLayoutPlan({ configurations }: PDPLayoutPlanProps) {
                 priority
                 sizes="(max-width: 1200px) 100vw, 1160px"
                 quality={100}
-                className="object-cover cursor-zoom-in"
+                className="cursor-zoom-in"
                 onClick={() => {
                   setCurrentImageIndex(0);
                   setIsModalOpen(true);

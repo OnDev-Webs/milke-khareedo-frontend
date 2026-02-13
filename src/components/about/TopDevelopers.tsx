@@ -10,7 +10,7 @@ export default function TopDevelopers() {
         <Title
           text={"Top"}
           isDrawLine
-          drawLineText={"Developer Logos"}
+          drawLineText={"Developer Partners"}
           className="text-center mb-12 md:mb-20"
         />
 

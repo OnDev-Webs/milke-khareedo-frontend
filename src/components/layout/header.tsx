@@ -212,7 +212,7 @@ export default function Header() {
                         </div>
                         <div>
                           <p className="text-[16px] font-bold text-[#141414]">
-                            {user?.firstName}
+                            {user?.firstName || "User"}
                           </p>
                           <p className="text-[12px] font-medium text-[#828282]">
                             {user?.countryCode} {user?.phoneNumber}

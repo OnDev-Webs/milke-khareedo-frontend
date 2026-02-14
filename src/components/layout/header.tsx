@@ -17,7 +17,7 @@ const navLinks = [
   { label: "Properties", href: "/properties" },
   { label: "Blogs", href: "/blogs" },
   { label: "About Us", href: "/about" },
-    { label: "NRI ", href: "/nri" },
+  { label: "NRI ", href: "/nri" },
   { label: "Contact Us", href: "/contact" },
 ];
 
@@ -109,8 +109,8 @@ export default function Header() {
               className="
                 h-10 w-auto      
                 sm:h-11           
-                lg:h-[52px]"            
-                />
+                lg:h-[52px]"
+            />
           </Link>
 
           {/* Navigation Links */}
@@ -173,7 +173,7 @@ export default function Header() {
                   {user?.profileImage ? (
                     <Image
                       src={user.profileImage}
-                      alt={user.name || "Profile"}
+                      alt={user.firstName || "Profile"}
                       width={44}
                       height={44}
                       unoptimized
@@ -200,7 +200,7 @@ export default function Header() {
                           {user?.profileImage ? (
                             <Image
                               src={user.profileImage}
-                              alt={user.name || "Profile"}
+                              alt={user.firstName || "Profile"}
                               width={40}
                               height={40}
                               unoptimized
@@ -212,7 +212,7 @@ export default function Header() {
                         </div>
                         <div>
                           <p className="text-[16px] font-bold text-[#141414]">
-                            {user?.name || "User"}
+                            {user?.firstName}
                           </p>
                           <p className="text-[12px] font-medium text-[#828282]">
                             {user?.countryCode} {user?.phoneNumber}

@@ -12,7 +12,7 @@ interface User {
   id: string;
   phoneNumber: string;
   countryCode: string;
-  name?: string;
+  firstName?: string;
   email?: string;
   profileImage?: string;
   [key: string]: unknown;
@@ -25,6 +25,7 @@ interface AuthContextType {
   login: (token: string, user: User) => void;
   logout: () => void;
   checkAuth: () => boolean;
+  updateUser: (user: User) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -99,6 +100,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  const updateUser = useCallback((updatedUser: User) => {
+    try {
+      localStorage.setItem("auth_user", JSON.stringify(updatedUser));
+      setUser(updatedUser);
+
+      if (typeof window !== "undefined") {
+        setTimeout(() => {
+          window.dispatchEvent(new Event("auth-changed"));
+        }, 0);
+      }
+    } catch (error) {
+      console.error("Error updating user data:", error);
+    }
+  }, []);
+
   const checkAuth = useCallback(() => {
     if (typeof window !== "undefined") {
       const storedToken = localStorage.getItem("auth_token");
@@ -116,6 +132,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         login,
         logout,
         checkAuth,
+        updateUser,
       }}
     >
       {children}

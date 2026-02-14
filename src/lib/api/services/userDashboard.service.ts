@@ -66,11 +66,13 @@ export type SavePreferencesPayload = PreferencesApi;
 
 export type GetProfileResponse = {
     user: {
+        id: string;
         firstName: string;
         lastName: string;
         email: string;
         phoneNumber: string;
         countryCode: string;
+        profileImage?: string | null;
         address?: string | null;
         pincode?: string | null;
         country?: string | null;

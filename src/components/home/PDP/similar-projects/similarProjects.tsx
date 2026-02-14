@@ -184,8 +184,8 @@ export default function PDPSimilarProjects({ similarProjects }: PDPSimilarProjec
             </Link>
           </div>
 
-<div className="overflow-x-auto md:overflow-visible">
-            <div className="flex gap-4 px-4 md:px-0 snap-x snap-mandatory pb-2 lg:grid lg:grid-cols-3 lg:gap-6 lg:px-0 lg:overflow-visible">
+          <div className="overflow-x-auto md:overflow-visible">
+            <div className="grid gap-4 px-4 md:px-5 snap-x snap-mandatory pb-2 lg:grid lg:grid-cols-3 lg:gap-6 lg:px-0 lg:overflow-visible">
               {convertedProperties.map((property) => {
                 const images = getPropertyImages(property);
                 const isJoinGroup = joinGroupStates[property.id] ?? property.isJoinGroup ?? false;

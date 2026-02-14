@@ -91,7 +91,7 @@ export default function PDPLayoutPlan({ configurations }: PDPLayoutPlanProps) {
             ))}
           </div>
 
-          <div className="relative mx-auto h-[450px] w-full max-w-[1486px] overflow-hidden rounded-[25px] border border-orange-400 bg-white shadow-lg">
+          <div className="relative mx-auto h-[380px] w-full max-w-[1486px] overflow-hidden rounded-[25px] border border-orange-400 bg-white shadow-lg">
             {currentPlan?.layoutPlanImages?.[0] ? (
               <Image
                 src={currentPlan.layoutPlanImages[0]}
@@ -100,7 +100,7 @@ export default function PDPLayoutPlan({ configurations }: PDPLayoutPlanProps) {
                 priority
                 sizes="(max-width: 1200px) 100vw, 1160px"
                 quality={100}
-                className="cursor-zoom-in"
+                className="object-contain cursor-zoom-in p-4"
                 onClick={() => {
                   setCurrentImageIndex(0);
                   setIsModalOpen(true);

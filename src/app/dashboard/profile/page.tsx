@@ -9,10 +9,12 @@ import {
 } from "@/lib/api/services/userDashboard.service";
 import { getCities, getCountries, getStates } from "@/lib/location";
 import Loader from "@/components/ui/loader";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 
 export default function ProfilePage() {
     const countries = useMemo(() => getCountries(), []);
+    const { updateUser } = useAuthContext();
 
     const [form, setForm] = useState<Partial<UpdateProfilePayload>>({
         firstName: "",
@@ -38,6 +40,16 @@ export default function ProfilePage() {
         if (!data?.user) return;
 
         const user = data.user;
+
+        // Update AuthContext with fresh user data
+        updateUser({
+            id: user.id,
+            phoneNumber: user.phoneNumber,
+            countryCode: user.countryCode,
+            firstName: user.firstName,
+            email: user.email,
+            profileImage: user.profileImage || undefined,
+        });
 
         const countryCode =
             countries.some((c) => c.isoCode === user.country)
@@ -70,7 +82,7 @@ export default function ProfilePage() {
             city: user.city || undefined,
         });
 
-    }, [data, countries]);
+    }, [data, countries, updateUser]);
 
 
     const handleChange = (

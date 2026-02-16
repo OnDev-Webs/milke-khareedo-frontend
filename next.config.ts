@@ -20,18 +20,22 @@ const nextConfig: NextConfig = {
   },
 
   async rewrites() {
-    return [
-      {
-        "source": "/admin",
-        "destination": "https://milke-khareedo-admin-dashboard.vercel.app"
-      },
-      {
-        source: "/admin/:path*",
-        destination:
-          "https://milke-khareedo-admin-dashboard.vercel.app/admin/:path*",
-      },
-    ];
-  },
+  return [
+    {
+      source: "/admin",
+      destination: "https://milke-khareedo-admin-dashboard.vercel.app",
+    },
+    {
+      source: "/admin/:path*",
+      destination: "https://milke-khareedo-admin-dashboard.vercel.app/:path*",
+    },
+    {
+      source: "/_next/:path*",
+      destination: "https://milke-khareedo-admin-dashboard.vercel.app/_next/:path*",
+    },
+  ];
+}
+
 };
 
 export default nextConfig;

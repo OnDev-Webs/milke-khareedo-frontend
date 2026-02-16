@@ -56,14 +56,38 @@ export default function PDPHeader({
     }
   };
 
-  const discountAmount = bookingDeadlinePrice ? bookingDeadlinePrice.value - startingPrice.value : 0;
+const parseToRupees = (price: string | number): number => {
+  if (!price) return 0;
 
-  const discountFormatted =
-    discountAmount >= 10000000
-      ? `₹ ${(discountAmount / 10000000).toFixed(2)} Crore`
-      : discountAmount >= 100000
-        ? `₹ ${(discountAmount / 100000).toFixed(2)} Lakh`
-        : `₹ ${(discountAmount / 1000).toFixed(0)} K`;
+  if (typeof price === "number") {
+    // if backend accidentally sends 2.2 instead of crore
+    if (price < 1000) return price * 10000000;
+    return price;
+  }
+
+  const clean = price.replace(/[₹,\s]/g, "");
+  const lower = price.toLowerCase();
+  const numeric = parseFloat(clean) || 0;
+
+  if (lower.includes("crore") || lower.includes("cr")) {
+    return numeric * 10000000;
+  }
+
+  if (lower.includes("lakh") || lower.includes("lac")) {
+    return numeric * 100000;
+  }
+
+  // 🔥 SMART GUESS
+  // if value is too small to be rupees → assume crore
+  if (numeric > 0 && numeric < 1000) {
+    return numeric * 10000000;
+  }
+
+  return numeric;
+};
+
+
+const developerPriceNumber = parseToRupees(developerPrice);
 
   const formatPrice = (value: number) => {
     if (value >= 10000000) return `₹ ${(value / 10000000).toFixed(2)} Crore`;
@@ -71,7 +95,17 @@ export default function PDPHeader({
     return `₹ ${(value / 1000).toFixed(0)} K`;
   };
 
-  const developerPriceNumber = typeof developerPrice === "string" ? Number(developerPrice.replace(/[₹,\sA-Za-z]/g, "")) : developerPrice;
+
+  const offer = startingPrice?.value || 0;
+  const developer = developerPriceNumber || 0;
+
+  const discountAmount =
+    developer > offer ? developer - offer : 0;
+
+  const discountFormatted = formatPrice(discountAmount);
+
+
+
 
   const formatLocationForUI = (fullLocation?: string) => {
     if (!fullLocation) return "";
@@ -140,7 +174,8 @@ export default function PDPHeader({
                 <div className="inline-flex items-center bg-white rounded-full px-4 h-[36px] min-w-max shadow-sm">
                   <Image src={upPrice} alt="Up Price" width={18} height={18} />
                   <span className="ml-2 text-[13px] lg:text-[14px] text-lime-600 font-medium leading-none whitespace-nowrap">
-                    {bookingDeadlinePrice?.note || `Up to ${discountFormatted} off`}
+                    {discountAmount > 0 ? `Up to ${discountFormatted} off` : "No discount"}
+
                   </span>
                 </div>
                 <span className="text-[13px] lg:text-[14px] text-[#FF3232] md:whitespace-nowrap">

@@ -110,7 +110,7 @@ export default function PropertyCard({
         {/* Last Day Badge */}
         {property.lastDayToJoin && (
           <div className="absolute top-3 left-3 bg-white/80 backdrop-blur px-3 py-1.5 rounded-md text-xs shadow">
-            Last Day to join: {formatDate(property.lastDayToJoin)}
+Possession : {formatDate(property.lastDayToJoin)}
           </div>
         )}
 

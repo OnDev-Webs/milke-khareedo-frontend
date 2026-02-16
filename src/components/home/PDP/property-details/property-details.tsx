@@ -1,10 +1,16 @@
 import { type PropertyDetail } from "@/lib/api/services/home.service";
+import { useState } from "react";
 
 interface PDPPropertyDetailsProps {
   property: PropertyDetail;
 }
 
 export default function PDPPropertyDetails({ property }: PDPPropertyDetailsProps) {
+
+  const [expanded, setExpanded] = useState(false);
+
+  const isLong = property.description?.length > 160; // adjust threshold
+
   return (
     <section className="px-4 md:px-6 lg:px-0">
       <div className="mx-auto max-w-6xl rounded-2xl bg-white shadow-sm">
@@ -80,11 +86,26 @@ export default function PDPPropertyDetails({ property }: PDPPropertyDetailsProps
           </div>
 
           <div className="mt-4 pt-2">
-            <p className="text-[14px] text-[#7B7B7B] font-normal">Description</p>
-            <p className="leading-relaxed mt-1 text-[16px] font-medium text-[#000000] line-clamp-2">
-              {property.description}
-            </p>
-          </div>
+  <p className="text-[14px] text-[#7B7B7B] font-normal">Description</p>
+
+  <p
+    className={`leading-relaxed mt-1 text-[16px] font-medium text-[#000000] ${
+      expanded ? "" : "line-clamp-2"
+    }`}
+  >
+    {property.description}
+  </p>
+
+  {isLong && (
+    <button
+      onClick={() => setExpanded((p) => !p)}
+      className="mt-1 text-[#1C4692] font-semibold text-sm"
+    >
+      {expanded ? "View Less" : "View More"}
+    </button>
+  )}
+</div>
+
         </div>
       </div>
     </section>

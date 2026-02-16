@@ -22,7 +22,7 @@ const reviews = [
     title: "Clear process from start to end.",
     text1: "Great platform and service! We got better pricing through group negotiation than we expected. Communication was clear and professional.",
     user: "Sneha M., Hyderabad",
-    avatar: "/images/user1.jpg",
+    avatar: "/images/user5.png",
   },
   {
     rating: 5,

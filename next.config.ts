@@ -19,8 +19,12 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
 
-    async rewrites() {
+  async rewrites() {
     return [
+      {
+        "source": "/admin",
+        "destination": "https://milke-khareedo-admin-dashboard.vercel.vercel.app"
+      },
       {
         source: "/admin/:path*",
         destination:

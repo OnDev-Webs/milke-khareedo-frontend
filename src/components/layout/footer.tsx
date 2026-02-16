@@ -4,11 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/assets/footer-logo.svg";
 import {
-  FaTwitter,
   FaFacebookF,
   FaLinkedinIn,
   FaInstagram,
 } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/contexts/AuthContext";
 
@@ -54,7 +54,7 @@ export default function FooterSection() {
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1C4692] transition-colors hover:bg-gray-200"
                 aria-label="Twitter"
               >
-                <FaTwitter className="h-5 w-5" />
+                <FaXTwitter className="h-5 w-5" />
               </a>
               <a
                 href="https://www.facebook.com/profile.php?id=61587664478007"
@@ -169,7 +169,7 @@ export default function FooterSection() {
                 </li>
                 <li>
                   <Link
-                    href="/faqs"
+                    href="/#faqs"
                     className="text-sm text-[#241F20] transition-colors  lg:text-base"
                   >
                     FAQ's

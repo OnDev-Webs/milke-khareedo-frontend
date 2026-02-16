@@ -13,15 +13,17 @@ const founders = [
   {
     name: "Kirath Singh",
     role: "Founder & CEO",
-    desc: "description description description",
-    items: ["twitter", "facebook", "linkedin", "instagram"],
+    desc: "Experienced real estate and technology leader focused on innovative property investment solutions.",
+    // items: ["twitter", "facebook", "linkedin", "instagram"],
+    items: ["linkedin"],
     avatar: "/images/founder.jpg",
   },
   {
     name: "Gundapu Anush",
     role: "Co-Founder & CMO",
-    desc: "description description description",
-    items: ["twitter", "facebook", "linkedin", "instagram"],
+    desc: "Marketing expert driving brand growth through data-driven strategies and customer experience design.",
+    // items: ["twitter", "facebook", "linkedin", "instagram"],
+    items: ["linkedin"],
     avatar: "/images/photo2.jpeg",
   },
 ];
@@ -29,14 +31,14 @@ const founders = [
 export default function Founders() {
   const renderIcon = (name: string) => {
     switch (name) {
-      case "twitter":
-        return <FaTwitter size={20} className="text-[#1C4692]" />;
-      case "facebook":
-        return <FaFacebookF size={20} className="text-[#1C4692]" />;
+      // case "twitter":
+      //   return <FaTwitter size={20} className="text-[#1C4692]" />;
+      // case "facebook":
+      //   return <FaFacebookF size={20} className="text-[#1C4692]" />;
       case "linkedin":
         return <FaLinkedinIn size={20} className="text-[#1C4692]" />;
-      case "instagram":
-        return <FaInstagram size={20} className="text-[#1C4692]" />;
+      // case "instagram":
+      //   return <FaInstagram size={20} className="text-[#1C4692]" />;
       default:
         return null;
     }

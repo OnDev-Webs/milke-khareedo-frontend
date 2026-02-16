@@ -67,7 +67,7 @@ const arr = [
 
   return (
     <section
-      id="FAQS"
+      id="faqs"
       className="bg-[#F0F8FF] py-14 sm:py-16 md:py-20 px-4 sm:px-6 md:px-10"
     >
       <div className="mx-auto max-w-[1300px] flex flex-col items-center gap-10">

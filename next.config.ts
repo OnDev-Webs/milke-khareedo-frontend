@@ -30,7 +30,7 @@ const nextConfig: NextConfig = {
       destination: "https://milke-khareedo-admin-dashboard.vercel.app/:path*",
     },
     {
-      source: "/_next/:path*",
+      source: "/admin/_next/:path*",
       destination: "https://milke-khareedo-admin-dashboard.vercel.app/_next/:path*",
     },
   ];

@@ -38,28 +38,36 @@ export default function PDPGroupProgressStatus({
   const strokeDashoffset = circumference - (pct / 100) * circumference;
 
   const handleJoinGroup = async () => {
-    if (!checkAuth()) {
-      setShowAuthModal(true);
-      return;
-    }
+  if (!checkAuth()) {
+    setShowAuthModal(true);
+    return;
+  }
 
-    setIsLoading(true);
-    try {
-      const response = await homeService.joinGroup(propertyId);
-      if (response.success && response.data) {
-        onJoinGroupChange(response.data.isJoinGroup);
-        onRefresh();
-        // Add page refresh after successful join
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000); // Wait for UI to update before refresh
-      }
-    } catch (error) {
-      console.error("Error joining group:", error);
-    } finally {
-      setIsLoading(false);
+  if (isJoinGroup) return;
+
+  setIsLoading(true);
+
+  try {
+    const response = await homeService.joinGroup(propertyId);
+
+    if (response.success) {
+      // 1️⃣ Update joined state immediately
+      onJoinGroupChange(true);
+
+      // 2️⃣ Refresh group progress (members + counts)
+      await onRefresh();
     }
-  };
+  } catch (error: any) {
+    if (error?.status === 401) {
+      setShowAuthModal(true);
+    } else {
+      console.error("Join failed:", error);
+    }
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   // Format message to highlight the number
   const formatMessage = (message: string, required: number) => {

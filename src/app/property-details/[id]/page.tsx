@@ -149,7 +149,7 @@ export default function PropertyDetailsPage({
       <PDPHeader
         projectName={property.projectName}
         location={property.location}
-        startingPrice={property.startingPrice}
+        offerPrice={property.offerPrice}
         developerPrice={property.developerPrice}
         bookingDeadlinePrice={property.bookingDeadlinePrice}
         discountPercentage={property.discountPercentage}

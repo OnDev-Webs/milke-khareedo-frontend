@@ -11,7 +11,7 @@ import AuthModal from "@/components/auth/AuthModal";
 interface PDPHeaderProps {
   projectName: string;
   location: string;
-  startingPrice: PropertyPrice;
+  offerPrice: number;
   developerPrice: string;
   bookingDeadlinePrice?: {
     value: number;
@@ -27,7 +27,7 @@ interface PDPHeaderProps {
 export default function PDPHeader({
   projectName,
   location,
-  startingPrice,
+  offerPrice,
   developerPrice,
   bookingDeadlinePrice,
   discountPercentage,
@@ -96,7 +96,7 @@ const developerPriceNumber = parseToRupees(developerPrice);
   };
 
 
-  const offer = startingPrice?.value || 0;
+  const offer = offerPrice || 0;
   const developer = developerPriceNumber || 0;
 
   const discountAmount =
@@ -152,7 +152,7 @@ const developerPriceNumber = parseToRupees(developerPrice);
                     Starting Price
                   </span>
                   <span className="text-[24px] md:text-[28px] lg:text-[30px] font-semibold leading-none whitespace-nowrap">
-                    {formatPrice(startingPrice.value)}
+                    {formatPrice(offerPrice || 0)}
                   </span>
                 </div>
                 {/* Developer Price */}

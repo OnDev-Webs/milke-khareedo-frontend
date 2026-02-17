@@ -267,7 +267,7 @@ export interface PropertyDetail {
     note?: string;
   };
   developerPrice: string;
-  offerPrice: string;
+  offerPrice: number;
   discountPercentage: string;
   reraId: string;
   reraQrImage?: string;

@@ -17,7 +17,7 @@ export default function TopProperties() {
   const { isAuthenticated, checkAuth } = useAuthContext();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [pendingAction, setPendingAction] = useState<{
-    type: "favorite" | "compare";
+    type: "favorite" | "compare" | "join";
     propertyId: string;
   } | null>(null);
   const [favoriteStates, setFavoriteStates] = useState<Record<string, boolean>>(
@@ -27,9 +27,7 @@ export default function TopProperties() {
     Record<string, boolean>
   >({});
 
-  const [joinGroupStates, setJoinGroupStates] = useState<
-    Record<string, boolean>
-  >({});
+ 
   const [joinGroupLoading, setJoinGroupLoading] = useState<
     Record<string, boolean>
   >({});
@@ -40,6 +38,8 @@ export default function TopProperties() {
 
   const [hoveredProperty, setHoveredProperty] = useState<string | null>(null);
   const { data: locationsData } = useApi(() => homeService.getLocations());
+
+
 
   console.log("locationsData", locationsData);
 
@@ -61,20 +61,18 @@ export default function TopProperties() {
     return activeTab === "All Properties" ? undefined : activeTab;
   }, [activeTab]);
 
-  useEffect(() => {
-    const favoriteStates: Record<string, boolean> = {};
-    const joinGroupStates: Record<string, boolean> = {};
-    properties.forEach((prop) => {
-      if (prop.isFavorite !== undefined) {
-        favoriteStates[prop.id] = prop.isFavorite;
-      }
-      if (prop.isJoinGroup !== undefined) {
-        joinGroupStates[prop.id] = prop.isJoinGroup;
-      }
-    });
-    setFavoriteStates((prev) => ({ ...prev, ...favoriteStates }));
-    setJoinGroupStates((prev) => ({ ...prev, ...joinGroupStates }));
-  }, [properties]);
+useEffect(() => {
+  const favoriteStates: Record<string, boolean> = {};
+
+  properties.forEach((prop) => {
+    if (prop.isFavorite !== undefined) {
+      favoriteStates[prop.id] = prop.isFavorite;
+    }
+  });
+
+  setFavoriteStates((prev) => ({ ...prev, ...favoriteStates }));
+}, [properties]);
+
 
   const fetchInitialProperties = useCallback(async () => {
     setProperties([]);
@@ -191,67 +189,78 @@ export default function TopProperties() {
     }
   };
 
-  const handleJoinGroupClick = async (property: Property) => {
-    if (!checkAuth()) {
-      setPendingAction({ type: "favorite", propertyId: property.id });
+const handleJoinGroupClick = async (property: Property) => {
+  if (!checkAuth()) {
+    setPendingAction({ type: "join", propertyId: property.id });
+    setShowAuthModal(true);
+    return;
+  }
+
+  // const isJoined =
+  //   joinGroupStates[property.id] ?? property.isJoinGroup ?? false;
+
+  // if (isJoined) return;
+
+  setJoinGroupLoading((prev) => ({ ...prev, [property.id]: true }));
+
+  try {
+    const response = await homeService.joinGroup(property.id);
+
+ if (response.success) {
+  setProperties(prev =>
+    prev.map(p =>
+      p.id === property.id
+        ? {
+            ...p,
+            isJoinGroup: true,
+            openingLeft: Math.max(0, p.openingLeft - 1),
+          }
+        : p
+    )
+  );
+}
+
+  } catch (error: any) {
+    // 🔥 TOKEN EXPIRED CASE
+    if (error.status === 401) {
+      setPendingAction({ type: "join", propertyId: property.id });
       setShowAuthModal(true);
-      return;
-    }
-
-    const isJoined = joinGroupStates[property.id] ?? property.isJoinGroup ?? false;
-    if (isJoined) {
-      return;
-    }
-
-    setJoinGroupLoading((prev) => ({ ...prev, [property.id]: true }));
-
-    try {
-      const response = await homeService.joinGroup(property.id);
-      if (response.success && response.data?.isJoinGroup) {
-        setJoinGroupStates((prev) => ({
-          ...prev,
-          [property.id]: true,
-        }));
-
-        const refreshResponse: any = await homeService.getTopProperty({
-          page: currentPage,
-          limit: LIMIT,
-          location: locationFilter,
-        });
-
-        if (refreshResponse.success && refreshResponse.data) {
-          setProperties((prev) => {
-            return prev.map((p) => {
-              const updated = refreshResponse.data.find(
-                (refreshed: Property) => refreshed.id === p.id,
-              );
-              return updated || p;
-            });
-          });
-        }
-      }
-    } catch (error) {
+    } else {
       console.error("Failed to join group:", error);
-    } finally {
-      setJoinGroupLoading((prev) => ({ ...prev, [property.id]: false }));
     }
-  };
+  } finally {
+    setJoinGroupLoading((prev) => ({
+      ...prev,
+      [property.id]: false,
+    }));
+  }
+};
 
-  const handleAuthSuccess = () => {
-    if (pendingAction) {
-      const property = properties.find(
-        (p) => p.id === pendingAction.propertyId,
-      );
-      if (property) {
-        if (pendingAction.type === "favorite") {
-          handleJoinGroupClick(property);
-        } else if (pendingAction.type === "compare") {
-          handleCompareClick(property);
-        }
-      }
-      setPendingAction(null);
-    }
-  };
+
+ const handleAuthSuccess = async () => {
+  if (!pendingAction) return;
+
+  const property = properties.find(
+    (p) => p.id === pendingAction.propertyId
+  );
+
+  if (!property) return;
+
+  if (pendingAction.type === "join") {
+    await handleJoinGroupClick(property);
+  }
+
+  if (pendingAction.type === "favorite") {
+    await handleFavoriteClick(property);
+  }
+
+  if (pendingAction.type === "compare") {
+    handleCompareClick(property);
+  }
+
+  setPendingAction(null);
+};
+
 
   const formatDate = (dateString: string) => {
     try {
@@ -364,7 +373,7 @@ export default function TopProperties() {
             {properties.map((prop) => {
               const isFavorite = favoriteStates[prop.id] ?? prop.isFavorite ?? false;
               const isLoading = favoriteLoading[prop.id] ?? false;
-              const isJoinGroup = joinGroupStates[prop.id] ?? prop.isJoinGroup ?? false;
+const isJoinGroup = prop.isJoinGroup ?? false;
               const isJoinGroupLoading = joinGroupLoading[prop.id] ?? false;
               const images = getPropertyImages(prop);
               const currentIndex = currentImageIndex[prop.id] ?? 0;

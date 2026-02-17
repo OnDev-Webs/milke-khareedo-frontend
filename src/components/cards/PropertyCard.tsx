@@ -354,11 +354,11 @@ Possession : {formatDate(property.lastDayToJoin)}
             e.stopPropagation();
             if (!isJoinGroup) {
               onJoinGroupClick(property);
-              setTimeout(() => {
-                if (!isJoinGroupLoading) {
-                  window.location.reload();
-                }
-              }, 2000);
+              // setTimeout(() => {
+              //   if (!isJoinGroupLoading) {
+              //     window.location.reload();
+              //   }
+              // }, 2000);
             }
           }}
           disabled={isJoinGroup || isJoinGroupLoading}

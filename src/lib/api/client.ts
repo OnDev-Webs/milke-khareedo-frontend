@@ -116,19 +116,35 @@ class ApiClient {
       const error = data as ApiError;
 
       // Handle 401 Unauthorized - token might be invalid or missing
+      // if (response.status === 401) {
+      //   // Check if token exists in storage
+      //   const token = this.getAuthToken();
+      //   if (!token) {
+      //     // Token doesn't exist, clear any stale data
+      //     if (typeof window !== "undefined") {
+      //       localStorage.removeItem("auth_token");
+      //       localStorage.removeItem("auth_user");
+      //       // Dispatch event to notify auth context
+      //       window.dispatchEvent(new Event("auth-changed"));
+      //     }
+      //   }
+      // }
+
       if (response.status === 401) {
-        // Check if token exists in storage
-        const token = this.getAuthToken();
-        if (!token) {
-          // Token doesn't exist, clear any stale data
-          if (typeof window !== "undefined") {
-            localStorage.removeItem("auth_token");
-            localStorage.removeItem("auth_user");
-            // Dispatch event to notify auth context
-            window.dispatchEvent(new Event("auth-changed"));
-          }
-        }
-      }
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("auth_token");
+    localStorage.removeItem("auth_user");
+
+    // 🔥 force login globally
+    window.dispatchEvent(new Event("auth:invalid"));
+  }
+
+  throw new ApiClientError(
+    "Session expired. Please login again.",
+    401
+  );
+}
+
 
       throw new ApiClientError(
         error.message || `Request failed with status ${response.status}`,

@@ -401,7 +401,7 @@ export default function AboutSection() {
   ];
 
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const [muted, setMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -409,16 +409,7 @@ export default function AboutSection() {
   const [videoLoading, setVideoLoading] = useState(true);
   const [videoError, setVideoError] = useState(false);
 
-  const sendCommand = (func: string) => {
-    iframeRef.current?.contentWindow?.postMessage(
-      JSON.stringify({
-        event: "command",
-        func,
-        args: [],
-      }),
-      "*"
-    );
-  };
+
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -430,16 +421,16 @@ export default function AboutSection() {
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
   }, []);
 
-  useEffect(() => {
-    const t = setTimeout(() => {
-      setVideoLoading(false);
-      setVideoError(false);
-      sendCommand("mute");
-      sendCommand("playVideo");
-    }, 1200);
+  // useEffect(() => {
+  //   const t = setTimeout(() => {
+  //     setVideoLoading(false);
+  //     setVideoError(false);
+  //     sendCommand("mute");
+  //     sendCommand("playVideo");
+  //   }, 1200);
 
-    return () => clearTimeout(t);
-  }, []);
+  //   return () => clearTimeout(t);
+  // }, []);
 
   return (
     <section id="about" className="relative w-full bg-[#F2F5F9] overflow-hidden">
@@ -518,13 +509,21 @@ export default function AboutSection() {
                 <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-3xl z-10" />
               )}
 
-              <iframe
-                ref={iframeRef}
+              <video
+                ref={videoRef}
                 className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${videoLoading ? "opacity-0" : "opacity-100"
                   }`}
-                src="https://www.youtube.com/embed/k_GvGvt4Id0?enablejsapi=1&controls=0&playsinline=1&rel=0&modestbranding=1&loop=1&playlist=k_GvGvt4Id0"
-                title="Milke Khareedo"
-                allow="autoplay; fullscreen"
+                src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/MKVIDEO.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                onLoadedData={() => setVideoLoading(false)}
+                onError={() => {
+                  setVideoError(true);
+                  setVideoLoading(false);
+                }}
               />
 
               {videoError && !videoLoading && (
@@ -541,10 +540,17 @@ export default function AboutSection() {
               >
                 <button
                   onClick={() => {
-                    if (isPlaying) sendCommand("pauseVideo");
-                    else sendCommand("playVideo");
-                    setIsPlaying(!isPlaying);
+                    if (!videoRef.current) return;
+
+                    if (videoRef.current.paused) {
+                      videoRef.current.play();
+                      setIsPlaying(true);
+                    } else {
+                      videoRef.current.pause();
+                      setIsPlaying(false);
+                    }
                   }}
+
                   className="h-10 w-10 rounded-full bg-white/90 flex items-center justify-center shadow-lg"
                 >
                   {isPlaying ? <IoPause size={20} /> : <IoPlay size={20} />}
@@ -593,11 +599,13 @@ export default function AboutSection() {
               <div className="absolute top-[16px] right-[16px] z-40 flex gap-2">
                 <button
                   onClick={() => {
-                    const nextMuted = !muted;
-                    if (nextMuted) sendCommand("mute");
-                    else sendCommand("unMute");
+                    if (!videoRef.current) return;
+
+                    const nextMuted = !videoRef.current.muted;
+                    videoRef.current.muted = nextMuted;
                     setMuted(nextMuted);
                   }}
+
                   className="h-10 w-10 bg-white rounded-full flex items-center justify-center shadow"
                 >
                   <VolumeIcon muted={muted} />

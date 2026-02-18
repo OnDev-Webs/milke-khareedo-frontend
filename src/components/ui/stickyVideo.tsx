@@ -16,7 +16,7 @@ export default function StickyVideo() {
   const pathname = usePathname();
   if (pathname.startsWith("/dashboard")) return null;
 
-  const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const [visible, setVisible] = useState(true);
   const [loading, setLoading] = useState(true);
@@ -32,37 +32,38 @@ export default function StickyVideo() {
 
   if (!visible) return null;
 
-  const sendCommand = (func: string) => {
-    iframeRef.current?.contentWindow?.postMessage(
-      JSON.stringify({
-        event: "command",
-        func,
-        args: [],
-      }),
-      "*"
-    );
-  };
+
+
+
 
   const togglePlayPause = () => {
-    if (isPlaying) sendCommand("pauseVideo");
-    else sendCommand("playVideo");
-    setIsPlaying(!isPlaying);
+    if (!videoRef.current) return;
+
+    if (videoRef.current.paused) {
+      videoRef.current.play();
+      setIsPlaying(true);
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
   };
 
   const toggleMute = () => {
-    if (muted) sendCommand("unMute");
-    else sendCommand("mute");
-    setMuted(!muted);
+    if (!videoRef.current) return;
+
+    videoRef.current.muted = !videoRef.current.muted;
+    setMuted(videoRef.current.muted);
   };
 
   const goFullScreen = () => {
-    iframeRef.current?.requestFullscreen();
+    videoRef.current?.requestFullscreen();
   };
 
   const closeVideo = () => {
-    sendCommand("pauseVideo");
+    videoRef.current?.pause();
     setVisible(false);
   };
+
 
   return (
     <div className="group fixed bottom-2 right-6 z-50 w-[200px] h-[380px] rounded-3xl overflow-hidden shadow-xl hidden md:block">
@@ -70,14 +71,19 @@ export default function StickyVideo() {
         <Skeleton className="absolute inset-0 z-20 rounded-3xl animate-pulse" />
       )}
 
-      <iframe
-        ref={iframeRef}
-        className={`w-full h-full transition-opacity duration-500 ${loading ? "opacity-0" : "opacity-100"
+      <video
+        ref={videoRef}
+        className={`w-full h-full object-cover transition-opacity duration-500 ${loading ? "opacity-0" : "opacity-100"
           }`}
-        src={`https://www.youtube.com/embed/k_GvGvt4Id0?enablejsapi=1&autoplay=1&mute=1&controls=0&playsinline=1&rel=0&modestbranding=1&origin=${window.location.origin}`}
-        title="MilkeKhareedo"
-        allow="autoplay; fullscreen"
+        src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/MKVIDEO.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        onLoadedData={() => setLoading(false)}
       />
+
 
       {!loading && (
         <button

@@ -216,6 +216,7 @@ export interface RelationshipManager {
   name: string;
   email: string;
   phone: string;
+   profileImage?: string;
 }
 
 export interface ConfigurationDetail {

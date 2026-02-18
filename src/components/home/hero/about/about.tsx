@@ -478,7 +478,7 @@ export default function AboutSection() {
               Makes Buying Easier
             </h3>
 
-            <div className="space-y-6">
+            <div className="space-y-8">
               {points.map((item, i) => (
                 <div key={i} className="flex gap-3 md:gap-4">
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1C4692] text-white font-bold text-sm">
@@ -501,7 +501,7 @@ export default function AboutSection() {
           <div className="flex justify-center order-1 lg:order-2 xl:pl-20">
             <div
               ref={containerRef}
-              className="relative w-full max-w-[360px] h-[500px] md:h-[520px] rounded-3xl overflow-hidden shadow-xl"
+              className="relative w-full max-w-[370px] aspect-9/16 rounded-3xl overflow-hidden shadow-xl"
               onMouseEnter={() => setShowControls(true)}
               onMouseLeave={() => setShowControls(false)}
             >
@@ -511,7 +511,7 @@ export default function AboutSection() {
 
               <video
                 ref={videoRef}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${videoLoading ? "opacity-0" : "opacity-100"
+                className={`absolute inset-0 w-full h-full object-cover  transition-opacity duration-700 ${videoLoading ? "opacity-0" : "opacity-100"
                   }`}
                 src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/MKVIDEO.mp4"
                 autoPlay

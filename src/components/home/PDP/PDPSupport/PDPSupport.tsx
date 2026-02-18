@@ -17,8 +17,8 @@ interface PDPSupportProps {
   onBookVisitChange?: (isBookVisit: boolean) => void;
 }
 
-export default function PDPSupport({ 
-  relationshipManager, 
+export default function PDPSupport({
+  relationshipManager,
   propertyId,
   isBookVisit = false,
   onBookVisitChange
@@ -103,16 +103,16 @@ export default function PDPSupport({
       if (response.success && response.data) {
         // Update state immediately for smooth UI update - no page reload needed
         const newBookVisitStatus = response.data.isBookVisit;
-        
+
         // Update local state first for instant UI feedback
         setBookVisitStatus(newBookVisitStatus);
-        
+
         // Update parent component state
         onBookVisitChange?.(newBookVisitStatus);
-        
+
         // Show success feedback
         setShowSuccess(true);
-        
+
         // Close modal after showing success
         setTimeout(() => {
           setOpenVisit(false);
@@ -168,16 +168,26 @@ export default function PDPSupport({
           <div className="relative h-48 w-full bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600">
             {/* Relationship manager image placeholder - styled to look professional */}
             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-400 to-blue-600 relative overflow-hidden">
-              {relationshipManager.name && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {/* Large circular avatar */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                {relationshipManager.profileImage ? (
+                  <Image
+                    src={relationshipManager.profileImage}
+                    alt={relationshipManager.name}
+                    fill
+                    priority
+                    className="object-cover object-center"
+                    sizes="(max-width: 768px) 100vw, 360px"
+                  />
+                ) : (
+
                   <div className="w-36 h-36 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border-4 border-white/40 shadow-xl">
                     <span className="text-6xl font-bold text-white">
-                      {relationshipManager.name.charAt(0)}
+                      {relationshipManager.name?.charAt(0)}
                     </span>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
+
             </div>
 
             {/* 5 Star Rating Badge - positioned bottom left */}
@@ -210,7 +220,7 @@ export default function PDPSupport({
               e.stopPropagation();
               handleCall()
             }}
-            className="relative z-[100] inline-flex items-center gap-1 rounded-full bg-[#66AE39] text-white px-2.5 py-2 text-xs font-medium hover:bg-[#5a9a32] transition-colors shadow-sm">
+            className="relative  inline-flex items-center gap-1 rounded-full bg-[#66AE39] text-white px-2.5 py-2 text-xs font-medium hover:bg-[#5a9a32] transition-colors shadow-sm">
             <FaPhoneAlt className="h-3.5 w-3.5" />
             <span>Call</span>
           </a>
@@ -228,26 +238,25 @@ export default function PDPSupport({
         <button
           onClick={() => {
             if (bookVisitStatus) return;
-            
+
             // Check authentication before opening modal
             if (!checkAuth()) {
               setShowAuthModal(true);
               return;
             }
-            
+
             setOpenVisit(true);
             setStep("date");
           }}
           disabled={isBooking || bookVisitStatus}
-          className={`w-full rounded-[110px] py-3 px-6 text-sm font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg ${
-            bookVisitStatus
-              ? "bg-white border-2 border-[#1C4692] text-[#1C4692] cursor-default"
-              : "bg-[#1C4692] text-white hover:bg-[#1a3d7a]"
-          }`}>
-          {isBooking 
-            ? "Booking..." 
-            : bookVisitStatus 
-              ? "Visit Booked" 
+          className={`w-full rounded-[110px] py-3 px-6 text-sm font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg ${bookVisitStatus
+            ? "bg-white border-2 border-[#1C4692] text-[#1C4692] cursor-default"
+            : "bg-[#1C4692] text-white hover:bg-[#1a3d7a]"
+            }`}>
+          {isBooking
+            ? "Booking..."
+            : bookVisitStatus
+              ? "Visit Booked"
               : "Book A Visit"}
         </button>
       </div>

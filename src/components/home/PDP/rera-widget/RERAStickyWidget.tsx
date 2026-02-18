@@ -44,7 +44,7 @@ export default function RERAStickyWidget({
     }
   }, [isExpanded]);
 
-  const defaultReraUrl = "https://maharera.maharashtra.gov.in/";
+  const defaultReraUrl = "https://rera.telangana.gov.in/";
 
   const getReraLink = () => {
     if (!reraDetailsLink) {
@@ -113,7 +113,7 @@ export default function RERAStickyWidget({
             <div className="flex-1 min-w-0 mt-2 max-h-[140px] overflow-y-auto pr-2">
 
               <h3 className="text-[16px] font-bold text-[#000000] mb-1 leading-snug">
-                MehaRERA Registration numbers
+                Telangana RERA Registration Number
               </h3>
 
               {reraId && (

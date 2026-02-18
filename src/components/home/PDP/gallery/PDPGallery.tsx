@@ -22,12 +22,16 @@ interface PDPGalleryProps {
   };
   reraQrImage?: string;
   reraDetailsLink?: string;
+  locality?: string;
+  propertyName?: string;
 }
 
 export default function PDPGallery({
   images,
   mainImage,
   imageDetails,
+  locality,
+  propertyName
 }: PDPGalleryProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,20 +52,16 @@ export default function PDPGallery({
   };
 
   return (
-<section className="w-full bg-white py-6 md:py-10 px-4 md:px-10">
-<div className="max-w-6xl mx-auto">
+    <section className="w-full bg-white py-6 md:py-10 px-4 md:px-10">
+      <div className="max-w-6xl mx-auto">
         <Breadcrumb className="mb-[30px]">
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink
                 href="/"
-                className="flex items-center gap-2 text-[19px] text-[#000000]">
-                <Image
-                  src={HomeIcon}
-                  alt="Home"
-                  width={24}
-                  height={24}
-                />
+                className="flex items-center gap-2 text-[19px] text-[#000000]"
+              >
+                <Image src={HomeIcon} alt="Home" width={24} height={24} />
                 Home
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -70,23 +70,31 @@ export default function PDPGallery({
               <span className="text-[18px] text-[#000000]">|</span>
             </BreadcrumbSeparator>
 
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/filter" className="text-[18px] text-[#000000]">
-                Filter
-              </BreadcrumbLink>
-            </BreadcrumbItem>
+            {locality && (
+              <>
+                <BreadcrumbItem>
+                  <BreadcrumbLink
+                    href={`/properties?locality=${encodeURIComponent(locality)}`}
+                    className="text-[18px] text-[#000000]"
+                  >
+                    {locality}
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
 
-            <BreadcrumbSeparator>
-              <span className="text-[18px] text-[#000000]">|</span>
-            </BreadcrumbSeparator>
+                <BreadcrumbSeparator>
+                  <span className="text-[18px] text-[#000000]">|</span>
+                </BreadcrumbSeparator>
+              </>
+            )}
 
             <BreadcrumbItem>
               <BreadcrumbPage className="text-[#1C4692] font-semibold text-[18px]">
-                Properties
+                {propertyName || "Property Details"}
               </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+
 
         <div className="relative">
           <div className="grid gap-4 grid-cols-1 md:grid-cols-2 rounded-3xl">

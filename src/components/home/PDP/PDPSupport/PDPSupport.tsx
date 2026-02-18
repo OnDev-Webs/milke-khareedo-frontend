@@ -164,41 +164,37 @@ export default function PDPSupport({
       </div>
 
       <div className="mt-4 px-4">
-        <div className="relative rounded-2xl overflow-hidden bg-white shadow-sm">
-          <div className="relative h-48 w-full bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600">
-            {/* Relationship manager image placeholder - styled to look professional */}
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-400 to-blue-600 relative overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center">
-                {relationshipManager.profileImage ? (
-                  <Image
-                    src={relationshipManager.profileImage}
-                    alt={relationshipManager.name}
-                    fill
-                    priority
-                    className="object-cover object-center"
-                    sizes="(max-width: 768px) 100vw, 360px"
-                  />
-                ) : (
+        <div className="mt-4 px-4">
+  <div className="relative w-full aspect-3/4 rounded-2xl overflow-hidden bg-gray-100 shadow-sm">
+    {relationshipManager.profileImage ? (
+      <Image
+        src={relationshipManager.profileImage}
+        alt={relationshipManager.name}
+        fill
+        priority
+        className="object-cover object-top"
+        sizes="(max-width: 768px) 100vw, 360px"
+      />
+    ) : (
+      <div className="flex h-full w-full items-center justify-center bg-blue-500">
+        <span className="text-6xl font-bold text-white">
+          {relationshipManager.name?.charAt(0)}
+        </span>
+      </div>
+    )}
 
-                  <div className="w-36 h-36 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border-4 border-white/40 shadow-xl">
-                    <span className="text-6xl font-bold text-white">
-                      {relationshipManager.name?.charAt(0)}
-                    </span>
-                  </div>
-                )}
-              </div>
+    {/* 5 Star Rating Badge */}
+    <div className="absolute left-2 bottom-2 flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 bg-[#BDBDBD99] backdrop-blur-[24px] shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
+      <div className="bg-white rounded-full p-[4px]">
+        <Image src={Star} alt="star" width={10} height={10} />
+      </div>
+      <span className="text-xs font-medium text-white">
+        5 Star Rating
+      </span>
+    </div>
+  </div>
+</div>
 
-            </div>
-
-            {/* 5 Star Rating Badge - positioned bottom left */}
-            <div className="absolute left-2 bottom-2 flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 bg-[#BDBDBD99] backdrop-blur-[24px] shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
-              <div className="bg-white rounded-full p-[4px]">
-                <Image src={Star} alt="star" width={10} height={10} />
-              </div>
-              <span className="text-xs font-medium text-[#ffffff]">5 Star Rating</span>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div className="flex items-center gap-4 px-3">

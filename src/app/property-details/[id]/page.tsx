@@ -145,6 +145,8 @@ export default function PropertyDetailsPage({
         imageDetails={property.imageDetails}
         reraQrImage={property.reraQrImage}
         reraDetailsLink={property.reraDetailsLink}
+locality={property.location?.split(",")[1]?.trim()}
+        propertyName={property.projectName}
       />
       <PDPHeader
         projectName={property.projectName}

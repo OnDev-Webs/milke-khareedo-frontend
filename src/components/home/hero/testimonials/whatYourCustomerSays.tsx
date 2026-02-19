@@ -37,7 +37,7 @@ const reviews = [
     text1:
       "Very helpful platform for first - time home buyers.The team walked us through each step and made the process much less stressful.",
     user: "Priya R., Hyderabad",
-    avatar: "/images/user4.jpg",
+    avatar: "/images/user5.png",
   }
 ];
 

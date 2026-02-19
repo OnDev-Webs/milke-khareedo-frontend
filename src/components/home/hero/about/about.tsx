@@ -501,7 +501,7 @@ export default function AboutSection() {
           <div className="flex justify-center order-1 lg:order-2 xl:pl-20">
             <div
               ref={containerRef}
-              className="relative w-full max-w-[370px] aspect-9/16 rounded-3xl overflow-hidden shadow-xl"
+              className="relative w-full max-w-[370px] aspect-9/16 md:h-[520px] rounded-3xl overflow-hidden shadow-xl"
               onMouseEnter={() => setShowControls(true)}
               onMouseLeave={() => setShowControls(false)}
             >

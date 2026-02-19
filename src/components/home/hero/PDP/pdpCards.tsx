@@ -57,9 +57,12 @@ export default function TopProperties() {
   const [hasMore, setHasMore] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  const locationFilter = useMemo(() => {
-    return activeTab === "All Properties" ? undefined : activeTab;
-  }, [activeTab]);
+ const locationFilter = useMemo(() => {
+  if (activeTab === "All Properties") return undefined;
+
+  return activeTab.replace(/\s*\(.*?\)\s*/g, "").trim();
+}, [activeTab]);
+
 
 useEffect(() => {
   const favoriteStates: Record<string, boolean> = {};

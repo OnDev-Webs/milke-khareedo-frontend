@@ -79,6 +79,13 @@ export default function PDPPropertyDetails({ property }: PDPPropertyDetailsProps
               <div>
                 <p className="text-[14px] text-[#7B7B7B] font-normal">Project Area (in acre)</p>
                 <p className="mt-1 text-[16px] font-medium text-[#000000]">
+                  {property.landParcel}
+                </p>
+              </div>
+
+               <div>
+                <p className="text-[14px] text-[#7B7B7B] font-normal">Tower Count</p>
+                <p className="mt-1 text-[16px] font-medium text-[#000000]">
                   {property.projectSize}
                 </p>
               </div>

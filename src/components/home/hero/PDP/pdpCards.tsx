@@ -41,15 +41,45 @@ export default function TopProperties() {
 
 
 
-  console.log("locationsData", locationsData);
-
   const tabs = useMemo(() => {
-    const allTabs = ["All Properties"];
-    if (locationsData?.locations) {
-      allTabs.push(...locationsData.locations);
-    }
-    return allTabs;
-  }, [locationsData]);
+  const allTabs = ["All Properties"];
+
+  if (locationsData?.locations) {
+    const cleaned = locationsData.locations
+        .map((loc: string) => {
+          if (!loc) return null;
+  
+          // remove brackets like "(M)"
+          let label = loc.replace(/\(.*?\)/g, "").trim();
+  
+          // 🚨 remove obvious building noise
+          const noiseWords = [
+            "building",
+            "tower",
+            "phase",
+            "block",
+            "project",
+          ];
+  
+          const lower = label.toLowerCase();
+          const isNoisy = noiseWords.some(word => lower.includes(word));
+  
+          // if noisy, skip it
+          if (isNoisy) return null;
+  
+          return label;
+        })
+        .filter((item): item is string => item !== null);
+  
+      // ✅ remove duplicates
+      const unique = Array.from(new Set(cleaned));
+
+    allTabs.push(...unique);
+  }
+
+  return allTabs;
+}, [locationsData]);
+
 
   const [activeTab, setActiveTab] = useState("All Properties");
   const [properties, setProperties] = useState<Property[]>([]);
@@ -57,11 +87,15 @@ export default function TopProperties() {
   const [hasMore, setHasMore] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
- const locationFilter = useMemo(() => {
+const locationFilter = useMemo(() => {
   if (activeTab === "All Properties") return undefined;
 
-  return activeTab.replace(/\s*\(.*?\)\s*/g, "").trim();
+  return activeTab
+    .replace(/\(.*?\)/g, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
 }, [activeTab]);
+
 
 
 useEffect(() => {

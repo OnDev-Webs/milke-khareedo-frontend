@@ -501,7 +501,7 @@ export default function AboutSection() {
           <div className="flex justify-center order-1 lg:order-2 xl:pl-20">
             <div
               ref={containerRef}
-              className="relative w-full max-w-[370px] aspect-9/16 md:h-[520px] rounded-3xl overflow-hidden shadow-xl"
+              className="relative w-full max-w-[370px] aspect-9/16 md:h-[620px] rounded-3xl overflow-hidden shadow-xl"
               onMouseEnter={() => setShowControls(true)}
               onMouseLeave={() => setShowControls(false)}
             >
@@ -511,8 +511,11 @@ export default function AboutSection() {
 
               <video
                 ref={videoRef}
-                className={`absolute inset-0 w-full h-full object-cover  transition-opacity duration-700 ${videoLoading ? "opacity-0" : "opacity-100"
-                  }`}
+                className={`absolute inset-0 w-full h-full transition-opacity duration-700 ${isFullscreen
+                    ? "object-contain bg-black"
+                    : "object-cover"
+                  } ${videoLoading ? "opacity-0" : "opacity-100"}`}
+
                 src="https://milkekhareedo-storage.s3.ap-southeast-2.amazonaws.com/properties/images/MKVIDEO.mp4"
                 autoPlay
                 muted
@@ -535,7 +538,7 @@ export default function AboutSection() {
               )}
 
               <div
-                className={`absolute inset-0 mt-113 ms-4 flex justify-start z-30 transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0"
+                className={`absolute inset-0 mt-140 ms-4 flex justify-start z-30 transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0"
                   }`}
               >
                 <button

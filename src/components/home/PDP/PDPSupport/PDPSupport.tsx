@@ -75,11 +75,35 @@ export default function PDPSupport({
     }
   };
 
-  const handleEmail = () => {
-    if (relationshipManager.email) {
-      window.location.href = `mailto:${relationshipManager.email}`;
-    }
-  };
+ const handleEmail = async () => {
+  if (!relationshipManager.email) return;
+
+  const subject = encodeURIComponent(
+    "Property Inquiry from Mil Ke Khareedo"
+  );
+
+  const body = encodeURIComponent(
+    `Hello ${relationshipManager.name},\n\nI am interested in this property.\n\nPlease share more details.\n\nThanks`
+  );
+
+  const mailtoUrl = `mailto:${relationshipManager.email}?subject=${subject}&body=${body}`;
+
+  try {
+    window.location.href = mailtoUrl;
+
+    // fallback timer
+    setTimeout(async () => {
+      // if user still on page, offer copy
+      if (document.visibilityState === "visible") {
+        await navigator.clipboard.writeText(relationshipManager.email);
+        console.warn("Email copied as fallback");
+      }
+    }, 1500);
+  } catch {
+    await navigator.clipboard.writeText(relationshipManager.email);
+  }
+};
+
 
   const handleConfirmVisit = async () => {
     if (!selectedDate) return;
